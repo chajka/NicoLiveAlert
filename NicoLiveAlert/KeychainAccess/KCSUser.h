@@ -35,6 +35,7 @@
 @property (copy, readwrite)		NSString				*securityDomain;
 @property (copy, readwrite)		NSString				*serviceName;
 @property (assign, readwrite)	SecProtocolType			protocol;
+@property (assign, readwrite)	SecAuthenticationType	authType;
 
 - (id) init;
 @end

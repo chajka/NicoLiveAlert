@@ -208,4 +208,18 @@
 	protocol = protocol_;
 }// end - (SecProtocolType) protocol
 
+#pragma mark -
+#pragma mark authType’s accessor
+//@synthesize authType;
+- (SecAuthenticationType) authType
+{
+	return authType;
+}// end - (SecAuthenticationType) authType
+
+- (void) setAuthType:(SecAuthenticationType)authType_
+{
+	syncronized = NO;
+	authType = authType_;
+}// end - (void) setAuthType:(SecAuthenticationType)authType_
+
 @end

@@ -17,6 +17,13 @@
 		1D1CE2E5150C77BB001E7E39 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */; };
 		1D1CE2ED150C77BB001E7E39 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1CE2EB150C77BB001E7E39 /* InfoPlist.strings */; };
 		1D1CE2F0150C77BB001E7E39 /* NicoLiveAlertTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1CE2EF150C77BB001E7E39 /* NicoLiveAlertTests.m */; };
+		1D1CE2FF150C7849001E7E39 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */; };
+		1D1CE318150C7849001E7E39 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1CE2E3150C77BB001E7E39 /* SenTestingKit.framework */; };
+		1D1CE319150C7849001E7E39 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */; };
+		1D1CE32B150C79B0001E7E39 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1CE2D8150C77BA001E7E39 /* AppDelegate.m */; };
+		1D1CE32C150C79BA001E7E39 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1CE2D1150C77BA001E7E39 /* main.m */; };
+		1D1CE32D150C79DA001E7E39 /* NicoLiveAlertTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1CE2EF150C77BB001E7E39 /* NicoLiveAlertTests.m */; };
+		1D1CE32E150C79F5001E7E39 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1CE2EB150C77BB001E7E39 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +34,13 @@
 			remoteGlobalIDString = 1D1CE2C0150C77BA001E7E39;
 			remoteInfo = NicoLiveAlert;
 		};
+		1D1CE31A150C7849001E7E39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D1CE2B8150C77BA001E7E39 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D1CE2FC150C7849001E7E39;
+			remoteInfo = "NicoLiveAlert Leopard";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -35,20 +49,22 @@
 		1D1CE2C8150C77BA001E7E39 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		1D1CE2C9150C77BA001E7E39 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1D1CE2CA150C77BA001E7E39 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D1CE2CD150C77BA001E7E39 /* NicoLiveAlert-Info.plist */ = {isa = PBXFileReference; path = "NicoLiveAlert-Info.plist"; sourceTree = "<group>"; };
+		1D1CE2CD150C77BA001E7E39 /* NicoLiveAlert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NicoLiveAlert-Info.plist"; sourceTree = "<group>"; };
 		1D1CE2CF150C77BA001E7E39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1D1CE2D1150C77BA001E7E39 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1D1CE2D3150C77BA001E7E39 /* NicoLiveAlert-Prefix.pch */ = {isa = PBXFileReference; path = "NicoLiveAlert-Prefix.pch"; sourceTree = "<group>"; };
+		1D1CE2D3150C77BA001E7E39 /* NicoLiveAlert-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NicoLiveAlert-Prefix.pch"; sourceTree = "<group>"; };
 		1D1CE2D5150C77BA001E7E39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		1D1CE2D7150C77BA001E7E39 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		1D1CE2D7150C77BA001E7E39 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D1CE2D8150C77BA001E7E39 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D1CE2DB150C77BB001E7E39 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		1D1CE2E2150C77BB001E7E39 /* NicoLiveAlertTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NicoLiveAlertTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1CE2E3150C77BB001E7E39 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		1D1CE2EA150C77BB001E7E39 /* NicoLiveAlertTests-Info.plist */ = {isa = PBXFileReference; path = "NicoLiveAlertTests-Info.plist"; sourceTree = "<group>"; };
+		1D1CE2EA150C77BB001E7E39 /* NicoLiveAlertTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NicoLiveAlertTests-Info.plist"; sourceTree = "<group>"; };
 		1D1CE2EC150C77BB001E7E39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1D1CE2EE150C77BB001E7E39 /* NicoLiveAlertTests.h */ = {isa = PBXFileReference; path = NicoLiveAlertTests.h; sourceTree = "<group>"; };
+		1D1CE2EE150C77BB001E7E39 /* NicoLiveAlertTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NicoLiveAlertTests.h; sourceTree = "<group>"; };
 		1D1CE2EF150C77BB001E7E39 /* NicoLiveAlertTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NicoLiveAlertTests.m; sourceTree = "<group>"; };
+		1D1CE2FD150C7849001E7E39 /* NicoLiveAlert Leopard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NicoLiveAlert Leopard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D1CE317150C7849001E7E39 /* NicoLiveAlertTests LeopardTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NicoLiveAlertTests LeopardTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +82,23 @@
 			files = (
 				1D1CE2E4150C77BB001E7E39 /* SenTestingKit.framework in Frameworks */,
 				1D1CE2E5150C77BB001E7E39 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D1CE2FA150C7849001E7E39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D1CE2FF150C7849001E7E39 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D1CE313150C7849001E7E39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D1CE318150C7849001E7E39 /* SenTestingKit.framework in Frameworks */,
+				1D1CE319150C7849001E7E39 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +120,8 @@
 			children = (
 				1D1CE2C1150C77BA001E7E39 /* NicoLiveAlert.app */,
 				1D1CE2E2150C77BB001E7E39 /* NicoLiveAlertTests.octest */,
+				1D1CE2FD150C7849001E7E39 /* NicoLiveAlert Leopard.app */,
+				1D1CE317150C7849001E7E39 /* NicoLiveAlertTests LeopardTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -156,9 +191,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D1CE2C0150C77BA001E7E39 /* NicoLiveAlert */ = {
+		1D1CE2C0150C77BA001E7E39 /* NicoLiveAlert Lion */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D1CE2F3150C77BB001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlert" */;
+			buildConfigurationList = 1D1CE2F3150C77BB001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlert Lion" */;
 			buildPhases = (
 				1D1CE2BD150C77BA001E7E39 /* Sources */,
 				1D1CE2BE150C77BA001E7E39 /* Frameworks */,
@@ -168,14 +203,14 @@
 			);
 			dependencies = (
 			);
-			name = NicoLiveAlert;
+			name = "NicoLiveAlert Lion";
 			productName = NicoLiveAlert;
 			productReference = 1D1CE2C1150C77BA001E7E39 /* NicoLiveAlert.app */;
 			productType = "com.apple.product-type.application";
 		};
-		1D1CE2E1150C77BB001E7E39 /* NicoLiveAlertTests */ = {
+		1D1CE2E1150C77BB001E7E39 /* NicoLiveAlertTests Lion */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D1CE2F6150C77BB001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlertTests" */;
+			buildConfigurationList = 1D1CE2F6150C77BB001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlertTests Lion" */;
 			buildPhases = (
 				1D1CE2DD150C77BB001E7E39 /* Sources */,
 				1D1CE2DE150C77BB001E7E39 /* Frameworks */,
@@ -187,9 +222,45 @@
 			dependencies = (
 				1D1CE2E7150C77BB001E7E39 /* PBXTargetDependency */,
 			);
-			name = NicoLiveAlertTests;
+			name = "NicoLiveAlertTests Lion";
 			productName = NicoLiveAlertTests;
 			productReference = 1D1CE2E2150C77BB001E7E39 /* NicoLiveAlertTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		1D1CE2FC150C7849001E7E39 /* NicoLiveAlert Leopard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D1CE325150C7849001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlert Leopard" */;
+			buildPhases = (
+				1D1CE2F9150C7849001E7E39 /* Sources */,
+				1D1CE2FA150C7849001E7E39 /* Frameworks */,
+				1D1CE2FB150C7849001E7E39 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "NicoLiveAlert Leopard";
+			productName = "NicoLiveAlert Leopard";
+			productReference = 1D1CE2FD150C7849001E7E39 /* NicoLiveAlert Leopard.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1D1CE316150C7849001E7E39 /* NicoLiveAlertTests LeopardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D1CE328150C7849001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlertTests LeopardTests" */;
+			buildPhases = (
+				1D1CE312150C7849001E7E39 /* Sources */,
+				1D1CE313150C7849001E7E39 /* Frameworks */,
+				1D1CE314150C7849001E7E39 /* Resources */,
+				1D1CE315150C7849001E7E39 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D1CE31B150C7849001E7E39 /* PBXTargetDependency */,
+			);
+			name = "NicoLiveAlertTests LeopardTests";
+			productName = "NicoLiveAlert LeopardTests";
+			productReference = 1D1CE317150C7849001E7E39 /* NicoLiveAlertTests LeopardTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -213,8 +284,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D1CE2C0150C77BA001E7E39 /* NicoLiveAlert */,
-				1D1CE2E1150C77BB001E7E39 /* NicoLiveAlertTests */,
+				1D1CE2C0150C77BA001E7E39 /* NicoLiveAlert Lion */,
+				1D1CE2FC150C7849001E7E39 /* NicoLiveAlert Leopard */,
+				1D1CE2E1150C77BB001E7E39 /* NicoLiveAlertTests Lion */,
+				1D1CE316150C7849001E7E39 /* NicoLiveAlertTests LeopardTests */,
 			);
 		};
 /* End PBXProject section */
@@ -238,10 +311,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1D1CE2FB150C7849001E7E39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D1CE314150C7849001E7E39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D1CE32E150C79F5001E7E39 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		1D1CE2E0150C77BB001E7E39 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		1D1CE315150C7849001E7E39 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -274,13 +375,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1D1CE2F9150C7849001E7E39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D1CE32C150C79BA001E7E39 /* main.m in Sources */,
+				1D1CE32B150C79B0001E7E39 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D1CE312150C7849001E7E39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D1CE32D150C79DA001E7E39 /* NicoLiveAlertTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		1D1CE2E7150C77BB001E7E39 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D1CE2C0150C77BA001E7E39 /* NicoLiveAlert */;
+			target = 1D1CE2C0150C77BA001E7E39 /* NicoLiveAlert Lion */;
 			targetProxy = 1D1CE2E6150C77BB001E7E39 /* PBXContainerItemProxy */;
+		};
+		1D1CE31B150C7849001E7E39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D1CE2FC150C7849001E7E39 /* NicoLiveAlert Leopard */;
+			targetProxy = 1D1CE31A150C7849001E7E39 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -417,6 +540,68 @@
 			};
 			name = Release;
 		};
+		1D1CE326150C7849001E7E39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
+				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.5;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		1D1CE327150C7849001E7E39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
+				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.5;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		1D1CE329150C7849001E7E39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NicoLiveAlert Leopard.app/Contents/MacOS/NicoLiveAlert Leopard";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NicoLiveAlert Leopard/NicoLiveAlert Leopard-Prefix.pch";
+				INFOPLIST_FILE = "NicoLiveAlertTests/NicoLiveAlertTests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.5;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		1D1CE32A150C7849001E7E39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NicoLiveAlert Leopard.app/Contents/MacOS/NicoLiveAlert Leopard";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NicoLiveAlert Leopard/NicoLiveAlert Leopard-Prefix.pch";
+				INFOPLIST_FILE = "NicoLiveAlertTests/NicoLiveAlertTests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.5;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -429,7 +614,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1D1CE2F3150C77BB001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlert" */ = {
+		1D1CE2F3150C77BB001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlert Lion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D1CE2F4150C77BB001E7E39 /* Debug */,
@@ -437,11 +622,27 @@
 			);
 			defaultConfigurationIsVisible = 0;
 		};
-		1D1CE2F6150C77BB001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlertTests" */ = {
+		1D1CE2F6150C77BB001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlertTests Lion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D1CE2F7150C77BB001E7E39 /* Debug */,
 				1D1CE2F8150C77BB001E7E39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1D1CE325150C7849001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlert Leopard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D1CE326150C7849001E7E39 /* Debug */,
+				1D1CE327150C7849001E7E39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1D1CE328150C7849001E7E39 /* Build configuration list for PBXNativeTarget "NicoLiveAlertTests LeopardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D1CE329150C7849001E7E39 /* Debug */,
+				1D1CE32A150C7849001E7E39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};

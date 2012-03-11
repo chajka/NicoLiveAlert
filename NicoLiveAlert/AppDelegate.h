@@ -8,7 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
+@interface AppDelegate : NSObject <NSApplicationDelegate> {
+#else
+@interface AppDelegate : NSObject {
+#endif
+}
 
 @property (assign) IBOutlet NSWindow *window;
 

@@ -118,7 +118,6 @@
 		serverName = NULL;
 		serverPath = NULL;
 		securityDomain = NULL;
-		serviceName = NULL;
 		protocol = kSecProtocolTypeAny;
 		authType = kSecAuthenticationTypeAny;
 		port = 0;
@@ -135,8 +134,6 @@
 		[serverPath release];
 	if (securityDomain)
 		[securityDomain release];
-	if (serviceName)
-		[serviceName release];
 	[super dealloc];
 }// end - (void) dealloc
 #endif
@@ -194,24 +191,6 @@
 #endif
 	securityDomain = [securityDomain_ copy];
 }// end - (void) setSecurityDomain:(NSString *)securityDomain_
-
-#pragma mark -
-#pragma mark serviceName’s accessor
-//@synthesize serviceName;
-- (NSString *) serviceName
-{
-	return serviceName;
-}// end - (NSString *) serviceName
-
-- (void) setServiceName:(NSString *)serviceName_
-{
-	syncronized = NO;
-#if __has_feature(objc_arc) == 0
-	if (serviceName != NULL)
-		[serviceName autorelease];
-#endif
-	serviceName = [serviceName_ copy];
-}// end - (void) setServiceName:(NSString *)serviceName_
 
 #pragma mark -
 #pragma mark protocol’s accessor

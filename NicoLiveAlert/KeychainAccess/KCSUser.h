@@ -31,7 +31,6 @@
 	NSString				*serverName;
 	NSString				*serverPath;
 	NSString				*securityDomain;	// optional
-	NSString				*serviceName;
 	SecProtocolType			protocol;
 	SecAuthenticationType	authType;
 	UInt16					port;
@@ -39,7 +38,6 @@
 @property (copy, readwrite)		NSString				*serverName;
 @property (copy, readwrite)		NSString				*serverPath;
 @property (copy, readwrite)		NSString				*securityDomain;
-@property (copy, readwrite)		NSString				*serviceName;
 @property (assign, readwrite)	SecProtocolType			protocol;
 @property (assign, readwrite)	SecAuthenticationType	authType;
 @property (assign, readwrite)	UInt16					port;

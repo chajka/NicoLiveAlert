@@ -158,4 +158,22 @@
 	serverPath = [serverPath_ copy];
 }// end - (void) setServerPath:(NSString *)serverPath_
 
+#pragma mark -
+#pragma mark securityDomain’s accessor
+//@synthesize securityDomain;
+- (NSString *) securityDomain
+{
+	return securityDomain;
+}// end - (NSString *) securityDomain
+
+- (void) setSecurityDomain:(NSString *)securityDomain_
+{
+	syncronized = NO;
+#if __has_feature(objc_arc) == 0
+	if (securityDomain != NULL)
+		[securityDomain autorelease];
+#endif
+	securityDomain = [securityDomain_ copy];
+}// end - (void) setSecurityDomain:(NSString *)securityDomain_
+
 @end

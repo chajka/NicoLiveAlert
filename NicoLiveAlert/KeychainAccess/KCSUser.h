@@ -32,6 +32,7 @@
 @property (assign, readwrite)	SecKeychainRef			keyChain;
 @property (copy, readwrite)		NSString				*serverName;
 @property (copy, readwrite)		NSString				*serverPath;
+@property (copy, readwrite)		NSString				*securityDomain;
 
 - (id) init;
 @end

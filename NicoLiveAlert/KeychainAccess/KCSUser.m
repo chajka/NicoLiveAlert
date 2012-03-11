@@ -9,5 +9,62 @@
 #import "KCSUser.h"
 
 @implementation KCSUser
+#pragma mark construct / destruct
+- (id) init
+{
+	self = [super init];
+	if (self)
+	{
+		account = NULL;
+		password = NULL;
+		syncronized = NO;
+	}
+	return self;
+}// - (id) init
+
+#if __has_feature(objc_arc) == 0
+- (void) dealloc
+{
+	// relase account
+    if (account != NULL)
+		[account release];
+	// relase password
+	if (password != NULL)
+		[password release];
+	// no need care synced
+	[super dealloc];
+}// end - (void) dealloc
+#endif
+
+#pragma mark -
+#pragma mark account’s accessor
+- (NSString *) account
+{
+	return account;
+}// - (NSString *) account
+
+- (void) setAccount:(NSString *)account_
+{
+	syncronized = NO;
+	account = [account_ copy];
+}// end - (void) setAccount:(NSString *)account_
+#pragma mark -
+#pragma mark password’s accessor
+- (NSString *) password
+{
+	return account;
+}// - (NSString *) account
+
+- (void) setPassword:(NSString *)_password
+{
+#if __has_feature(objc_arc) == 1
+	password = _password;
+#else
+	if (password != NULL)
+		[password autorelease];
+	password = [_password copy];
+#endif
+	syncronized = NO;
+}// end - (void) setPassword:(NSString *)password
 
 @end

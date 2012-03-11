@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface KCSUser : NSObject
+@interface KCSUser : NSObject {
+	NSString	*account;
+	NSString	*password;
+	BOOL		syncronized;
+}
+@property (copy, readwrite) NSString	*account;
+@property (copy, readwrite) NSString	*password;
 
 @end

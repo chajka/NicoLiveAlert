@@ -29,8 +29,10 @@
 		1D1CE331150C7EA6001E7E39 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1CE2DA150C77BB001E7E39 /* MainMenu.xib */; };
 		1D6500BE150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500BF150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
-		1D6500C0150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
-		1D6500C1150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
+		1D6500C5150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
+		1D6500C6150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
+		1D6500C7150CB63A002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
+		1D6500C8150CB63E002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		1D1CE317150C7849001E7E39 /* NicoLiveAlertTests LeopardTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NicoLiveAlertTests LeopardTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D6500BC150CB0DE002F5A8B /* KCSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUser.h; path = KeychainAccess/KCSUser.h; sourceTree = "<group>"; };
 		1D6500BD150CB0DE002F5A8B /* KCSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUser.m; path = KeychainAccess/KCSUser.m; sourceTree = "<group>"; };
+		1D6500C3150CB351002F5A8B /* KCSUserTsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUserTsts.h; path = Keychain/KCSUserTsts.h; sourceTree = "<group>"; };
+		1D6500C4150CB351002F5A8B /* KCSUserTsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUserTsts.m; path = Keychain/KCSUserTsts.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +162,7 @@
 		1D1CE2CB150C77BA001E7E39 /* NicoLiveAlert */ = {
 			isa = PBXGroup;
 			children = (
-				1D6500BA150CB07E002F5A8B /* Security */,
+				1D6500BA150CB07E002F5A8B /* Keychain */,
 				1D1CE2D7150C77BA001E7E39 /* NicoLiveAlert.h */,
 				1D1CE2D8150C77BA001E7E39 /* NicoLiveAlert.m */,
 				1D1CE2DA150C77BB001E7E39 /* MainMenu.xib */,
@@ -182,6 +186,7 @@
 		1D1CE2E8150C77BB001E7E39 /* NicoLiveAlertTests */ = {
 			isa = PBXGroup;
 			children = (
+				1D6500C2150CB2FF002F5A8B /* Keychain */,
 				1D1CE2EE150C77BB001E7E39 /* NicoLiveAlertTests.h */,
 				1D1CE2EF150C77BB001E7E39 /* NicoLiveAlertTests.m */,
 				1D1CE2E9150C77BB001E7E39 /* Supporting Files */,
@@ -198,13 +203,22 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		1D6500BA150CB07E002F5A8B /* Security */ = {
+		1D6500BA150CB07E002F5A8B /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
 				1D6500BC150CB0DE002F5A8B /* KCSUser.h */,
 				1D6500BD150CB0DE002F5A8B /* KCSUser.m */,
 			);
-			name = Security;
+			name = Keychain;
+			sourceTree = "<group>";
+		};
+		1D6500C2150CB2FF002F5A8B /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				1D6500C3150CB351002F5A8B /* KCSUserTsts.h */,
+				1D6500C4150CB351002F5A8B /* KCSUserTsts.m */,
+			);
+			name = Keychain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -395,7 +409,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D1CE2F0150C77BB001E7E39 /* NicoLiveAlertTests.m in Sources */,
-				1D6500C0150CB0DE002F5A8B /* KCSUser.m in Sources */,
+				1D6500C8150CB63E002F5A8B /* KCSUser.m in Sources */,
+				1D6500C5150CB351002F5A8B /* KCSUserTsts.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,7 +429,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D1CE32D150C79DA001E7E39 /* NicoLiveAlertTests.m in Sources */,
-				1D6500C1150CB0DE002F5A8B /* KCSUser.m in Sources */,
+				1D6500C7150CB63A002F5A8B /* KCSUser.m in Sources */,
+				1D6500C6150CB351002F5A8B /* KCSUserTsts.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

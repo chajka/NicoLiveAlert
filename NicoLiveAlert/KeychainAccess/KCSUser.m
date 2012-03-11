@@ -86,6 +86,23 @@
 	keyChain = keyChain;
 }// end - (void) setKeyChain:(SecKeychainRef)keyChain_
 
+#pragma mark -
+#pragma mark keyChain’s accessor
+//@synthesize keyChain
+- (SecKeychainItemRef) keyChainItem
+{
+	return keyChainItem;
+}// end - (SecKeychainRef) keyChain
+
+- (void) setKeyChainItem:(SecKeychainItemRef)keyChainItem_
+{
+#if __has_feature(objc_arc) == 0
+	if (keyChainItem_ != NULL)
+		CFRelease(keyChainItem);
+#endif
+	keyChainItem = keyChainItem_;
+}// end - (void) setKeyChain:(SecKeychainItemRef)keyChainItem_
+
 @end
 
 #pragma mark -

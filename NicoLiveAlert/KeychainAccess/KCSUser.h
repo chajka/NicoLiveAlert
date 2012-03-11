@@ -16,9 +16,10 @@
 	SecKeychainItemRef	keyChainItem;
 	BOOL				syncronized;
 }
-@property (copy, readwrite)		NSString		*account;
-@property (copy, readwrite)		NSString		*password;
-@property (assign, readwrite)	SecKeychainRef	keyChain;
+@property (copy, readwrite)		NSString			*account;
+@property (copy, readwrite)		NSString			*password;
+@property (assign, readwrite)	SecKeychainRef		keyChain;
+@property (assign, readwrite)	SecKeychainItemRef	keyChainItem;
 
 #pragma mark construct / destruct
 - (id) init;

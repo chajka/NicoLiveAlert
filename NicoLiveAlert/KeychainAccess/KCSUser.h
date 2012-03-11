@@ -34,6 +34,7 @@
 @property (copy, readwrite)		NSString				*serverPath;
 @property (copy, readwrite)		NSString				*securityDomain;
 @property (copy, readwrite)		NSString				*serviceName;
+@property (assign, readwrite)	SecProtocolType			protocol;
 
 - (id) init;
 @end

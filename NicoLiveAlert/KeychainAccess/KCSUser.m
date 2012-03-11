@@ -194,4 +194,18 @@
 	serviceName = [serviceName_ copy];
 }// end - (void) setServiceName:(NSString *)serviceName_
 
+#pragma mark -
+#pragma mark protocol’s accessor
+//@synthesize protocol;
+- (SecProtocolType) protocol
+{
+	return protocol;
+}// end - (SecProtocolType) protocol
+
+- (void) setProtocol:(SecProtocolType)protocol_
+{
+	syncronized = NO;
+	protocol = protocol_;
+}// end - (SecProtocolType) protocol
+
 @end

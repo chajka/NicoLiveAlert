@@ -17,3 +17,8 @@
 @property (copy, readwrite) NSString	*password;
 
 @end
+
+#pragma mark -
+@interface KCSInternetUser : KCSUser {
+}
+@end

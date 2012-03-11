@@ -68,3 +68,8 @@
 }// end - (void) setPassword:(NSString *)password
 
 @end
+
+#pragma mark -
+
+@implementation KCSInternetUser
+@end

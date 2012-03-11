@@ -33,6 +33,7 @@
 @property (copy, readwrite)		NSString				*serverName;
 @property (copy, readwrite)		NSString				*serverPath;
 @property (copy, readwrite)		NSString				*securityDomain;
+@property (copy, readwrite)		NSString				*serviceName;
 
 - (id) init;
 @end

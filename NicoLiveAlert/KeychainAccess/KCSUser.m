@@ -17,6 +17,8 @@
 	{
 		account = NULL;
 		password = NULL;
+		keyChain = NULL;
+		keyChainItem = NULL;
 		syncronized = NO;
 	}
 	return self;
@@ -52,7 +54,7 @@
 #pragma mark password’s accessor
 - (NSString *) password
 {
-	return account;
+	return password;
 }// - (NSString *) account
 
 - (void) setPassword:(NSString *)_password
@@ -66,6 +68,23 @@
 #endif
 	syncronized = NO;
 }// end - (void) setPassword:(NSString *)password
+
+#pragma mark -
+#pragma mark keyChain’s accessor
+//@synthesize keyChain
+- (SecKeychainRef) keyChain
+{
+	return keyChain;
+}// end - (SecKeychainRef) keyChain
+
+- (void) setKeyChain:(SecKeychainRef)keyChain_
+{
+#if __has_feature(objc_arc) == 0
+	if (keyChain != NULL)
+		CFRelease(keyChain);
+#endif
+	keyChain = keyChain;
+}// end - (void) setKeyChain:(SecKeychainRef)keyChain_
 
 @end
 
@@ -104,23 +123,6 @@
 	[super dealloc];
 }// end - (void) dealloc
 #endif
-
-#pragma mark -
-#pragma mark keyChain’s accessor
-//@synthesize keyChain
-- (SecKeychainRef) keyChain
-{
-	return keyChain;
-}// end - (SecKeychainRef) keyChain
-
-- (void) setKeyChain:(SecKeychainRef)keyChain_
-{
-#if __has_feature(objc_arc) == 0
-	if (keyChain != NULL)
-		CFRelease(keyChain);
-#endif
-	keyChain = keyChain;
-}// end - (void) setKeyChain:(SecKeychainRef)keyChain_
 
 #pragma mark -
 #pragma mark serverName’s accessor

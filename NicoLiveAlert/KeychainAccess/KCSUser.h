@@ -29,6 +29,7 @@
 	SecAuthenticationType	authType;
 	UInt16					port;
 }
+@property (assign, readwrite)	SecKeychainRef			keyChain;
 
 - (id) init;
 @end

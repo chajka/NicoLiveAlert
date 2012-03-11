@@ -104,4 +104,22 @@
 	[super dealloc];
 }// end - (void) dealloc
 #endif
+
+#pragma mark -
+#pragma mark keyChain’s accessor
+//@synthesize keyChain
+- (SecKeychainRef) keyChain
+{
+	return keyChain;
+}// end - (SecKeychainRef) keyChain
+
+- (void) setKeyChain:(SecKeychainRef)keyChain_
+{
+#if __has_feature(objc_arc) == 0
+	if (keyChain != NULL)
+		CFRelease(keyChain);
+#endif
+	keyChain = keyChain;
+}// end - (void) setKeyChain:(SecKeychainRef)keyChain_
+
 @end

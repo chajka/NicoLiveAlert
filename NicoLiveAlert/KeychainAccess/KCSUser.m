@@ -140,4 +140,22 @@
 	serverName = [serverName_ copy];
 }// end - (void) setServerName:(NSString *)serverName_
 
+#pragma mark -
+#pragma mark serverPath’s accessor
+//@synthesize serverPath;
+- (NSString *) serverPath
+{
+	return serverPath;
+}// end - (NSString *) serverPath
+
+- (void) setServerPath:(NSString *)serverPath_
+{
+	syncronized = NO;
+#if __has_feature(objc_arc) == 0
+	if (serverPath != NULL)
+		[serverPath autorelease];
+#endif
+	serverPath = [serverPath_ copy];
+}// end - (void) setServerPath:(NSString *)serverPath_
+
 @end

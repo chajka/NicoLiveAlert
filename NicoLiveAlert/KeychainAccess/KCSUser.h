@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface KCSUser : NSObject {
+@protected
 	NSString	*account;
 	NSString	*password;
 	BOOL		syncronized;
@@ -16,10 +17,13 @@
 @property (copy, readwrite) NSString	*account;
 @property (copy, readwrite) NSString	*password;
 
+#pragma mark construct / destruct
+- (id) init;
 @end
 
 #pragma mark -
 @interface KCSInternetUser : KCSUser {
+@protected
 	SecKeychainRef			keyChain;			// optional
 	NSString				*serverName;
 	NSString				*serverPath;
@@ -38,6 +42,7 @@
 @property (assign, readwrite)	SecAuthenticationType	authType;
 @property (assign, readwrite)	UInt16					port;
 
+#pragma mark construct / destruct
 - (id) init;
 #pragma mark accessor
 - (NSString *) password:(OSStatus *)error;

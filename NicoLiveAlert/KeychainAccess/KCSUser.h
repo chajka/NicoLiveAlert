@@ -20,5 +20,15 @@
 
 #pragma mark -
 @interface KCSInternetUser : KCSUser {
+	SecKeychainRef			keyChain;			// optional
+	NSString				*serverName;
+	NSString				*serverPath;
+	NSString				*securityDomain;	// optional
+	NSString				*serviceName;
+	SecProtocolType			protocol;
+	SecAuthenticationType	authType;
+	UInt16					port;
 }
+
+- (id) init;
 @end

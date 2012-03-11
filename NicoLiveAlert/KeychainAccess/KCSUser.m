@@ -72,4 +72,36 @@
 #pragma mark -
 
 @implementation KCSInternetUser
+#pragma mark construct / destruct
+- (id) init
+{
+	self = [super init];
+	if (self)
+	{
+		keyChain = NULL;
+		serverName = NULL;
+		serverPath = NULL;
+		securityDomain = NULL;
+		serviceName = NULL;
+		protocol = kSecProtocolTypeAny;
+		authType = kSecAuthenticationTypeAny;
+		port = 0;
+	}// end if self
+	return self;
+}// end - (id) init
+
+#if __has_feature(objc_arc) == 0
+- (void) dealloc
+{
+	if (serverName)
+		[serverName release];
+	if (serverPath)
+		[serverPath release];
+	if (securityDomain)
+		[securityDomain release];
+	if (serviceName)
+		[serviceName release];
+	[super dealloc];
+}// end - (void) dealloc
+#endif
 @end

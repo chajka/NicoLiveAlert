@@ -33,6 +33,10 @@
 		1D6500C6150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
 		1D6500C7150CB63A002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500C8150CB63E002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
+		1D6500CA150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
+		1D6500CB150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
+		1D6500CC150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
+		1D6500CD150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +82,7 @@
 		1D6500BD150CB0DE002F5A8B /* KCSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUser.m; path = KeychainAccess/KCSUser.m; sourceTree = "<group>"; };
 		1D6500C3150CB351002F5A8B /* KCSUserTsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUserTsts.h; path = Keychain/KCSUserTsts.h; sourceTree = "<group>"; };
 		1D6500C4150CB351002F5A8B /* KCSUserTsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUserTsts.m; path = Keychain/KCSUserTsts.m; sourceTree = "<group>"; };
+		1D6500C9150CBE98002F5A8B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D1CE2C6150C77BA001E7E39 /* Cocoa.framework in Frameworks */,
+				1D6500CA150CBE98002F5A8B /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +101,7 @@
 			files = (
 				1D1CE2E4150C77BB001E7E39 /* SenTestingKit.framework in Frameworks */,
 				1D1CE2E5150C77BB001E7E39 /* Cocoa.framework in Frameworks */,
+				1D6500CC150CBE98002F5A8B /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +110,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D1CE2FF150C7849001E7E39 /* Cocoa.framework in Frameworks */,
+				1D6500CB150CBE98002F5A8B /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +120,7 @@
 			files = (
 				1D1CE318150C7849001E7E39 /* SenTestingKit.framework in Frameworks */,
 				1D1CE319150C7849001E7E39 /* Cocoa.framework in Frameworks */,
+				1D6500CD150CBE98002F5A8B /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */,
+				1D6500C9150CBE98002F5A8B /* Security.framework */,
 				1D1CE2E3150C77BB001E7E39 /* SenTestingKit.framework */,
 				1D1CE2C7150C77BA001E7E39 /* Other Frameworks */,
 			);

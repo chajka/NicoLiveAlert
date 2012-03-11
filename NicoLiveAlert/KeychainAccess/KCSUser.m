@@ -236,4 +236,38 @@
 	port = port_;
 }// end - (void) setPort:(UInt16)port_
 
+#pragma mark -
+#pragma mark password’s accessor
+- (NSString *) password:(OSStatus *)error
+{
+	*error = noErr;
+	if (syncronized)
+		return password;
+	
+	// make cstring & length data;
+	const char *strAccountName = [account UTF8String];
+	UInt32		lenAccountName = [account length];
+	const char *strServerName = [serverName UTF8String];
+	UInt32		lenServerName = [serverName length];
+	const char *strSecurityDomain = [securityDomain UTF8String];
+	UInt32		lenSecurityDomain = [securityDomain length];
+	const char *strServerPath = [serverPath UTF8String];
+	UInt32		lenServerPath = [serverPath	length];
+	// returned password data
+	const char *strPassword = NULL;
+	UInt32 lenPassword;
+	
+	// fetch password from keychain
+	*error = SecKeychainFindInternetPassword(NULL, lenServerName, strServerName, lenSecurityDomain, strSecurityDomain, lenAccountName, strAccountName, lenServerPath, strServerPath, port, protocol, authType, &lenPassword, (void **)&strPassword, NULL);
+	
+	// check err 
+	if (*error == noErr)
+	{
+		NSData *data = [[NSData alloc] initWithBytes:strPassword length:lenPassword];
+		password = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	}
+	
+	return password;
+}// end - (NSString *) getPassword:(OSStatus  *)error
+
 @end

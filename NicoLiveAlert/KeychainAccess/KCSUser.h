@@ -39,4 +39,6 @@
 @property (assign, readwrite)	UInt16					port;
 
 - (id) init;
+#pragma mark accessor
+- (NSString *) password:(OSStatus *)error;
 @end

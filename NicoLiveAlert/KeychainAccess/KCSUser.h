@@ -30,6 +30,7 @@
 	UInt16					port;
 }
 @property (assign, readwrite)	SecKeychainRef			keyChain;
+@property (copy, readwrite)		NSString				*serverName;
 
 - (id) init;
 @end

@@ -122,4 +122,22 @@
 	keyChain = keyChain;
 }// end - (void) setKeyChain:(SecKeychainRef)keyChain_
 
+#pragma mark -
+#pragma mark serverName’s accessor
+//@synthesize serverName
+- (NSString *) serverName
+{
+	return serverName;
+}// end - (NSString *) serverName
+
+- (void) setServerName:(NSString *)serverName_
+{
+	syncronized = NO;
+#if __has_feature(objc_arc) == 0
+	if (serverName != NULL)
+		[serverName autorelease];
+#endif
+	serverName = [serverName_ copy];
+}// end - (void) setServerName:(NSString *)serverName_
+
 @end

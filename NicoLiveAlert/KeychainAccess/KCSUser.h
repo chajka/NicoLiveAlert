@@ -36,6 +36,7 @@
 @property (copy, readwrite)		NSString				*serviceName;
 @property (assign, readwrite)	SecProtocolType			protocol;
 @property (assign, readwrite)	SecAuthenticationType	authType;
+@property (assign, readwrite)	UInt16					port;
 
 - (id) init;
 @end

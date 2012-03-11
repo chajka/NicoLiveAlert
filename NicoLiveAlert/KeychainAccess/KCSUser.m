@@ -222,4 +222,18 @@
 	authType = authType_;
 }// end - (void) setAuthType:(SecAuthenticationType)authType_
 
+#pragma mark -
+#pragma mark port’s accessor
+//@synthesize port;
+- (UInt16) port
+{
+	return port;
+}// end - (UInt16) port
+
+- (void) setPort:(UInt16)port_
+{
+	syncronized = NO;
+	port = port_;
+}// end - (void) setPort:(UInt16)port_
+
 @end

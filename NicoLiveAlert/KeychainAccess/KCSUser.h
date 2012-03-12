@@ -45,6 +45,9 @@
 #pragma mark construct / destruct
 - (id) init;
 - (id) initWithURI:(NSURL *)URI;
+- (id) initWithURI:(NSURL *)URI withAuth:(SecAuthenticationType)auth;
+#pragma mark constructor support
+- (NSDictionary *) protocolDict;
 #pragma mark accessor
 - (NSString *) password:(OSStatus *)error;
 @end

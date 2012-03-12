@@ -111,6 +111,7 @@
 
 - (void) testInitializers
 {
+		// test initWithURI:
 	KCSInternetUser *user = [[KCSInternetUser alloc] initWithURI:[NSURL URLWithString:URI]];
 	STAssertNotNil(user, @"KCSInternetUser allocation failed");
 	NSString *username = [user account];
@@ -123,6 +124,23 @@
 	STAssertTrue([domain isEqualToString:SECDOMAIN], @"Domain and securityDomain is not match");
 	SecProtocolType protocol = [user protocol];
 	STAssertTrue((protocol == kSecProtocolTypeHTTPS), @"protocol and protocol is not match");
+
+		// test initWithURI:withAuth:
+	user = [[KCSInternetUser alloc] initWithURI:[NSURL URLWithString:URI] withAuth:kSecAuthenticationTypeHTTPBasic];
+	STAssertNotNil(user, @"KCSInternetUser allocation failed");
+	username = [user account];
+	STAssertTrue([username isEqualToString:URIUSERNAME], @"username and account is not match");
+	server = [user serverName];
+	STAssertTrue([server isEqualToString:SERVER], @"server and serverName is not match");
+	path = [user serverPath];
+	STAssertTrue([path isEqualToString:@"/"], @"Path and serverPath is not match");
+	domain = [user securityDomain];
+	STAssertTrue([domain isEqualToString:SECDOMAIN], @"Domain and securityDomain is not match");
+	protocol = [user protocol];
+	STAssertTrue((protocol == kSecProtocolTypeHTTPS), @"protocol and protocol is not match");
+	SecAuthenticationType auth = [user authType];
+	STAssertTrue((auth == kSecAuthenticationTypeHTTPBasic), @"authentication type is not match");
+	
 }// end - (void) testInitializers
 
 - (void)testExample

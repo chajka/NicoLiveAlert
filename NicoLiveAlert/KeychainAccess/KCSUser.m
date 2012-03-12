@@ -136,18 +136,8 @@
 		securityDomain = [[URI host] copy];
 		if ([[URI scheme] isEqualToString:@""] == NO)
 		{
-			NSDictionary *schemeDict = [NSDictionary dictionaryWithObjectsAndKeys:
-										[NSNumber numberWithInteger:kSecProtocolTypeHTTP], @"http", 
-										[NSNumber numberWithInteger:kSecProtocolTypeHTTPS], @"https",
-										[NSNumber numberWithInteger:kSecProtocolTypeFTP],@"ftp", 
-										[NSNumber numberWithInteger:kSecProtocolTypePOP3],@"pop3", 
-										[NSNumber numberWithInteger:kSecProtocolTypeSMTP], @"smtp", 
-										[NSNumber numberWithInteger:kSecProtocolTypeAFP],@"afp", 
-										[NSNumber numberWithInteger:kSecProtocolTypeSMB],@"smb", 
-										nil];
-			NSLog(@"%@", [URI scheme]);
-			NSLog(@"%@",[schemeDict valueForKey:[URI scheme]]);
-			protocol = [[schemeDict valueForKey:[URI scheme]] integerValue];
+			NSDictionary *protocolDict = [self protocolDict];
+			protocol = [[protocolDict valueForKey:[URI scheme]] integerValue];
 			if (protocol == 0)
 				protocol = kSecProtocolTypeAny;
 		}// end if scheme
@@ -156,6 +146,45 @@
 	}// end if self
 	return self;
 }// end - (id) initWithURI:(NSURL *)URI
+
+- (id) initWithURI:(NSURL *)URI withAuth:(SecAuthenticationType)auth
+{
+	self = [super init];
+	if (self)
+	{
+		account = [[URI user] copy];
+		serverName = [[URI host] copy];
+		serverPath = [[URI path] copy];
+		securityDomain = [[URI host] copy];
+		if ([[URI scheme] isEqualToString:@""] == NO)
+		{
+			NSDictionary *protocolDict = [self protocolDict];
+			protocol = [[protocolDict valueForKey:[URI scheme]] integerValue];
+			if (protocol == 0)
+				protocol = kSecProtocolTypeAny;
+		}// end if scheme
+		authType = kSecAuthenticationTypeAny;
+		port = [[URI port] integerValue];
+		authType = auth;
+	}// end if self
+	return self;
+}// end - (id) initWithURI:(NSURL *)URI withAuth:(SecAuthenticationType)auth;
+
+#pragma mark constructor support
+- (NSDictionary *) protocolDict
+{
+	NSDictionary *protocolDict = [NSDictionary dictionaryWithObjectsAndKeys:
+	 [NSNumber numberWithInteger:kSecProtocolTypeHTTP], @"http", 
+	 [NSNumber numberWithInteger:kSecProtocolTypeHTTPS], @"https",
+	 [NSNumber numberWithInteger:kSecProtocolTypeFTP],@"ftp", 
+	 [NSNumber numberWithInteger:kSecProtocolTypePOP3],@"pop3", 
+	 [NSNumber numberWithInteger:kSecProtocolTypeSMTP], @"smtp", 
+	 [NSNumber numberWithInteger:kSecProtocolTypeAFP],@"afp", 
+	 [NSNumber numberWithInteger:kSecProtocolTypeSMB],@"smb", 
+	 nil];
+
+	return protocolDict;
+}// end - (NSDictionary *) protocolDict
 
 #if __has_feature(objc_arc) == 0
 - (void) dealloc

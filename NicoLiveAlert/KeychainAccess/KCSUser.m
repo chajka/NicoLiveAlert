@@ -170,6 +170,19 @@
 	return self;
 }// end - (id) initWithURI:(NSURL *)URI withAuth:(SecAuthenticationType)auth;
 
+#if __has_feature(objc_arc) == 0
+- (void) dealloc
+{
+	if (serverName)
+		[serverName release];
+	if (serverPath)
+		[serverPath release];
+	if (securityDomain)
+		[securityDomain release];
+	[super dealloc];
+}// end - (void) dealloc
+#endif
+
 #pragma mark constructor support
 - (NSDictionary *) protocolDict
 {
@@ -185,19 +198,6 @@
 
 	return protocolDict;
 }// end - (NSDictionary *) protocolDict
-
-#if __has_feature(objc_arc) == 0
-- (void) dealloc
-{
-	if (serverName)
-		[serverName release];
-	if (serverPath)
-		[serverPath release];
-	if (securityDomain)
-		[securityDomain release];
-	[super dealloc];
-}// end - (void) dealloc
-#endif
 
 #pragma mark -
 #pragma mark serverName’s accessor

@@ -44,6 +44,7 @@
 
 #pragma mark construct / destruct
 - (id) init;
+- (id) initWithURI:(NSURL *)URI;
 #pragma mark accessor
 - (NSString *) password:(OSStatus *)error;
 @end

@@ -13,7 +13,9 @@
 #define PASSWORD	@"somepassword"
 #define SERVER		@"secure.nicovideo.jp"
 #define SERVPATH	@""
-#define SECDOMAIN	@"https"
+#define SECDOMAIN	@"secure.nicovideo.jp"
+#define URI			@"https://chajka@secure.nicovideo.jp/"
+#define URIUSERNAME	@"chajka"
 
 @implementation KCSUserTsts
 
@@ -106,6 +108,22 @@
 	STAssertTrue((auth == kSecAuthenticationTypeHTMLForm), @"Set and Get authentication type is not match");
 
 }// end - (void) testInitializeKCSInternetUser
+
+- (void) testInitializers
+{
+	KCSInternetUser *user = [[KCSInternetUser alloc] initWithURI:[NSURL URLWithString:URI]];
+	STAssertNotNil(user, @"KCSInternetUser allocation failed");
+	NSString *username = [user account];
+	STAssertTrue([username isEqualToString:URIUSERNAME], @"username and account is not match");
+	NSString *server = [user serverName];
+	STAssertTrue([server isEqualToString:SERVER], @"server and serverName is not match");
+	NSString *path = [user serverPath];
+	STAssertTrue([path isEqualToString:@"/"], @"Path and serverPath is not match");
+	NSString *domain = [user securityDomain];
+	STAssertTrue([domain isEqualToString:SECDOMAIN], @"Domain and securityDomain is not match");
+	SecProtocolType protocol = [user protocol];
+	STAssertTrue((protocol == kSecProtocolTypeHTTPS), @"protocol and protocol is not match");
+}// end - (void) testInitializers
 
 - (void)testExample
 {

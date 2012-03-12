@@ -324,6 +324,11 @@
 	{
 		NSData *data = [[NSData alloc] initWithBytes:strPassword length:lenPassword];
 		password = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		SecKeychainItemFreeContent(NULL, (void *)strPassword);
+#if __has_feature(objc_arc) == 0
+		[data release];
+		[password autorelease];
+#endif
 	}
 	
 	return password;

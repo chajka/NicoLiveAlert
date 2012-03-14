@@ -251,7 +251,7 @@ const UInt8 maskBitsInetOptional =
 	if (serverName != NULL)	// set server name flag
 		paramFlags |= maskBitInetServerName;
 	else	// clear server name flag
-		paramFlags &= !maskBitInetServerName;
+		paramFlags &= ~maskBitInetServerName;
 }// end - (void) setServerName:(NSString *)serverName_
 
 #pragma mark -
@@ -274,7 +274,7 @@ const UInt8 maskBitsInetOptional =
 	if (serverPath != NULL)	// set server path flag
 		paramFlags |= maskBitInetServerPath;
 	else	// clear server path flag
-		paramFlags &= !maskBitInetServerPath;
+		paramFlags &= ~maskBitInetServerPath;
 }// end - (void) setServerPath:(NSString *)serverPath_
 
 #pragma mark -
@@ -297,7 +297,7 @@ const UInt8 maskBitsInetOptional =
 	if (securityDomain != NULL)	// set security domain flag
 		paramFlags |= maskBitInetSecurityDomain;
 	else	// clear security domain flag
-		paramFlags &= !maskBitInetSecurityDomain;
+		paramFlags &= ~maskBitInetSecurityDomain;
 }// end - (void) setSecurityDomain:(NSString *)securityDomain_
 
 #pragma mark -

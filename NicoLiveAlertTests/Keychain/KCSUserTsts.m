@@ -15,6 +15,7 @@
 #define SERVPATH	@""
 #define SECDOMAIN	@"secure.nicovideo.jp"
 #define URI			@"https://chajka@secure.nicovideo.jp/"
+#define URI2		@"https://secure.nicovideo.jp"
 #define URIUSERNAME	@"chajka"
 
 @implementation KCSUserTsts
@@ -53,7 +54,6 @@
 	[user setAccount:USERNAME];
 	username = [user account];
 	STAssertEquals(USERNAME, username, @"Set and get user name is not match");
-	[user setPassword:PASSWORD];
 	password = [user password];
 	STAssertEquals(PASSWORD, password, @"Set and get password is not match");	
 }// end - (void) testInitializeKCSUser
@@ -86,7 +86,6 @@
 	[user setAccount:USERNAME];
 	username = [user account];
 	STAssertEquals(USERNAME, username, @"Set and get user name is not match");
-	[user setPassword:PASSWORD];
 	password = [user password];
 	STAssertEquals(PASSWORD, password, @"Set and get password is not match");
 
@@ -141,6 +140,21 @@
 	SecAuthenticationType auth = [user authType];
 	STAssertTrue((auth == kSecAuthenticationTypeHTTPBasic), @"authentication type is not match");
 	
+	// test initWithURI:withAuth:
+	user = [[KCSInternetUser alloc] initWithURI:[NSURL URLWithString:URI2] withAuth:kSecAuthenticationTypeHTMLForm];
+	STAssertNotNil(user, @"KCSInternetUser allocation failed");
+	username = [user account];
+	STAssertNil(username, @"username is not nil");
+	server = [user serverName];
+	STAssertTrue([server isEqualToString:SERVER], @"server and serverName is not match");
+	path = [user serverPath];
+	STAssertTrue([path isEqualToString:@""], @"Path and serverPath is not match");
+	domain = [user securityDomain];
+	STAssertTrue([domain isEqualToString:SECDOMAIN], @"Domain and securityDomain is not match");
+	protocol = [user protocol];
+	STAssertTrue((protocol == kSecProtocolTypeHTTPS), @"protocol and protocol is not match");
+	auth = [user authType];
+	STAssertTrue((auth == kSecAuthenticationTypeHTMLForm), @"authentication type is not match");
 }// end - (void) testInitializers
 
 - (void)testExample

@@ -8,6 +8,25 @@
 
 #import "KCSUser.h"
 
+#pragma mark constant definition
+	// Common Mask Bit
+const UInt8 maskBitAccount				= 0x01 << 0;
+	// Internet Keychain specific Bits
+const UInt8 maskBitInetServerName		= 0x01 << 1;
+const UInt8 maskBitInetServerPath		= 0x01 << 2;
+const UInt8 maskBitInetProtocol			= 0x01 << 3;
+const UInt8 maskBitInetAuthType			= 0x01 << 4;
+const UInt8 maskBitInetPort				= 0x01 << 5;
+const UInt8 maskBitInetSecurityDomain	= 0x01 << 6;
+const UInt8 mastBitsInetRequired = 
+	maskBitAccount | maskBitInetServerName | maskBitInetServerPath | 
+	maskBitInetProtocol | maskBitInetPort;
+const UInt8 maskBitsInetOptional = 
+	maskBitAccount | maskBitInetServerName | maskBitInetServerPath | 
+	maskBitInetProtocol | maskBitInetPort | maskBitInetSecurityDomain;
+	// Generic KeyChain specific Bits
+
+
 @implementation KCSUser
 #pragma mark construct / destruct
 - (id) init
@@ -20,13 +39,16 @@
 		keyChain = NULL;
 		keyChainItem = NULL;
 		syncronized = NO;
+		paramFlags = 0x00;
 	}
 	return self;
 }// - (id) init
 
-#if __has_feature(objc_arc) == 0
 - (void) dealloc
 {
+	if (keyChainItem != NULL)
+		CFRelease(keyChainItem);
+#if __has_feature(objc_arc) == 0
 	// relase account
     if (account != NULL)
 		[account release];
@@ -35,8 +57,8 @@
 		[password release];
 	// no need care synced
 	[super dealloc];
-}// end - (void) dealloc
 #endif
+}// end - (void) dealloc
 
 #pragma mark -
 #pragma mark account’s accessor
@@ -49,6 +71,7 @@
 {
 	syncronized = NO;
 	account = [account_ copy];
+	paramFlags |= maskBitAccount;
 }// end - (void) setAccount:(NSString *)account_
 #pragma mark -
 #pragma mark password’s accessor
@@ -56,18 +79,6 @@
 {
 	return password;
 }// - (NSString *) account
-
-- (void) setPassword:(NSString *)_password
-{
-#if __has_feature(objc_arc) == 1
-	password = _password;
-#else
-	if (password != NULL)
-		[password autorelease];
-	password = [_password copy];
-#endif
-	syncronized = NO;
-}// end - (void) setPassword:(NSString *)password
 
 #pragma mark -
 #pragma mark keyChain’s accessor
@@ -131,18 +142,29 @@
 	if (self)
 	{
 		account = [[URI user] copy];
+		if (account != NULL)
+			paramFlags |= maskBitAccount;
 		serverName = [[URI host] copy];
+		if (serverName != NULL)
+			paramFlags |= maskBitInetServerName;
 		serverPath = [[URI path] copy];
+		if (serverPath != NULL)
+			paramFlags |= maskBitInetServerPath;
 		securityDomain = [[URI host] copy];
+		if (securityDomain != NULL)
+			paramFlags |= maskBitInetSecurityDomain;
 		if ([[URI scheme] isEqualToString:@""] == NO)
 		{
 			NSDictionary *protocolDict = [self protocolDict];
 			protocol = [[protocolDict valueForKey:[URI scheme]] integerValue];
 			if (protocol == 0)
 				protocol = kSecProtocolTypeAny;
+			paramFlags |= maskBitInetProtocol;
 		}// end if scheme
-		authType = kSecAuthenticationTypeAny;
 		port = [[URI port] integerValue];
+		paramFlags |= maskBitInetPort;
+		authType = kSecAuthenticationTypeAny;
+		paramFlags |= maskBitInetAuthType;
 	}// end if self
 	return self;
 }// end - (id) initWithURI:(NSURL *)URI
@@ -153,26 +175,36 @@
 	if (self)
 	{
 		account = [[URI user] copy];
+		if (account != NULL)
+			paramFlags |= maskBitAccount;
 		serverName = [[URI host] copy];
+		if (serverName != NULL)
+			paramFlags |= maskBitInetServerName;
 		serverPath = [[URI path] copy];
+		if (serverPath != NULL)
+			paramFlags |= maskBitInetServerPath;
 		securityDomain = [[URI host] copy];
+		if (securityDomain != NULL)
+			paramFlags |= maskBitInetSecurityDomain;
 		if ([[URI scheme] isEqualToString:@""] == NO)
 		{
 			NSDictionary *protocolDict = [self protocolDict];
 			protocol = [[protocolDict valueForKey:[URI scheme]] integerValue];
 			if (protocol == 0)
 				protocol = kSecProtocolTypeAny;
+			paramFlags |= maskBitInetProtocol;
 		}// end if scheme
-		authType = kSecAuthenticationTypeAny;
 		port = [[URI port] integerValue];
+		paramFlags |= maskBitInetPort;
 		authType = auth;
+		paramFlags |= maskBitInetAuthType;
 	}// end if self
 	return self;
 }// end - (id) initWithURI:(NSURL *)URI withAuth:(SecAuthenticationType)auth;
 
-#if __has_feature(objc_arc) == 0
 - (void) dealloc
 {
+#if __has_feature(objc_arc) == 0
 	if (serverName)
 		[serverName release];
 	if (serverPath)
@@ -180,8 +212,8 @@
 	if (securityDomain)
 		[securityDomain release];
 	[super dealloc];
-}// end - (void) dealloc
 #endif
+}// end - (void) dealloc
 
 #pragma mark constructor support
 - (NSDictionary *) protocolDict
@@ -215,6 +247,11 @@
 		[serverName autorelease];
 #endif
 	serverName = [serverName_ copy];
+		// set/clear server name flag
+	if (serverName != NULL)	// set server name flag
+		paramFlags |= maskBitInetServerName;
+	else	// clear server name flag
+		paramFlags &= !maskBitInetServerName;
 }// end - (void) setServerName:(NSString *)serverName_
 
 #pragma mark -
@@ -233,6 +270,11 @@
 		[serverPath autorelease];
 #endif
 	serverPath = [serverPath_ copy];
+		// set/clear server path flag
+	if (serverPath != NULL)	// set server path flag
+		paramFlags |= maskBitInetServerPath;
+	else	// clear server path flag
+		paramFlags &= !maskBitInetServerPath;
 }// end - (void) setServerPath:(NSString *)serverPath_
 
 #pragma mark -
@@ -251,6 +293,11 @@
 		[securityDomain autorelease];
 #endif
 	securityDomain = [securityDomain_ copy];
+		// set/clear security domain flag
+	if (securityDomain != NULL)	// set security domain flag
+		paramFlags |= maskBitInetSecurityDomain;
+	else	// clear security domain flag
+		paramFlags &= !maskBitInetSecurityDomain;
 }// end - (void) setSecurityDomain:(NSString *)securityDomain_
 
 #pragma mark -
@@ -265,6 +312,8 @@
 {
 	syncronized = NO;
 	protocol = protocol_;
+		// set protocol flag
+	paramFlags |= maskBitInetProtocol;
 }// end - (SecProtocolType) protocol
 
 #pragma mark -
@@ -279,6 +328,8 @@
 {
 	syncronized = NO;
 	authType = authType_;
+		// set authentication flag
+	paramFlags |= maskBitInetAuthType;
 }// end - (void) setAuthType:(SecAuthenticationType)authType_
 
 #pragma mark -
@@ -293,6 +344,8 @@
 {
 	syncronized = NO;
 	port = port_;
+		// set port flag
+	paramFlags |= maskBitInetPort;
 }// end - (void) setPort:(UInt16)port_
 
 #pragma mark -
@@ -334,4 +387,12 @@
 	return password;
 }// end - (NSString *) getPassword:(OSStatus  *)error
 
+- (OSStatus) changePasswordTo:(NSString *)newPassword
+{
+	OSStatus error = errSecItemNotFound;
+	if (keyChainItem == NULL)
+		return error;
+
+	return error;
+}// end - (OSStatus ) changePasswordTo:(NSString *)newPassword
 @end

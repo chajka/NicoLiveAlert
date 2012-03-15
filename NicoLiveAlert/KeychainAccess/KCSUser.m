@@ -63,6 +63,15 @@ const UInt8 maskBitsInetOptional =
 #endif
 }// end - (void) dealloc
 
+#ifdef __OBJC_GC__
+- (void) finalize
+{
+	if (keyChainItem != NULL)
+		CFRelease(keyChainItem);
+	[super finalize];
+}// end - (void) finalize
+#endif
+
 #pragma mark -
 #pragma mark account’s accessor
 - (NSString *) account

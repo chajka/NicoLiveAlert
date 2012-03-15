@@ -28,11 +28,13 @@ extern const UInt8 maskBitsInetOptional;
 	SecKeychainItemRef	keyChainItem;
 	BOOL				syncronized;
 	UInt8				paramFlags;
+	OSStatus			status;
 }
 @property (copy, readwrite)		NSString			*account;
 @property (copy, readonly)		NSString			*password;
 @property (assign, readwrite)	SecKeychainRef		keyChain;
 @property (assign, readwrite)	SecKeychainItemRef	keyChainItem;
+@property (readonly)			OSStatus			status;
 
 #pragma mark construct / destruct
 - (id) init;

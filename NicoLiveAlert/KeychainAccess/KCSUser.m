@@ -28,6 +28,8 @@ const UInt8 maskBitsInetOptional =
 
 
 @implementation KCSUser
+@synthesize status;
+
 #pragma mark construct / destruct
 - (id) init
 {
@@ -40,6 +42,7 @@ const UInt8 maskBitsInetOptional =
 		keyChainItem = NULL;
 		syncronized = NO;
 		paramFlags = 0x00;
+		status = 1;
 	}
 	return self;
 }// - (id) init

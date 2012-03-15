@@ -13,26 +13,31 @@
 const UInt8 maskBitAccount				= 0x01 << 0;
 	// Internet Keychain specific Bits
 const UInt8 maskBitInetServerName		= 0x01 << 1;
-const UInt8 maskBitInetServerPath		= 0x01 << 2;
-const UInt8 maskBitInetProtocol			= 0x01 << 3;
+const UInt8 maskBitInetProtocol			= 0x01 << 2;
+const UInt8 maskBitInetPort				= 0x01 << 3;
 const UInt8 maskBitInetAuthType			= 0x01 << 4;
-const UInt8 maskBitInetPort				= 0x01 << 5;
+const UInt8 maskBitInetServerPath		= 0x01 << 5;
 const UInt8 maskBitInetSecurityDomain	= 0x01 << 6;
 const UInt8 mastBitsInetRequired = 
-	maskBitAccount | maskBitInetServerName | maskBitInetServerPath | 
-	maskBitInetProtocol | maskBitInetPort;
+	maskBitAccount | maskBitInetServerName | maskBitInetProtocol | maskBitInetPort;
 const UInt8 maskBitsInetOptional = 
-	maskBitAccount | maskBitInetServerName | maskBitInetServerPath | 
-	maskBitInetProtocol | maskBitInetPort | maskBitInetSecurityDomain;
+	maskBitAccount | maskBitInetServerName | maskBitInetProtocol | maskBitInetPort |
+	maskBitInetServerPath | maskBitInetSecurityDomain;
 	// Generic KeyChain specific Bits
 
 
 @implementation KCSUser
+@synthesize password;
+@synthesize keyChain;
+@synthesize keyChainItem;
 @synthesize status;
 
 #pragma mark construct / destruct
 - (id) init
 {
+#ifdef UNITTEST
+	NSLog(@"Unit Testing");
+#endif
 	self = [super init];
 	if (self)
 	{
@@ -83,48 +88,9 @@ const UInt8 maskBitsInetOptional =
 {
 	syncronized = NO;
 	account = [account_ copy];
-	paramFlags |= maskBitAccount;
+	if ((account != NULL) && ([account length] != 0))
+		paramFlags |= maskBitAccount;
 }// end - (void) setAccount:(NSString *)account_
-#pragma mark -
-#pragma mark password’s accessor
-- (NSString *) password
-{
-	return password;
-}// - (NSString *) account
-
-#pragma mark -
-#pragma mark keyChain’s accessor
-//@synthesize keyChain
-- (SecKeychainRef) keyChain
-{
-	return keyChain;
-}// end - (SecKeychainRef) keyChain
-
-- (void) setKeyChain:(SecKeychainRef)keyChain_
-{
-#if __has_feature(objc_arc) == 0
-	if (keyChain != NULL)
-		CFRelease(keyChain);
-#endif
-	keyChain = keyChain;
-}// end - (void) setKeyChain:(SecKeychainRef)keyChain_
-
-#pragma mark -
-#pragma mark keyChain’s accessor
-//@synthesize keyChain
-- (SecKeychainItemRef) keyChainItem
-{
-	return keyChainItem;
-}// end - (SecKeychainRef) keyChain
-
-- (void) setKeyChainItem:(SecKeychainItemRef)keyChainItem_
-{
-#if __has_feature(objc_arc) == 0
-	if (keyChainItem_ != NULL)
-		CFRelease(keyChainItem);
-#endif
-	keyChainItem = keyChainItem_;
-}// end - (void) setKeyChain:(SecKeychainItemRef)keyChainItem_
 
 @end
 
@@ -154,16 +120,14 @@ const UInt8 maskBitsInetOptional =
 	if (self)
 	{
 		account = [[URI user] copy];
-		if (account != NULL)
+		if ((account != NULL) && ([account length] != 0))
 			paramFlags |= maskBitAccount;
 		serverName = [[URI host] copy];
-		if (serverName != NULL)
+		if ((serverName != NULL) && ([serverName length] != 0))
 			paramFlags |= maskBitInetServerName;
 		serverPath = [[URI path] copy];
-		if (serverPath != NULL)
-			paramFlags |= maskBitInetServerPath;
 		securityDomain = [[URI host] copy];
-		if (securityDomain != NULL)
+		if ((securityDomain != NULL) && ([securityDomain length] != 0))
 			paramFlags |= maskBitInetSecurityDomain;
 		if ([[URI scheme] isEqualToString:@""] == NO)
 		{
@@ -187,16 +151,14 @@ const UInt8 maskBitsInetOptional =
 	if (self)
 	{
 		account = [[URI user] copy];
-		if (account != NULL)
+		if ((account != NULL) && ([account length] != 0))
 			paramFlags |= maskBitAccount;
 		serverName = [[URI host] copy];
-		if (serverName != NULL)
+		if ((serverName != NULL) && ([serverName length] != 0))
 			paramFlags |= maskBitInetServerName;
 		serverPath = [[URI path] copy];
-		if (serverPath != NULL)
-			paramFlags |= maskBitInetServerPath;
 		securityDomain = [[URI host] copy];
-		if (securityDomain != NULL)
+		if ((securityDomain != NULL) && ([securityDomain length] != 0))
 			paramFlags |= maskBitInetSecurityDomain;
 		if ([[URI scheme] isEqualToString:@""] == NO)
 		{
@@ -233,15 +195,22 @@ const UInt8 maskBitsInetOptional =
 	NSDictionary *protocolDict = [NSDictionary dictionaryWithObjectsAndKeys:
 	 [NSNumber numberWithInteger:kSecProtocolTypeHTTP], @"http", 
 	 [NSNumber numberWithInteger:kSecProtocolTypeHTTPS], @"https",
-	 [NSNumber numberWithInteger:kSecProtocolTypeFTP],@"ftp", 
-	 [NSNumber numberWithInteger:kSecProtocolTypePOP3],@"pop3", 
+	 [NSNumber numberWithInteger:kSecProtocolTypeFTP], @"ftp", 
+	 [NSNumber numberWithInteger:kSecProtocolTypePOP3], @"pop3", 
 	 [NSNumber numberWithInteger:kSecProtocolTypeSMTP], @"smtp", 
-	 [NSNumber numberWithInteger:kSecProtocolTypeAFP],@"afp", 
-	 [NSNumber numberWithInteger:kSecProtocolTypeSMB],@"smb", 
+	 [NSNumber numberWithInteger:kSecProtocolTypeAFP], @"afp", 
+	 [NSNumber numberWithInteger:kSecProtocolTypeSMB], @"smb", 
 	 nil];
 
 	return protocolDict;
 }// end - (NSDictionary *) protocolDict
+
+#pragma mark -
+#pragma mark override account’s settor
+- (void) setAccount:(NSString *)account_
+{
+	[super setAccount:account_];
+}// end - (void) setAccount:(NSString *)account_
 
 #pragma mark -
 #pragma mark serverName’s accessor
@@ -282,11 +251,6 @@ const UInt8 maskBitsInetOptional =
 		[serverPath autorelease];
 #endif
 	serverPath = [serverPath_ copy];
-		// set/clear server path flag
-	if (serverPath != NULL)	// set server path flag
-		paramFlags |= maskBitInetServerPath;
-	else	// clear server path flag
-		paramFlags &= ~maskBitInetServerPath;
 }// end - (void) setServerPath:(NSString *)serverPath_
 
 #pragma mark -

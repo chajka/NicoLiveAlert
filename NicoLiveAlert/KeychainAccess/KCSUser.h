@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-
+/*
 #pragma mark constant definition
 extern const UInt8 maskBitAccount;
 extern const UInt8 maskBitInetServerName;
-extern const UInt8 maskBitInetServerPath;
 extern const UInt8 maskBitInetProtocol;
-extern const UInt8 maskBitInetAuthType;
 extern const UInt8 maskBitInetPort;
+extern const UInt8 maskBitInetAuthType;
+extern const UInt8 maskBitInetServerPath;
 extern const UInt8 maskBitInetSecurityDomain;
 extern const UInt8 mastBitsInetRequired;
 extern const UInt8 maskBitsInetOptional;
-
+*/
 #pragma mark -
 @interface KCSUser : NSObject {
 @protected
@@ -32,8 +32,8 @@ extern const UInt8 maskBitsInetOptional;
 }
 @property (copy, readwrite)		NSString			*account;
 @property (copy, readonly)		NSString			*password;
-@property (assign, readwrite)	SecKeychainRef		keyChain;
-@property (assign, readwrite)	SecKeychainItemRef	keyChainItem;
+@property (readonly)			SecKeychainRef		keyChain;
+@property (readonly)			SecKeychainItemRef	keyChainItem;
 @property (readonly)			OSStatus			status;
 
 #pragma mark construct / destruct

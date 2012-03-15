@@ -57,7 +57,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D1CE2C1150C77BA001E7E39 /* NicoLiveAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = NicoLiveAlert.app; path = "NicoLiveAlert Lion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D1CE2C1150C77BA001E7E39 /* NicoLiveAlert Lion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NicoLiveAlert Lion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1D1CE2C8150C77BA001E7E39 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		1D1CE2C9150C77BA001E7E39 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -140,7 +140,7 @@
 		1D1CE2C2150C77BA001E7E39 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D1CE2C1150C77BA001E7E39 /* NicoLiveAlert.app */,
+				1D1CE2C1150C77BA001E7E39 /* NicoLiveAlert Lion.app */,
 				1D1CE2E2150C77BB001E7E39 /* NicoLiveAlertTests.octest */,
 				1D1CE2FD150C7849001E7E39 /* NicoLiveAlert Leopard.app */,
 				1D1CE317150C7849001E7E39 /* NicoLiveAlertTests LeopardTests.octest */,
@@ -248,7 +248,7 @@
 			);
 			name = "NicoLiveAlert Lion";
 			productName = NicoLiveAlert;
-			productReference = 1D1CE2C1150C77BA001E7E39 /* NicoLiveAlert.app */;
+			productReference = 1D1CE2C1150C77BA001E7E39 /* NicoLiveAlert Lion.app */;
 			productType = "com.apple.product-type.application";
 		};
 		1D1CE2E1150C77BB001E7E39 /* NicoLiveAlertTests Lion */ = {
@@ -548,6 +548,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -559,6 +560,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -600,6 +602,7 @@
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = app;
@@ -614,6 +617,7 @@
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = app;

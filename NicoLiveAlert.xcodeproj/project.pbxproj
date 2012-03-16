@@ -27,6 +27,8 @@
 		1D1CE32F150C7E9E001E7E39 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1CE2CE150C77BA001E7E39 /* InfoPlist.strings */; };
 		1D1CE330150C7EA3001E7E39 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1D1CE2D4150C77BA001E7E39 /* Credits.rtf */; };
 		1D1CE331150C7EA6001E7E39 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1CE2DA150C77BB001E7E39 /* MainMenu.xib */; };
+		1D1D3EFF151316C1001F571F /* KCSInternetUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D3EFE151316C1001F571F /* KCSInternetUserTests.m */; };
+		1D1D3F00151316C1001F571F /* KCSInternetUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D3EFE151316C1001F571F /* KCSInternetUserTests.m */; };
 		1D6500BE150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500BF150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500C5150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
@@ -78,6 +80,8 @@
 		1D1CE2EF150C77BB001E7E39 /* NicoLiveAlertTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NicoLiveAlertTests.m; sourceTree = "<group>"; };
 		1D1CE2FD150C7849001E7E39 /* NicoLiveAlert Leopard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NicoLiveAlert Leopard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1CE317150C7849001E7E39 /* NicoLiveAlertTests LeopardTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NicoLiveAlertTests LeopardTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D1D3EFD151316C1001F571F /* KCSInternetUserTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSInternetUserTests.h; path = Keychain/KCSInternetUserTests.h; sourceTree = "<group>"; };
+		1D1D3EFE151316C1001F571F /* KCSInternetUserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSInternetUserTests.m; path = Keychain/KCSInternetUserTests.m; sourceTree = "<group>"; };
 		1D6500BC150CB0DE002F5A8B /* KCSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUser.h; path = KeychainAccess/KCSUser.h; sourceTree = "<group>"; };
 		1D6500BD150CB0DE002F5A8B /* KCSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUser.m; path = KeychainAccess/KCSUser.m; sourceTree = "<group>"; };
 		1D6500C3150CB351002F5A8B /* KCSUserTsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUserTsts.h; path = Keychain/KCSUserTsts.h; sourceTree = "<group>"; };
@@ -227,6 +231,8 @@
 			children = (
 				1D6500C3150CB351002F5A8B /* KCSUserTsts.h */,
 				1D6500C4150CB351002F5A8B /* KCSUserTsts.m */,
+				1D1D3EFD151316C1001F571F /* KCSInternetUserTests.h */,
+				1D1D3EFE151316C1001F571F /* KCSInternetUserTests.m */,
 			);
 			name = Keychain;
 			sourceTree = "<group>";
@@ -421,6 +427,7 @@
 				1D1CE2F0150C77BB001E7E39 /* NicoLiveAlertTests.m in Sources */,
 				1D6500C8150CB63E002F5A8B /* KCSUser.m in Sources */,
 				1D6500C5150CB351002F5A8B /* KCSUserTsts.m in Sources */,
+				1D1D3EFF151316C1001F571F /* KCSInternetUserTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +448,7 @@
 				1D1CE32D150C79DA001E7E39 /* NicoLiveAlertTests.m in Sources */,
 				1D6500C7150CB63A002F5A8B /* KCSUser.m in Sources */,
 				1D6500C6150CB351002F5A8B /* KCSUserTsts.m in Sources */,
+				1D1D3F00151316C1001F571F /* KCSInternetUserTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

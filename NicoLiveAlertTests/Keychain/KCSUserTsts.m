@@ -47,113 +47,17 @@
 	STAssertNil((__bridge_transfer id)keyChain, @"Initial keyChain is not NILL");
 	SecKeychainItemRef itemRef = [user keyChainItem];
 	STAssertNil((__bridge_transfer id)itemRef, @"Inital keyChainItem is not NILL");
-	
-		// set get value check
-	[user setAccount:USERNAME];
-	username = [user account];
-	STAssertEquals(USERNAME, username, @"Set and get user name is not match");
-	password = [user password];
-//	STAssertEquals(PASSWORD, password, @"Set and get password is not match");	
 }// end - (void) testInitializeKCSUser
 
-- (void) testInitializeKCSInternetUser
+- (void) testGetSetValue
 {
-		// allocation test
-	KCSInternetUser *user = [[KCSInternetUser alloc] init];
-
-		// check initial value (inherited)
-	STAssertNotNil(user, @"Generate KCSInternetUser instance failed");
-	NSString *username = [user account];
-	STAssertNil(username, @"Initial accout is not NILL");
-	NSString *password = [user password];
-	STAssertNil(password, @"Initial password is not NILL");
-
-		// check inital value (class sepecific)
-	NSString *server = [user serverName];
-	STAssertNil(server, @"Initial server name is not NILL");
-	NSString *path = [user serverPath];
-	STAssertNil(path, @"Initial server path is not NILL");
-	NSString *domain = [user securityDomain];
-	STAssertNil(domain, @"Initial domain is not NILL");
-	SecProtocolType protocol = [user protocol];
-	STAssertTrue((protocol == kSecProtocolTypeAny), @"Initial protocol is not kSecProtocolTypeAny");
-	SecAuthenticationType auth = [user authType];
-	STAssertTrue((auth == kSecAuthenticationTypeAny), @"Initial authentication type is not kSecAuthenticationTypeAny");
-
-		// set get value check (inherited)
-	[user setAccount:USERNAME];
-	username = [user account];
-	STAssertEquals(USERNAME, username, @"Set and get user name is not match");
-	password = [user password];
-//	STAssertEquals(PASSWORD, password, @"Set and get password is not match");
-
-		// set get value check (class specific)
-	[user setServerName:SERVER];
-	server = [user serverName];
-	STAssertEquals(server, SERVER, @"Set and get server name is not match");
-	[user setServerPath:SERVPATH];
-	path = [user serverPath];
-	STAssertEquals(path, SERVPATH, @"Set and get server path is not match");
-	[user setSecurityDomain:SERVER];
-	domain = [user securityDomain];
-	STAssertEquals(domain, SERVER, @"Set and get sercurity domain is not match");
-	[user setProtocol:kSecProtocolTypeHTTP];
-	protocol = [user protocol];
-	STAssertTrue((protocol == kSecProtocolTypeHTTP), @"Set and Get protocol is not match");
-	[user setAuthType:kSecAuthenticationTypeHTMLForm];
-	auth = [user authType];
-	STAssertTrue((auth == kSecAuthenticationTypeHTMLForm), @"Set and Get authentication type is not match");
-
-}// end - (void) testInitializeKCSInternetUser
-
-- (void) testInitializers
-{
-		// test initWithURI:
-	KCSInternetUser *user = [[KCSInternetUser alloc] initWithURI:[NSURL URLWithString:URI]];
-	STAssertNotNil(user, @"KCSInternetUser allocation failed");
-	NSString *username = [user account];
-	STAssertTrue([username isEqualToString:URIUSERNAME], @"username and account is not match");
-	NSString *server = [user serverName];
-	STAssertTrue([server isEqualToString:SERVER], @"server and serverName is not match");
-	NSString *path = [user serverPath];
-	STAssertTrue([path isEqualToString:@"/"], @"Path and serverPath is not match");
-	NSString *domain = [user securityDomain];
-	STAssertTrue([domain isEqualToString:SECDOMAIN], @"Domain and securityDomain is not match");
-	SecProtocolType protocol = [user protocol];
-	STAssertTrue((protocol == kSecProtocolTypeHTTPS), @"protocol and protocol is not match");
-
-		// test initWithURI:withAuth:
-	user = [[KCSInternetUser alloc] initWithURI:[NSURL URLWithString:URI] withAuth:kSecAuthenticationTypeHTTPBasic];
-	STAssertNotNil(user, @"KCSInternetUser allocation failed");
-	username = [user account];
-	STAssertTrue([username isEqualToString:URIUSERNAME], @"username and account is not match");
-	server = [user serverName];
-	STAssertTrue([server isEqualToString:SERVER], @"server and serverName is not match");
-	path = [user serverPath];
-	STAssertTrue([path isEqualToString:@"/"], @"Path and serverPath is not match");
-	domain = [user securityDomain];
-	STAssertTrue([domain isEqualToString:SECDOMAIN], @"Domain and securityDomain is not match");
-	protocol = [user protocol];
-	STAssertTrue((protocol == kSecProtocolTypeHTTPS), @"protocol and protocol is not match");
-	SecAuthenticationType auth = [user authType];
-	STAssertTrue((auth == kSecAuthenticationTypeHTTPBasic), @"authentication type is not match");
+	KCSUser *user = [[KCSUser alloc] init];
 	
-	// test initWithURI:withAuth:
-	user = [[KCSInternetUser alloc] initWithURI:[NSURL URLWithString:URI2] withAuth:kSecAuthenticationTypeHTMLForm];
-	STAssertNotNil(user, @"KCSInternetUser allocation failed");
-	username = [user account];
-	STAssertNil(username, @"username is not nil");
-	server = [user serverName];
-	STAssertTrue([server isEqualToString:SERVER], @"server and serverName is not match");
-	path = [user serverPath];
-	STAssertTrue([path isEqualToString:@""], @"Path and serverPath is not match");
-	domain = [user securityDomain];
-	STAssertTrue([domain isEqualToString:SECDOMAIN], @"Domain and securityDomain is not match");
-	protocol = [user protocol];
-	STAssertTrue((protocol == kSecProtocolTypeHTTPS), @"protocol and protocol is not match");
-	auth = [user authType];
-	STAssertTrue((auth == kSecAuthenticationTypeHTMLForm), @"authentication type is not match");
-}// end - (void) testInitializers
+		// set get account value check
+	[user setAccount:USERNAME];
+	NSString *username = [user account];
+	STAssertEquals(USERNAME, username, @"Set and get user name is not match");
+}// end - (void) testGetSetValue
 
 - (void)testExample
 {

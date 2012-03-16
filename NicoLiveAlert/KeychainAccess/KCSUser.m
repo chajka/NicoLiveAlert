@@ -16,13 +16,14 @@ const UInt8 maskBitInetServerName		= 0x01 << 1;
 const UInt8 maskBitInetProtocol			= 0x01 << 2;
 const UInt8 maskBitInetPort				= 0x01 << 3;
 const UInt8 maskBitInetAuthType			= 0x01 << 4;
-const UInt8 maskBitInetServerPath		= 0x01 << 5;
-const UInt8 maskBitInetSecurityDomain	= 0x01 << 6;
+const UInt8 maskBitInetSecurityDomain	= 0x01 << 5;
+const UInt8 maskBitInetServerPath		= 0x01 << 6;
 const UInt8 mastBitsInetRequired = 
-	maskBitAccount | maskBitInetServerName | maskBitInetProtocol | maskBitInetPort;
+	maskBitAccount | maskBitInetServerName | maskBitInetProtocol | maskBitInetPort | 
+	maskBitInetAuthType ;
 const UInt8 maskBitsInetOptional = 
 	maskBitAccount | maskBitInetServerName | maskBitInetProtocol | maskBitInetPort |
-	maskBitInetServerPath | maskBitInetSecurityDomain;
+	maskBitInetAuthType | maskBitInetSecurityDomain | maskBitInetServerPath;
 	// Generic KeyChain specific Bits
 
 
@@ -35,9 +36,6 @@ const UInt8 maskBitsInetOptional =
 #pragma mark construct / destruct
 - (id) init
 {
-#ifdef UNITTEST
-	NSLog(@"Unit Testing");
-#endif
 	self = [super init];
 	if (self)
 	{
@@ -46,7 +44,7 @@ const UInt8 maskBitsInetOptional =
 		keyChain = NULL;
 		keyChainItem = NULL;
 		syncronized = NO;
-		paramFlags = 0x00;
+		paramFlags = 0x00 | maskBitInetSecurityDomain | maskBitInetServerPath;
 		status = 1;
 	}
 	return self;
@@ -54,6 +52,8 @@ const UInt8 maskBitsInetOptional =
 
 - (void) dealloc
 {
+	if (keyChain != NULL)
+		CFRelease(keyChain);
 	if (keyChainItem != NULL)
 		CFRelease(keyChainItem);
 #if __has_feature(objc_arc) == 0
@@ -71,6 +71,8 @@ const UInt8 maskBitsInetOptional =
 #ifdef __OBJC_GC__
 - (void) finalize
 {
+	if (keyChain != NULL)
+		CFRelease(keyChain);
 	if (keyChainItem != NULL)
 		CFRelease(keyChainItem);
 	[super finalize];
@@ -95,6 +97,10 @@ const UInt8 maskBitsInetOptional =
 @end
 
 #pragma mark -
+
+@interface KCSInternetUser ()
+- (NSString *) getPassword:(OSStatus *)error;
+@end
 
 @implementation KCSInternetUser
 #pragma mark construct / destruct
@@ -142,6 +148,11 @@ const UInt8 maskBitsInetOptional =
 		authType = kSecAuthenticationTypeAny;
 		paramFlags |= maskBitInetAuthType;
 	}// end if self
+
+		// check flags and find keychain item
+	if ((paramFlags^maskBitsInetOptional) == 0x00)
+		password = [self getPassword:&status];
+	
 	return self;
 }// end - (id) initWithURI:(NSURL *)URI
 
@@ -173,6 +184,11 @@ const UInt8 maskBitsInetOptional =
 		authType = auth;
 		paramFlags |= maskBitInetAuthType;
 	}// end if self
+
+		// check flags and find keychain item
+	if ((paramFlags^maskBitsInetOptional) == 0x00)
+		password = [self getPassword:&status];
+
 	return self;
 }// end - (id) initWithURI:(NSURL *)URI withAuth:(SecAuthenticationType)auth;
 
@@ -210,6 +226,11 @@ const UInt8 maskBitsInetOptional =
 - (void) setAccount:(NSString *)account_
 {
 	[super setAccount:account_];
+
+		// check flags and find keychain item
+	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
+		((paramFlags^mastBitsInetRequired) == 0x00))
+		password = [self getPassword:&status];
 }// end - (void) setAccount:(NSString *)account_
 
 #pragma mark -
@@ -233,6 +254,11 @@ const UInt8 maskBitsInetOptional =
 		paramFlags |= maskBitInetServerName;
 	else	// clear server name flag
 		paramFlags &= ~maskBitInetServerName;
+
+		// check flags and find keychain item
+	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
+		((paramFlags^mastBitsInetRequired) == 0x00))
+		password = [self getPassword:&status];
 }// end - (void) setServerName:(NSString *)serverName_
 
 #pragma mark -
@@ -251,6 +277,11 @@ const UInt8 maskBitsInetOptional =
 		[serverPath autorelease];
 #endif
 	serverPath = [serverPath_ copy];
+
+		// check flags and find keychain item
+	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
+		((paramFlags^mastBitsInetRequired) == 0x00))
+		password = [self getPassword:&status];
 }// end - (void) setServerPath:(NSString *)serverPath_
 
 #pragma mark -
@@ -274,6 +305,11 @@ const UInt8 maskBitsInetOptional =
 		paramFlags |= maskBitInetSecurityDomain;
 	else	// clear security domain flag
 		paramFlags &= ~maskBitInetSecurityDomain;
+	
+		// check flags and find keychain item
+	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
+		((paramFlags^mastBitsInetRequired) == 0x00))
+		password = [self getPassword:&status];
 }// end - (void) setSecurityDomain:(NSString *)securityDomain_
 
 #pragma mark -
@@ -290,6 +326,11 @@ const UInt8 maskBitsInetOptional =
 	protocol = protocol_;
 		// set protocol flag
 	paramFlags |= maskBitInetProtocol;
+	
+		// check flags and find keychain item
+	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
+		((paramFlags^mastBitsInetRequired) == 0x00))
+		password = [self getPassword:&status];
 }// end - (SecProtocolType) protocol
 
 #pragma mark -
@@ -306,6 +347,11 @@ const UInt8 maskBitsInetOptional =
 	authType = authType_;
 		// set authentication flag
 	paramFlags |= maskBitInetAuthType;
+	
+		// check flags and find keychain item
+	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
+		((paramFlags^mastBitsInetRequired) == 0x00))
+		password = [self getPassword:&status];
 }// end - (void) setAuthType:(SecAuthenticationType)authType_
 
 #pragma mark -
@@ -322,11 +368,16 @@ const UInt8 maskBitsInetOptional =
 	port = port_;
 		// set port flag
 	paramFlags |= maskBitInetPort;
+	
+	// check flags and find keychain item
+	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
+		((paramFlags^mastBitsInetRequired) == 0x00))
+		password = [self getPassword:&status];
 }// end - (void) setPort:(UInt16)port_
 
 #pragma mark -
 #pragma mark password’s accessor
-- (NSString *) password:(OSStatus *)error
+- (NSString *) getPassword:(OSStatus *)error
 {
 	*error = noErr;
 	if (syncronized)
@@ -356,13 +407,14 @@ const UInt8 maskBitsInetOptional =
 		SecKeychainItemFreeContent(NULL, (void *)strPassword);
 #if __has_feature(objc_arc) == 0
 		[data release];
-		[password autorelease];
+		[[password autorelease] retain];
 #endif
 	}
 	
 	return password;
 }// end - (NSString *) getPassword:(OSStatus  *)error
 
+// TODO: must be implement contents
 - (OSStatus) changePasswordTo:(NSString *)newPassword
 {
 	OSStatus error = errSecItemNotFound;

@@ -33,6 +33,32 @@ const UInt8 maskBitsInetOptional =
 @synthesize keyChainItem;
 @synthesize status;
 
+#pragma mark class method
++ (SecKeychainRef) newKeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error
+{
+	SecKeychainRef newKey = NULL;
+	NSString *path = NULL;
+
+	path = [keychainPath stringByExpandingTildeInPath];
+	if (prompt)
+		*error = SecKeychainCreate([path UTF8String], 0, (void *)NULL, TRUE, NULL, &newKey);
+	else
+		*error = SecKeychainCreate([path UTF8String], [password length], [password UTF8String], FALSE, NULL, &newKey);
+
+	return newKey;
+}// end - (SecKeychainRef) newKeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error
+
++ (OSStatus) deleteKeychain:(SecKeychainRef)keyChain
+{
+	OSStatus result = SecKeychainDelete(keyChain);
+	if (result == noErr)
+	{
+		CFRelease(keyChain);
+		keyChain = Nil;
+	}
+
+	return result;
+}// end + (OSStatus) deleteKeychain:(SecKeychainRef)keyChain;
 #pragma mark construct / destruct
 - (id) init
 {

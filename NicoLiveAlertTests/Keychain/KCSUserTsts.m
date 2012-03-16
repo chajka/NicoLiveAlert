@@ -59,9 +59,40 @@
 	STAssertEquals(USERNAME, username, @"Set and get user name is not match");
 }// end - (void) testGetSetValue
 
-- (void)testExample
+#define KEYCHAINPATH	@"~/Documents/tmpKeyChain"
+- (void) testCreateDeleteKeychain
 {
-//    STFail(@"Unit tests are not implemented yet in NicoLiveAlertTests");
-}
+	OSStatus error;
+
+		// create keychain with password
+	SecKeychainRef kc = [KCSUser newKeychain:KEYCHAINPATH withPassword:@"testpassword" orPrompt:FALSE error:&error];
+	STAssertTrue((kc != Nil), @"new keychainRef is not allocated");
+	STAssertTrue((error == noErr), @"keychain create error = %d", error);
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSString *fullpath = [KEYCHAINPATH stringByExpandingTildeInPath];
+	BOOL keyisExist = [fm fileExistsAtPath:fullpath];
+	STAssertTrue(keyisExist, @"Create KeyChain Failed");
+
+		// delete keychain
+	error = [KCSUser deleteKeychain:kc];
+	STAssertTrue((error == noErr), @"Delete Keychain Failed");
+	keyisExist = [fm fileExistsAtPath:fullpath];
+	STAssertFalse(keyisExist, @"Delete KeyChain file Failed");
+
+		// create keychain with prompt
+	kc = [KCSUser newKeychain:KEYCHAINPATH withPassword:@"testpassword" orPrompt:TRUE error:&error];
+	STAssertTrue((kc != Nil), @"new keychainRef is not allocated");
+	STAssertTrue((error == noErr), @"keychain create error = %d", error);
+	fm = [NSFileManager defaultManager];
+	fullpath = [KEYCHAINPATH stringByExpandingTildeInPath];
+	keyisExist = [fm fileExistsAtPath:fullpath];
+	STAssertTrue(keyisExist, @"Create KeyChain Failed");
+	
+		// delete keychain (again)
+	error = [KCSUser deleteKeychain:kc];
+	STAssertTrue((error == noErr), @"Delete Keychain Failed");
+	keyisExist = [fm fileExistsAtPath:fullpath];
+	STAssertFalse(keyisExist, @"Delete KeyChain file Failed");
+}// end - (void) testCreateKeychain
 
 @end

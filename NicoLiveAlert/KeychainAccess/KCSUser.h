@@ -25,6 +25,9 @@
 @property (readonly)			SecKeychainItemRef	keyChainItem;
 @property (readonly)			OSStatus			status;
 
+#pragma mark class method
++ (SecKeychainRef) newKeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error;
++ (OSStatus) deleteKeychain:(SecKeychainRef)keyChain;
 #pragma mark construct / destruct
 - (id) init;
 @end

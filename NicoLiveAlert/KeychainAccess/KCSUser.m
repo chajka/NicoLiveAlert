@@ -276,8 +276,8 @@ const UInt8 maskBitsInetOptional =
 	[super setAccount:account_];
 
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
-		((paramFlags^mastBitsInetRequired) == 0x00))
+	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
+		((paramFlags^mastBitsInetRequired) == resultAllClear))
 		password = [self getPassword:&status];
 }// end - (void) setAccount:(NSString *)account_
 
@@ -304,8 +304,8 @@ const UInt8 maskBitsInetOptional =
 		paramFlags &= ~flagInetServerName;
 
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
-		((paramFlags^mastBitsInetRequired) == 0x00))
+	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
+		((paramFlags^mastBitsInetRequired) == resultAllClear))
 		password = [self getPassword:&status];
 }// end - (void) setServerName:(NSString *)serverName_
 
@@ -327,8 +327,8 @@ const UInt8 maskBitsInetOptional =
 	serverPath = [serverPath_ copy];
 
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
-		((paramFlags^mastBitsInetRequired) == 0x00))
+	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
+		((paramFlags^mastBitsInetRequired) == resultAllClear))
 		password = [self getPassword:&status];
 }// end - (void) setServerPath:(NSString *)serverPath_
 
@@ -355,8 +355,8 @@ const UInt8 maskBitsInetOptional =
 		paramFlags &= ~flagBitInetSecurityDomain;
 	
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
-		((paramFlags^mastBitsInetRequired) == 0x00))
+	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
+		((paramFlags^mastBitsInetRequired) == resultAllClear))
 		password = [self getPassword:&status];
 }// end - (void) setSecurityDomain:(NSString *)securityDomain_
 
@@ -376,8 +376,8 @@ const UInt8 maskBitsInetOptional =
 	paramFlags |= flagBitInetServerName;
 	
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
-		((paramFlags^mastBitsInetRequired) == 0x00))
+	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
+		((paramFlags^mastBitsInetRequired) == resultAllClear))
 		password = [self getPassword:&status];
 }// end - (SecProtocolType) protocol
 
@@ -397,8 +397,8 @@ const UInt8 maskBitsInetOptional =
 	paramFlags |= flagBitInetAuthType;
 	
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
-		((paramFlags^mastBitsInetRequired) == 0x00))
+	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
+		((paramFlags^mastBitsInetRequired) == resultAllClear))
 		password = [self getPassword:&status];
 }// end - (void) setAuthType:(SecAuthenticationType)authType_
 
@@ -418,8 +418,8 @@ const UInt8 maskBitsInetOptional =
 	paramFlags |= flagBitInetPort;
 	
 	// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
-		((paramFlags^mastBitsInetRequired) == 0x00))
+	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
+		((paramFlags^mastBitsInetRequired) == resultAllClear))
 		password = [self getPassword:&status];
 }// end - (void) setPort:(UInt16)port_
 
@@ -465,8 +465,8 @@ const UInt8 maskBitsInetOptional =
 #pragma mark manage keychainItem 
 - (BOOL) addToKeychain
 {		// check params
-	if (((paramFlags^maskBitsInetOptional) != 0x00) &&
-		((paramFlags^mastBitsInetRequired) != 0x00))
+	if (((paramFlags^maskBitsInetOptional) != resultAllClear) &&
+		((paramFlags^mastBitsInetRequired) != resultAllClear))
 		return NO;
 
 		// check password is existing

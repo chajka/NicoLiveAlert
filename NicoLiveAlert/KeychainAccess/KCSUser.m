@@ -12,7 +12,7 @@
 	// Common flag Bit
 const UInt8 resultAllClear				= 0x00;
 const UInt8 flagBitAccount				= 0x01 << 0;
-	// Internet Keychain specific Bits
+	// Internet keychain specific Bits
 const UInt8 flagInetServerName			= 0x01 << 1;
 const UInt8 flagBitInetServerName		= 0x01 << 2;
 const UInt8 flagBitInetPort				= 0x01 << 3;
@@ -25,18 +25,19 @@ const UInt8 mastBitsInetRequired =
 const UInt8 maskBitsInetOptional = 
 	flagBitAccount | flagInetServerName | flagBitInetServerName | flagBitInetPort |
 	flagBitInetAuthType | flagBitInetSecurityDomain | flagBitInetServerPath;
-	// Generic KeyChain specific Bits
+	// Generic keychain specific Bits
 
 
 @implementation KCSUser
 @synthesize password;
-@synthesize description;
-@synthesize keyChain;
-@synthesize keyChainItem;
+@synthesize keychainName;
+@synthesize keychainKind;
+@synthesize keychain;
+@synthesize keychainItem;
 @synthesize status;
 
 #pragma mark class method
-+ (SecKeychainRef) newKeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error
++ (SecKeychainRef) newkeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error
 {
 	SecKeychainRef newKey = NULL;
 	NSString *path = NULL;
@@ -52,19 +53,19 @@ const UInt8 maskBitsInetOptional =
 		*error = SecKeychainCreate([path UTF8String], passLength, passwordString, FALSE, NULL, &newKey);
 
 	return newKey;
-}// end - (SecKeychainRef) newKeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error
+}// end - (SeckeychainRef) newkeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error
 
-+ (OSStatus) deleteKeychain:(SecKeychainRef)keyChain
++ (OSStatus) deletekeychain:(SecKeychainRef)keychain
 {
-	OSStatus result = SecKeychainDelete(keyChain);
+	OSStatus result = SecKeychainDelete(keychain);
 	if (result == noErr)
 	{
-		CFRelease(keyChain);
-		keyChain = Nil;
+		CFRelease(keychain);
+		keychain = Nil;
 	}
 
 	return result;
-}// end + (OSStatus) deleteKeychain:(SecKeychainRef)keyChain;
+}// end + (OSStatus) deletekeychain:(SeckeychainRef)keychain;
 #pragma mark construct / destruct
 - (id) init
 {
@@ -73,8 +74,10 @@ const UInt8 maskBitsInetOptional =
 	{
 		account = NULL;
 		password = NULL;
-		keyChain = NULL;
-		keyChainItem = NULL;
+		keychainName = NULL;
+		keychainKind = NULL;
+		keychain = NULL;
+		keychainItem = NULL;
 		syncronized = NO;
 		paramFlags = 0x00 | flagBitInetSecurityDomain | flagBitInetServerPath;
 		status = 1;
@@ -84,10 +87,10 @@ const UInt8 maskBitsInetOptional =
 
 - (void) dealloc
 {
-	if (keyChain != NULL)
-		CFRelease(keyChain);
-	if (keyChainItem != NULL)
-		CFRelease(keyChainItem);
+	if (keychain != NULL)
+		CFRelease(keychain);
+	if (keychainItem != NULL)
+		CFRelease(keychainItem);
 #if __has_feature(objc_arc) == 0
 	// relase account
     if (account != NULL)
@@ -103,10 +106,10 @@ const UInt8 maskBitsInetOptional =
 #ifdef __OBJC_GC__
 - (void) finalize
 {
-	if (keyChain != NULL)
-		CFRelease(keyChain);
-	if (keyChainItem != NULL)
-		CFRelease(keyChainItem);
+	if (keychain != NULL)
+		CFRelease(keychain);
+	if (keychainItem != NULL)
+		CFRelease(keychainItem);
 	[super finalize];
 }// end - (void) finalize
 #endif
@@ -141,7 +144,7 @@ const UInt8 maskBitsInetOptional =
 	self = [super init];
 	if (self)
 	{
-		keyChain = NULL;
+		keychain = NULL;
 		serverName = NULL;
 		serverPath = NULL;
 		securityDomain = NULL;
@@ -159,7 +162,7 @@ const UInt8 maskBitsInetOptional =
 	{
 		[super setAccount:account_];
 		password = password_;
-		keyChain = NULL;
+		keychain = NULL;
 		serverName = NULL;
 		securityDomain = NULL;
 		protocol = kSecProtocolTypeAny;
@@ -445,7 +448,7 @@ const UInt8 maskBitsInetOptional =
 	UInt32 lenPassword;
 	
 	// fetch password from keychain
-	*error = SecKeychainFindInternetPassword(keyChain, lenServerName, strServerName, lenSecurityDomain, strSecurityDomain, lenAccountName, strAccountName, lenServerPath, strServerPath, port, protocol, authType, &lenPassword, (void **)&strPassword, &keyChainItem);
+	*error = SecKeychainFindInternetPassword(keychain, lenServerName, strServerName, lenSecurityDomain, strSecurityDomain, lenAccountName, strAccountName, lenServerPath, strServerPath, port, protocol, authType, &lenPassword, (void **)&strPassword, &keychainItem);
 	
 	// check err 
 	if (*error == noErr)
@@ -463,7 +466,7 @@ const UInt8 maskBitsInetOptional =
 }// end - (NSString *) getPassword:(OSStatus  *)error
 
 #pragma mark manage keychainItem 
-- (BOOL) addToKeychain
+- (BOOL) addTokeychain
 {		// check params
 	if (((paramFlags^maskBitsInetOptional) != resultAllClear) &&
 		((paramFlags^mastBitsInetRequired) != resultAllClear))
@@ -492,39 +495,73 @@ const UInt8 maskBitsInetOptional =
 	const char *strPassword = [password UTF8String];
 	UInt32 lenPassword = (UInt32)[password length];
 	
-		// add Keychain Item
-	status = SecKeychainAddInternetPassword(keyChain, lenServerName, strServerName, lenSecurityDomain, strSecurityDomain, lenAccountName, strAccountName, lenServerPath, strServerPath, port, protocol, authType, lenPassword, strPassword, &keyChainItem);
+		// add keychain Item
+	status = SecKeychainAddInternetPassword(keychain, lenServerName, strServerName, lenSecurityDomain, strSecurityDomain, lenAccountName, strAccountName, lenServerPath, strServerPath, port, protocol, authType, lenPassword, strPassword, &keychainItem);
+
+		// check status
+	if (status != noErr)
+		return NO;
+
+		// add keychain name if exists
+	if ((keychainName != NULL) || ([keychainName length] != 0))
+	{		// create attribute
+		SecKeychainAttribute attribute;
+		SecKeychainAttributeList attrs;
+		attribute.tag = kSecLabelItemAttr;
+		attribute.data = (void *)[keychainName UTF8String];
+		attribute.length = (UInt32)[keychainName length];
+		attrs.count = 1;
+		attrs.attr = &attribute;
+		
+			// write to keychain
+		status = SecKeychainItemModifyContent(keychainItem, &attrs, 0, NULL);
+	}// end if keychain name is exists
+
+		// add keychain kind if exists
+	if ((keychainKind != NULL) || ([keychainKind length] != 0))
+	{		// create attribute
+		SecKeychainAttribute attribute;
+		SecKeychainAttributeList attrs;
+		attribute.tag = kSecDescriptionItemAttr;
+		attribute.data = (void *)[keychainKind UTF8String];
+		attribute.length = (UInt32)[keychainKind length];
+		attrs.count = 1;
+		attrs.attr = &attribute;
+		
+			// write to keychain
+		status = SecKeychainItemModifyContent(keychainItem, &attrs, 0, NULL);
+	}// end if keychain kind is exists
 
 		// check result and return
 	if (status == noErr)
 		return YES;
 	else
 		return NO;
-}// end - (BOOL) addToKeychain;
+}// end - (BOOL) addTokeychain;
 
-- (OSStatus) removeFromKeychain
+- (OSStatus) removeFromkeychain
 {
-	if (keyChainItem == NULL)
+	if (keychainItem == NULL)
 		return errSecItemNotFound;
 
-	status = SecKeychainItemDelete(keyChainItem);
+	status = SecKeychainItemDelete(keychainItem);
 	if (status == noErr)
 	{
-		CFRelease(keyChainItem);
-		keyChainItem = NULL;
+		CFRelease(keychainItem);
+		keychainItem = NULL;
 	}// end if success
 
 	return status;
-}// end - (OSStatus) removeFromKeychain;
+}// end - (OSStatus) removeFromkeychain;
 
 // TODO: must be implement contents
 - (OSStatus) changePasswordTo:(NSString *)newPassword
 {
 	OSStatus error = errSecItemNotFound;
-	if (keyChainItem == NULL)
+	if (keychainItem == NULL)
 		return error;
 
-//	SecKeychainModifyContent();
+//	SeckeychainModifyContent();
 
 	return error;
 }// end - (OSStatus ) changePasswordTo:(NSString *)newPassword

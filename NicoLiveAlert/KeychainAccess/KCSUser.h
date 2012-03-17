@@ -13,23 +13,25 @@
 @protected
 	NSString			*account;
 	NSString			*password;
-	NSString			*description;
-	SecKeychainRef		keyChain;			// optional
-	SecKeychainItemRef	keyChainItem;
+	NSString			*keychainName;	// optional it's set to name attribute of keychainAccess	
+	NSString			*keychainKind;	// optional it's set to kind attribute of keychain
+	SecKeychainRef		keychain;		// optional
+	SecKeychainItemRef	keychainItem;
 	BOOL				syncronized;
 	UInt8				paramFlags;
 	OSStatus			status;
 }
 @property (copy, readwrite)		NSString			*account;
 @property (copy, readonly)		NSString			*password;
-@property (copy, readwrite)		NSString			*description;
-@property (assign, readwrite)	SecKeychainRef		keyChain;
-@property (readonly)			SecKeychainItemRef	keyChainItem;
+@property (copy, readwrite)		NSString			*keychainName;
+@property (copy, readwrite)		NSString			*keychainKind;
+@property (assign, readwrite)	SecKeychainRef		keychain;
+@property (readonly)			SecKeychainItemRef	keychainItem;
 @property (readonly)			OSStatus			status;
 
 #pragma mark class method
-+ (SecKeychainRef) newKeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error;
-+ (OSStatus) deleteKeychain:(SecKeychainRef)keyChain;
++ (SecKeychainRef) newkeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error;
++ (OSStatus) deletekeychain:(SecKeychainRef)keychain;
 #pragma mark construct / destruct
 - (id) init;
 @end
@@ -59,7 +61,7 @@
 #pragma mark constructor support
 - (NSDictionary *) protocolDict;
 #pragma mark manage keychainItem 
-- (BOOL) addToKeychain;
-- (OSStatus) removeFromKeychain;
+- (BOOL) addTokeychain;
+- (OSStatus) removeFromkeychain;
 - (OSStatus) changePasswordTo:(NSString *)newPassword;
 @end

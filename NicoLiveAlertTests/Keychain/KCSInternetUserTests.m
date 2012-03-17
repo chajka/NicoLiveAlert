@@ -179,16 +179,18 @@ const UInt8 portNo = 80;
 	[newUser setProtocol:kSecProtocolTypeHTTPS];
 	[newUser setAuthType:kSecAuthenticationTypeHTMLForm];
 	[newUser setPort:443];
+	[newUser setKeychainName:@"Chajka's test"];
+	[newUser setKeychainKind:@"Web Form password"];
 	BOOL success = NO;
 	if ([newUser status] != noErr)
-		success = [newUser addToKeychain];
-	STAssertTrue(success, @"addToKeychain is Failed");
-	STAssertNotNil((__bridge id)[newUser keyChainItem], @"KeychainItem is Nil");
+		success = [newUser addTokeychain];
+	STAssertTrue(success, @"addTokeychain is Failed");
+	STAssertNotNil((__bridge id)[newUser keychainItem], @"keychainItem is Nil");
 
 		// remove entry test
-	[newUser removeFromKeychain];
-	STAssertTrue(([newUser status] == noErr), @"removeFromKeychain Failed");
-	STAssertNil((__bridge id)[newUser keyChainItem], @"keyChainItem is not cleard");
+	[newUser removeFromkeychain];
+	STAssertTrue(([newUser status] == noErr), @"removeFromkeychain Failed");
+	STAssertNil((__bridge id)[newUser keychainItem], @"keychainItem is not cleard");
 	
 }// end - (void) testAddPassword
 @end

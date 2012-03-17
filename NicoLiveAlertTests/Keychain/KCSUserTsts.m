@@ -9,14 +9,16 @@
 #import "KCSUserTsts.h"
 #import "KCSUser.h"
 
-#define USERNAME	@"chajka.niconico@gmail.com"
-#define PASSWORD	@"somepassword"
-#define SERVER		@"chajka.from.tv"
-#define SERVPATH	@""
-#define SECDOMAIN	@"secure.nicovideo.jp"
-#define URI			@"https://chajka@secure.nicovideo.jp/"
-#define URI2		@"https://secure.nicovideo.jp"
-#define URIUSERNAME	@"chajka"
+#define USERNAME		@"chajka.niconico@gmail.com"
+#define PASSWORD		@"somepassword"
+#define SERVER			@"chajka.from.tv"
+#define SERVPATH		@""
+#define SECDOMAIN		@"secure.nicovideo.jp"
+#define URI				@"https://chajka@secure.nicovideo.jp/"
+#define URI2			@"https://secure.nicovideo.jp"
+#define URIUSERNAME		@"chajka"
+#define KEYCHAINNAME	@"Test Keychain"
+#define KEYCHAINKIND	@"Web form password"
 
 @implementation KCSUserTsts
 
@@ -43,10 +45,10 @@
 	STAssertNil(username, @"Initial accout is not NILL");
 	NSString *password = [user password];
 	STAssertNil(password, @"Initial password is not NILL");
-	SecKeychainRef keyChain = [user keyChain];
-	STAssertNil((__bridge_transfer id)keyChain, @"Initial keyChain is not NILL");
-	SecKeychainItemRef itemRef = [user keyChainItem];
-	STAssertNil((__bridge_transfer id)itemRef, @"Inital keyChainItem is not NILL");
+	SecKeychainRef keychain = [user keychain];
+	STAssertNil((__bridge_transfer id)keychain, @"Initial keychain is not NILL");
+	SecKeychainItemRef itemRef = [user keychainItem];
+	STAssertNil((__bridge_transfer id)itemRef, @"Inital keychainItem is not NILL");
 }// end - (void) testInitializeKCSUser
 
 - (void) testGetSetValue
@@ -57,42 +59,53 @@
 	[user setAccount:USERNAME];
 	NSString *username = [user account];
 	STAssertEquals(USERNAME, username, @"Set and get user name is not match");
+
+		// set get keychain name check
+	[user setKeychainName:KEYCHAINNAME];
+	NSString *keychainname = [user keychainName];
+	STAssertEquals(KEYCHAINNAME, keychainname, @"Set and get keychain name is not match");
+
+		// set get keychain name check
+	[user setKeychainKind:KEYCHAINKIND];
+	NSString *keychainkind = [user keychainKind];
+	STAssertEquals(KEYCHAINKIND, keychainkind, @"Set and get keychain kind is not match");
+	
 }// end - (void) testGetSetValue
 
-#define KEYCHAINPATH	@"~/Documents/tmpKeyChain"
-- (void) testCreateDeleteKeychain
+#define keychainPATH	@"~/Documents/tmpkeychain"
+- (void) testCreateDeletekeychain
 {
 	OSStatus error;
 
 		// create keychain with password
-	SecKeychainRef kc = [KCSUser newKeychain:KEYCHAINPATH withPassword:@"testpassword" orPrompt:FALSE error:&error];
+	SecKeychainRef kc = [KCSUser newkeychain:keychainPATH withPassword:@"testpassword" orPrompt:FALSE error:&error];
 	STAssertTrue((kc != Nil), @"new keychainRef is not allocated");
 	STAssertTrue((error == noErr), @"keychain create error = %d", error);
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *fullpath = [KEYCHAINPATH stringByExpandingTildeInPath];
+	NSString *fullpath = [keychainPATH stringByExpandingTildeInPath];
 	BOOL keyisExist = [fm fileExistsAtPath:fullpath];
-	STAssertTrue(keyisExist, @"Create KeyChain Failed");
+	STAssertTrue(keyisExist, @"Create keychain Failed");
 
 		// delete keychain
-	error = [KCSUser deleteKeychain:kc];
-	STAssertTrue((error == noErr), @"Delete Keychain Failed");
+	error = [KCSUser deletekeychain:kc];
+	STAssertTrue((error == noErr), @"Delete keychain Failed");
 	keyisExist = [fm fileExistsAtPath:fullpath];
-	STAssertFalse(keyisExist, @"Delete KeyChain file Failed");
+	STAssertFalse(keyisExist, @"Delete keychain file Failed");
 
 		// create keychain with prompt
-	kc = [KCSUser newKeychain:KEYCHAINPATH withPassword:@"testpassword" orPrompt:TRUE error:&error];
+	kc = [KCSUser newkeychain:keychainPATH withPassword:@"testpassword" orPrompt:TRUE error:&error];
 	STAssertTrue((kc != Nil), @"new keychainRef is not allocated");
 	STAssertTrue((error == noErr), @"keychain create error = %d", error);
 	fm = [NSFileManager defaultManager];
-	fullpath = [KEYCHAINPATH stringByExpandingTildeInPath];
+	fullpath = [keychainPATH stringByExpandingTildeInPath];
 	keyisExist = [fm fileExistsAtPath:fullpath];
-	STAssertTrue(keyisExist, @"Create KeyChain Failed");
+	STAssertTrue(keyisExist, @"Create keychain Failed");
 	
 		// delete keychain (again)
-	error = [KCSUser deleteKeychain:kc];
-	STAssertTrue((error == noErr), @"Delete Keychain Failed");
+	error = [KCSUser deletekeychain:kc];
+	STAssertTrue((error == noErr), @"Delete keychain Failed");
 	keyisExist = [fm fileExistsAtPath:fullpath];
-	STAssertFalse(keyisExist, @"Delete KeyChain file Failed");
-}// end - (void) testCreateKeychain
+	STAssertFalse(keyisExist, @"Delete keychain file Failed");
+}// end - (void) testCreatekeychain
 
 @end

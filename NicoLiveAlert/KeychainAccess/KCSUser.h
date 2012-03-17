@@ -13,6 +13,7 @@
 @protected
 	NSString			*account;
 	NSString			*password;
+	NSString			*description;
 	SecKeychainRef		keyChain;			// optional
 	SecKeychainItemRef	keyChainItem;
 	BOOL				syncronized;
@@ -21,6 +22,7 @@
 }
 @property (copy, readwrite)		NSString			*account;
 @property (copy, readonly)		NSString			*password;
+@property (copy, readwrite)		NSString			*description;
 @property (assign, readwrite)	SecKeychainRef		keyChain;
 @property (readonly)			SecKeychainItemRef	keyChainItem;
 @property (readonly)			OSStatus			status;

@@ -9,26 +9,28 @@
 #import "KCSUser.h"
 
 #pragma mark constant definition
-	// Common Mask Bit
-const UInt8 maskBitAccount				= 0x01 << 0;
+	// Common flag Bit
+const UInt8 resultAllClear				= 0x00;
+const UInt8 flagBitAccount				= 0x01 << 0;
 	// Internet Keychain specific Bits
-const UInt8 maskBitInetServerName		= 0x01 << 1;
-const UInt8 maskBitInetProtocol			= 0x01 << 2;
-const UInt8 maskBitInetPort				= 0x01 << 3;
-const UInt8 maskBitInetAuthType			= 0x01 << 4;
-const UInt8 maskBitInetSecurityDomain	= 0x01 << 5;
-const UInt8 maskBitInetServerPath		= 0x01 << 6;
+const UInt8 flagInetServerName			= 0x01 << 1;
+const UInt8 flagBitInetServerName		= 0x01 << 2;
+const UInt8 flagBitInetPort				= 0x01 << 3;
+const UInt8 flagBitInetAuthType			= 0x01 << 4;
+const UInt8 flagBitInetSecurityDomain	= 0x01 << 5;
+const UInt8 flagBitInetServerPath		= 0x01 << 6;
 const UInt8 mastBitsInetRequired = 
-	maskBitAccount | maskBitInetServerName | maskBitInetProtocol | maskBitInetPort | 
-	maskBitInetAuthType ;
+	flagBitAccount | flagInetServerName | flagBitInetServerName | flagBitInetPort | 
+	flagBitInetAuthType ;
 const UInt8 maskBitsInetOptional = 
-	maskBitAccount | maskBitInetServerName | maskBitInetProtocol | maskBitInetPort |
-	maskBitInetAuthType | maskBitInetSecurityDomain | maskBitInetServerPath;
+	flagBitAccount | flagInetServerName | flagBitInetServerName | flagBitInetPort |
+	flagBitInetAuthType | flagBitInetSecurityDomain | flagBitInetServerPath;
 	// Generic KeyChain specific Bits
 
 
 @implementation KCSUser
 @synthesize password;
+@synthesize description;
 @synthesize keyChain;
 @synthesize keyChainItem;
 @synthesize status;
@@ -38,12 +40,16 @@ const UInt8 maskBitsInetOptional =
 {
 	SecKeychainRef newKey = NULL;
 	NSString *path = NULL;
+	UInt32 passLength;
+	const char *passwordString = NULL;
 
 	path = [keychainPath stringByExpandingTildeInPath];
+	passwordString = [password UTF8String];
+	passLength = (UInt32)[password length];
 	if (prompt)
 		*error = SecKeychainCreate([path UTF8String], 0, (void *)NULL, TRUE, NULL, &newKey);
 	else
-		*error = SecKeychainCreate([path UTF8String], [password length], [password UTF8String], FALSE, NULL, &newKey);
+		*error = SecKeychainCreate([path UTF8String], passLength, passwordString, FALSE, NULL, &newKey);
 
 	return newKey;
 }// end - (SecKeychainRef) newKeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error
@@ -70,7 +76,7 @@ const UInt8 maskBitsInetOptional =
 		keyChain = NULL;
 		keyChainItem = NULL;
 		syncronized = NO;
-		paramFlags = 0x00 | maskBitInetSecurityDomain | maskBitInetServerPath;
+		paramFlags = 0x00 | flagBitInetSecurityDomain | flagBitInetServerPath;
 		status = 1;
 	}
 	return self;
@@ -117,7 +123,7 @@ const UInt8 maskBitsInetOptional =
 	syncronized = NO;
 	account = [account_ copy];
 	if ((account != NULL) && ([account length] != 0))
-		paramFlags |= maskBitAccount;
+		paramFlags |= flagBitAccount;
 }// end - (void) setAccount:(NSString *)account_
 
 @end
@@ -157,9 +163,9 @@ const UInt8 maskBitsInetOptional =
 		serverName = NULL;
 		securityDomain = NULL;
 		protocol = kSecProtocolTypeAny;
-		paramFlags |= maskBitInetProtocol;
+		paramFlags |= flagBitInetServerName;
 		authType = kSecAuthenticationTypeAny;
-		paramFlags |= maskBitInetAuthType;
+		paramFlags |= flagBitInetAuthType;
 	}// end if self
 	return self;
 }// end - (id) initWithAccount:(NSString *)account_ andPassword:(NSString *)password_
@@ -171,32 +177,31 @@ const UInt8 maskBitsInetOptional =
 	{
 		account = [[URI user] copy];
 		if ((account != NULL) && ([account length] != 0))
-			paramFlags |= maskBitAccount;
+			paramFlags |= flagBitAccount;
 		serverName = [[URI host] copy];
 		if ((serverName != NULL) && ([serverName length] != 0))
-			paramFlags |= maskBitInetServerName;
+			paramFlags |= flagInetServerName;
 		serverPath = [[URI path] copy];
 		securityDomain = [[URI host] copy];
 		if ((securityDomain != NULL) && ([securityDomain length] != 0))
-			paramFlags |= maskBitInetSecurityDomain;
+			paramFlags |= flagBitInetSecurityDomain;
 		if ([[URI scheme] isEqualToString:@""] == NO)
 		{
 			NSDictionary *protocolDict = [self protocolDict];
-			protocol = [[protocolDict valueForKey:[URI scheme]] integerValue];
+			protocol = [[protocolDict valueForKey:[URI scheme]] intValue];
 			if (protocol == 0)
 				protocol = kSecProtocolTypeAny;
-			paramFlags |= maskBitInetProtocol;
+			paramFlags |= flagBitInetServerName;
 		}// end if scheme
-		port = [[URI port] integerValue];
-		paramFlags |= maskBitInetPort;
+		port = [[URI port] intValue];
+		paramFlags |= flagBitInetPort;
 		authType = kSecAuthenticationTypeAny;
-		paramFlags |= maskBitInetAuthType;
+		paramFlags |= flagBitInetAuthType;
+		
+			// check flags and find keychain item
+		if ((paramFlags^maskBitsInetOptional) == resultAllClear)
+			password = [self getPassword:&status];
 	}// end if self
-
-		// check flags and find keychain item
-	if ((paramFlags^maskBitsInetOptional) == 0x00)
-		password = [self getPassword:&status];
-	
 	return self;
 }// end - (id) initWithURI:(NSURL *)URI
 
@@ -207,32 +212,31 @@ const UInt8 maskBitsInetOptional =
 	{
 		account = [[URI user] copy];
 		if ((account != NULL) && ([account length] != 0))
-			paramFlags |= maskBitAccount;
+			paramFlags |= flagBitAccount;
 		serverName = [[URI host] copy];
 		if ((serverName != NULL) && ([serverName length] != 0))
-			paramFlags |= maskBitInetServerName;
+			paramFlags |= flagInetServerName;
 		serverPath = [[URI path] copy];
 		securityDomain = [[URI host] copy];
 		if ((securityDomain != NULL) && ([securityDomain length] != 0))
-			paramFlags |= maskBitInetSecurityDomain;
+			paramFlags |= flagBitInetSecurityDomain;
 		if ([[URI scheme] isEqualToString:@""] == NO)
 		{
 			NSDictionary *protocolDict = [self protocolDict];
-			protocol = [[protocolDict valueForKey:[URI scheme]] integerValue];
+			protocol = [[protocolDict valueForKey:[URI scheme]] intValue];
 			if (protocol == 0)
 				protocol = kSecProtocolTypeAny;
-			paramFlags |= maskBitInetProtocol;
+			paramFlags |= flagBitInetServerName;
 		}// end if scheme
 		port = [[URI port] integerValue];
-		paramFlags |= maskBitInetPort;
+		paramFlags |= flagBitInetPort;
 		authType = auth;
-		paramFlags |= maskBitInetAuthType;
+		paramFlags |= flagBitInetAuthType;
+
+			// check flags and find keychain item
+		if ((paramFlags^maskBitsInetOptional) == resultAllClear)
+			password = [self getPassword:&status];
 	}// end if self
-
-		// check flags and find keychain item
-	if ((paramFlags^maskBitsInetOptional) == 0x00)
-		password = [self getPassword:&status];
-
 	return self;
 }// end - (id) initWithURI:(NSURL *)URI withAuth:(SecAuthenticationType)auth;
 
@@ -295,9 +299,9 @@ const UInt8 maskBitsInetOptional =
 	serverName = [serverName_ copy];
 		// set/clear server name flag
 	if (serverName != NULL)	// set server name flag
-		paramFlags |= maskBitInetServerName;
+		paramFlags |= flagInetServerName;
 	else	// clear server name flag
-		paramFlags &= ~maskBitInetServerName;
+		paramFlags &= ~flagInetServerName;
 
 		// check flags and find keychain item
 	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
@@ -346,9 +350,9 @@ const UInt8 maskBitsInetOptional =
 	securityDomain = [securityDomain_ copy];
 		// set/clear security domain flag
 	if (securityDomain != NULL)	// set security domain flag
-		paramFlags |= maskBitInetSecurityDomain;
+		paramFlags |= flagBitInetSecurityDomain;
 	else	// clear security domain flag
-		paramFlags &= ~maskBitInetSecurityDomain;
+		paramFlags &= ~flagBitInetSecurityDomain;
 	
 		// check flags and find keychain item
 	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
@@ -369,7 +373,7 @@ const UInt8 maskBitsInetOptional =
 	syncronized = NO;
 	protocol = protocol_;
 		// set protocol flag
-	paramFlags |= maskBitInetProtocol;
+	paramFlags |= flagBitInetServerName;
 	
 		// check flags and find keychain item
 	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
@@ -390,7 +394,7 @@ const UInt8 maskBitsInetOptional =
 	syncronized = NO;
 	authType = authType_;
 		// set authentication flag
-	paramFlags |= maskBitInetAuthType;
+	paramFlags |= flagBitInetAuthType;
 	
 		// check flags and find keychain item
 	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
@@ -411,7 +415,7 @@ const UInt8 maskBitsInetOptional =
 	syncronized = NO;
 	port = port_;
 		// set port flag
-	paramFlags |= maskBitInetPort;
+	paramFlags |= flagBitInetPort;
 	
 	// check flags and find keychain item
 	if (((paramFlags^maskBitsInetOptional) == 0x00) ||
@@ -429,13 +433,13 @@ const UInt8 maskBitsInetOptional =
 	
 	// make cstring & length data;
 	const char *strAccountName = [account UTF8String];
-	UInt32		lenAccountName = [account length];
+	UInt32		lenAccountName = (UInt32)[account length];
 	const char *strServerName = [serverName UTF8String];
-	UInt32		lenServerName = [serverName length];
+	UInt32		lenServerName = (UInt32)[serverName length];
 	const char *strSecurityDomain = [securityDomain UTF8String];
-	UInt32		lenSecurityDomain = [securityDomain length];
+	UInt32		lenSecurityDomain = (UInt32)[securityDomain length];
 	const char *strServerPath = [serverPath UTF8String];
-	UInt32		lenServerPath = [serverPath	length];
+	UInt32		lenServerPath = (UInt32)[serverPath	length];
 	// returned password data
 	const char *strPassword = NULL;
 	UInt32 lenPassword;
@@ -472,21 +476,21 @@ const UInt8 maskBitsInetOptional =
 		// make cstring & length data
 	// make cstring & length data;
 	const char *strAccountName = [account UTF8String];
-	UInt32		lenAccountName = [account length];
+	UInt32		lenAccountName = (UInt32)[account length];
 	const char *strServerName = [serverName UTF8String];
-	UInt32		lenServerName = [serverName length];
+	UInt32		lenServerName = (UInt32)[serverName length];
 	const char *strSecurityDomain = NULL;
 	UInt32		lenSecurityDomain = 0;
 	if (securityDomain != NULL)
 	{
 		strSecurityDomain = [securityDomain UTF8String];
-		lenSecurityDomain = [securityDomain length];
+		lenSecurityDomain = (UInt32)[securityDomain length];
 	}// endif
 	const char *strServerPath = [serverPath UTF8String];
-	UInt32		lenServerPath = [serverPath	length];
+	UInt32		lenServerPath = (UInt32)[serverPath	length];
 	// returned password data
 	const char *strPassword = [password UTF8String];
-	UInt32 lenPassword = [password length];
+	UInt32 lenPassword = (UInt32)[password length];
 	
 		// add Keychain Item
 	status = SecKeychainAddInternetPassword(keyChain, lenServerName, strServerName, lenSecurityDomain, strSecurityDomain, lenAccountName, strAccountName, lenServerPath, strServerPath, port, protocol, authType, lenPassword, strPassword, &keyChainItem);

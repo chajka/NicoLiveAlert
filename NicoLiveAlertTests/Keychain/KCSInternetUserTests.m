@@ -176,8 +176,9 @@ const UInt8 portNo = 80;
 	STAssertTrue(([[newUser password] isEqualToString:PASSWORD]),@"password is invarid");
 	[newUser setServerName:SERVER];
 	[newUser setSecurityDomain:SERVER];
-	[newUser setPort:kSecProtocolTypeHTTPS];
+	[newUser setProtocol:kSecProtocolTypeHTTPS];
 	[newUser setAuthType:kSecAuthenticationTypeHTMLForm];
+	[newUser setPort:443];
 	BOOL success = NO;
 	if ([newUser status] != noErr)
 		success = [newUser addToKeychain];

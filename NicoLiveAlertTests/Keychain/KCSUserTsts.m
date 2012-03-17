@@ -11,7 +11,7 @@
 
 #define USERNAME	@"chajka.niconico@gmail.com"
 #define PASSWORD	@"somepassword"
-#define SERVER		@"secure.nicovideo.jp"
+#define SERVER		@"chajka.from.tv"
 #define SERVPATH	@""
 #define SECDOMAIN	@"secure.nicovideo.jp"
 #define URI			@"https://chajka@secure.nicovideo.jp/"

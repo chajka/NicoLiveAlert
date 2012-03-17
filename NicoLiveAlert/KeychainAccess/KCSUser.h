@@ -51,10 +51,13 @@
 
 #pragma mark construct / destruct
 - (id) init;
+- (id) initWithAccount:(NSString *)account_ andPassword:(NSString *)password_;
 - (id) initWithURI:(NSURL *)URI;
 - (id) initWithURI:(NSURL *)URI withAuth:(SecAuthenticationType)auth;
 #pragma mark constructor support
 - (NSDictionary *) protocolDict;
-#pragma mark action
+#pragma mark manage keychainItem 
+- (BOOL) addToKeychain;
+- (OSStatus) removeFromKeychain;
 - (OSStatus) changePasswordTo:(NSString *)newPassword;
 @end

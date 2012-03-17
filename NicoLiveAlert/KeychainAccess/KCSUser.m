@@ -146,6 +146,24 @@ const UInt8 maskBitsInetOptional =
 	return self;
 }// end - (id) init
 
+- (id) initWithAccount:(NSString *)account_ andPassword:(NSString *)password_
+{
+	self = [super init];
+	if (self)
+	{
+		[super setAccount:account_];
+		password = password_;
+		keyChain = NULL;
+		serverName = NULL;
+		securityDomain = NULL;
+		protocol = kSecProtocolTypeAny;
+		paramFlags |= maskBitInetProtocol;
+		authType = kSecAuthenticationTypeAny;
+		paramFlags |= maskBitInetAuthType;
+	}// end if self
+	return self;
+}// end - (id) initWithAccount:(NSString *)account_ andPassword:(NSString *)password_
+
 - (id) initWithURI:(NSURL *)URI
 {
 	self = [super init];
@@ -423,7 +441,7 @@ const UInt8 maskBitsInetOptional =
 	UInt32 lenPassword;
 	
 	// fetch password from keychain
-	*error = SecKeychainFindInternetPassword(NULL, lenServerName, strServerName, lenSecurityDomain, strSecurityDomain, lenAccountName, strAccountName, lenServerPath, strServerPath, port, protocol, authType, &lenPassword, (void **)&strPassword, NULL);
+	*error = SecKeychainFindInternetPassword(keyChain, lenServerName, strServerName, lenSecurityDomain, strSecurityDomain, lenAccountName, strAccountName, lenServerPath, strServerPath, port, protocol, authType, &lenPassword, (void **)&strPassword, &keyChainItem);
 	
 	// check err 
 	if (*error == noErr)
@@ -440,12 +458,69 @@ const UInt8 maskBitsInetOptional =
 	return password;
 }// end - (NSString *) getPassword:(OSStatus  *)error
 
+#pragma mark manage keychainItem 
+- (BOOL) addToKeychain
+{		// check params
+	if (((paramFlags^maskBitsInetOptional) != 0x00) &&
+		((paramFlags^mastBitsInetRequired) != 0x00))
+		return NO;
+
+		// check password is existing
+	if ((password == NULL) || ([password length] == 0))
+		return NO;
+
+		// make cstring & length data
+	// make cstring & length data;
+	const char *strAccountName = [account UTF8String];
+	UInt32		lenAccountName = [account length];
+	const char *strServerName = [serverName UTF8String];
+	UInt32		lenServerName = [serverName length];
+	const char *strSecurityDomain = NULL;
+	UInt32		lenSecurityDomain = 0;
+	if (securityDomain != NULL)
+	{
+		strSecurityDomain = [securityDomain UTF8String];
+		lenSecurityDomain = [securityDomain length];
+	}// endif
+	const char *strServerPath = [serverPath UTF8String];
+	UInt32		lenServerPath = [serverPath	length];
+	// returned password data
+	const char *strPassword = [password UTF8String];
+	UInt32 lenPassword = [password length];
+	
+		// add Keychain Item
+	status = SecKeychainAddInternetPassword(keyChain, lenServerName, strServerName, lenSecurityDomain, strSecurityDomain, lenAccountName, strAccountName, lenServerPath, strServerPath, port, protocol, authType, lenPassword, strPassword, &keyChainItem);
+
+		// check result and return
+	if (status == noErr)
+		return YES;
+	else
+		return NO;
+}// end - (BOOL) addToKeychain;
+
+- (OSStatus) removeFromKeychain
+{
+	if (keyChainItem == NULL)
+		return errSecItemNotFound;
+
+	status = SecKeychainItemDelete(keyChainItem);
+	if (status == noErr)
+	{
+		CFRelease(keyChainItem);
+		keyChainItem = NULL;
+	}// end if success
+
+	return status;
+}// end - (OSStatus) removeFromKeychain;
+
 // TODO: must be implement contents
 - (OSStatus) changePasswordTo:(NSString *)newPassword
 {
 	OSStatus error = errSecItemNotFound;
 	if (keyChainItem == NULL)
 		return error;
+
+//	SecKeychainModifyContent();
 
 	return error;
 }// end - (OSStatus ) changePasswordTo:(NSString *)newPassword

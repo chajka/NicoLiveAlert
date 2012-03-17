@@ -10,11 +10,11 @@
 
 #define USERNAME	@"chajka.niconico@gmail.com"
 #define PASSWORD	@"somepassword"
-#define SERVER		@"secure.nicovideo.jp"
-#define SERVPATH	@""
-#define SECDOMAIN	@"secure.nicovideo.jp"
-#define URI			@"https://chajka@secure.nicovideo.jp/"
-#define URI2		@"https://secure.nicovideo.jp"
+#define SERVER		@"chajka.from.tv"
+#define SERVPATH	@"/"
+#define SECDOMAIN	@"chajka.from.tv"
+#define URI			@"https://chajka@chajka.from.tv/"
+#define URI2		@"https://chajka.from.tv"
 #define URIUSERNAME	@"chajka"
 const UInt8 portNo = 80;
 
@@ -168,4 +168,26 @@ const UInt8 portNo = 80;
 	NSString *password = [user password];
 	STAssertNil(password, @"password is not nil");
 }// end - (void) testSetAccountStartCollectPassword
+
+- (void) testAddPassword
+{
+		// add entry test
+	KCSInternetUser *newUser = [[KCSInternetUser alloc] initWithAccount:USERNAME andPassword:PASSWORD];
+	STAssertTrue(([[newUser password] isEqualToString:PASSWORD]),@"password is invarid");
+	[newUser setServerName:SERVER];
+	[newUser setSecurityDomain:SERVER];
+	[newUser setPort:kSecProtocolTypeHTTPS];
+	[newUser setAuthType:kSecAuthenticationTypeHTMLForm];
+	BOOL success = NO;
+	if ([newUser status] != noErr)
+		success = [newUser addToKeychain];
+	STAssertTrue(success, @"addToKeychain is Failed");
+	STAssertNotNil((__bridge id)[newUser keyChainItem], @"KeychainItem is Nil");
+
+		// remove entry test
+	[newUser removeFromKeychain];
+	STAssertTrue(([newUser status] == noErr), @"removeFromKeychain Failed");
+	STAssertNil((__bridge id)[newUser keyChainItem], @"keyChainItem is not cleard");
+	
+}// end - (void) testAddPassword
 @end

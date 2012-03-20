@@ -34,7 +34,7 @@
     [super tearDown];
 }// end - (void) tearDown
 
-- (void) testInitializeKCSUser
+- (void) test_01_InitializeKCSUser
 {
 		// allocation test
 	KCSUser *user = [[KCSUser alloc] init];
@@ -51,7 +51,7 @@
 	STAssertNil((__bridge_transfer id)itemRef, @"Inital keychainItem is not NILL");
 }// end - (void) testInitializeKCSUser
 
-- (void) testGetSetValue
+- (void) test_02_GetSetValue
 {
 	KCSUser *user = [[KCSUser alloc] init];
 	
@@ -73,7 +73,7 @@
 }// end - (void) testGetSetValue
 
 #define keychainPATH	@"~/Documents/tmpkeychain"
-- (void) testCreateDeletekeychain
+- (void) _test_03_CreateDeletekeychain
 {
 	OSStatus error;
 

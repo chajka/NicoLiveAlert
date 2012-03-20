@@ -32,7 +32,7 @@ const UInt8 portNo = 80;
     [super tearDown];
 }// end - (void) tearDown
 
-- (void) testInitializeKCSInternetUser
+- (void) test_01_InitializeKCSInternetUser
 {
 		// allocation test
 	KCSInternetUser *user = [[KCSInternetUser alloc] init];
@@ -57,7 +57,7 @@ const UInt8 portNo = 80;
 	STAssertTrue((auth == kSecAuthenticationTypeAny), @"Initial authentication type is not kSecAuthenticationTypeAny");
 }// end - (void) testInitializeKCSInternetUser
 
-- (void) testSetGetValues
+- (void) test_02_SetGetValues
 {
 	KCSInternetUser *user = [[KCSInternetUser alloc] init];
 	
@@ -95,7 +95,7 @@ const UInt8 portNo = 80;
 	
 }// end - (void) testSetGetValues
 
-- (void) testInitWithURI
+- (void) test_03_InitWithURI
 {
 		// test initWithURI:
 	KCSInternetUser *user = [[KCSInternetUser alloc] initWithURI:[NSURL URLWithString:URI]];
@@ -123,7 +123,7 @@ const UInt8 portNo = 80;
 	STAssertNil(password, @"password is not nil");
 }// end - (void) testInitWithURI
 
-- (void) testInitWithURIwithAuth
+- (void) test_04_InitWithURIwithAuth
 {
 	KCSInternetUser *user = [[KCSInternetUser alloc] initWithURI:[NSURL URLWithString:URI] withAuth:kSecAuthenticationTypeHTTPBasic];
 
@@ -156,7 +156,7 @@ const UInt8 portNo = 80;
 	STAssertNil(password, @"password is not nil");
 }// end - (void) testInitWithURIwithAuth
 
-- (void) testSetAccountStartCollectPassword
+- (void) test_05_SetAccountStartCollectPassword
 {
 	KCSInternetUser *user = [[KCSInternetUser alloc] initWithURI:[NSURL URLWithString:URI] withAuth:kSecAuthenticationTypeHTTPBasic];
 	
@@ -169,7 +169,7 @@ const UInt8 portNo = 80;
 	STAssertNil(password, @"password is not nil");
 }// end - (void) testSetAccountStartCollectPassword
 
-- (void) testAddPassword
+- (void) test_06_AddPassword
 {
 		// add entry test
 	KCSInternetUser *newUser = [[KCSInternetUser alloc] initWithAccount:USERNAME andPassword:PASSWORD];

@@ -26,7 +26,23 @@ const UInt8 maskBitsInetOptional =
 	flagBitAccount | flagInetServerName | flagBitInetServerName | flagBitInetPort |
 	flagBitInetAuthType | flagBitInetSecurityDomain | flagBitInetServerPath;
 	// Generic keychain specific Bits
+	// keychain item query enumuration
+enum kcItemQueryOrder {
+	orderAccount = 0,
+	orderServerName,
+	orderServerPath,
+	orderSecurityDomain,
+	orderServerType,
+	orderProtocol,
+	orderPort,
+	orderAuthType,
+	orderKeychainName,
+	orderDescription,
+	attrQueryCount
+};
 
+@interface KCSUser ()
+@end
 
 @implementation KCSUser
 @synthesize password;
@@ -66,6 +82,7 @@ const UInt8 maskBitsInetOptional =
 
 	return result;
 }// end + (OSStatus) deletekeychain:(SeckeychainRef)keychain;
+
 #pragma mark construct / destruct
 - (id) init
 {
@@ -134,10 +151,28 @@ const UInt8 maskBitsInetOptional =
 #pragma mark -
 
 @interface KCSInternetUser ()
+- (id) initWithAccount:(NSString *)account_ password:(NSString *)pass serverName:(NSString *)server path:(NSString *)path domain:(NSString *)domain protocol:(SecProtocolType)protocol_ authentication:(SecAuthenticationType)auth port:(UInt16)port_;
 - (NSString *) getPassword:(OSStatus *)error;
+#pragma mark constructor support
+- (NSDictionary *) protocolDict;
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
+- (CFMutableDictionaryRef) makeQuery;
+#else
+SecKeychainAttributeInfo makeQuery(void);
+#endif
 @end
 
+
 @implementation KCSInternetUser
+// KCSInternetUser's C Function prototype;
+NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticationType type);
+#pragma mark class method
++ (NSArray *) initWithAccountsForServer:(NSString *)where path:(NSString *)path forAuthType:(SecAuthenticationType)type
+{
+	NSArray *accounts = keyChainUsersOfServer(where, path, type);
+	
+	return accounts;
+}// end + (NSArray *) initWithAccountsForServer:(NSString *)where path:(NSString *)path forAuthType:(SecAuthenticationType)type
 #pragma mark construct / destruct
 - (id) init
 {
@@ -191,12 +226,12 @@ const UInt8 maskBitsInetOptional =
 		if ([[URI scheme] isEqualToString:@""] == NO)
 		{
 			NSDictionary *protocolDict = [self protocolDict];
-			protocol = [[protocolDict valueForKey:[URI scheme]] intValue];
+			protocol = [[protocolDict valueForKey:[URI scheme]] unsignedIntValue];
 			if (protocol == 0)
 				protocol = kSecProtocolTypeAny;
 			paramFlags |= flagBitInetServerName;
 		}// end if scheme
-		port = [[URI port] intValue];
+		port = [[URI port] unsignedIntValue];
 		paramFlags |= flagBitInetPort;
 		authType = kSecAuthenticationTypeAny;
 		paramFlags |= flagBitInetAuthType;
@@ -226,7 +261,7 @@ const UInt8 maskBitsInetOptional =
 		if ([[URI scheme] isEqualToString:@""] == NO)
 		{
 			NSDictionary *protocolDict = [self protocolDict];
-			protocol = [[protocolDict valueForKey:[URI scheme]] intValue];
+			protocol = [[protocolDict valueForKey:[URI scheme]] unsignedIntValue];
 			if (protocol == 0)
 				protocol = kSecProtocolTypeAny;
 			paramFlags |= flagBitInetServerName;
@@ -242,6 +277,68 @@ const UInt8 maskBitsInetOptional =
 	}// end if self
 	return self;
 }// end - (id) initWithURI:(NSURL *)URI withAuth:(SecAuthenticationType)auth;
+
+- (id) initWithAccount:(NSString *)account_ password:(NSString *)pass serverName:(NSString *)server path:(NSString *)path domain:(NSString *)domain protocol:(SecProtocolType)protocol_ authentication:(SecAuthenticationType)auth port:(UInt16)port_
+{
+	self = [super init];
+	if (self)
+	{		// assign superclass's member
+		account = account_;
+		password = pass;
+			// initialize class specific member
+		serverName = server;
+		serverPath = path;
+		securityDomain = domain;
+		protocol = protocol_;
+		authType = auth;
+		port = port_;
+	}
+	return self;
+}// end - (id) initWithAccount:(NSString *)account_ password:(NSString *)pass serverName:(NSString *)server path:(NSString *)path_ domain:(NSString *)domain protocol:(SecProtocolType)protocol_ authentication:(SecAuthenticationType)auth port:(UInt16)port_;
+
+- (id) initWithItemRef:(SecKeychainItemRef)item
+{
+	if (item == NULL)
+		return NULL;
+	self = [super init];
+	if (self)
+	{
+		SecKeychainAttributeInfo info = makeQuery();
+		SecKeychainAttributeList *attrList = NULL;
+		UInt32 length = 0;
+		void *data = NULL;
+		status = SecKeychainItemCopyAttributesAndData(item, &info, NULL, &attrList, &length, &data);
+		if (status != noErr)	// check fetch data is success?
+		{
+			[super dealloc];
+			return NULL;
+		}// end if fetch data failed
+
+		keychainItem = item;
+
+			// get password
+		password = [[[[NSString alloc] initWithBytes:data length:length encoding:NSUTF8StringEncoding] autorelease] copy];
+			// get account
+		account = [[[[NSString alloc] initWithBytes:attrList->attr[orderAccount].data length:attrList->attr[orderAccount].length encoding:NSUTF8StringEncoding] autorelease] copy];
+			// get server name
+		serverName = [[[[NSString alloc] initWithBytes:attrList->attr[orderServerName].data length:attrList->attr[orderServerName].length encoding:NSUTF8StringEncoding] autorelease] copy];
+			// get server path
+		serverPath = [[[[NSString alloc] initWithBytes:attrList->attr[orderServerPath].data length:attrList->attr[orderServerPath].length encoding:NSUTF8StringEncoding] autorelease] copy];
+			// get security domain
+		securityDomain = [[[[NSString alloc] initWithBytes:attrList->attr[orderSecurityDomain].data length:attrList->attr[orderSecurityDomain].length encoding:NSUTF8StringEncoding] autorelease] copy];
+			// get protocol
+		protocol = *(SecProtocolType *)(attrList->attr[orderProtocol].data);
+			// get authentication type
+		authType = *(SecAuthenticationType *)(attrList->attr[orderAuthType].data);
+			// get keychain name
+		keychainName = [[[[NSString alloc] initWithBytes:attrList->attr[orderKeychainName].data length:attrList->attr[orderKeychainName].length encoding:NSUTF8StringEncoding] autorelease] copy];
+			// get keychain kind
+		keychainKind = [[[[NSString alloc] initWithBytes:attrList->attr[orderDescription].data length:attrList->attr[orderDescription].length encoding:NSUTF8StringEncoding] autorelease] copy];
+
+		SecKeychainItemFreeAttributesAndData(attrList, data);
+	}// end if self
+	return self;
+}// end - (id) initWithItemRef:(SecKeychainItemRef)item
 
 - (void) dealloc
 {
@@ -565,4 +662,148 @@ const UInt8 maskBitsInetOptional =
 
 	return error;
 }// end - (OSStatus ) changePasswordTo:(NSString *)newPassword
+
+NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticationType type)
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
+{
+	OSStatus status;
+	// Later 10.6 use SecItemCopyMatching
+    // create query
+	CFMutableDictionaryRef query = CFDictionaryCreateMutable(kCFAllocatorDefault, 5, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);	
+    CFDictionaryAddValue(query, kSecClass, kSecClassInternetPassword);
+    CFDictionaryAddValue(query, kSecReturnAttributes, kCFBooleanTrue);
+    CFDictionaryAddValue(query, kSecMatchLimit, kSecMatchLimitAll);
+    CFDictionaryAddValue(query, kSecClass, kSecClassInternetPassword);
+	CFDictionaryAddValue(query, kSecAttrServer, (__bridge CFStringRef)server);
+	
+    // get search results
+	CFIndex items = 0;
+    CFArrayRef search = NULL;
+    status = SecItemCopyMatching(query, (CFTypeRef*)&search);
+	CFRelease(query);
+	if ((status != noErr) && ((items = CFArrayGetCount(search)) != 0))
+		return NULL;
+	
+	NSMutableArray *users = [NSMutableArray array];
+	KCSInternetUser *user;
+	UInt32 passwordLength;
+	const char *passwordString;
+	NSString *account = NULL;
+	NSString *password = NULL;
+	NSString *serverName = NULL;
+	NSInteger protcol = 0;
+	NSNumber *serverType = NULL;
+	NSInteger port = 0;
+	SecKeychainItemRef itemRef = NULL;
+	for (NSDictionary *item in (__bridge NSArray *)search)
+	{
+		account = [item objectForKey:kSecAttrAccount];
+		serverName = [item objectForKey:kSecAttrServer];
+		protcol = [[item objectForKey:kSecAttrProtocol] integerValue];
+		port = [[item objectForKey:kSecAttrPort] integerValue];
+		serverType = [item objectForKey:kSecAttrType];
+		status = SecKeychainFindInternetPassword(NULL, [serverName length], (const char *)[serverName UTF8String], 0, NULL, [account length], (const char *)[account UTF8String], [path length], (const char *)[path UTF8String], port, protcol, type, &passwordLength, (void **)&passwordString, &itemRef);
+		
+		if (status == noErr)
+		{
+			NSLog(@"%@", itemRef);
+			// convet password to NSString
+			password = [[NSString alloc] initWithBytes:(void *)passwordString length:passwordLength encoding:NSUTF8StringEncoding];
+			// Make User instance and set each value
+			user = [[KCSInternetUser alloc] init];
+			[user setAccount:account];
+			[user setPassword:password];
+			[user setServerName:serverName];
+			[user setServerPath:path];
+			[user setType:serverType];
+			[user setProtocol:protcol];
+			[users addObject:user];
+			SecKeychainItemFreeContent(NULL, (void *)passwordString);
+		}// end if status is OK
+	}// end for
+	CFRelease(search);
+	
+#else
+	{
+		// Earler 10.5 user SecKeychainSearchCreateFromAttributes
+			// Construct a query.
+		const char *cStringServerName = [server cStringUsingEncoding:NSUTF8StringEncoding];
+		OSStatus status;
+		SecKeychainAttribute attr[1];
+		
+		attr[0].tag = kSecServerItemAttr; 
+		attr[0].length = strlen(cStringServerName); 
+		attr[0].data = (void *)cStringServerName;
+		
+		SecKeychainAttributeList attrList = { .count = 1, .attr = attr };
+		SecKeychainSearchRef search = NULL;
+		
+		status = SecKeychainSearchCreateFromAttributes(NULL, kSecInternetPasswordItemClass, &attrList, &search);
+		NSMutableArray *users = NULL;
+		if (status != noErr)
+			return users;
+		
+		users = [NSMutableArray array];
+		// iterate user accounts
+		while (true)
+		{
+			SecKeychainItemRef item = NULL;
+			status = SecKeychainSearchCopyNext(search, &item);
+			if (status != noErr)
+				break;
+			KCSInternetUser *user = [[[KCSInternetUser alloc] initWithItemRef:item] autorelease];
+			if (item != NULL)
+				[users addObject:user];
+		}// end while (true)
+		CFRelease(search);
+#endif
+		return users;
+}// end NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticationType type)
+	
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
+#else
+SecKeychainAttributeInfo makeQuery(void)
+{
+		// create query
+	UInt32 tags[attrQueryCount];
+	UInt32 formats[attrQueryCount];
+		// account item
+	tags[orderAccount] = kSecAccountItemAttr;
+	formats[orderAccount] = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
+		// server name item
+	tags[orderServerName] = kSecServerItemAttr;
+	formats[orderServerName] = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
+		// server path item
+	tags[orderServerPath] = kSecPathItemAttr;
+	formats[orderServerPath] = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
+		// server security domain item
+	tags[orderSecurityDomain] = kSecSecurityDomainItemAttr;
+	formats[orderSecurityDomain] = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
+		// server type item
+	tags[orderServerType] = kSecTypeItemAttr;
+	formats[orderServerType] = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
+		// server protocol item
+	tags[orderProtocol] = kSecProtocolItemAttr;
+	formats[orderProtocol] = CSSM_DB_ATTRIBUTE_FORMAT_UINT32;
+		// server port item
+	tags[orderPort] = kSecPortItemAttr;
+	formats[orderPort] = CSSM_DB_ATTRIBUTE_FORMAT_UINT32;
+		// server authentication item
+	tags[orderAuthType] = kSecAuthenticationTypeItemAttr;
+	formats[orderAuthType] = CSSM_DB_ATTRIBUTE_FORMAT_UINT32;
+		// server label item
+	tags[orderKeychainName] = kSecLabelItemAttr;
+	formats[orderKeychainName] = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
+		// server kind item
+	tags[orderDescription] = kSecDescriptionItemAttr;
+	formats[orderDescription] = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
+	
+	SecKeychainAttributeInfo info;
+	info.count = attrQueryCount;
+	info.tag = tags;
+	info.format = formats;
+
+	return info;
+}//end SecKeychainAttributeInfo makeQuery(void)
+#endif
 @end

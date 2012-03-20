@@ -53,13 +53,13 @@
 @property (assign, readwrite)	SecAuthenticationType	authType;
 @property (assign, readwrite)	UInt16					port;
 
+#pragma mark class method
++ (NSArray *) initWithAccountsForServer:(NSString *)where path:(NSString *)path forAuthType:(SecAuthenticationType)type;
 #pragma mark construct / destruct
 - (id) init;
 - (id) initWithAccount:(NSString *)account_ andPassword:(NSString *)password_;
 - (id) initWithURI:(NSURL *)URI;
 - (id) initWithURI:(NSURL *)URI withAuth:(SecAuthenticationType)auth;
-#pragma mark constructor support
-- (NSDictionary *) protocolDict;
 #pragma mark manage keychainItem 
 - (BOOL) addTokeychain;
 - (OSStatus) removeFromkeychain;

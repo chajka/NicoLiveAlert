@@ -9,6 +9,8 @@
 #import "KCSInternetUserTests.h"
 
 #define USERNAME	@"chajka.niconico@gmail.com"
+#define USERNAME1	@"chajka"
+#define USERNAME2	@"mellanie"
 #define PASSWORD	@"somepassword"
 #define SERVER		@"chajka.from.tv"
 #define SERVPATH	@"/"
@@ -169,7 +171,7 @@ const UInt8 portNo = 80;
 	STAssertNil(password, @"password is not nil");
 }// end - (void) testSetAccountStartCollectPassword
 
-- (void) test_06_AddPassword
+- (void) test_06_AddEntry
 {
 		// add entry test
 	KCSInternetUser *newUser = [[KCSInternetUser alloc] initWithAccount:USERNAME andPassword:PASSWORD];
@@ -190,7 +192,58 @@ const UInt8 portNo = 80;
 		// remove entry test
 	[newUser removeFromkeychain];
 	STAssertTrue(([newUser status] == noErr), @"removeFromkeychain Failed");
-	STAssertNil((__bridge id)[newUser keychainItem], @"keychainItem is not cleard");
-	
+	STAssertNil((__bridge id)[newUser keychainItem], @"keychainItem is not cleard");	
 }// end - (void) testAddPassword
+
+- (void) test_07_fetchUsers
+{
+		// create first user
+	KCSInternetUser *newUser = [[KCSInternetUser alloc] initWithAccount:USERNAME1 andPassword:PASSWORD];
+	STAssertTrue(([[newUser password] isEqualToString:PASSWORD]),@"password is invarid");
+	[newUser setServerName:SERVER];
+	[newUser setSecurityDomain:SERVER];
+	[newUser setProtocol:kSecProtocolTypeHTTPS];
+	[newUser setAuthType:kSecAuthenticationTypeHTMLForm];
+	[newUser setPort:443];
+	[newUser setKeychainName:@"Chajka's test"];
+	[newUser setKeychainKind:@"Web Form password"];
+	BOOL success = NO;
+	if ([newUser status] != noErr)
+		success = [newUser addTokeychain];
+	STAssertTrue(success, @"addTokeychain is Failed");
+	STAssertNotNil((__bridge id)[newUser keychainItem], @"keychainItem is Nil");
+
+	// create second user
+#if __has_feature(objc_arc) == 0
+	[newUser autorelease];
+#endif
+	newUser = [[KCSInternetUser alloc] initWithAccount:USERNAME2 andPassword:PASSWORD];
+	STAssertTrue(([[newUser password] isEqualToString:PASSWORD]),@"password is invarid");
+	[newUser setServerName:SERVER];
+	[newUser setSecurityDomain:SERVER];
+	[newUser setProtocol:kSecProtocolTypeHTTPS];
+	[newUser setAuthType:kSecAuthenticationTypeHTMLForm];
+	[newUser setPort:443];
+	[newUser setKeychainName:@"Chajka's test"];
+	[newUser setKeychainKind:@"Web Form password"];
+	success = NO;
+	if ([newUser status] != noErr)
+		success = [newUser addTokeychain];
+	STAssertTrue(success, @"addTokeychain is Failed");
+	STAssertNotNil((__bridge id)[newUser keychainItem], @"keychainItem is Nil");
+	
+		// search users
+	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:@"" forAuthType:kSecAuthenticationTypeAny inKeychain:NULL];
+	STAssertNotNil(users, @"users of server not found");
+	STAssertTrue(([users count] == 2), @"user count isn't match");
+
+		// cleanup users
+	for (KCSInternetUser *user in users)
+	{
+		[user removeFromkeychain];
+		STAssertTrue(([user status] == noErr), @"removeFromkeychain Failed");
+		STAssertNil((__bridge id)[user keychainItem], @"keychainItem is not cleard");	
+	}// end for
+}// end - (void) test_07_usersWith
+
 @end

@@ -54,7 +54,7 @@
 @property (assign, readwrite)	UInt16					port;
 
 #pragma mark class method
-+ (NSArray *) initWithAccountsForServer:(NSString *)where path:(NSString *)path forAuthType:(SecAuthenticationType)type;
++ (NSArray *) usersOfAccountsForServer:(NSString *)where path:(NSString *)path forAuthType:(SecAuthenticationType)type inKeychain:(SecKeychainRef)keychain;
 #pragma mark construct / destruct
 - (id) init;
 - (id) initWithAccount:(NSString *)account_ andPassword:(NSString *)password_;

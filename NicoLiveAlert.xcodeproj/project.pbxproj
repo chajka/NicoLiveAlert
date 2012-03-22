@@ -39,6 +39,18 @@
 		1D6500CB150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
 		1D6500CC150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
 		1D6500CD150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
+		1DF062BA151AE2A70025C5DE /* sbiconalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B7151AE2A70025C5DE /* sbiconalt.png */; };
+		1DF062BB151AE2A70025C5DE /* sbiconalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B7151AE2A70025C5DE /* sbiconalt.png */; };
+		1DF062BC151AE2A70025C5DE /* sbiconalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B7151AE2A70025C5DE /* sbiconalt.png */; };
+		1DF062BD151AE2A70025C5DE /* sbiconalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B7151AE2A70025C5DE /* sbiconalt.png */; };
+		1DF062BE151AE2A70025C5DE /* sbicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B8151AE2A70025C5DE /* sbicon.png */; };
+		1DF062BF151AE2A70025C5DE /* sbicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B8151AE2A70025C5DE /* sbicon.png */; };
+		1DF062C0151AE2A70025C5DE /* sbicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B8151AE2A70025C5DE /* sbicon.png */; };
+		1DF062C1151AE2A70025C5DE /* sbicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B8151AE2A70025C5DE /* sbicon.png */; };
+		1DF062C2151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B9151AE2A70025C5DE /* NicoLiveAlert.icns */; };
+		1DF062C3151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B9151AE2A70025C5DE /* NicoLiveAlert.icns */; };
+		1DF062C4151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B9151AE2A70025C5DE /* NicoLiveAlert.icns */; };
+		1DF062C5151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B9151AE2A70025C5DE /* NicoLiveAlert.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +99,10 @@
 		1D6500C3150CB351002F5A8B /* KCSUserTsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUserTsts.h; path = Keychain/KCSUserTsts.h; sourceTree = "<group>"; };
 		1D6500C4150CB351002F5A8B /* KCSUserTsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUserTsts.m; path = Keychain/KCSUserTsts.m; sourceTree = "<group>"; };
 		1D6500C9150CBE98002F5A8B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		1DF062B7151AE2A70025C5DE /* sbiconalt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sbiconalt.png; path = Images/sbiconalt.png; sourceTree = "<group>"; };
+		1DF062B8151AE2A70025C5DE /* sbicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sbicon.png; path = Images/sbicon.png; sourceTree = "<group>"; };
+		1DF062B9151AE2A70025C5DE /* NicoLiveAlert.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NicoLiveAlert.icns; path = Images/NicoLiveAlert.icns; sourceTree = "<group>"; };
+		1DF062C6151AE3950025C5DE /* NicoLiveAlertDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NicoLiveAlertDefinitions.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,10 +193,12 @@
 			isa = PBXGroup;
 			children = (
 				1D6500BA150CB07E002F5A8B /* Keychain */,
+				1DF062C6151AE3950025C5DE /* NicoLiveAlertDefinitions.h */,
 				1D1CE2D7150C77BA001E7E39 /* NicoLiveAlert.h */,
 				1D1CE2D8150C77BA001E7E39 /* NicoLiveAlert.m */,
 				1D1CE2DA150C77BB001E7E39 /* MainMenu.xib */,
 				1D1CE2CC150C77BA001E7E39 /* Supporting Files */,
+				1DF062B5151AE2660025C5DE /* Images */,
 			);
 			path = NicoLiveAlert;
 			sourceTree = "<group>";
@@ -235,6 +253,16 @@
 				1D1D3EFE151316C1001F571F /* KCSInternetUserTests.m */,
 			);
 			name = Keychain;
+			sourceTree = "<group>";
+		};
+		1DF062B5151AE2660025C5DE /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				1DF062B7151AE2A70025C5DE /* sbiconalt.png */,
+				1DF062B8151AE2A70025C5DE /* sbicon.png */,
+				1DF062B9151AE2A70025C5DE /* NicoLiveAlert.icns */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +377,9 @@
 				1D1CE2D0150C77BA001E7E39 /* InfoPlist.strings in Resources */,
 				1D1CE2D6150C77BA001E7E39 /* Credits.rtf in Resources */,
 				1D1CE2DC150C77BB001E7E39 /* MainMenu.xib in Resources */,
+				1DF062BA151AE2A70025C5DE /* sbiconalt.png in Resources */,
+				1DF062BE151AE2A70025C5DE /* sbicon.png in Resources */,
+				1DF062C2151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +388,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D1CE2ED150C77BB001E7E39 /* InfoPlist.strings in Resources */,
+				1DF062BC151AE2A70025C5DE /* sbiconalt.png in Resources */,
+				1DF062C0151AE2A70025C5DE /* sbicon.png in Resources */,
+				1DF062C4151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +401,9 @@
 				1D1CE32F150C7E9E001E7E39 /* InfoPlist.strings in Resources */,
 				1D1CE330150C7EA3001E7E39 /* Credits.rtf in Resources */,
 				1D1CE331150C7EA6001E7E39 /* MainMenu.xib in Resources */,
+				1DF062BB151AE2A70025C5DE /* sbiconalt.png in Resources */,
+				1DF062BF151AE2A70025C5DE /* sbicon.png in Resources */,
+				1DF062C3151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +412,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D1CE32E150C79F5001E7E39 /* InfoPlist.strings in Resources */,
+				1DF062BD151AE2A70025C5DE /* sbiconalt.png in Resources */,
+				1DF062C1151AE2A70025C5DE /* sbicon.png in Resources */,
+				1DF062C5151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

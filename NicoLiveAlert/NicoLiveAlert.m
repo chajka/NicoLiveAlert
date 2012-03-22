@@ -7,8 +7,10 @@
 //
 
 #import "NicoLiveAlert.h"
+#import "NicoLiveAlertDefinitions.h"
 
 @implementation NicoLiveAlert
+@synthesize menuStatusbar;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {

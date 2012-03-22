@@ -13,6 +13,7 @@
 #else
 @interface NicoLiveAlert : NSObject {
 #endif
+	NSMenu *menuStatusbar;
 }
-
+@property (retain) IBOutlet NSMenu *menuStatusbar;
 @end

@@ -17,29 +17,16 @@ const UInt8 flagInetServerName			= 0x01 << 1;
 const UInt8 flagBitInetServerName		= 0x01 << 2;
 const UInt8 flagBitInetPort				= 0x01 << 3;
 const UInt8 flagBitInetAuthType			= 0x01 << 4;
-const UInt8 flagBitInetSecurityDomain	= 0x01 << 5;
+const UInt8 flagBitInetProtocol			= 0x01 << 5;
 const UInt8 flagBitInetServerPath		= 0x01 << 6;
+const UInt8 flagBitInetSecurityDomain	= 0x01 << 7;
 const UInt8 mastBitsInetRequired = 
 	flagBitAccount | flagInetServerName | flagBitInetServerName | flagBitInetPort | 
 	flagBitInetAuthType ;
 const UInt8 maskBitsInetOptional = 
 	flagBitAccount | flagInetServerName | flagBitInetServerName | flagBitInetPort |
-	flagBitInetAuthType | flagBitInetSecurityDomain | flagBitInetServerPath;
+	flagBitInetAuthType | flagBitInetProtocol | flagBitInetSecurityDomain | flagBitInetServerPath;
 	// Generic keychain specific Bits
-	// keychain item query enumuration
-enum kcItemQueryOrder {
-	orderAccount = 0,
-	orderServerName,
-	orderServerPath,
-//	orderSecurityDomain,
-	orderServerType,
-	orderProtocol,
-	orderPort,
-	orderAuthType,
-//	orderKeychainName,
-	orderDescription,
-	attrQueryCount
-};
 
 @interface KCSUser ()
 @end
@@ -96,7 +83,7 @@ enum kcItemQueryOrder {
 		keychain = NULL;
 		keychainItem = NULL;
 		syncronized = NO;
-		paramFlags = 0x00 | flagBitInetSecurityDomain | flagBitInetServerPath;
+		paramFlags = resultAllClear;
 		status = 1;
 	}
 	return self;
@@ -154,7 +141,7 @@ enum kcItemQueryOrder {
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 - (id) initWithDictionary:(NSDictionary *)user inKeychain:(SecKeychainRef)keyChain;
 #else
-- (id) initWithItemRef:(SecKeychainItemRef)item;
+- (id) initWithItemRef:(SecKeychainItemRef)item andKeychain:(SecKeychainRef)keyChain;
 #endif
 - (NSString *) getPassword:(OSStatus *)error;
 #pragma mark constructor support
@@ -186,8 +173,11 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		serverPath = NULL;
 		securityDomain = NULL;
 		protocol = kSecProtocolTypeAny;
+		paramFlags |= flagBitInetProtocol;
 		authType = kSecAuthenticationTypeAny;
+		paramFlags |= flagBitInetAuthType;
 		port = 0;
+		paramFlags |= flagBitInetPort;
 	}// end if self
 	return self;
 }// end - (id) init
@@ -202,8 +192,10 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		keychain = NULL;
 		serverName = NULL;
 		securityDomain = NULL;
+		port = 0;
+		paramFlags |= flagBitInetPort;
 		protocol = kSecProtocolTypeAny;
-		paramFlags |= flagBitInetServerName;
+		paramFlags |= flagBitInetProtocol;
 		authType = kSecAuthenticationTypeAny;
 		paramFlags |= flagBitInetAuthType;
 	}// end if self
@@ -222,6 +214,9 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		if ((serverName != NULL) && ([serverName length] != 0))
 			paramFlags |= flagInetServerName;
 		serverPath = [[URI path] copy];
+		if (serverPath == NULL)
+			serverPath = [@"" copy];
+		paramFlags |= flagBitInetServerPath;
 		securityDomain = [[URI host] copy];
 		if ((securityDomain != NULL) && ([securityDomain length] != 0))
 			paramFlags |= flagBitInetSecurityDomain;
@@ -239,7 +234,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		paramFlags |= flagBitInetAuthType;
 		
 			// check flags and find keychain item
-		if ((paramFlags^maskBitsInetOptional) == resultAllClear)
+		if (((paramFlags & mastBitsInetRequired) ^ mastBitsInetRequired) == resultAllClear)
 			password = [self getPassword:&status];
 	}// end if self
 	return self;
@@ -257,6 +252,9 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		if ((serverName != NULL) && ([serverName length] != 0))
 			paramFlags |= flagInetServerName;
 		serverPath = [[URI path] copy];
+		if (serverPath == NULL)
+			serverPath = [@"" copy];
+		paramFlags |= flagBitInetServerPath;
 		securityDomain = [[URI host] copy];
 		if ((securityDomain != NULL) && ([securityDomain length] != 0))
 			paramFlags |= flagBitInetSecurityDomain;
@@ -274,7 +272,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		paramFlags |= flagBitInetAuthType;
 
 			// check flags and find keychain item
-		if ((paramFlags^maskBitsInetOptional) == resultAllClear)
+		if (((paramFlags & mastBitsInetRequired) ^ mastBitsInetRequired) == resultAllClear)
 			password = [self getPassword:&status];
 	}// end if self
 	return self;
@@ -290,14 +288,24 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	{
 		keychain = keyChain;
 		account = [[user objectForKey:kSecAttrAccount] copy];
+		if ((account != NULL) && ([account length] != 0))
+			paramFlags |= flagBitAccount;
 		keychainName = [[user objectForKey:kSecAttrLabel] copy];
 		keychainKind = [[user objectForKey:kSecAttrDescription] copy];
 		serverName = [[user objectForKey:kSecAttrServer] copy];
 		serverPath = [[user objectForKey:kSecAttrPath] copy];
+		if (serverPath == NULL)
+			serverPath = [@"" copy];
+		paramFlags |= flagBitInetServerPath;
 		securityDomain = [[user objectForKey:kSecAttrSecurityDomain] copy];
+		if ((securityDomain != NULL) && ([securityDomain length] == 0))
+			paramFlags |= flagBitInetSecurityDomain;
 		protocol = [[user objectForKey:kSecAttrProtocol] integerValue];
+		paramFlags |= flagBitInetProtocol;
 		authType = [[user objectForKey:kSecAttrAuthenticationType] integerValue];
+		paramFlags |= flagBitInetAuthType;
 		port = [[user objectForKey:kSecAttrPort] integerValue];
+		paramFlags |= flagBitInetPort;
 
 		UInt32 passwordLength = 0;
 		const char *passwordString = NULL;
@@ -318,7 +326,8 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		password = [passwd copy];
 #if __has_feature(objc_arc) == 0
 		[passwd autorelase];
-#endif		
+#endif
+		syncronized = TRUE;
 		
 		SecKeychainItemFreeContent(NULL, (void *)passwordString);
 	}// end if self
@@ -327,13 +336,15 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 #endif
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_5
-- (id) initWithItemRef:(SecKeychainItemRef)item
+- (id) initWithItemRef:(SecKeychainItemRef)item andKeychain:(SecKeychainRef)keyChain
 {
 	if (item == NULL)
 		return NULL;
 	self = [super init];
 	if (self)
-	{		// set keychain item
+	{		// set keychain
+		keychain = keyChain;
+			// set keychain item
 		keychainItem = item;
 			// initialize variables
 		SecKeychainAttributeInfo info;
@@ -351,11 +362,13 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		format = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
 		status = SecKeychainItemCopyAttributesAndData(item, &info, NULL, &attrList, &length, &data);
 		if (status == noErr)	// check fetch data is success?
-		{		// get password
+		{		// get account
+			account = [[[[NSString alloc] initWithBytes:attrList->attr->data length:attrList->attr->length encoding:NSUTF8StringEncoding] autorelease] copy];
+			paramFlags |= flagBitAccount;
+				// get password
 			password = [[[[NSString alloc] initWithBytes:data length:length encoding:NSUTF8StringEncoding] autorelease] copy];
-				// get account
-			account = [[[[NSString alloc] initWithBytes:attrList->attr[orderAccount].data length:attrList->attr[orderAccount].length encoding:NSUTF8StringEncoding] autorelease] copy];
 			SecKeychainItemFreeAttributesAndData(attrList, data);
+			syncronized = TRUE;
 		}
 		else
 		{
@@ -372,6 +385,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		{
 			serverName = [[[[NSString alloc] initWithBytes:attrList->attr->data length:attrList->attr->length encoding:NSUTF8StringEncoding] autorelease] copy];
 			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			paramFlags |= flagBitInetServerName;
 		}
 		else
 		{
@@ -387,6 +401,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		{
 			serverPath = [[[[NSString alloc] initWithBytes:attrList->attr->data length:attrList->attr->length encoding:NSUTF8StringEncoding] autorelease] copy];
 			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			paramFlags |= flagBitInetServerPath;
 		}
 		else
 		{
@@ -402,6 +417,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		{
 			securityDomain = [[[[NSString alloc] initWithBytes:attrList->attr->data length:attrList->attr->length encoding:NSUTF8StringEncoding] autorelease] copy];
 			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			paramFlags |= flagBitInetSecurityDomain;
 		}
 		else
 		{
@@ -423,6 +439,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 			protocol = kSecProtocolTypeAny;
 			SecKeychainItemFreeAttributesAndData(attrList, NULL);
 		}// end if set protocol
+		paramFlags |= flagBitInetProtocol;
 		
 				// get prot
 		tag = kSecPortItemAttr;
@@ -438,6 +455,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 			port = 0;
 			SecKeychainItemFreeAttributesAndData(attrList, NULL);
 		}// end set authentication type
+		paramFlags |= flagBitInetPort;
 
 				// get authentication type
 		tag = kSecProtocolItemAttr;
@@ -447,6 +465,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		{
 			authType = *(SecAuthenticationType *)(attrList->attr->data);
 			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			paramFlags |= flagBitInetAuthType;
 		}
 		else
 		{
@@ -485,7 +504,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		}// end set keychain name
 	}// end if self
 	return self;
-}// end - (id) initWithItemRef:(SecKeychainItemRef)item
+}// end - (id) initWithItemRef:(SecKeychainItemRef)item andKeychain:(SecKeychainRef)keyChain
 #endif
 
 - (void) dealloc
@@ -524,8 +543,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	[super setAccount:account_];
 
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
-		((paramFlags^mastBitsInetRequired) == resultAllClear))
+	if (((paramFlags & mastBitsInetRequired) ^ mastBitsInetRequired) == resultAllClear)
 		password = [self getPassword:&status];
 }// end - (void) setAccount:(NSString *)account_
 
@@ -552,8 +570,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		paramFlags &= ~flagInetServerName;
 
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
-		((paramFlags^mastBitsInetRequired) == resultAllClear))
+	if (((paramFlags & mastBitsInetRequired) ^ mastBitsInetRequired) == resultAllClear)
 		password = [self getPassword:&status];
 }// end - (void) setServerName:(NSString *)serverName_
 
@@ -575,8 +592,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	serverPath = [serverPath_ copy];
 
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
-		((paramFlags^mastBitsInetRequired) == resultAllClear))
+	if (((paramFlags & mastBitsInetRequired) ^ mastBitsInetRequired) == resultAllClear)
 		password = [self getPassword:&status];
 }// end - (void) setServerPath:(NSString *)serverPath_
 
@@ -603,8 +619,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		paramFlags &= ~flagBitInetSecurityDomain;
 	
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
-		((paramFlags^mastBitsInetRequired) == resultAllClear))
+	if (((paramFlags & mastBitsInetRequired) ^ mastBitsInetRequired) == resultAllClear)
 		password = [self getPassword:&status];
 }// end - (void) setSecurityDomain:(NSString *)securityDomain_
 
@@ -621,11 +636,10 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	syncronized = NO;
 	protocol = protocol_;
 		// set protocol flag
-	paramFlags |= flagBitInetServerName;
+	paramFlags |= flagBitInetProtocol;
 	
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
-		((paramFlags^mastBitsInetRequired) == resultAllClear))
+	if (((paramFlags & mastBitsInetRequired) ^ mastBitsInetRequired) == resultAllClear)
 		password = [self getPassword:&status];
 }// end - (SecProtocolType) protocol
 
@@ -645,8 +659,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	paramFlags |= flagBitInetAuthType;
 	
 		// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
-		((paramFlags^mastBitsInetRequired) == resultAllClear))
+	if (((paramFlags & mastBitsInetRequired) ^ mastBitsInetRequired) == resultAllClear)
 		password = [self getPassword:&status];
 }// end - (void) setAuthType:(SecAuthenticationType)authType_
 
@@ -666,8 +679,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	paramFlags |= flagBitInetPort;
 	
 	// check flags and find keychain item
-	if (((paramFlags^maskBitsInetOptional) == resultAllClear) ||
-		((paramFlags^mastBitsInetRequired) == resultAllClear))
+	if (((paramFlags & mastBitsInetRequired) ^ mastBitsInetRequired) == resultAllClear)
 		password = [self getPassword:&status];
 }// end - (void) setPort:(UInt16)port_
 
@@ -705,6 +717,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		[data release];
 		[[password autorelease] retain];
 #endif
+		syncronized = TRUE;
 	}
 	
 	return password;
@@ -713,8 +726,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 #pragma mark manage keychainItem 
 - (BOOL) addTokeychain
 {		// check params
-	if (((paramFlags^maskBitsInetOptional) != resultAllClear) &&
-		((paramFlags^mastBitsInetRequired) != resultAllClear))
+	if (((paramFlags & mastBitsInetRequired) ^ mastBitsInetRequired) == resultAllClear)
 		return NO;
 
 		// check password is existing
@@ -799,16 +811,19 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	return status;
 }// end - (OSStatus) removeFromkeychain;
 
-// TODO: must be implement contents
 - (OSStatus) changePasswordTo:(NSString *)newPassword
 {
 	OSStatus error = errSecItemNotFound;
 	if (keychainItem == NULL)
 		return error;
 
-//	SeckeychainModifyContent();
+		// write to keychain
+	const char *passwordString = [newPassword UTF8String];
+	status = SecKeychainItemModifyAttributesAndData(keychainItem, NULL, strlen(passwordString), (void *)passwordString);
+	if (status == noErr)
+		syncronized = TRUE;
 
-	return error;
+	return status;
 }// end - (OSStatus ) changePasswordTo:(NSString *)newPassword
 
 NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticationType type, SecKeychainRef keychain)
@@ -852,7 +867,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	SecKeychainAttributeList attrList = { .count = 1, .attr = attr };
 	SecKeychainSearchRef search = NULL;
 	
-	status = SecKeychainSearchCreateFromAttributes(NULL, kSecInternetPasswordItemClass, &attrList, &search);
+	status = SecKeychainSearchCreateFromAttributes(keychain, kSecInternetPasswordItemClass, &attrList, &search);
 	if (status != noErr)
 		return users;
 	
@@ -863,7 +878,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		status = SecKeychainSearchCopyNext(search, &item);
 		if (status != noErr)
 			break;
-		KCSInternetUser *user = [[[KCSInternetUser alloc] initWithItemRef:item] autorelease];
+		KCSInternetUser *user = [[[KCSInternetUser alloc] initWithItemRef:item andKeychain:keychain] autorelease];
 		if (item != NULL)
 			[users addObject:user];
 	}// end while (true)

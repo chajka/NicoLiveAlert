@@ -12,6 +12,7 @@
 #define USERNAME1	@"chajka"
 #define USERNAME2	@"mellanie"
 #define PASSWORD	@"somepassword"
+#define PASSWORD2	@"changedpassword"
 #define SERVER		@"chajka.from.tv"
 #define SERVPATH	@"/"
 #define SECDOMAIN	@"chajka.from.tv"
@@ -245,5 +246,39 @@ const UInt8 portNo = 80;
 		STAssertNil((__bridge id)[user keychainItem], @"keychainItem is not cleard");	
 	}// end for
 }// end - (void) test_07_usersWith
+
+- (void) test_08_changePassword
+{
+	// create user
+	KCSInternetUser *user = [[KCSInternetUser alloc] initWithAccount:USERNAME1 andPassword:PASSWORD];
+	STAssertTrue(([[user password] isEqualToString:PASSWORD]),@"password is invarid");
+	[user setServerName:SERVER];
+	[user setSecurityDomain:SERVER];
+	[user setProtocol:kSecProtocolTypeHTTPS];
+	[user setAuthType:kSecAuthenticationTypeHTMLForm];
+	[user setPort:443];
+	[user setKeychainName:@"Chajka's test"];
+	[user setKeychainKind:@"Web Form password"];
+	BOOL success = NO;
+	if ([user status] != noErr)
+		success = [user addTokeychain];
+	STAssertTrue(success, @"addTokeychain is Failed");
+	STAssertNotNil((__bridge id)[user keychainItem], @"keychainItem is Nil");
+
+	OSStatus status = [user changePasswordTo:PASSWORD2];
+	STAssertTrue((status == noErr), @"change password status failed");
+
+		// search users
+	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:@"" forAuthType:kSecAuthenticationTypeAny inKeychain:NULL];
+	STAssertNotNil(users, @"users of server not found");
+	STAssertTrue(([users count] == 1), @"user count isn't match");
+		//
+	KCSInternetUser *result = [users objectAtIndex:0];
+	STAssertTrue([PASSWORD2 isEqualToString:[result password]], @"password is not changed");
+		// remove
+	[user removeFromkeychain];
+	STAssertTrue(([user status] == noErr), @"removeFromkeychain Failed");
+	STAssertNil((__bridge id)[user keychainItem], @"keychainItem is not cleard");	
+}// end - (void) test_08_changePassword
 
 @end

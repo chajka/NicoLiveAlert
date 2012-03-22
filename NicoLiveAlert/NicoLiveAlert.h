@@ -14,6 +14,13 @@
 @interface NicoLiveAlert : NSObject {
 #endif
 	NSMenu *menuStatusbar;
+#if __has_feature(objc_arc) 
+	__strong NSStatusItem *sbItem;
+#else
+	NSStatusItem *sbItem;
+#endif
 }
 @property (retain) IBOutlet NSMenu *menuStatusbar;
+
+- (void) installStatusbarMenu;
 @end

@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  NicoLiveAlert
+
+  Created by Чайка on 2/28/12.
+  Copyright (c) 2012 iom. All rights reserved.
+*/
+
+// menubar item title
+"TitleAutoOpen" = "チェックした放送を自動で開く";
+"TitlePrograms" = "放送中の番組";
+"TitleAccounts" = "チェック中のアカウント";
+"TitleLauncher" = "登録したアプリケーションを起動";
+"TitlePreference" = "環境設定…";
+"TitleAbout" = "NicoLiveAlertについて…";
+"TitleQuit" = "終了";

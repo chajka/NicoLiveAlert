@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  NicoLiveAlert
+
+  Created by Чайка on 2/28/12.
+  Copyright (c) 2012 iom. All rights reserved.
+*/
+
+// menubar item title
+"TitleAutoOpen" = "AutoOpen Checked Live";
+"TitlePrograms" = "Programs";
+"TitleAccounts" = "Accounts";
+"TitleLauncher" = "launch Applications";
+"TitlePreference" = "Preference…";
+"TitleAbout" = "About NicoLiveAlert…";
+"TitleQuit" = "Quit";

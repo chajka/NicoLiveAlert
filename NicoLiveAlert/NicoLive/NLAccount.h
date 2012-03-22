@@ -13,12 +13,14 @@
 	NSString			*password;
 	NSString			*username;
 	NSNumber			*userid;
+	NSString			*ticket;
 	NSMutableDictionary	*channels;
 }
 @property (copy, readwrite)	NSString			*mailaddr;
 @property (copy, readwrite)	NSString			*password;
 @property (copy, readwrite)	NSString			*username;
 @property (copy, readwrite)	NSNumber			*userid;
+@property (copy, readwrite)	NSString			*ticket;
 @property (copy, readwrite)	NSMutableDictionary	*channels;
 
 @end

@@ -13,6 +13,7 @@
 @synthesize password;
 @synthesize username;
 @synthesize userid;
+@synthesize ticket;
 @synthesize channels;
 
 @end

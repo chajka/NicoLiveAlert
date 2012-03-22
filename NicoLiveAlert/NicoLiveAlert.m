@@ -1,5 +1,5 @@
 //
-//  AppDelegate.m
+//  NicoLiveAlert.m
 //  NicoLiveAlert
 //
 //  Created by Чайка on 3/11/12.
@@ -8,9 +8,7 @@
 
 #import "NicoLiveAlert.h"
 
-@implementation AppDelegate
-
-@synthesize window = _window;
+@implementation NicoLiveAlert
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {

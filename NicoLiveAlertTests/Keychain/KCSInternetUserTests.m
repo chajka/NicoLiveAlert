@@ -196,7 +196,14 @@ const UInt8 portNo = 80;
 	STAssertNil((__bridge id)[newUser keychainItem], @"keychainItem is not cleard");	
 }// end - (void) testAddPassword
 
-- (void) test_07_fetchUsers
+- (void) test_07_fetchEmptyUsers
+{
+		// search users
+	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:@"" forAuthType:kSecAuthenticationTypeAny inKeychain:NULL];
+	STAssertNil(users, @"users of server not found");
+}// end - (void) test_07_fetchEmptyUsers
+
+- (void) test_08_fetchUsers
 {
 		// create first user
 	KCSInternetUser *newUser = [[KCSInternetUser alloc] initWithAccount:USERNAME1 andPassword:PASSWORD];
@@ -245,9 +252,9 @@ const UInt8 portNo = 80;
 		STAssertTrue(([user status] == noErr), @"removeFromkeychain Failed");
 		STAssertNil((__bridge id)[user keychainItem], @"keychainItem is not cleard");	
 	}// end for
-}// end - (void) test_07_usersWith
+}// end - (void) test_08_usersWith
 
-- (void) test_08_changePassword
+- (void) test_09_changePassword
 {
 	// create user
 	KCSInternetUser *user = [[KCSInternetUser alloc] initWithAccount:USERNAME1 andPassword:PASSWORD];
@@ -279,6 +286,6 @@ const UInt8 portNo = 80;
 	[user removeFromkeychain];
 	STAssertTrue(([user status] == noErr), @"removeFromkeychain Failed");
 	STAssertNil((__bridge id)[user keychainItem], @"keychainItem is not cleard");	
-}// end - (void) test_08_changePassword
+}// end - (void) test_09_changePassword
 
 @end

@@ -841,7 +841,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
     CFArrayRef search = NULL;
     status = SecItemCopyMatching(query, (CFTypeRef*)&search);
 	CFRelease(query);
-	if ((status != noErr) && ((items = CFArrayGetCount(search)) != 0))
+	if ((search == NULL) || ((status != noErr) && ((items = CFArrayGetCount(search)) != 0)))
 		return NULL;
 	
 	KCSInternetUser *user;

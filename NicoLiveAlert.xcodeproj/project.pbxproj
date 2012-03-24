@@ -120,7 +120,7 @@
 		1D1CE2EE150C77BB001E7E39 /* NicoLiveAlertTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NicoLiveAlertTests.h; sourceTree = "<group>"; };
 		1D1CE2EF150C77BB001E7E39 /* NicoLiveAlertTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NicoLiveAlertTests.m; sourceTree = "<group>"; };
 		1D1CE2FD150C7849001E7E39 /* NicoLiveAlert Leopard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NicoLiveAlert Leopard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D1CE317150C7849001E7E39 /* NicoLiveAlertTests LeopardTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NicoLiveAlertTests LeopardTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D1CE317150C7849001E7E39 /* NicoLiveAlertTests Leopard.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NicoLiveAlertTests Leopard.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1D3EFD151316C1001F571F /* KCSInternetUserTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSInternetUserTests.h; path = Keychain/KCSInternetUserTests.h; sourceTree = "<group>"; };
 		1D1D3EFE151316C1001F571F /* KCSInternetUserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSInternetUserTests.m; path = Keychain/KCSInternetUserTests.m; sourceTree = "<group>"; };
 		1D1E5232151B0B9900BDD43D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = NicoLiveAlert/en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 				1D1CE2C1150C77BA001E7E39 /* NicoLiveAlert Lion.app */,
 				1D1CE2E2150C77BB001E7E39 /* NicoLiveAlertTests.octest */,
 				1D1CE2FD150C7849001E7E39 /* NicoLiveAlert Leopard.app */,
-				1D1CE317150C7849001E7E39 /* NicoLiveAlertTests LeopardTests.octest */,
+				1D1CE317150C7849001E7E39 /* NicoLiveAlertTests Leopard.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -405,8 +405,8 @@
 				1D1CE31B150C7849001E7E39 /* PBXTargetDependency */,
 			);
 			name = "NicoLiveAlertTests Leopard";
-			productName = "NicoLiveAlert LeopardTests";
-			productReference = 1D1CE317150C7849001E7E39 /* NicoLiveAlertTests LeopardTests.octest */;
+			productName = "NicoLiveAlert Leopard";
+			productReference = 1D1CE317150C7849001E7E39 /* NicoLiveAlertTests Leopard.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */

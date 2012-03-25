@@ -7,7 +7,56 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NicoLiveAlertDefinitions.h"
+/*!
+	@header NLStatusbarIcon.h
 
-@interface NLStatusbarIcon : NSObject
+	This header file describes the constructs used to stasusbar management.
+	bur currently useable by NicoLiveAlert.
+*/
 
+@interface NLStatusbarIcon : NSObject {
+	__strong	NSStatusItem	*statusBarItem;
+	__strong	NSStatusBar		*statusBar;
+	NSMenu						*statusbarMenu;
+	NSInteger					numberOfPrograms;
+	NSSize						noProgSize;
+	NSSize						haveProgSize;
+	CIImage						*sourceImage;
+	CIImage						*destImage;
+	NSImage						*statusbarIcon;
+	NSImage						*statusbarAlt;
+	CIFilter					*gammaFilter;
+	NSNumber					*gammaPower;
+	CIFilter					*cropFilter;
+	CIVector					*noProgVect;
+	CIVector					*haveProgVect;
+	CIFilter					*invertFilter;
+	NSFont						*progCountFont;
+	NSDictionary				*fontAttrDict;
+	NSDictionary				*fontAttrInvertDict;
+}
+@property (readonly) NSInteger	numberOfPrograms;
+
+/*!
+	@method initWithMenu:andImageName:
+	@abstract initialize statusbar menu and install it.
+	@param menu menu of install to stataus bar.
+	@param imageName point a image it show on statusbar.
+	@result A newly-created statusbar manager instance.
+*/
+- (id) initWithMenu:(NSMenu *)menu andImageName:(NSString *)imageName;
+
+#pragma mark accessor
+/*!
+	@method incleaseProgCount
+	@abstract notify pogram count need inclease.
+*/
+- (void) incleaseProgCount;
+
+/*!
+ @method decleaseProgCount
+ @abstract notify pogram count need declease.
+ */
+- (void) decleaseProgCount;
 @end

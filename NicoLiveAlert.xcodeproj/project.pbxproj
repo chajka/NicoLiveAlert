@@ -49,6 +49,9 @@
 		1D1E523A151B0BA900BDD43D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1E5231151B0B9900BDD43D /* Localizable.strings */; };
 		1D1E523B151B0BA900BDD43D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1E5231151B0B9900BDD43D /* Localizable.strings */; };
 		1D1E523C151B0BA900BDD43D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1E5231151B0B9900BDD43D /* Localizable.strings */; };
+		1D2AD039151F2E98001496E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2AD038151F2E98001496E6 /* Foundation.framework */; };
+		1D2AD03C151F2EB2001496E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2AD03B151F2EB2001496E6 /* Foundation.framework */; };
+		1D2AD03D151F2EB2001496E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2AD03B151F2EB2001496E6 /* Foundation.framework */; };
 		1D6500BE150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500BF150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500C5150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
@@ -108,7 +111,6 @@
 		1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1D1CE2C8150C77BA001E7E39 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		1D1CE2C9150C77BA001E7E39 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		1D1CE2CA150C77BA001E7E39 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D1CE2CD150C77BA001E7E39 /* NicoLiveAlert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NicoLiveAlert-Info.plist"; sourceTree = "<group>"; };
 		1D1CE2CF150C77BA001E7E39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1D1CE2D1150C77BA001E7E39 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -129,6 +131,8 @@
 		1D1D3EFE151316C1001F571F /* KCSInternetUserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSInternetUserTests.m; path = Keychain/KCSInternetUserTests.m; sourceTree = "<group>"; };
 		1D1E5232151B0B9900BDD43D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = NicoLiveAlert/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1D1E5238151B0BA900BDD43D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = NicoLiveAlert/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1D2AD038151F2E98001496E6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		1D2AD03B151F2EB2001496E6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		1D6500BC150CB0DE002F5A8B /* KCSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUser.h; path = KeychainAccess/KCSUser.h; sourceTree = "<group>"; };
 		1D6500BD150CB0DE002F5A8B /* KCSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUser.m; path = KeychainAccess/KCSUser.m; sourceTree = "<group>"; };
 		1D6500C3150CB351002F5A8B /* KCSUserTsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUserTsts.h; path = Keychain/KCSUserTsts.h; sourceTree = "<group>"; };
@@ -173,6 +177,8 @@
 				1D1CE2FF150C7849001E7E39 /* Cocoa.framework in Frameworks */,
 				1D6500CB150CBE98002F5A8B /* Security.framework in Frameworks */,
 				1D141CFF151DAA1300CEB686 /* QuartzCore.framework in Frameworks */,
+				1D2AD039151F2E98001496E6 /* Foundation.framework in Frameworks */,
+				1D2AD03C151F2EB2001496E6 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +190,7 @@
 				1D1CE319150C7849001E7E39 /* Cocoa.framework in Frameworks */,
 				1D6500CD150CBE98002F5A8B /* Security.framework in Frameworks */,
 				1D141D01151DAA1300CEB686 /* QuartzCore.framework in Frameworks */,
+				1D2AD03D151F2EB2001496E6 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,9 +253,10 @@
 		1D1CE2C7150C77BA001E7E39 /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1D2AD03B151F2EB2001496E6 /* Foundation.framework */,
+				1D2AD038151F2E98001496E6 /* Foundation.framework */,
 				1D1CE2C8150C77BA001E7E39 /* AppKit.framework */,
 				1D1CE2C9150C77BA001E7E39 /* CoreData.framework */,
-				1D1CE2CA150C77BA001E7E39 /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -791,7 +799,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NicoLiveAlert Leopard.app/Contents/MacOS/NicoLiveAlert Leopard";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlertTests/NicoLiveAlertTests-Info.plist";
@@ -808,7 +819,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NicoLiveAlert Leopard.app/Contents/MacOS/NicoLiveAlert Leopard";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlertTests/NicoLiveAlertTests-Info.plist";

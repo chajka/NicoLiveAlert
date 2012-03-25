@@ -17,7 +17,7 @@ static CGFloat noProgPower = 0.3;
 static CGFloat progCountFontSize = 11;
 static CGFloat progCountPointY = 1.5;
 static CGFloat progCountPointSingleDigitX = 31.0;
-static CGFloat progCountPointDoubleDigitX = 26.0;
+static CGFloat progCountPointDoubleDigitX = 28.0;
 static CGFloat progCountPointTripleDigitX = 20.0;
 
 #pragma mark internal constant
@@ -52,7 +52,7 @@ static CGFloat progCountPointTripleDigitX = 20.0;
 		noProgVect = [CIVector vectorWithX:origin Y:origin Z:noProgWidth W:iconHeight];
 		haveProgVect = [CIVector vectorWithX:origin Y:origin Z:haveProgWidth W:iconHeight];
 		invertFilter = [CIFilter filterWithName:@"CIColorInvert"];
-		progCountFont = [NSFont fontWithName:@"HiraKakuStd-W8" size:progCountFontSize];
+		progCountFont = [NSFont fontWithName:@"CourierNewPS-BoldItalicMT" size:progCountFontSize];
 		fontAttrDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, progCountFont,NSFontAttributeName, nil];
 		fontAttrInvertDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSColor blackColor], NSForegroundColorAttributeName, progCountFont ,NSFontAttributeName, nil];
 #if __has_feature(objc_arc) == 0
@@ -171,7 +171,6 @@ static CGFloat progCountPointTripleDigitX = 20.0;
 		else 
 			drawPoint = NSMakePoint(progCountPointSingleDigitX, progCountPointY);
 		// draw for image
-		NSLog(@"%ld", numberOfPrograms);
 		[statusbarIcon lockFocus];
 		[progCountStr drawAtPoint:drawPoint withAttributes:fontAttrDict];
 		[statusbarIcon unlockFocus];
@@ -188,14 +187,12 @@ static CGFloat progCountPointTripleDigitX = 20.0;
 #pragma mark accessor
 - (void) incleaseProgCount
 {
-	NSLog(@"incleaseProgCount");
 	numberOfPrograms++;
 	[self makeStatusbarIcon];
 }// end - (BOOL) incleaseProgCount
 
 - (void) decleaseProgCount
 {
-	NSLog(@"decleaseProgCount");
 	if (numberOfPrograms > 0)
 		numberOfPrograms--;
 	[self makeStatusbarIcon];

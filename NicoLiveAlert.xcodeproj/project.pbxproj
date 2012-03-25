@@ -63,6 +63,10 @@
 		1DAAB8FB151B4BA500D0D2B3 /* NLAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */; };
 		1DAAB8FC151B4BA500D0D2B3 /* NLAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */; };
 		1DAAB8FD151B4BA500D0D2B3 /* NLAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */; };
+		1DE87D82151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
+		1DE87D83151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
+		1DE87D84151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
+		1DE87D85151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DF062BA151AE2A70025C5DE /* sbiconalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B7151AE2A70025C5DE /* sbiconalt.png */; };
 		1DF062BB151AE2A70025C5DE /* sbiconalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B7151AE2A70025C5DE /* sbiconalt.png */; };
 		1DF062BC151AE2A70025C5DE /* sbiconalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B7151AE2A70025C5DE /* sbiconalt.png */; };
@@ -132,6 +136,8 @@
 		1D6500C9150CBE98002F5A8B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1DAAB8F8151B4BA500D0D2B3 /* NLAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccount.h; path = NicoLive/NLAccount.h; sourceTree = "<group>"; };
 		1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLAccount.m; path = NicoLive/NLAccount.m; sourceTree = "<group>"; };
+		1DE87D80151EFFBB006C6EDC /* NLUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLUsers.h; path = NicoLive/NLUsers.h; sourceTree = "<group>"; };
+		1DE87D81151EFFBB006C6EDC /* NLUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLUsers.m; path = NicoLive/NLUsers.m; sourceTree = "<group>"; };
 		1DF062B7151AE2A70025C5DE /* sbiconalt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sbiconalt.png; path = Images/sbiconalt.png; sourceTree = "<group>"; };
 		1DF062B8151AE2A70025C5DE /* sbicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sbicon.png; path = Images/sbicon.png; sourceTree = "<group>"; };
 		1DF062B9151AE2A70025C5DE /* NicoLiveAlert.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NicoLiveAlert.icns; path = Images/NicoLiveAlert.icns; sourceTree = "<group>"; };
@@ -320,6 +326,8 @@
 				1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */,
 				1D141CF1151D8DAA00CEB686 /* NLStatusbarIcon.h */,
 				1D141CF2151D8DAA00CEB686 /* NLStatusbarIcon.m */,
+				1DE87D80151EFFBB006C6EDC /* NLUsers.h */,
+				1DE87D81151EFFBB006C6EDC /* NLUsers.m */,
 			);
 			name = NicoLive;
 			sourceTree = "<group>";
@@ -538,6 +546,7 @@
 				1DAAB8FA151B4BA500D0D2B3 /* NLAccount.m in Sources */,
 				1D07EB8E151C5C1E00CEF855 /* HTTPConnection.m in Sources */,
 				1D141CF3151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */,
+				1DE87D82151EFFBB006C6EDC /* NLUsers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,6 +561,7 @@
 				1DAAB8FC151B4BA500D0D2B3 /* NLAccount.m in Sources */,
 				1D07EB90151C5C1E00CEF855 /* HTTPConnection.m in Sources */,
 				1D141CF5151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */,
+				1DE87D84151EFFBB006C6EDC /* NLUsers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +575,7 @@
 				1DAAB8FB151B4BA500D0D2B3 /* NLAccount.m in Sources */,
 				1D07EB8F151C5C1E00CEF855 /* HTTPConnection.m in Sources */,
 				1D141CF4151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */,
+				1DE87D83151EFFBB006C6EDC /* NLUsers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +590,7 @@
 				1DAAB8FD151B4BA500D0D2B3 /* NLAccount.m in Sources */,
 				1D07EB91151C5C1E00CEF855 /* HTTPConnection.m in Sources */,
 				1D141CF6151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */,
+				1DE87D85151EFFBB006C6EDC /* NLUsers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,6 +758,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
@@ -761,6 +774,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";

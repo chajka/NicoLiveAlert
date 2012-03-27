@@ -26,7 +26,15 @@
     [super tearDown];
 }// end - (void) tearDown
 
-- (void) test_01_allocation
+- (void) test_01_allocationFail
+{
+	NLAccount *user = NULL;
+	STAssertNil(user, @"stack variable initialize failed");
+	user = [[NLAccount alloc] initWithAccount:@"dummyAccount@gmail.com" andPassword:@"dummyPassword"];
+	STAssertNil(user, @"dummy account but object allocated");
+}// end - (void) test_01_allocationFail
+
+- (void) test_02_allocation
 {
 	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:PATH forAuthType:kSecAuthenticationTypeAny inKeychain:NULL];
 	STAssertNotNil(users, @"fetch user failed");

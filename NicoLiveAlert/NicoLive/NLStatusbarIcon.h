@@ -20,8 +20,7 @@
 	__strong	NSStatusBar		*statusBar;
 	NSMenu						*statusbarMenu;
 	NSInteger					numberOfPrograms;
-	NSSize						noProgSize;
-	NSSize						haveProgSize;
+	NSSize						iconSize;
 	CIImage						*sourceImage;
 	CIImage						*destImage;
 	NSImage						*statusbarIcon;
@@ -32,9 +31,12 @@
 	CIVector					*noProgVect;
 	CIVector					*haveProgVect;
 	CIFilter					*invertFilter;
+	NSPoint						drawPoint;
 	NSFont						*progCountFont;
 	NSDictionary				*fontAttrDict;
 	NSDictionary				*fontAttrInvertDict;
+	NSBezierPath				*progCountBackground;
+	NSColor						*progCountBackColor;
 }
 @property (readonly) NSInteger	numberOfPrograms;
 

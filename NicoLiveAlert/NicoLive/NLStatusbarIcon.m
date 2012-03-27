@@ -11,14 +11,23 @@
 
 static CGFloat origin = 0.0;
 static CGFloat iconHeight = 20.0;
+//static CGFloat noProgWidth = 20.0;
 static CGFloat noProgWidth = 20.0;
-static CGFloat haveProgWidth = 50.0;
+static CGFloat haveProgWidth = 41.0;
 static CGFloat noProgPower = 0.3;
 static CGFloat progCountFontSize = 11;
 static CGFloat progCountPointY = 1.5;
-static CGFloat progCountPointSingleDigitX = 31.0;
-static CGFloat progCountPointDoubleDigitX = 28.0;
-static CGFloat progCountPointTripleDigitX = 20.0;
+static CGFloat progCountPointSingleDigitX = 27.0;
+static CGFloat progCountBackGroundWidth = 14.3;
+static CGFloat progCountBackGrountFromX = 28.0;
+static CGFloat progCountBackGrountFromY = 8.5;
+static CGFloat progCountBackGrountToX = 34.0;
+static CGFloat progCountBackGrountToY = 8.5;
+static CGFloat progCountBackDigitOffset = 6.5;
+static CGFloat progCountBackColorRed = 000.0/256.0;
+static CGFloat progCountBackColorGreen = 153.0/256.0;
+static CGFloat progCountBackColorBlue = 051.0/256.0;
+static CGFloat progCountBackColorAlpha = 1.00;
 
 #pragma mark internal constant
 
@@ -40,26 +49,31 @@ static CGFloat progCountPointTripleDigitX = 20.0;
 	{
 		numberOfPrograms = 0;
 		statusbarMenu = menu;
-		noProgSize = NSMakeSize(noProgWidth, iconHeight);
-		haveProgSize = NSMakeSize(haveProgWidth, iconHeight);
+		drawPoint = NSMakePoint(progCountPointSingleDigitX, progCountPointY);
+		iconSize = NSMakeSize(noProgWidth, iconHeight);
 		sourceImage = [self createFromResource:imageName];
 		destImage = NULL;
-		statusbarIcon = [[NSImage alloc] initWithSize:noProgSize];
-		statusbarAlt = [[NSImage alloc] initWithSize:noProgSize];
+		statusbarIcon = [[NSImage alloc] initWithSize:iconSize];
+		statusbarAlt = [[NSImage alloc] initWithSize:iconSize];
 		gammaFilter = [CIFilter filterWithName:@"CIGammaAdjust"];
 		gammaPower = [NSNumber numberWithFloat:noProgPower];
-		cropFilter = [CIFilter filterWithName:@"CICrop"];
-		noProgVect = [CIVector vectorWithX:origin Y:origin Z:noProgWidth W:iconHeight];
-		haveProgVect = [CIVector vectorWithX:origin Y:origin Z:haveProgWidth W:iconHeight];
 		invertFilter = [CIFilter filterWithName:@"CIColorInvert"];
 		progCountFont = [NSFont fontWithName:@"CourierNewPS-BoldItalicMT" size:progCountFontSize];
 		fontAttrDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, progCountFont,NSFontAttributeName, nil];
 		fontAttrInvertDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSColor blackColor], NSForegroundColorAttributeName, progCountFont ,NSFontAttributeName, nil];
+		progCountBackground = [NSBezierPath bezierPath];
+		[progCountBackground setLineCapStyle:NSRoundLineCapStyle];
+		[progCountBackground setLineWidth:progCountBackGroundWidth];
+		[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
+		[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX, progCountBackGrountToY)];
+		
+		progCountBackColor = [NSColor colorWithCalibratedRed:progCountBackColorRed green:progCountBackColorGreen blue:progCountBackColorBlue alpha:progCountBackColorAlpha];
 #if __has_feature(objc_arc) == 0
 		[sourceImage retain];
 		[gammaFilter retain];
-		[cropFilter retain];
 		[invertFilter retain];
+		[progCountBackground retain];
+		[progCountBackColor retain];
 #endif
 		[self installStatusbarMenu];
 		[self makeStatusbarIcon];
@@ -77,7 +91,6 @@ static CGFloat progCountPointTripleDigitX = 20.0;
 	[statusbarIcon release];
 	[statusbarAlt release];
 	[gammaFilter release];
-	[cropFilter release];
 	[noProgVect release];
 	[haveProgVect release];
 	[invertFilter release];
@@ -126,22 +139,17 @@ static CGFloat progCountPointTripleDigitX = 20.0;
 - (void) makeStatusbarIcon
 {
 	CIImage *invertImage = NULL;
-	[cropFilter setValue:sourceImage forKey:@"inputImage"];
 	if (numberOfPrograms == 0)
 	{		// crop image
-		[statusbarIcon setSize:noProgSize];
-		[statusbarAlt setSize:noProgSize];
-		[cropFilter setValue:noProgVect forKey:@"inputRectangle"];
-		destImage = [cropFilter valueForKey:@"outputImage"];
+		[statusbarIcon setSize:iconSize];
+		[statusbarAlt setSize:iconSize];
 			// gamma adjust image
-		[gammaFilter setValue:destImage forKey:@"inputImage"];
+		[gammaFilter setValue:sourceImage forKey:@"inputImage"];
 		[gammaFilter setValue:gammaPower forKey:@"inputPower"];
 		destImage = [gammaFilter valueForKey:@"outputImage"];
 	}
 	else
 	{
-		[statusbarIcon setSize:haveProgSize];
-		[statusbarAlt setSize:haveProgSize];
 		destImage = [sourceImage copy];
 	}// end if number of programs
 
@@ -152,10 +160,8 @@ static CGFloat progCountPointTripleDigitX = 20.0;
 	NSCIImageRep *alt = [NSCIImageRep imageRepWithCIImage:invertImage];
 	NSArray *sbreps = [statusbarIcon representations];
 	NSArray *altreps = [statusbarAlt representations];
-	[statusbarIcon addRepresentation:sb];
 	for (NSImageRep *aRep in sbreps)
 		[statusbarIcon removeRepresentation:aRep];
-	[statusbarAlt addRepresentation:alt];
 	for (NSImageRep *aRep in altreps)
 		[statusbarAlt removeRepresentation:aRep];
 
@@ -163,19 +169,40 @@ static CGFloat progCountPointTripleDigitX = 20.0;
 	if (numberOfPrograms > 0)
 	{
 		NSString *progCountStr = [NSString stringWithFormat:@"%d", numberOfPrograms];
-		NSPoint drawPoint;
 		if (numberOfPrograms > 99)
-			drawPoint = NSMakePoint(progCountPointTripleDigitX, progCountPointY);
+		{
+			[progCountBackground removeAllPoints];
+			[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
+			[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX + (progCountBackDigitOffset * 2), progCountBackGrountToY)];
+			[statusbarIcon setSize:NSMakeSize(haveProgWidth + (progCountBackDigitOffset * 2), iconHeight)];
+			[statusbarAlt setSize:NSMakeSize(haveProgWidth + (progCountBackDigitOffset * 2), iconHeight)];
+		}
 		else if (numberOfPrograms > 9)
-			drawPoint = NSMakePoint(progCountPointDoubleDigitX, progCountPointY);
+		{
+			[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
+			[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX + progCountBackDigitOffset, progCountBackGrountToY)];
+			[statusbarIcon setSize:NSMakeSize(haveProgWidth + progCountBackDigitOffset, iconHeight)];
+			[statusbarAlt setSize:NSMakeSize(haveProgWidth + progCountBackDigitOffset, iconHeight)];
+		}
 		else 
-			drawPoint = NSMakePoint(progCountPointSingleDigitX, progCountPointY);
+		{
+			[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
+			[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX, progCountBackGrountToY)];
+			[statusbarIcon setSize:NSMakeSize(haveProgWidth, iconHeight)];
+			[statusbarAlt setSize:NSMakeSize(haveProgWidth, iconHeight)];
+		}
 		// draw for image
 		[statusbarIcon lockFocus];
+		[sb drawAtPoint:NSMakePoint(origin, origin)];
+		[progCountBackColor set];
+		[progCountBackground stroke];
 		[progCountStr drawAtPoint:drawPoint withAttributes:fontAttrDict];
 		[statusbarIcon unlockFocus];
 		// draw for alt image
 		[statusbarAlt lockFocus];
+		[alt drawAtPoint:NSMakePoint(origin, origin)];
+		[[NSColor whiteColor] set];
+		[progCountBackground stroke];
 		[progCountStr drawAtPoint:drawPoint withAttributes:fontAttrInvertDict];
 		[statusbarAlt unlockFocus];
 	}// end if program count is not zero

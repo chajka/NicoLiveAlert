@@ -69,10 +69,6 @@
 		1DE87D83151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DE87D84151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DE87D85151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
-		1DF062BA151AE2A70025C5DE /* sbiconalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B7151AE2A70025C5DE /* sbiconalt.png */; };
-		1DF062BB151AE2A70025C5DE /* sbiconalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B7151AE2A70025C5DE /* sbiconalt.png */; };
-		1DF062BC151AE2A70025C5DE /* sbiconalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B7151AE2A70025C5DE /* sbiconalt.png */; };
-		1DF062BD151AE2A70025C5DE /* sbiconalt.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B7151AE2A70025C5DE /* sbiconalt.png */; };
 		1DF062BE151AE2A70025C5DE /* sbicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B8151AE2A70025C5DE /* sbicon.png */; };
 		1DF062BF151AE2A70025C5DE /* sbicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B8151AE2A70025C5DE /* sbicon.png */; };
 		1DF062C0151AE2A70025C5DE /* sbicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DF062B8151AE2A70025C5DE /* sbicon.png */; };
@@ -142,7 +138,6 @@
 		1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLAccount.m; path = NicoLive/NLAccount.m; sourceTree = "<group>"; };
 		1DE87D80151EFFBB006C6EDC /* NLUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLUsers.h; path = NicoLive/NLUsers.h; sourceTree = "<group>"; };
 		1DE87D81151EFFBB006C6EDC /* NLUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLUsers.m; path = NicoLive/NLUsers.m; sourceTree = "<group>"; };
-		1DF062B7151AE2A70025C5DE /* sbiconalt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sbiconalt.png; path = Images/sbiconalt.png; sourceTree = "<group>"; };
 		1DF062B8151AE2A70025C5DE /* sbicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sbicon.png; path = Images/sbicon.png; sourceTree = "<group>"; };
 		1DF062B9151AE2A70025C5DE /* NicoLiveAlert.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NicoLiveAlert.icns; path = Images/NicoLiveAlert.icns; sourceTree = "<group>"; };
 		1DF062C6151AE3950025C5DE /* NicoLiveAlertDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NicoLiveAlertDefinitions.h; sourceTree = "<group>"; };
@@ -349,7 +344,6 @@
 		1DF062B5151AE2660025C5DE /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				1DF062B7151AE2A70025C5DE /* sbiconalt.png */,
 				1DF062B8151AE2A70025C5DE /* sbicon.png */,
 				1DF062B9151AE2A70025C5DE /* NicoLiveAlert.icns */,
 			);
@@ -469,7 +463,6 @@
 				1D1CE2D0150C77BA001E7E39 /* InfoPlist.strings in Resources */,
 				1D1CE2D6150C77BA001E7E39 /* Credits.rtf in Resources */,
 				1D1CE2DC150C77BB001E7E39 /* MainMenu.xib in Resources */,
-				1DF062BA151AE2A70025C5DE /* sbiconalt.png in Resources */,
 				1DF062BE151AE2A70025C5DE /* sbicon.png in Resources */,
 				1DF062C2151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */,
 				1D1E5233151B0B9900BDD43D /* Localizable.strings in Resources */,
@@ -482,7 +475,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D1CE2ED150C77BB001E7E39 /* InfoPlist.strings in Resources */,
-				1DF062BC151AE2A70025C5DE /* sbiconalt.png in Resources */,
 				1DF062C0151AE2A70025C5DE /* sbicon.png in Resources */,
 				1DF062C4151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */,
 				1D1E5235151B0B9900BDD43D /* Localizable.strings in Resources */,
@@ -497,7 +489,6 @@
 				1D1CE32F150C7E9E001E7E39 /* InfoPlist.strings in Resources */,
 				1D1CE330150C7EA3001E7E39 /* Credits.rtf in Resources */,
 				1D1CE331150C7EA6001E7E39 /* MainMenu.xib in Resources */,
-				1DF062BB151AE2A70025C5DE /* sbiconalt.png in Resources */,
 				1DF062BF151AE2A70025C5DE /* sbicon.png in Resources */,
 				1DF062C3151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */,
 				1D1E5234151B0B9900BDD43D /* Localizable.strings in Resources */,
@@ -510,7 +501,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D1CE32E150C79F5001E7E39 /* InfoPlist.strings in Resources */,
-				1DF062BD151AE2A70025C5DE /* sbiconalt.png in Resources */,
 				1DF062C1151AE2A70025C5DE /* sbicon.png in Resources */,
 				1DF062C5151AE2A70025C5DE /* NicoLiveAlert.icns in Resources */,
 				1D1E5236151B0B9900BDD43D /* Localizable.strings in Resources */,

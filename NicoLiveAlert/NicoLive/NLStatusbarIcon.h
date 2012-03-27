@@ -22,12 +22,10 @@
 	NSInteger					numberOfPrograms;
 	NSSize						iconSize;
 	CIImage						*sourceImage;
-	CIImage						*destImage;
 	NSImage						*statusbarIcon;
 	NSImage						*statusbarAlt;
 	CIFilter					*gammaFilter;
 	NSNumber					*gammaPower;
-	CIFilter					*cropFilter;
 	CIVector					*noProgVect;
 	CIVector					*haveProgVect;
 	CIFilter					*invertFilter;

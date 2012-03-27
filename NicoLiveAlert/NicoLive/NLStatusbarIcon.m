@@ -11,14 +11,13 @@
 
 static CGFloat origin = 0.0;
 static CGFloat iconHeight = 20.0;
-//static CGFloat noProgWidth = 20.0;
-static CGFloat noProgWidth = 20.0;
+static CGFloat noProgWidth = 20.0;	
 static CGFloat haveProgWidth = 41.0;
 static CGFloat noProgPower = 0.3;
 static CGFloat progCountFontSize = 11;
 static CGFloat progCountPointY = 1.5;
 static CGFloat progCountPointSingleDigitX = 27.0;
-static CGFloat progCountBackGroundWidth = 14.3;
+static CGFloat progCountBackGroundWidth = 14.8;
 static CGFloat progCountBackGrountFromX = 28.0;
 static CGFloat progCountBackGrountFromY = 8.5;
 static CGFloat progCountBackGrountToX = 34.0;
@@ -52,7 +51,6 @@ static CGFloat progCountBackColorAlpha = 1.00;
 		drawPoint = NSMakePoint(progCountPointSingleDigitX, progCountPointY);
 		iconSize = NSMakeSize(noProgWidth, iconHeight);
 		sourceImage = [self createFromResource:imageName];
-		destImage = NULL;
 		statusbarIcon = [[NSImage alloc] initWithSize:iconSize];
 		statusbarAlt = [[NSImage alloc] initWithSize:iconSize];
 		gammaFilter = [CIFilter filterWithName:@"CIGammaAdjust"];
@@ -87,7 +85,6 @@ static CGFloat progCountBackColorAlpha = 1.00;
 #if __has_feature(objc_arc) == 0
 	[statusBarItem release];
     [sourceImage release];
-	[destImage release];
 	[statusbarIcon release];
 	[statusbarAlt release];
 	[gammaFilter release];
@@ -113,7 +110,6 @@ static CGFloat progCountBackColorAlpha = 1.00;
 {
 	statusBar = [NSStatusBar systemStatusBar];
 	statusBarItem = [statusBar statusItemWithLength:NSVariableStatusItemLength];
-	//#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
 #if __has_feature(objc_arc) == 0
 	[statusBarItem retain];
 	[statusBar retain];
@@ -139,6 +135,7 @@ static CGFloat progCountBackColorAlpha = 1.00;
 - (void) makeStatusbarIcon
 {
 	CIImage *invertImage = NULL;
+	CIImage *destImage = NULL;
 	if (numberOfPrograms == 0)
 	{		// crop image
 		[statusbarIcon setSize:iconSize];
@@ -166,47 +163,52 @@ static CGFloat progCountBackColorAlpha = 1.00;
 		[statusbarAlt removeRepresentation:aRep];
 
 		// draw program count on image
-	if (numberOfPrograms > 0)
+	NSString *progCountStr = [NSString stringWithFormat:@"%d", numberOfPrograms];
+	if (numberOfPrograms > 99)
 	{
-		NSString *progCountStr = [NSString stringWithFormat:@"%d", numberOfPrograms];
-		if (numberOfPrograms > 99)
-		{
-			[progCountBackground removeAllPoints];
-			[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
-			[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX + (progCountBackDigitOffset * 2), progCountBackGrountToY)];
-			[statusbarIcon setSize:NSMakeSize(haveProgWidth + (progCountBackDigitOffset * 2), iconHeight)];
-			[statusbarAlt setSize:NSMakeSize(haveProgWidth + (progCountBackDigitOffset * 2), iconHeight)];
-		}
-		else if (numberOfPrograms > 9)
-		{
-			[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
-			[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX + progCountBackDigitOffset, progCountBackGrountToY)];
-			[statusbarIcon setSize:NSMakeSize(haveProgWidth + progCountBackDigitOffset, iconHeight)];
-			[statusbarAlt setSize:NSMakeSize(haveProgWidth + progCountBackDigitOffset, iconHeight)];
-		}
-		else 
-		{
-			[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
-			[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX, progCountBackGrountToY)];
-			[statusbarIcon setSize:NSMakeSize(haveProgWidth, iconHeight)];
-			[statusbarAlt setSize:NSMakeSize(haveProgWidth, iconHeight)];
-		}
-		// draw for image
-		[statusbarIcon lockFocus];
-		[sb drawAtPoint:NSMakePoint(origin, origin)];
-		[progCountBackColor set];
-		[progCountBackground stroke];
-		[progCountStr drawAtPoint:drawPoint withAttributes:fontAttrDict];
-		[statusbarIcon unlockFocus];
-		// draw for alt image
-		[statusbarAlt lockFocus];
-		[alt drawAtPoint:NSMakePoint(origin, origin)];
-		[[NSColor whiteColor] set];
-		[progCountBackground stroke];
-		[progCountStr drawAtPoint:drawPoint withAttributes:fontAttrInvertDict];
-		[statusbarAlt unlockFocus];
-	}// end if program count is not zero
+		[progCountBackground removeAllPoints];
+		[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
+		[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX + (progCountBackDigitOffset * 2), progCountBackGrountToY)];
+		[statusbarIcon setSize:NSMakeSize(haveProgWidth + (progCountBackDigitOffset * 2), iconHeight)];
+		[statusbarAlt setSize:NSMakeSize(haveProgWidth + (progCountBackDigitOffset * 2), iconHeight)];
+	}
+	else if (numberOfPrograms > 9)
+	{
+		[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
+		[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX + progCountBackDigitOffset, progCountBackGrountToY)];
+		[statusbarIcon setSize:NSMakeSize(haveProgWidth + progCountBackDigitOffset, iconHeight)];
+		[statusbarAlt setSize:NSMakeSize(haveProgWidth + progCountBackDigitOffset, iconHeight)];
+	}
+	else if (numberOfPrograms > 0)
+	{
+		[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
+		[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX, progCountBackGrountToY)];
+		[statusbarIcon setSize:NSMakeSize(haveProgWidth, iconHeight)];
+		[statusbarAlt setSize:NSMakeSize(haveProgWidth, iconHeight)];
+	}
+	else
+	{
+		[statusbarIcon setSize:NSMakeSize(noProgWidth, iconHeight)];
+		[statusbarAlt setSize:NSMakeSize(noProgWidth, iconHeight)];
+	}// end if adjust icon withd by program count.
+
+		// draw for image.
+	[statusbarIcon lockFocus];
+	[sb drawAtPoint:NSMakePoint(origin, origin)];
+	[progCountBackColor set];
+	[progCountBackground stroke];
+	[progCountStr drawAtPoint:drawPoint withAttributes:fontAttrDict];
+	[statusbarIcon unlockFocus];
+
+		// draw for alt image.
+	[statusbarAlt lockFocus];
+	[alt drawAtPoint:NSMakePoint(origin, origin)];
+	[[NSColor whiteColor] set];
+	[progCountBackground stroke];
+	[progCountStr drawAtPoint:drawPoint withAttributes:fontAttrInvertDict];
+	[statusbarAlt unlockFocus];
 	
+		// update status bar icon.
 	[statusBarItem setImage:statusbarIcon];
     [statusBarItem setAlternateImage:statusbarAlt];
 }// end - (CIImage *) makeStatusbarIcon

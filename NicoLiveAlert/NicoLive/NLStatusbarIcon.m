@@ -211,6 +211,11 @@ static CGFloat progCountBackColorAlpha = 1.00;
 		// update status bar icon.
 	[statusBarItem setImage:statusbarIcon];
     [statusBarItem setAlternateImage:statusbarAlt];
+
+#if __has_feature(objc_arc) == 0
+	if (numberOfPrograms != 0)
+		[destImage release];
+#endif
 }// end - (CIImage *) makeStatusbarIcon
 
 #pragma mark accessor

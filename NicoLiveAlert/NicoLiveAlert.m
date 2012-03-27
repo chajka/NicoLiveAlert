@@ -10,42 +10,53 @@
 #import "NicoLiveAlertDefinitions.h"
 
 @implementation NicoLiveAlert
+@synthesize prefencePanel;
 @synthesize menuStatusbar;
 
 - (void) awakeFromNib
 {
-	[self installStatusbarMenu];
+	statusBar = [[NLStatusbarIcon alloc] initWithMenu:menuStatusbar andImageName:@"sbicon"];
+#if __has_feature(objc_arc) == 0
+	[statusBar retain];
+#endif
 }// end - (void) awakeFromNib
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+NSTimer *timer;
+- (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(timerFireMethod) userInfo:nil repeats:YES];
+    [timer fire];
 	// Insert code here to initialize your application
+	if (![self checkFirstLaunch])
+		NSLog(@"Not found Prefernce");
+	else
+		NSLog(@"Found preference");
 }
 
-- (void) installStatusbarMenu
+- (void) timerFireMethod
 {
-	NSStatusBar *bar = [NSStatusBar systemStatusBar];
-	sbItem = [bar statusItemWithLength:NSVariableStatusItemLength];
-	//#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
+	[statusBar incleaseProgCount];
+}
+
+- (void) applicationWillTerminate:(NSNotification *)notification
+{
 #if __has_feature(objc_arc) == 0
-	[sbItem retain];
+	[statusBar release];
 #endif
-	NSImage *nicoLiveIcon = [NSImage imageNamed:@"sbicon"];
-    NSImage *nicoLiveAlt = [NSImage imageNamed:@"sbiconalt"];
-	[sbItem setTitle:@""];
-	[sbItem setImage:nicoLiveIcon];
-    [sbItem setAlternateImage:nicoLiveAlt];
-	[sbItem setToolTip:@"NicoLiveAlert"];
-	[sbItem setHighlightMode:YES];
-    // localize
-    [[menuStatusbar itemWithTag:tagAutoOpen] setTitle:TITLEAUTOOPEN];
-    [[menuStatusbar itemWithTag:tagPorgrams] setTitle:TITLEPROGRAMS];
-    [[menuStatusbar itemWithTag:tagAccounts] setTitle:TITLEACCOUNTS];
-    [[menuStatusbar	itemWithTag:tagLaunchApplications] setTitle:TITLELAUNCHER];
-    [[menuStatusbar itemWithTag:tagPreference] setTitle:TITLEPREFERENCE];
-    [[menuStatusbar itemWithTag:tagAbout] setTitle:TITLEABOUT];
-    [[menuStatusbar itemWithTag:tagQuit] setTitle:TITLEQUIT];
-    
-	[sbItem setMenu:menuStatusbar];
-}// end - (void) installStatusbarMenu
+	[timer invalidate];
+}
+
+- (BOOL) checkFirstLaunch
+{
+	NSBundle *mb = [NSBundle mainBundle];
+	NSDictionary *infoDict = [mb infoDictionary];
+	NSString *prefPath = [NSString stringWithFormat:PARTIALPATHFORMAT, [infoDict objectForKey:KEYBUNDLEIDENTIFY]];
+	NSString *fullPath = [prefPath stringByExpandingTildeInPath];
+
+	NSFileManager *fm = [NSFileManager defaultManager];
+	BOOL isThere = [fm fileExistsAtPath:fullPath];
+	
+	return isThere;
+}// end - (BOOL) checkFirstLaunch
+
 @end

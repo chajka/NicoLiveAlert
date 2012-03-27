@@ -7,20 +7,21 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NLStatusbarIcon.h"
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @interface NicoLiveAlert : NSObject <NSApplicationDelegate> {
 #else
 @interface NicoLiveAlert : NSObject {
 #endif
-	NSMenu *menuStatusbar;
-#if __has_feature(objc_arc) 
-	__strong NSStatusItem *sbItem;
-#else
-	NSStatusItem *sbItem;
-#endif
-}
-@property (retain) IBOutlet NSMenu *menuStatusbar;
+	IBOutlet NSMenu *menuStatusbar;
+	IBOutlet NSPanel *preferencePanel;
 
-- (void) installStatusbarMenu;
+	__strong NSStatusItem *sbItem;
+	NLStatusbarIcon	*statusBar;
+}
+@property (retain) NSMenu *menuStatusbar;
+@property (assign) NSPanel *prefencePanel;
+
+- (BOOL) checkFirstLaunch;
 @end

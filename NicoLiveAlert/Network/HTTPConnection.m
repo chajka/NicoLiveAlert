@@ -114,9 +114,9 @@ const NSTimeInterval defaultTimeout = 30; // second
 	self = [super init];
 	if (self)
 	{
-		url = url_;
+		url = [url_ copy];
 		path = NULL;
-		params = param;
+		params = [param copy];
 		response = NULL;
 		timeout = defaultTimeout;
 	}// end if self
@@ -126,10 +126,10 @@ const NSTimeInterval defaultTimeout = 30; // second
 - (void) dealloc
 {
 #if __has_feature(objc_arc) == 0
-    [url release];
-	[path release];
-	[params release];
-	[response release];
+    if (url != NULL)		[url release];
+	if (path != NULL)		[path release];
+	if (params != NULL)		[params release];
+	if (response != NULL)	[response release];
 	[super dealloc];
 #endif
 }// end - (void) dealloc
@@ -203,13 +203,20 @@ const NSTimeInterval defaultTimeout = 30; // second
 
 - (NSData *) dataByPost:(NSError **)error
 {
-	return [self post:error];
+	NSData *data = NULL;
+	NSError *err = NULL;
+	data = [self post:&err];
+	if (error != NULL)
+		*error = err;
+
+	return data;
 }// end - (NSData *) dataByPost:(NSError **)error
 
 - (NSURLConnection *) httpDataAsyncWithdelegate:(id)target
 {
 	if (target == NULL)
 		return NULL;
+	// end if target isn't there, because self cannot become delegator.
 
 	NSURLRequest *request;
 	request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -232,16 +239,19 @@ const NSTimeInterval defaultTimeout = 30; // second
 	NSString *message = [self buildParam];
 	NSURLResponse *resp = NULL;
 	NSData *httpBody = [message dataUsingEncoding:NSUTF8StringEncoding];
+	NSError *error = NULL;
 	[urlRequest setHTTPMethod:RequestMethodPost];
 	[urlRequest setHTTPBody:httpBody];
 	NSData* result = [NSURLConnection sendSynchronousRequest:urlRequest
 										   returningResponse:&resp
-													   error:err];
+													   error:&error];
 	response = [resp copy];
 #if __has_feature(objc_arc) == 0
-	[urlRequest autorelease];
+	[urlRequest release];
 #endif
-	if ([*err code] != noErr)
+	if (err != NULL)
+		*err = error;
+	if ([error code] != noErr)
 		return NULL;
 	else
 		return result;

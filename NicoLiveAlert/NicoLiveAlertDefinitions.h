@@ -10,6 +10,8 @@
 #define NicoLiveAlert_NicoLiveAlertDefinitions_h
 
 // common definition
+#define NICOLOGINSERVER	@"secure.nicovideo.jp"
+#define NICOLOGINPATH	@""
 #define NICOLOGINURL	@"https://secure.nicovideo.jp/secure/login"
 #define NICOLOGINPARAM	@"?site=nicolive_antenna"
 #define LOGINQUERYMAIL	@"mail"
@@ -43,6 +45,10 @@ enum statusBarMenuItems {
 	// string riteral definition
 #define PARTIALPATHFORMAT	@"~/Library/Preferences/%@"
 #define KEYBUNDLEIDENTIFY	@"CFBundleIdentifier"
+
+#pragma mark definitions for class NLAccount
+
+#define systemDefaultKeychain	NULL
 
 #pragma mark definitions for class NLAccount
 

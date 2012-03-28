@@ -15,8 +15,8 @@
 		1D141CF4151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbarIcon.m */; };
 		1D141CF5151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbarIcon.m */; };
 		1D141CF6151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbarIcon.m */; };
-		1D141CFE151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; };
-		1D141CFF151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; };
+		1D141CFE151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1D141CFF151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1D141D00151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; };
 		1D141D01151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; };
 		1D1CE2C6150C77BA001E7E39 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */; };
@@ -331,12 +331,12 @@
 		1DAAB8F6151B4ADF00D0D2B3 /* NicoLive */ = {
 			isa = PBXGroup;
 			children = (
+				1DE87D80151EFFBB006C6EDC /* NLUsers.h */,
+				1DE87D81151EFFBB006C6EDC /* NLUsers.m */,
 				1DAAB8F8151B4BA500D0D2B3 /* NLAccount.h */,
 				1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */,
 				1D141CF1151D8DAA00CEB686 /* NLStatusbarIcon.h */,
 				1D141CF2151D8DAA00CEB686 /* NLStatusbarIcon.m */,
-				1DE87D80151EFFBB006C6EDC /* NLUsers.h */,
-				1DE87D81151EFFBB006C6EDC /* NLUsers.m */,
 			);
 			name = NicoLive;
 			sourceTree = "<group>";
@@ -779,7 +779,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -795,7 +795,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

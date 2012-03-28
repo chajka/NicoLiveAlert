@@ -7,7 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NicoLiveAlertDefinitions.h"
+#import "KCSUser.h"
+#import "NLAccount.h"
 
-@interface NLUsers : NSObject
+@interface NLUsers : NSObject {
+	NSMutableArray		*enabledUsers;
+	NSMutableArray		*disabledUsers;
+	NSDictionary		*accounts;
+	NSMutableDictionary	*originalWatchList;
+	NSMutableDictionary	*watchlist;
+}
+@property (readonly)	NSDictionary	*watchlist;
+
+#pragma mark constructor / destructor
+- (id) initWithActiveUsers:(NSArray *)users andManualWatchList:(NSDictionary *)manualWatchList;
 
 @end

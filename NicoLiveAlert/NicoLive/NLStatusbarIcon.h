@@ -19,6 +19,7 @@
 	__strong	NSStatusItem	*statusBarItem;
 	__strong	NSStatusBar		*statusBar;
 	NSMenu						*statusbarMenu;
+	BOOL						connected;
 	NSInteger					numberOfPrograms;
 	NSSize						iconSize;
 	CIImage						*sourceImage;
@@ -34,9 +35,12 @@
 	NSDictionary				*fontAttrDict;
 	NSDictionary				*fontAttrInvertDict;
 	NSBezierPath				*progCountBackground;
+	NSBezierPath				*disconnectPath;
 	NSColor						*progCountBackColor;
+	NSColor						*disconnectColor;
 }
 @property (readonly) NSInteger	numberOfPrograms;
+@property (readwrite) BOOL		connected;
 
 /*!
 	@method initWithMenu:andImageName:
@@ -59,4 +63,11 @@
  @abstract notify pogram count need declease.
  */
 - (void) decleaseProgCount;
+
+/*!
+ @method toggleConnected
+ @abstract toggle connected / disconnected status.
+ */
+- (void) toggleConnected;
+
 @end

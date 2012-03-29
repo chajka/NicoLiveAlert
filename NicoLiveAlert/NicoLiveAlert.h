@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "NLStatusbarIcon.h"
+#import "NLUsers.h"
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @interface NicoLiveAlert : NSObject <NSApplicationDelegate> {
@@ -19,6 +20,7 @@
 
 	__strong NSStatusItem *sbItem;
 	NLStatusbarIcon	*statusBar;
+	NLUsers			*nicoliveAccounts;
 }
 @property (retain) NSMenu *menuStatusbar;
 @property (assign) NSPanel *prefencePanel;

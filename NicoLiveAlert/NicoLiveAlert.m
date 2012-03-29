@@ -9,10 +9,17 @@
 #import "NicoLiveAlert.h"
 #import "NicoLiveAlertDefinitions.h"
 
+@interface NicoLiveAlert ()
+- (void) doBeforeSleep:(NSNotification *)note;
+- (void) doAfterSleep:(NSNotification *)note;
+@end
+
 @implementation NicoLiveAlert
 @synthesize prefencePanel;
 @synthesize menuStatusbar;
 
+int count = 0;
+int threath = 15;
 - (void) awakeFromNib
 {
 	statusBar = [[NLStatusbarIcon alloc] initWithMenu:menuStatusbar andImageName:@"sbicon"];
@@ -23,23 +30,41 @@
 
 NSTimer *timer;
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-    timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(timerFireMethod) userInfo:nil repeats:YES];
-    [timer fire];
-	// Insert code here to initialize your application
-	if (![self checkFirstLaunch])
-		NSLog(@"Not found Prefernce");
-	else
-		NSLog(@"Found preference");
+{		// setup for account
+	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:NULL andManualWatchList:[NSDictionary dictionary]];
+	[[menuStatusbar itemWithTag:tagAccounts] setSubmenu:[nicoliveAccounts usersMenu]];
+	[[menuStatusbar itemWithTag:tagAccounts] setEnabled:YES];
+
+		// sleep and wakeup notification hook
+			// hook to sleep notification
+	[[[NSWorkspace sharedWorkspace] notificationCenter]
+		addObserver: self selector: @selector(receiveSleepNote:)
+	 name: NSWorkspaceWillSleepNotification object: NULL];
+			// hook to wakeup notification
+	[[[NSWorkspace sharedWorkspace] notificationCenter]
+	 addObserver: self selector: @selector(receiveSleepNote:)
+	 name: NSWorkspaceDidWakeNotification object: NULL];
 }
 
-- (void) timerFireMethod
+- (void) doBeforeSleep:(NSNotification *)note
 {
-	[statusBar incleaseProgCount];
-}
+}// end - (void) doBeforeSleep:(NSNotification *)note
+
+- (void) doAfterSleep:(NSNotification *)note
+{
+}// end - (void) doAfterSleep:(NSNotification *)note
 
 - (void) applicationWillTerminate:(NSNotification *)notification
 {
+		// release sleep and wakeup notifidation
+			// release sleep notification
+	[[[NSWorkspace sharedWorkspace] notificationCenter]
+	 removeObserver:self 
+	 name:NSWorkspaceWillSleepNotification object:NULL];
+		// release wakeup notification
+	[[[NSWorkspace sharedWorkspace] notificationCenter]
+	 removeObserver:self 
+	 name:NSWorkspaceDidWakeNotification object:NULL];
 #if __has_feature(objc_arc) == 0
 	[statusBar release];
 #endif
@@ -59,4 +84,8 @@ NSTimer *timer;
 	return isThere;
 }// end - (BOOL) checkFirstLaunch
 
+- (IBAction) toggleUserState:(id)sender
+{
+	[nicoliveAccounts toggleUserState:sender];
+}// end - (IBAction) toggleUserState:(id)sender
 @end

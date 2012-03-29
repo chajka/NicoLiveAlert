@@ -223,7 +223,6 @@
 		// check xml status
 	if ((elementIndexResponse == currentElement) || (elementIndexStatus == currentElement))
 	{		// check status attribute
-		NSLog(@"%@", attributeDict);
 		if ([[attributeDict valueForKey:keyXMLStatus] isEqualToString:resultOK] != YES)
 			xmlResult = NO;
 		else
@@ -299,7 +298,6 @@
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
 	[stringBuffer appendString:string];
-//	NSLog(@"%@", string);
 }// end - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 
 - (void)parser:(NSXMLParser *)parser foundAttributeDeclarationWithName:(NSString *)attributeName forElement:(NSString *)elementName type:(NSString *)type defaultValue:(NSString *)defaultValue

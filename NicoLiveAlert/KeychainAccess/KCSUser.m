@@ -48,8 +48,15 @@ const UInt8 maskBitsInetOptional =
 	const char *passwordString = NULL;
 
 	path = [keychainPath stringByExpandingTildeInPath];
-	passwordString = [password UTF8String];
-	passLength = (UInt32)[password length];
+	if (password != NULL)
+	{
+		passwordString = [password UTF8String];
+		passLength = (UInt32)[password length];
+	}
+	else
+	{
+		prompt = YES;
+	}
 	if (prompt)
 		*error = SecKeychainCreate([path UTF8String], 0, (void *)NULL, TRUE, NULL, &newKey);
 	else
@@ -819,7 +826,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 
 		// write to keychain
 	const char *passwordString = [newPassword UTF8String];
-	status = SecKeychainItemModifyAttributesAndData(keychainItem, NULL, strlen(passwordString), (void *)passwordString);
+	status = SecKeychainItemModifyAttributesAndData(keychainItem, NULL, (UInt32)strlen(passwordString), (void *)passwordString);
 	if (status == noErr)
 		syncronized = TRUE;
 
@@ -861,7 +868,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	SecKeychainAttribute attr[1];
 	
 	attr[0].tag = kSecServerItemAttr; 
-	attr[0].length = strlen(cStringServerName); 
+	attr[0].length = (UInt32)strlen(cStringServerName); 
 	attr[0].data = (void *)cStringServerName;
 	
 	SecKeychainAttributeList attrList = { .count = 1, .attr = attr };

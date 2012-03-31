@@ -84,7 +84,9 @@ const NSTimeInterval defaultTimeout = 30; // second
 	NSData *receivedData = [NSURLConnection sendSynchronousRequest:request
 												 returningResponse:&re
 															 error:&error];
-	*resp = re;
+	if (resp != NULL)
+		*resp = re;
+	// endif 
 	
 		// error check
 	if ([error code] != noErr)

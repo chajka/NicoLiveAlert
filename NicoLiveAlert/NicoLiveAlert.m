@@ -10,16 +10,15 @@
 #import "NicoLiveAlertDefinitions.h"
 
 @interface NicoLiveAlert ()
+- (BOOL) checkFirstLaunch;
 - (void) doBeforeSleep:(NSNotification *)note;
-- (void) doAfterSleep:(NSNotification *)note;
+- (void) doAfterWakeup:(NSNotification *)note;
 @end
 
 @implementation NicoLiveAlert
-@synthesize prefencePanel;
 @synthesize menuStatusbar;
+@synthesize prefencePanel;
 
-int count = 0;
-int threath = 15;
 - (void) awakeFromNib
 {
 	statusBar = [[NLStatusbarIcon alloc] initWithMenu:menuStatusbar andImageName:@"sbicon"];
@@ -28,31 +27,24 @@ int threath = 15;
 #endif
 }// end - (void) awakeFromNib
 
-NSTimer *timer;
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {		// setup for account
 	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:NULL andManualWatchList:[NSDictionary dictionary]];
-	[[menuStatusbar itemWithTag:tagAccounts] setSubmenu:[nicoliveAccounts usersMenu]];
-	[[menuStatusbar itemWithTag:tagAccounts] setEnabled:YES];
+	NSMenuItem *accountsItem = [menuStatusbar itemWithTag:tagAccounts];
+	[accountsItem setSubmenu:[nicoliveAccounts usersMenu]];
+	[accountsItem setState:[nicoliveAccounts userState]];
+	[accountsItem setEnabled:YES];
 
 		// sleep and wakeup notification hook
 			// hook to sleep notification
 	[[[NSWorkspace sharedWorkspace] notificationCenter]
-		addObserver: self selector: @selector(receiveSleepNote:)
+		addObserver: self selector: @selector(doBeforeSleep:)
 	 name: NSWorkspaceWillSleepNotification object: NULL];
 			// hook to wakeup notification
 	[[[NSWorkspace sharedWorkspace] notificationCenter]
-	 addObserver: self selector: @selector(receiveSleepNote:)
+	 addObserver: self selector: @selector(doAfterWakeup:)
 	 name: NSWorkspaceDidWakeNotification object: NULL];
-}
-
-- (void) doBeforeSleep:(NSNotification *)note
-{
-}// end - (void) doBeforeSleep:(NSNotification *)note
-
-- (void) doAfterSleep:(NSNotification *)note
-{
-}// end - (void) doAfterSleep:(NSNotification *)note
+}// end - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 
 - (void) applicationWillTerminate:(NSNotification *)notification
 {
@@ -68,8 +60,15 @@ NSTimer *timer;
 #if __has_feature(objc_arc) == 0
 	[statusBar release];
 #endif
-	[timer invalidate];
-}
+}// end - (void) applicationWillTerminate:(NSNotification *)notification
+
+- (void) doBeforeSleep:(NSNotification *)note
+{
+}// end - (void) doBeforeSleep:(NSNotification *)note
+
+- (void) doAfterWakeup:(NSNotification *)note
+{
+}// end - (void) doAfterSleep:(NSNotification *)note
 
 - (BOOL) checkFirstLaunch
 {
@@ -84,8 +83,49 @@ NSTimer *timer;
 	return isThere;
 }// end - (BOOL) checkFirstLaunch
 
+#pragma mark -
+#pragma mark gui backend
+
+- (IBAction)menuSelectAutoOpen:(id)sender
+{
+}// end - (IBAction)menuSelectAutoOpen:(id)sender
+
+- (IBAction)launchApplicaions:(id)sender
+{
+}// end - (IBAction)launchApplicaions:(id)sender
+
+
+- (IBAction)loginNameSelected:(id)sender
+{
+}// end - (IBAction)loginNameSelected:(id)sender
+
+- (IBAction)toggleWatch:(id)sender
+{
+}// end - (IBAction)toggleWatch:(id)sender
+
+- (IBAction)addAccount:(id)sender
+{
+}// end - (IBAction)addAccount:(id)sender
+
+- (IBAction)autoOpenChecked:(id)sender
+{
+}// end - (IBAction)autoOpenChecked:(id)sender
+
+- (IBAction)addToWatchList:(id)sender
+{
+}// end - (IBAction)addToWatchList:(id)sender
+
+- (IBAction)deleteFromWatchList:(id)sender
+{
+}// end - (IBAction)deleteFromWatchList:(id)sender
+
+- (IBAction) openProgram:(id)sender
+{
+}// end - (IBAction) openProgram:(id)sender
+
 - (IBAction) toggleUserState:(id)sender
 {
-	[nicoliveAccounts toggleUserState:sender];
+	[nicoliveAccounts toggleUserState:(NSMenuItem *)sender];
+	[menuAccounts setState:[nicoliveAccounts userState]];
 }// end - (IBAction) toggleUserState:(id)sender
 @end

@@ -15,9 +15,37 @@
 #else
 @interface NicoLiveAlert : NSObject {
 #endif
-	IBOutlet NSMenu *menuStatusbar;
-	IBOutlet NSPanel *preferencePanel;
+		// allover interface items
+	__strong IBOutlet NSMenu *menuStatusbar;
+	__strong IBOutlet NSPanel *preferencePanel;
+	
+		// menu access item
+	__strong IBOutlet NSMenuItem *menuAccounts;
 
+		// login information items
+	__strong IBOutlet NSComboBox *comboLoginID;
+	__strong IBOutlet NSSecureTextField *secureFieldPassword;
+	__strong IBOutlet NSButton *btnIsWatch;
+
+		// other application relation information items
+	__strong IBOutlet NSButton *chkboxDonotAutoOpenAtBroadcasting;
+	__strong IBOutlet NSButton *chkboxRelationWithFMELauncher;
+	__strong IBOutlet NSButton *chkboxRelationWithCharlestonMyBroadcast;
+	__strong IBOutlet NSButton *chkboxRelationAutoOpenAndCharleston;
+	__strong IBOutlet NSButton *chkboxRelationChooseFromMenuAndCharleston;
+
+		// tiny launcher item
+	__strong IBOutlet NSTableView *tblTinyLauncher;
+
+		// manual wath list items
+	__strong IBOutlet NSTableView *tblManualWatchList;
+	__strong IBOutlet NSTextField *watchItemName;
+	__strong IBOutlet NSTextField *watchItemComment;
+
+		// array controller items
+	__strong IBOutlet NSArrayController *aryLauncherItems;
+	__strong IBOutlet NSArrayController *aryManualWatchlist;
+	
 	__strong NSStatusItem *sbItem;
 	NLStatusbarIcon	*statusBar;
 	NLUsers			*nicoliveAccounts;
@@ -25,5 +53,4 @@
 @property (retain) NSMenu *menuStatusbar;
 @property (assign) NSPanel *prefencePanel;
 
-- (BOOL) checkFirstLaunch;
 @end

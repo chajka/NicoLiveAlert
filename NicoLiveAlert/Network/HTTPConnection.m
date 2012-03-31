@@ -214,7 +214,7 @@ const NSTimeInterval defaultTimeout = 30; // second
 	return data;
 }// end - (NSData *) dataByPost:(NSError **)error
 
-- (NSURLConnection *) httpDataAsyncWithdelegate:(id)target
+- (NSURLConnection *) httpDataAsyncWithDelegate:(id)target
 {
 	if (target == NULL)
 		return NULL;

@@ -96,5 +96,5 @@
 	@param delegate object for data recieve. if nil, it dosen’t work.
 	@result NSURLConnection object of this connection;
  */
-- (NSURLConnection *) httpDataAsyncWithdelegate:(id)target;
+- (NSURLConnection *) httpDataAsyncWithDelegate:(id)target;
 @end

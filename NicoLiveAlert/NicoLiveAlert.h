@@ -21,6 +21,7 @@
 	
 		// menu access item
 	__strong IBOutlet NSMenuItem *menuAccounts;
+	__strong IBOutlet NSMenuItem *manuLauncApplications;
 
 		// login information items
 	__strong IBOutlet NSComboBox *comboLoginID;

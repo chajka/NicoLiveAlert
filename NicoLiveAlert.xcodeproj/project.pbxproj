@@ -69,10 +69,18 @@
 		1D9993911525D25D00786114 /* NLMixedState.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D99938A1525D25D00786114 /* NLMixedState.png */; };
 		1D9993921525D25D00786114 /* NLOnState.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D99938B1525D25D00786114 /* NLOnState.png */; };
 		1D9993931525D25D00786114 /* NLOnState.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D99938B1525D25D00786114 /* NLOnState.png */; };
+		1D9993961525E3B600786114 /* NLOffStateRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D9993951525E3B600786114 /* NLOffStateRed.png */; };
+		1D9993971525E3B600786114 /* NLOffStateRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D9993951525E3B600786114 /* NLOffStateRed.png */; };
 		1DAAB8FA151B4BA500D0D2B3 /* NLAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */; };
 		1DAAB8FB151B4BA500D0D2B3 /* NLAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */; };
 		1DAAB8FC151B4BA500D0D2B3 /* NLAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */; };
 		1DAAB8FD151B4BA500D0D2B3 /* NLAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */; };
+		1DD73A221526B9ED00DAC3EB /* NLMessageServerData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A211526B9ED00DAC3EB /* NLMessageServerData.m */; };
+		1DD73A231526B9ED00DAC3EB /* NLMessageServerData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A211526B9ED00DAC3EB /* NLMessageServerData.m */; };
+		1DD73A241526B9ED00DAC3EB /* NLMessageServerData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A211526B9ED00DAC3EB /* NLMessageServerData.m */; };
+		1DD73A251526B9ED00DAC3EB /* NLMessageServerData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A211526B9ED00DAC3EB /* NLMessageServerData.m */; };
+		1DD73A481527214E00DAC3EB /* NLMessageServerDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A471527214E00DAC3EB /* NLMessageServerDataTests.m */; };
+		1DD73A491527214E00DAC3EB /* NLMessageServerDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A471527214E00DAC3EB /* NLMessageServerDataTests.m */; };
 		1DE87D82151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DE87D83151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DE87D84151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
@@ -146,8 +154,13 @@
 		1D9993891525D25D00786114 /* NLOffState.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NLOffState.png; path = Images/NLOffState.png; sourceTree = "<group>"; };
 		1D99938A1525D25D00786114 /* NLMixedState.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NLMixedState.png; path = Images/NLMixedState.png; sourceTree = "<group>"; };
 		1D99938B1525D25D00786114 /* NLOnState.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NLOnState.png; path = Images/NLOnState.png; sourceTree = "<group>"; };
+		1D9993951525E3B600786114 /* NLOffStateRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NLOffStateRed.png; path = Images/NLOffStateRed.png; sourceTree = "<group>"; };
 		1DAAB8F8151B4BA500D0D2B3 /* NLAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccount.h; path = NicoLive/NLAccount.h; sourceTree = "<group>"; };
 		1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLAccount.m; path = NicoLive/NLAccount.m; sourceTree = "<group>"; };
+		1DD73A201526B9ED00DAC3EB /* NLMessageServerData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLMessageServerData.h; path = NicoLive/NLMessageServerData.h; sourceTree = "<group>"; };
+		1DD73A211526B9ED00DAC3EB /* NLMessageServerData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLMessageServerData.m; path = NicoLive/NLMessageServerData.m; sourceTree = "<group>"; };
+		1DD73A461527214E00DAC3EB /* NLMessageServerDataTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLMessageServerDataTests.h; path = NicoLive/NLMessageServerDataTests.h; sourceTree = "<group>"; };
+		1DD73A471527214E00DAC3EB /* NLMessageServerDataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLMessageServerDataTests.m; path = NicoLive/NLMessageServerDataTests.m; sourceTree = "<group>"; };
 		1DE87D80151EFFBB006C6EDC /* NLUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLUsers.h; path = NicoLive/NLUsers.h; sourceTree = "<group>"; };
 		1DE87D81151EFFBB006C6EDC /* NLUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLUsers.m; path = NicoLive/NLUsers.m; sourceTree = "<group>"; };
 		1DF062B8151AE2A70025C5DE /* sbicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sbicon.png; path = Images/sbicon.png; sourceTree = "<group>"; };
@@ -316,6 +329,8 @@
 			children = (
 				1D2AD091151F693A001496E6 /* NLAccountTests.h */,
 				1D2AD090151F693A001496E6 /* NLAccountTests.m */,
+				1DD73A461527214E00DAC3EB /* NLMessageServerDataTests.h */,
+				1DD73A471527214E00DAC3EB /* NLMessageServerDataTests.m */,
 			);
 			name = NicoLive;
 			sourceTree = "<group>";
@@ -349,6 +364,8 @@
 				1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */,
 				1D141CF1151D8DAA00CEB686 /* NLStatusbarIcon.h */,
 				1D141CF2151D8DAA00CEB686 /* NLStatusbarIcon.m */,
+				1DD73A201526B9ED00DAC3EB /* NLMessageServerData.h */,
+				1DD73A211526B9ED00DAC3EB /* NLMessageServerData.m */,
 			);
 			name = NicoLive;
 			sourceTree = "<group>";
@@ -356,10 +373,11 @@
 		1DF062B5151AE2660025C5DE /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				1D9993881525D25D00786114 /* NLOffBadge.png */,
-				1D9993891525D25D00786114 /* NLOffState.png */,
-				1D99938A1525D25D00786114 /* NLMixedState.png */,
 				1D99938B1525D25D00786114 /* NLOnState.png */,
+				1D9993891525D25D00786114 /* NLOffState.png */,
+				1D9993951525E3B600786114 /* NLOffStateRed.png */,
+				1D99938A1525D25D00786114 /* NLMixedState.png */,
+				1D9993881525D25D00786114 /* NLOffBadge.png */,
 				1DF062B8151AE2A70025C5DE /* sbicon.png */,
 				1DF062B9151AE2A70025C5DE /* NicoLiveAlert.icns */,
 			);
@@ -487,6 +505,7 @@
 				1D99938E1525D25D00786114 /* NLOffState.png in Resources */,
 				1D9993901525D25D00786114 /* NLMixedState.png in Resources */,
 				1D9993921525D25D00786114 /* NLOnState.png in Resources */,
+				1D9993961525E3B600786114 /* NLOffStateRed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +536,7 @@
 				1D99938F1525D25D00786114 /* NLOffState.png in Resources */,
 				1D9993911525D25D00786114 /* NLMixedState.png in Resources */,
 				1D9993931525D25D00786114 /* NLOnState.png in Resources */,
+				1D9993971525E3B600786114 /* NLOffStateRed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +595,7 @@
 				1D07EB8E151C5C1E00CEF855 /* HTTPConnection.m in Sources */,
 				1D141CF3151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */,
 				1DE87D82151EFFBB006C6EDC /* NLUsers.m in Sources */,
+				1DD73A221526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,6 +612,8 @@
 				1D141CF5151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */,
 				1DE87D84151EFFBB006C6EDC /* NLUsers.m in Sources */,
 				1D2AD092151F693A001496E6 /* NLAccountTests.m in Sources */,
+				1DD73A241526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
+				1DD73A481527214E00DAC3EB /* NLMessageServerDataTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +628,7 @@
 				1D07EB8F151C5C1E00CEF855 /* HTTPConnection.m in Sources */,
 				1D141CF4151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */,
 				1DE87D83151EFFBB006C6EDC /* NLUsers.m in Sources */,
+				1DD73A231526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -621,6 +645,8 @@
 				1D141CF6151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */,
 				1DE87D85151EFFBB006C6EDC /* NLUsers.m in Sources */,
 				1D2AD093151F693A001496E6 /* NLAccountTests.m in Sources */,
+				1DD73A251526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
+				1DD73A491527214E00DAC3EB /* NLMessageServerDataTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -81,6 +81,10 @@
 		1DD73A251526B9ED00DAC3EB /* NLMessageServerData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A211526B9ED00DAC3EB /* NLMessageServerData.m */; };
 		1DD73A481527214E00DAC3EB /* NLMessageServerDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A471527214E00DAC3EB /* NLMessageServerDataTests.m */; };
 		1DD73A491527214E00DAC3EB /* NLMessageServerDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A471527214E00DAC3EB /* NLMessageServerDataTests.m */; };
+		1DD73A4C15272ECD00DAC3EB /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
+		1DD73A4D15272ECD00DAC3EB /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
+		1DD73A4E15272ECD00DAC3EB /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
+		1DD73A4F15272ECD00DAC3EB /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
 		1DE87D82151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DE87D83151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DE87D84151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
@@ -161,6 +165,8 @@
 		1DD73A211526B9ED00DAC3EB /* NLMessageServerData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLMessageServerData.m; path = NicoLive/NLMessageServerData.m; sourceTree = "<group>"; };
 		1DD73A461527214E00DAC3EB /* NLMessageServerDataTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLMessageServerDataTests.h; path = NicoLive/NLMessageServerDataTests.h; sourceTree = "<group>"; };
 		1DD73A471527214E00DAC3EB /* NLMessageServerDataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLMessageServerDataTests.m; path = NicoLive/NLMessageServerDataTests.m; sourceTree = "<group>"; };
+		1DD73A4A15272ECD00DAC3EB /* SocketConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnection.h; path = Network/SocketConnection.h; sourceTree = "<group>"; };
+		1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnection.m; path = Network/SocketConnection.m; sourceTree = "<group>"; };
 		1DE87D80151EFFBB006C6EDC /* NLUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLUsers.h; path = NicoLive/NLUsers.h; sourceTree = "<group>"; };
 		1DE87D81151EFFBB006C6EDC /* NLUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLUsers.m; path = NicoLive/NLUsers.m; sourceTree = "<group>"; };
 		1DF062B8151AE2A70025C5DE /* sbicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sbicon.png; path = Images/sbicon.png; sourceTree = "<group>"; };
@@ -219,6 +225,8 @@
 			children = (
 				1D07EB8C151C5C1E00CEF855 /* HTTPConnection.h */,
 				1D07EB8D151C5C1E00CEF855 /* HTTPConnection.m */,
+				1DD73A4A15272ECD00DAC3EB /* SocketConnection.h */,
+				1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -596,6 +604,7 @@
 				1D141CF3151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */,
 				1DE87D82151EFFBB006C6EDC /* NLUsers.m in Sources */,
 				1DD73A221526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
+				1DD73A4C15272ECD00DAC3EB /* SocketConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +623,7 @@
 				1D2AD092151F693A001496E6 /* NLAccountTests.m in Sources */,
 				1DD73A241526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
 				1DD73A481527214E00DAC3EB /* NLMessageServerDataTests.m in Sources */,
+				1DD73A4E15272ECD00DAC3EB /* SocketConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +639,7 @@
 				1D141CF4151D8DAA00CEB686 /* NLStatusbarIcon.m in Sources */,
 				1DE87D83151EFFBB006C6EDC /* NLUsers.m in Sources */,
 				1DD73A231526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
+				1DD73A4D15272ECD00DAC3EB /* SocketConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,6 +658,7 @@
 				1D2AD093151F693A001496E6 /* NLAccountTests.m in Sources */,
 				1DD73A251526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
 				1DD73A491527214E00DAC3EB /* NLMessageServerDataTests.m in Sources */,
+				1DD73A4F15272ECD00DAC3EB /* SocketConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

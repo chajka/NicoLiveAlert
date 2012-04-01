@@ -10,17 +10,14 @@
 
 @interface NLUsers ()
 - (NSMutableDictionary *) makeAccounts:(NSArray *)users;
-- (void) makeCurrentWatchlist;
-/*!
- @method creteUserStateMenu
- @abstract
- */
+- (void) updateCurrentWatchlist;
 - (void) creteUserStateMenu;
 @end
 
 @implementation NLUsers
 @synthesize watchlist;
 @synthesize usersMenu;
+@synthesize userState;
 
 #pragma mark constructor / destructor
 - (id) initWithActiveUsers:(NSArray *)users andManualWatchList:(NSDictionary *)manualWatchList
@@ -34,10 +31,7 @@
 		accounts = [[NSMutableDictionary alloc] initWithDictionary:[self makeAccounts:users]];
 		originalWatchList = manualWatchList;
 		watchlist = [[NSMutableDictionary alloc] init];
-#if __has_feature(objc_arc) == 0
-		[watchlist retain];
-#endif
-		[self makeCurrentWatchlist];
+		[self updateCurrentWatchlist];
 		usersMenu = NULL;
 		[self creteUserStateMenu];
 	}
@@ -90,7 +84,7 @@
 	return usersDict;
 }// end - (NSDictionary *) makeAccounts
 
-- (void) makeCurrentWatchlist
+- (void) updateCurrentWatchlist
 {
 	[watchlist removeAllObjects];
 
@@ -101,7 +95,7 @@
 	}// end foreach active users.
 
 	[watchlist addEntriesFromDictionary:originalWatchList];
-}// end - (void) makeCurrentWatchlist:(NSArray *)users
+}// end - (void) updateCurrentWatchlist:(NSArray *)users
 
 #pragma mark -
 #pragma mark user management
@@ -116,11 +110,8 @@
 		// store account
 	[accounts setValue:user forKey:[user username]];
 	[usersState setValue:deactive forKey:[user username]];
-#if __has_feature(objc_arc) == 0
-	[user release];
-#endif
 		// update current watch list
-	[self makeCurrentWatchlist];
+	[self updateCurrentWatchlist];
 
 		// add to keychain this user
 	KCSInternetUser *keychainOfUser =
@@ -136,6 +127,11 @@
 	else
 		error = [keychainOfUser status];
 
+#if __has_feature(objc_arc) == 0
+	[user autorelease];
+	[keychainOfUser autorelease];
+#endif
+
 	return error;
 }// end - (OSStatus) addUser:(NSString *)useraccount andPassword:(NSString *)userpassword
 #pragma mark -
@@ -145,12 +141,13 @@
 	usersMenu = [[NSMenu alloc] initWithTitle:@""];
 
 	NSMenuItem *userItem;
-	NSImage *onStateImg = [NSImage imageNamed:@"NSMenuCheckmark"];
+	NSImage *onStateImg = [NSImage imageNamed:@"NLOnState"];
+	NSImage *offStateImg = [NSImage imageNamed:@"NLOffStateRed"];
 	for (NSString *user in [usersState allKeys])
 	{
 		userItem = [[NSMenuItem alloc] initWithTitle:user action:@selector(toggleUserState:) keyEquivalent:@""];
 		[userItem setOnStateImage:onStateImg];
-		[userItem setOffStateImage:NULL];
+		[userItem setOffStateImage:offStateImg];
 		if ([[usersState valueForKey:user] isEqual:active] == YES)
 			[userItem setState:NSOnState];
 		else
@@ -162,11 +159,11 @@
 		[userItem autorelease];
 #endif
 	}// end foreach user
+	[self calcUserState];
 }// end - (NSMenu *) creteUserStateMenu
 
-- (void) toggleUserState:(id)sender
+- (void) toggleUserState:(NSMenuItem *)item
 {
-	NSMenuItem *item = (NSMenuItem *)sender;
 	if ([item state] == NSOnState)
 	{
 		[item setState:NSOffState];
@@ -177,6 +174,22 @@
 		[item setState:NSOnState];
 		[usersState setValue:active forKey:[item title]];
 	}// end if
-	[self makeCurrentWatchlist];
+	[self updateCurrentWatchlist];
+	[self calcUserState];
 }// end - (IBAction) toggleUserState:(id)sender
+
+- (void) calcUserState
+{
+	uint userCount = (int)[usersState count];
+	int activeCount = 0;
+	for (NSNumber *num in [usersState allValues])
+		activeCount += [num intValue];
+	// end for
+	if (activeCount == kNoUsers)
+		userState = NSOffState;
+	else if (activeCount == userCount)
+		userState = NSOnState;
+	else
+		userState = NSMixedState;
+}// end - (void) calcUserState
 @end

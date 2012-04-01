@@ -30,9 +30,11 @@
 	NSDictionary		*originalWatchList;
 	NSMutableDictionary	*watchlist;
 	NSMenu				*usersMenu;
+	NSInteger			userState;
 }
 @property (readonly) NSMutableDictionary	*watchlist;
 @property (readonly) NSMenu					*usersMenu;
+@property (readonly) NSInteger				userState;
 
 #pragma mark constructor / destructor
 /*!
@@ -64,6 +66,5 @@
  result status shown by users menuItem's check mark.
  It effect to reconstruct content of watchlist of reciever.
 */
-- (void) toggleUserState:(id)sender;
-
+- (void) toggleUserState:(NSMenuItem *)item;
 @end

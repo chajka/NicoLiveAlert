@@ -13,20 +13,25 @@
 @interface NLAccount ()
 - (NSDictionary *) generateElementDict;
 - (void) cleanupInternalVariables;
+- (BOOL) getLoginTicket;
 - (BOOL) getAccountInfo;
 @end
+
+// connection information member variables
+NSString			*ticket;
+
+	// internal use variables (when initialize only)
+NSDictionary		*elements;
+NSMutableString	*stringBuffer;
+NSUInteger		currentElement;
+NSNumber		*notAutoOpen;
 
 @implementation NLAccount
 @synthesize mailaddr;
 @synthesize password;
 @synthesize username;
 @synthesize userid;
-@synthesize ticket;
-@synthesize userHash;
 @synthesize channels;
-@synthesize messageServerName;
-@synthesize messageServerPortNo;
-@synthesize messageServerThreadID;
 
 #pragma mark construct / destruct
 - (id) initWithAccount:(NSString *)account andPassword:(NSString *)pass
@@ -38,13 +43,9 @@
 		password = [pass copy];
 		username = NULL;
 		userid = NULL;
-			// initialize connection member variables
-		ticket = NULL;
-		userHash = NULL;
 		channels = NULL;
-		messageServerName = NULL;
-		messageServerPortNo = 0;
-		messageServerThreadID = NULL;
+			// initialize connection internal variables
+		ticket = NULL;
 			// initialize internal variable
 		elements = [self generateElementDict]; 
 #if __has_feature(objc_arc) == 0
@@ -53,30 +54,22 @@
 		stringBuffer = NULL;
 		currentElement = 0;
 		notAutoOpen = [NSNumber numberWithInteger:0];
-		xmlResult = NO;
-		if ([self getAccountInfo] == NO)
-		{		// get user & connection information fail.
-				// cleanup self and return NULL;
+		if ([self getLoginTicket] != YES)
+		{
 #if __has_feature(objc_arc) == 0
-			[mailaddr release];
-			[password release];
-			if (username != NULL) {			[username release]; }
-			if (userid != NULL)	{			[userid release]; }
-			if (ticket != NULL)	{			[ticket release]; }
-			if (userHash != NULL) {			[userHash release]; }
-			if (channels != NULL)	{		[channels release]; }
-			if (messageServerName != NULL)
-				[messageServerName release];
-			if (messageServerThreadID != NULL)
-				[messageServerThreadID release];
-			[self cleanupInternalVariables];
-			[super dealloc];
+			[self dealloc];
 #endif
 			return NULL;
 		}// end if getAccountInfo is failed
+		if ([self getAccountInfo] != YES)
+		{
+#if __has_feature(objc_arc) == 0
+			[self dealloc];
+#endif
+			return NULL;
+		}// end if get Account info was failed
 			// cleanup initialize only variables
 		[self cleanupInternalVariables];
-		
 	}// end if self
 	return self;
 }// end - (id) initWithAccount:(NSString *)account andPassword:(NSString *)pass
@@ -91,13 +84,13 @@
 	if (userid != NULL)	{			[userid release]; }
 		// cleanup connection information variables.
 	if (ticket != NULL)	{			[ticket release]; }
-	if (userHash != NULL) {			[userHash release]; }
+//	if (userHash != NULL) {			[userHash release]; }
 	if (channels != NULL)	{		[channels release]; }
 	if (stringBuffer != NULL)	{	[stringBuffer release]; }
-	if (messageServerName != NULL)
-		[messageServerName release];
-	if (messageServerThreadID != NULL)
-		[messageServerThreadID release];
+//	if (messageServerName != NULL)
+//		[messageServerName release];
+//	if (messageServerThreadID != NULL)
+//		[messageServerThreadID release];
 		// internal variables are already cleanuped at constructor.
 	[super dealloc];
 #endif
@@ -111,20 +104,23 @@
 		[NSNumber numberWithInteger:elementIndexTicket], elementKeyTicket,
 		[NSNumber numberWithInteger:elementIndexStatus], elementKeyStatus,
 		[NSNumber numberWithInteger:elementIndexUserID], elementKeyUserID, 
-		[NSNumber numberWithInteger:elementIndexHash], elementKeyHash, 
 		[NSNumber numberWithInteger:elementIndexUserName], elementKeyUserName, 
 		[NSNumber numberWithInteger:elementIndexCommunity], elementKeyCommunity, 
-		[NSNumber numberWithInteger:elementIndexAddress], elementKeyAddress, 
-		[NSNumber numberWithInteger:elementIndexPort], elementKeyPort, 
-		[NSNumber numberWithInteger:elementIndexThread], elementKeyThread,
 	nil];
 
 	return dict;
 }// end - (NSDictionary *) generateElementDict
 
 - (void) cleanupInternalVariables
-{		// clanup elements
+{		// clanup login ticket
 #if __has_feature(objc_arc) == 0
+	if (ticket != NULL)
+	{
+		[ticket autorelease];
+		ticket = NULL;
+	}// end cleanup ticket
+
+		// clanup elements
 	if (elements != NULL)
 	{		// cleanup elements
 		[elements release];
@@ -140,8 +136,15 @@
 #endif
 }// end - (void) cleanupInternalVariables
 
-- (BOOL) getAccountInfo
-{		// login and get ticket
+- (BOOL) getLoginTicket
+{
+	BOOL success = NO;
+#if __has_feature(objc_arc)
+	@autoreleasepool {
+#else
+	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
+#endif
+	// login and get ticket
 	NSString *loginURLStr = [NSString stringWithFormat:@"%@%@", NICOLOGINURL, NICOLOGINPARAM];
 	NSURL *loginURL = [NSURL URLWithString:loginURLStr];
 	NSDictionary *accountDict = [NSDictionary dictionaryWithObjectsAndKeys:mailaddr, LOGINQUERYMAIL, password, LOGINQUERYPASS, nil];
@@ -154,60 +157,76 @@
 	if (([err code] != noErr) || (response == NULL))
 		return NO;
 	// end if login failed
-		// correct ticket from xml
-#if __has_feature(objc_arc)
-	@autoreleasepool {
-#else
-	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
-#endif
-			// start parse for get ticket.
-		NSXMLParser *parser = [[NSXMLParser alloc] initWithData:response];
+	// start parse for get ticket.
+	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:response];
 #if __has_feature(objc_arc) == 0
-			[parser autorelease];
+	[parser autorelease];
 #endif
-		if (parser == NULL)
-			return NO;
-		// end if not parser allocated.
-		[parser setDelegate:(id)self];
-		BOOL success = [parser parse];
-		if ((success == NO) || (xmlResult == NO))
-			return NO;
-		// end if fail
-
-		parser = NULL;
-			// fetch userdata
-		NSURLResponse *resp = NULL;
-		NSString *userInfoQueryString = [NSString stringWithFormat:ALERTQUERY, ticket];
-		NSURL *userInfoQuery = [NSURL URLWithString:userInfoQueryString];
-		response = [HTTPConnection HTTPData:userInfoQuery response:&resp];
-		if (response == NULL)
-			return NO;
-		// end if no response
-
-			// start parse for get user's information from getalertstatus.
-		parser = [[NSXMLParser alloc] initWithData:response];
-#if __has_feature(objc_arc) == 0
-			[parser autorelease];
-#endif
-		if (parser == NULL)
-			return NO;
-		// end if not parser allocated.
-		[parser setDelegate:(id)self];
+	if (parser == NULL)
+		return success;
+	// end if not parser allocated.
+	[parser setDelegate:(id)self];
+	@try {
 		success = [parser parse];
-		if (success == NO)
-			return NO;
-		// end if
-	
+	}
+	@catch (NSException *exception) {
+		return success;
+	}// end parse get ticket
 #if __has_feature(objc_arc)
 	}
 #else
 	[arp release];
 #endif
-	return YES;
+	return success;
+}// end - (BOOL) getLoginTicket
+
+- (BOOL) getAccountInfo
+{
+	BOOL success = NO;
+#if __has_feature(objc_arc)
+	@autoreleasepool {
+#else
+	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
+#endif
+	NSXMLParser *parser = NULL;
+		// fetch userdata
+	NSURLResponse *resp = NULL;
+	NSString *userInfoQueryString = [NSString stringWithFormat:ALERTQUERY, ticket];
+	NSURL *userInfoQuery = [NSURL URLWithString:userInfoQueryString];
+	NSData *response = [HTTPConnection HTTPData:userInfoQuery response:&resp];
+	if (response == NULL)
+		return success;
+	// end if no response
+#if __has_feature(objc_arc) == 0
+NSString *xml = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+NSLog(@"%@", xml);
+[xml release];
+#endif
+		
+		// start parse for get user's information from getalertstatus.
+	parser = [[NSXMLParser alloc] initWithData:response];
+#if __has_feature(objc_arc) == 0
+		[parser autorelease];
+#endif
+	if (parser == NULL)
+		return NO;
+	// end if not parser allocated.
+	[parser setDelegate:(id)self];
+	@try {
+		success = [parser parse];
+	}
+	@catch (NSException *exception) {
+		return success;
+	}// end parse get ticket
+#if __has_feature(objc_arc)
+	}
+#else
+	[arp release];
+#endif
+	return success;
 }// end - (void) getAccountInfo
 
-
-
+#pragma mark -
 #pragma mark NSXMLParserDelegate methods
 - (void)parserDidStartDocument:(NSXMLParser *)parser
 {
@@ -222,13 +241,10 @@
 	currentElement = [[elements valueForKey:elementName] integerValue];
 		// check xml status
 	if ((elementIndexResponse == currentElement) || (elementIndexStatus == currentElement))
-	{		// check status attribute
+	{
 		if ([[attributeDict valueForKey:keyXMLStatus] isEqualToString:resultOK] != YES)
-			xmlResult = NO;
-		else
-			xmlResult = YES;
-		// end if xml status is OK
-
+			@throw [NSException exceptionWithName:RESULTERRORNAME reason:RESULTERRORREASON userInfo:attributeDict];
+		// end if status attribute is not OK
 			// allocate channels dictionary
 		if (elementIndexStatus == currentElement)
 			channels = [[NSMutableDictionary alloc] init];
@@ -263,24 +279,12 @@
 			uid = [stringBuffer integerValue];
 			userid = [[NSNumber alloc] initWithUnsignedInteger:uid];
 			break;
-		case elementIndexHash:
-			userHash = [[NSString alloc] initWithString:stringBuffer];
-			break;
 		case elementIndexUserName:
 			username = [[NSString alloc] initWithString:stringBuffer];
 			break;
 		case elementIndexCommunity:
 			channel = [NSString stringWithString:stringBuffer];
 			[channels setValue:notAutoOpen forKey:channel];
-			break;
-		case elementIndexAddress:
-			messageServerName = [[NSString alloc] initWithString:stringBuffer];
-			break;
-		case elementIndexPort:
-			messageServerPortNo = [stringBuffer integerValue];
-			break;
-		case elementIndexThread:
-			messageServerThreadID = [[NSString alloc] initWithString:stringBuffer];
 			break;
 		default:
 			break;

@@ -55,13 +55,8 @@
 		STAssertNotNil([account password], @"property password is NULL");
 		STAssertNotNil([account username], @"property username is NULL");
 		STAssertNotNil([account userid], @"property useridis NULL");
-		STAssertNotNil([account ticket], @"ticket fetch Fail");
-		STAssertNotNil([account userHash], @"property userHash is NULL");
 		STAssertNotNil([account channels], @"property channels is NULL");
-		STAssertNotNil([account messageServerName], @"property messageServerName is NULL");
 		STAssertNotNil([account userid], @"property password is NULL");
-		STAssertTrue(([account messageServerPortNo] != 0), @"property portNo is not set");
-		STAssertNotNil([account messageServerThreadID], @"property messageServerThreadID is NULL");
 	}// end for
 	account = NULL;
 }// end - (void) test_01_allocation

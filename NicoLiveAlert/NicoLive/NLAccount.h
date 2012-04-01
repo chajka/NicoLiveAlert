@@ -14,36 +14,18 @@
 #else
 @interface NLAccount : NSObject {
 #endif
-@protected
 		// user information member variables
 	NSString			*mailaddr;
 	NSString			*password;
 	NSString			*username;
 	NSNumber			*userid;
-		// connection information member variables
-	NSString			*ticket;
-	NSString			*userHash;
 	NSMutableDictionary	*channels;
-	NSString			*messageServerName;
-	NSUInteger			messageServerPortNo;
-	NSString			*messageServerThreadID;
-		// internal use variables (when initialize only)
-	NSDictionary		*elements;
-	NSMutableString		*stringBuffer;
-	NSUInteger			currentElement;
-	NSNumber			*notAutoOpen;
-	BOOL				xmlResult;
 }
 @property (readonly)	NSString			*mailaddr;
 @property (readonly)	NSString			*password;
 @property (readonly)	NSString			*username;
 @property (readonly)	NSNumber			*userid;
-@property (readonly)	NSString			*ticket;
-@property (readonly)	NSString			*userHash;
 @property (readonly)	NSMutableDictionary	*channels;
-@property (readonly)	NSString			*messageServerName;
-@property (readonly)	NSUInteger			messageServerPortNo;
-@property (readonly)	NSString			*messageServerThreadID;
 	
 #pragma mark construct
 - (id) initWithAccount:(NSString *)account andPassword:(NSString *)pass;

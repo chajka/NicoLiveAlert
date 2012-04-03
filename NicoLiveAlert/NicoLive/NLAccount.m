@@ -197,12 +197,7 @@ NSNumber		*notAutoOpen;
 	if (response == NULL)
 		return success;
 	// end if no response
-#if __has_feature(objc_arc) == 0
-NSString *xml = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-NSLog(@"%@", xml);
-[xml release];
-#endif
-		
+
 		// start parse for get user's information from getalertstatus.
 	parser = [[NSXMLParser alloc] initWithData:response];
 #if __has_feature(objc_arc) == 0

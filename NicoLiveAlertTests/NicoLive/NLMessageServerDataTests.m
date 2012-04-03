@@ -16,10 +16,8 @@
 	NLMessageServerData *data = [[NLMessageServerData alloc] init];
 	STAssertNotNil(data, @"NLMessageServerData allocation fail");
 	STAssertNotNil([data serveName], @"Server's name parse fail");
-	STAssertNotNil([data threadID], @"Server's thread ID parse fail");
-	STAssertTrue(([data port] != 0), @"Server's Port no parse fail");
-	STAssertNotNil([data hashID], @"Server's hash id parse fail");
-	
+	STAssertNotNil([data thread], @"Server's thread ID parse fail");
+	STAssertTrue(([data port] != 0), @"Server's Port no parse fail");	
 }// end - (void) test_01_allocation
 
 @end

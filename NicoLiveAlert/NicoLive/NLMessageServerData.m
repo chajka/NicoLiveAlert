@@ -23,8 +23,7 @@ NSUInteger		currentElement;
 @implementation NLMessageServerData
 @synthesize serveName;
 @synthesize port;
-@synthesize threadID;
-@synthesize hashID;
+@synthesize thread;
 #pragma mark -
 #pragma mark constructor / destructor
 - (id) init
@@ -50,7 +49,7 @@ NSUInteger		currentElement;
 {
 #if __has_feature(objc_arc) == 0
     if (serveName != NULL) {	[serveName release]; }
-	if (threadID != NULL) {		[threadID release]; }
+	if (thread != NULL) {		[thread release]; }
     [super dealloc];
 #endif
 }// end - (void) dealloc
@@ -89,12 +88,7 @@ NSUInteger		currentElement;
 {
 	elementDict = [NSDictionary dictionaryWithObjectsAndKeys:
 	  [NSNumber numberWithInteger:elementIndexResponse], elementKeyResponse,
-	  [NSNumber numberWithInteger:elementIndexTicket], elementKeyTicket,
 	  [NSNumber numberWithInteger:elementIndexStatus], elementKeyStatus,
-	  [NSNumber numberWithInteger:elementIndexUserID], elementKeyUserID, 
-	  [NSNumber numberWithInteger:elementIndexHash], elementKeyHash, 
-	  [NSNumber numberWithInteger:elementIndexUserName], elementKeyUserName, 
-	  [NSNumber numberWithInteger:elementIndexCommunity], elementKeyCommunity, 
 	  [NSNumber numberWithInteger:elementIndexAddress], elementKeyAddress, 
 	  [NSNumber numberWithInteger:elementIndexPort], elementKeyPort, 
 	  [NSNumber numberWithInteger:elementIndexThread], elementKeyThread,
@@ -130,9 +124,6 @@ NSUInteger		currentElement;
 {
 	switch ([[elementDict valueForKey:elementName] integerValue])
 	{
-		case elementIndexHash:
-			hashID = [[NSString alloc] initWithString:contentStr];
-			break;
 		case elementIndexAddress:
 			serveName = [[NSString alloc] initWithString:contentStr];
 			break;
@@ -140,7 +131,7 @@ NSUInteger		currentElement;
 			port = [contentStr integerValue];
 			break;
 		case elementIndexThread:
-			threadID = [[NSString alloc] initWithString:contentStr];
+			thread = [[NSString alloc] initWithString:contentStr];
 			break;
 		default:
 			break;

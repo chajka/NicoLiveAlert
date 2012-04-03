@@ -12,12 +12,10 @@
 @interface NLMessageServerData : NSObject <NSXMLParserDelegate> {
 	NSString	*serveName;
 	NSUInteger	port;
-	NSString	*threadID;
-	NSString	*hashID;
+	NSString	*thread;
 }
 @property (readonly) NSString	*serveName;
 @property (readonly) NSUInteger	port;
-@property (readonly) NSString	*threadID;
-@property (readonly) NSString	*hashID;
+@property (readonly) NSString	*thread;
 
 @end

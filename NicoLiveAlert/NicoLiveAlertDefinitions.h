@@ -10,6 +10,10 @@
 #define NicoLiveAlert_NicoLiveAlertDefinitions_h
 
 // common definition
+/*!
+ @defined 
+*/
+#define NICOVIDEOURI	@"https://secure.nicovideo.jp"
 #define NICOLOGINSERVER	@"secure.nicovideo.jp"
 #define NICOLOGINPATH	@""
 #define NICOLOGINURL	@"https://secure.nicovideo.jp/secure/login"
@@ -18,17 +22,22 @@
 #define LOGINQUERYPASS	@"password"
 #define ALERTAPIURL		@"http://live.nicovideo.jp/api/getalertstatus"
 #define ALERTQUERY		@"http://live.nicovideo.jp/api/getalertstatus?ticket=%@"
+#define MSQUERYAPI		@"http://live.nicovideo.jp/api/getalertinfo"
 
 #pragma mark definitions for class NicoLiveAlert
 	// Tag indexes of Status Bar Menu items
+/*!
+ @enum statusBarMenuItems
+*/
 enum statusBarMenuItems {
 	tagAutoOpen = 1001,
 	tagPorgrams,
-	tagSep1,
+	tagOfficial,
+	tagSep1 = 1010,
 	tagAccounts,
 	tagLaunchApplications,
 	tagPreference,
-	tagSep2,
+	tagSep2 = 1020,
 	tagAbout,
 	tagQuit
 };
@@ -46,11 +55,18 @@ enum statusBarMenuItems {
 #define PARTIALPATHFORMAT	@"~/Library/Preferences/%@"
 #define KEYBUNDLEIDENTIFY	@"CFBundleIdentifier"
 
-#pragma mark definitions for class NLAccount
+#pragma mark definitions for class NLUsers
 
 #define systemDefaultKeychain	NULL
+#define NICOKEYCHAINNAMEFORMAT	@"%@ (%@)"
+#define NICOKEYCHAINLABEL		@"Web form password"
 
-#pragma mark definitions for class NLAccount
+#define kNoUsers				(0)
+
+#pragma mark definitions for XMLParsing
+	// Exception definition
+#define RESULTERRORNAME		@"XML parse error"
+#define RESULTERRORREASON	@"XML result is not ok"
 
 	// XML element literal
 #define elementKeyResponse	@"nicovideo_user_response"

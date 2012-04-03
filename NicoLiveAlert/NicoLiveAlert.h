@@ -20,6 +20,8 @@
 	__strong IBOutlet NSPanel *preferencePanel;
 	
 		// menu access item
+	__strong IBOutlet NSMenuItem *menuPrograms;
+	__strong IBOutlet NSMenuItem *menuOfficalPrograms;
 	__strong IBOutlet NSMenuItem *menuAccounts;
 	__strong IBOutlet NSMenuItem *manuLauncApplications;
 
@@ -39,9 +41,10 @@
 	__strong IBOutlet NSTableView *tblTinyLauncher;
 
 		// manual wath list items
-	__strong IBOutlet NSTableView *tblManualWatchList;
-	__strong IBOutlet NSTextField *watchItemName;
-	__strong IBOutlet NSTextField *watchItemComment;
+	__strong IBOutlet NSTableView	*tblManualWatchList;
+	__strong IBOutlet NSTextField	*watchItemName;
+	__strong IBOutlet NSTextField	*watchItemComment;
+	__strong IBOutlet NSButton		*chkboxWatchOfficialProgram;
 
 		// array controller items
 	__strong IBOutlet NSArrayController *aryLauncherItems;

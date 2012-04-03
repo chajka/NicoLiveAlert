@@ -44,6 +44,7 @@
 	[[[NSWorkspace sharedWorkspace] notificationCenter]
 	 addObserver: self selector: @selector(doAfterWakeup:)
 	 name: NSWorkspaceDidWakeNotification object: NULL];
+	
 }// end - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 
 - (void) applicationWillTerminate:(NSNotification *)notification
@@ -85,39 +86,15 @@
 
 #pragma mark -
 #pragma mark gui backend
-
+#pragma mark menu interface
+	// menu item actions
 - (IBAction)menuSelectAutoOpen:(id)sender
 {
-}// end - (IBAction)menuSelectAutoOpen:(id)sender
+}// end - (IBAction) menuSelectAutoOpen:(id)sender
 
 - (IBAction)launchApplicaions:(id)sender
 {
-}// end - (IBAction)launchApplicaions:(id)sender
-
-
-- (IBAction)loginNameSelected:(id)sender
-{
-}// end - (IBAction)loginNameSelected:(id)sender
-
-- (IBAction)toggleWatch:(id)sender
-{
-}// end - (IBAction)toggleWatch:(id)sender
-
-- (IBAction)addAccount:(id)sender
-{
-}// end - (IBAction)addAccount:(id)sender
-
-- (IBAction)autoOpenChecked:(id)sender
-{
-}// end - (IBAction)autoOpenChecked:(id)sender
-
-- (IBAction)addToWatchList:(id)sender
-{
-}// end - (IBAction)addToWatchList:(id)sender
-
-- (IBAction)deleteFromWatchList:(id)sender
-{
-}// end - (IBAction)deleteFromWatchList:(id)sender
+}// end - (IBAction) launchApplicaions:(id)sender
 
 - (IBAction) openProgram:(id)sender
 {
@@ -128,4 +105,40 @@
 	[nicoliveAccounts toggleUserState:(NSMenuItem *)sender];
 	[menuAccounts setState:[nicoliveAccounts userState]];
 }// end - (IBAction) toggleUserState:(id)sender
+
+#pragma mark preference panel interface
+	// login informaion box actions
+- (IBAction) loginNameSelected:(id)sender
+{
+}// end - (IBAction) loginNameSelected:(id)sender
+
+- (IBAction) toggleWatch:(id)sender
+{
+}// end - (IBAction) toggleWatch:(id)sender
+
+- (IBAction) addAccount:(id)sender
+{
+}// end - (IBAction) addAccount:(id)sender
+
+	// application collaboration actions
+- (IBAction) appColaboChecked:(id)sender
+{
+}// end - (IBAction) appColaboChecked:(id)sender
+
+	// manual watch list box actions
+- (IBAction) autoOpenChecked:(id)sender
+{
+}// end - (IBAction) autoOpenChecked:(id)sender
+
+- (IBAction) watchOfficialChannels:(id)sender
+{
+}//end - (IBAction) watchOfficialChannels:(id)sender
+
+- (IBAction) addToWatchList:(id)sender
+{
+}// end - (IBAction) addToWatchList:(id)sender
+
+- (IBAction) deleteFromWatchList:(id)sender
+{
+}// end - (IBAction) deleteFromWatchList:(id)sender
 @end

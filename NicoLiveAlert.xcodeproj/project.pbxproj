@@ -51,6 +51,12 @@
 		1D1E523C151B0BA900BDD43D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1E5231151B0B9900BDD43D /* Localizable.strings */; };
 		1D2AD092151F693A001496E6 /* NLAccountTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2AD090151F693A001496E6 /* NLAccountTests.m */; };
 		1D2AD093151F693A001496E6 /* NLAccountTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2AD090151F693A001496E6 /* NLAccountTests.m */; };
+		1D5558171529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
+		1D5558181529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
+		1D555849152AC08F00221516 /* NLProgramMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D555848152AC08F00221516 /* NLProgramMenuItem.m */; };
+		1D55584A152AC08F00221516 /* NLProgramMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D555848152AC08F00221516 /* NLProgramMenuItem.m */; };
+		1D55584B152AC08F00221516 /* NLProgramMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D555848152AC08F00221516 /* NLProgramMenuItem.m */; };
+		1D55584C152AC08F00221516 /* NLProgramMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D555848152AC08F00221516 /* NLProgramMenuItem.m */; };
 		1D6500BE150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500BF150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500C5150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
@@ -149,6 +155,10 @@
 		1D1E5238151B0BA900BDD43D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = NicoLiveAlert/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1D2AD090151F693A001496E6 /* NLAccountTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLAccountTests.m; path = NicoLive/NLAccountTests.m; sourceTree = "<group>"; };
 		1D2AD091151F693A001496E6 /* NLAccountTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccountTests.h; path = NicoLive/NLAccountTests.h; sourceTree = "<group>"; };
+		1D5558151529392000221516 /* SocketConnectionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnectionTests.h; path = Network/SocketConnectionTests.h; sourceTree = "<group>"; };
+		1D5558161529392000221516 /* SocketConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnectionTests.m; path = Network/SocketConnectionTests.m; sourceTree = "<group>"; };
+		1D555847152AC08F00221516 /* NLProgramMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLProgramMenuItem.h; path = GUI/NLProgramMenuItem.h; sourceTree = "<group>"; };
+		1D555848152AC08F00221516 /* NLProgramMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLProgramMenuItem.m; path = GUI/NLProgramMenuItem.m; sourceTree = "<group>"; };
 		1D6500BC150CB0DE002F5A8B /* KCSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUser.h; path = KeychainAccess/KCSUser.h; sourceTree = "<group>"; };
 		1D6500BD150CB0DE002F5A8B /* KCSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUser.m; path = KeychainAccess/KCSUser.m; sourceTree = "<group>"; };
 		1D6500C3150CB351002F5A8B /* KCSUserTsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUserTsts.h; path = Keychain/KCSUserTsts.h; sourceTree = "<group>"; };
@@ -290,6 +300,7 @@
 			children = (
 				1D07EB8B151C5B7F00CEF855 /* Application */,
 				1DAAB8F6151B4ADF00D0D2B3 /* NicoLive */,
+				1D555846152AC02400221516 /* GUI */,
 				1D6500BA150CB07E002F5A8B /* Keychain */,
 				1D07EB89151C5B6E00CEF855 /* Network */,
 				1D1CE2CC150C77BA001E7E39 /* Supporting Files */,
@@ -318,6 +329,7 @@
 				1D1CE2EF150C77BB001E7E39 /* NicoLiveAlertTests.m */,
 				1D2AD087151F685B001496E6 /* NicoLive */,
 				1D6500C2150CB2FF002F5A8B /* Keychain */,
+				1D555813152938E900221516 /* Network */,
 				1D1CE2E9150C77BB001E7E39 /* Supporting Files */,
 			);
 			path = NicoLiveAlertTests;
@@ -341,6 +353,24 @@
 				1DD73A471527214E00DAC3EB /* NLMessageServerDataTests.m */,
 			);
 			name = NicoLive;
+			sourceTree = "<group>";
+		};
+		1D555813152938E900221516 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				1D5558151529392000221516 /* SocketConnectionTests.h */,
+				1D5558161529392000221516 /* SocketConnectionTests.m */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		1D555846152AC02400221516 /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				1D555847152AC08F00221516 /* NLProgramMenuItem.h */,
+				1D555848152AC08F00221516 /* NLProgramMenuItem.m */,
+			);
+			name = GUI;
 			sourceTree = "<group>";
 		};
 		1D6500BA150CB07E002F5A8B /* Keychain */ = {
@@ -605,6 +635,7 @@
 				1DE87D82151EFFBB006C6EDC /* NLUsers.m in Sources */,
 				1DD73A221526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
 				1DD73A4C15272ECD00DAC3EB /* SocketConnection.m in Sources */,
+				1D555849152AC08F00221516 /* NLProgramMenuItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,6 +655,8 @@
 				1DD73A241526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
 				1DD73A481527214E00DAC3EB /* NLMessageServerDataTests.m in Sources */,
 				1DD73A4E15272ECD00DAC3EB /* SocketConnection.m in Sources */,
+				1D5558171529392000221516 /* SocketConnectionTests.m in Sources */,
+				1D55584B152AC08F00221516 /* NLProgramMenuItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +673,7 @@
 				1DE87D83151EFFBB006C6EDC /* NLUsers.m in Sources */,
 				1DD73A231526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
 				1DD73A4D15272ECD00DAC3EB /* SocketConnection.m in Sources */,
+				1D55584A152AC08F00221516 /* NLProgramMenuItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +693,8 @@
 				1DD73A251526B9ED00DAC3EB /* NLMessageServerData.m in Sources */,
 				1DD73A491527214E00DAC3EB /* NLMessageServerDataTests.m in Sources */,
 				1DD73A4F15272ECD00DAC3EB /* SocketConnection.m in Sources */,
+				1D5558181529392000221516 /* SocketConnectionTests.m in Sources */,
+				1D55584C152AC08F00221516 /* NLProgramMenuItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -131,5 +131,20 @@ typedef NSInteger SCDirection;
 */
 - (void) disconnect;
 
+/*!
+ @method isInputStream:
+ @abstract compare reciever and message object
+ @param a stream want to be compare
+ @result if same object then YES, other NO.
+ */
+- (BOOL) isInputStream:(NSStream *)stream;
+
+/*!
+ @method isOutputStream:
+ @abstract compare reciever and message object
+ @param a stream want to be compare
+ @result if same object then YES, other NO.
+ */
+- (BOOL) isOutputStream:(NSStream *)stream;
 @end
 

@@ -94,7 +94,6 @@
 		[iStream retain];
 #endif
 		[iStream setDelegate:streamDelegate];
-//		oStream = NULL;
 	}
 	else if (direction == SCDirectionBroadcast)
 	{
@@ -107,13 +106,12 @@
 		[oStream retain];
 #endif
 		[oStream setDelegate:streamDelegate];
-//		iStream = NULL;
 	}
 	else if (direction == SCDirectionBoth)
 	{
 #if __has_feature(objc_arc)
-		__strong NSInputStream *_iStream;
-		__strong NSOutputStream *_oStream;
+		NSInputStream *_iStream;
+		NSOutputStream *_oStream;
 		[NSStream getStreamsToHost:host port:port inputStream:&_iStream outputStream:&_oStream];
 		iStream = _iStream;
 		oStream = _oStream;
@@ -197,6 +195,22 @@
 	[self closeStream];
 }// end - (void) disconnect
 
+- (BOOL) isInputStream:(NSStream *)stream
+{
+	if (stream == iStream)
+		return YES;
+	else
+		return NO;
+}// end - (BOOL) isInputStream:(NSStream *)stream
+
+- (BOOL) isOutputStream:(NSStream *)stream
+{
+	if (stream == oStream)
+		return YES;
+	else
+		return NO;
+}// end - (BOOL) isOutputStream:(NSStream *)stream
+
 #pragma mark -
 #pragma mark internal
 - (void) openStream
@@ -266,7 +280,7 @@ NSNotification *note = NULL;
 			[streamEventDelegate streamEventOpenCompleted:aStream];
 			break;
 		case NSStreamEventHasBytesAvailable:
-			[streamEventDelegate streamEventHasSpaceAvailable:aStream];
+			[streamEventDelegate streamEventHasBytesAvailable:aStream];
 			break;
 		case NSStreamEventHasSpaceAvailable:
 			[streamEventDelegate streamEventHasSpaceAvailable:aStream];

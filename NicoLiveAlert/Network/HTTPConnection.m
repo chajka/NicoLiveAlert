@@ -46,7 +46,7 @@ const NSTimeInterval defaultTimeout = 30; // second
 @synthesize timeout;
 
 #pragma mark class methods
-+ (NSString *) HTTPSource:(NSURL *)url response:(NSURLResponse **)resp
++ (NSString *) HTTPSource:(NSURL *)url response:(NSURLResponse * __autoreleasing *)resp
 {		// create detamine encoding constant array 
 	NSArray *encodings = [NSArray arrayWithObjects:
 			  [NSNumber numberWithUnsignedInt:NSUTF8StringEncoding],
@@ -76,7 +76,7 @@ const NSTimeInterval defaultTimeout = 30; // second
 	return data_str;
 }// end + (NSString *) HTTPSource:(NSURL *)url
 
-+ (NSData *) HTTPData:(NSURL *)url response:(NSURLResponse **)resp
++ (NSData *) HTTPData:(NSURL *)url response:(NSURLResponse * __autoreleasing *)resp
 {
 	NSURLRequest *request = [NSURLRequest requestWithURL:url];
 	NSError *error = nil;
@@ -158,7 +158,7 @@ const NSTimeInterval defaultTimeout = 30; // second
 	response = [resp copy];
 	
 	return string;
-}// end - (NSString *) stringByGet:(NSError **)error
+}// end - (NSString *) stringByGet
 
 - (NSData *) dataByGet
 {
@@ -171,9 +171,9 @@ const NSTimeInterval defaultTimeout = 30; // second
 	NSData *data = [HTTPConnection HTTPData:queryURL response:&resp];
 	response = [resp copy];
 	return data;
-}// end - (NSData *) dataByGet:(NSError **)error
+}// end - (NSData *) dataByGet
 
-- (NSString *) stringByPost:(NSError **)error
+- (NSString *) stringByPost:(NSError * __autoreleasing *)error
 {
 	NSData *receivedData = [self post:error];
 	if ([*error code] != noErr)
@@ -203,7 +203,7 @@ const NSTimeInterval defaultTimeout = 30; // second
 	return data_str;
 }// end - (NSString *) stringByPost:(NSError **)error
 
-- (NSData *) dataByPost:(NSError **)error
+- (NSData *) dataByPost:(NSError * __autoreleasing *)error
 {
 	NSData *data = NULL;
 	NSError *err = NULL;
@@ -233,7 +233,7 @@ const NSTimeInterval defaultTimeout = 30; // second
 }// end - (NSURLConnection *) httpDataAsync:(NSURL *)url delegate:(id)target
 
 #pragma mark private methods
-- (NSData*) post:(NSError **)err;
+- (NSData*) post:(NSError * __autoreleasing *)err;
 {
 		// create request
 	NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc]initWithURL:url];

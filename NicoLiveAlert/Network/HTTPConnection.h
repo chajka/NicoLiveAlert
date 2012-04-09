@@ -29,7 +29,7 @@
 	@param resoponse from server.
 	@result html data by string format.
 */
-+ (NSString *) HTTPSource:(NSURL *)url response:(NSURLResponse **)resp;
++ (NSString *) HTTPSource:(NSURL *)url response:(NSURLResponse * __autoreleasing *)resp;
 
 /*!
 	@method HTTPSource:
@@ -38,7 +38,7 @@
 	@param resoponse from server.
 	@result html data by binary format.
  */
-+ (NSData *) HTTPData:(NSURL *)url response:(NSURLResponse **)resp;
++ (NSData *) HTTPData:(NSURL *)url response:(NSURLResponse * __autoreleasing *)resp;
 	// constructor
 /*!
 	@method init
@@ -81,14 +81,14 @@
 	@abstract get contents of URL by string format with posted own parameters.
 	@param error result.
  */
-- (NSString *) stringByPost:(NSError **)error;
+- (NSString *) stringByPost:(NSError * __autoreleasing *)error;
 
 /*!
 	@method dataByPost:
 	@abstract get contents of URL by binary format with posted own parameters.
 	@param error result.
 */
-- (NSData *) dataByPost:(NSError **)error;
+- (NSData *) dataByPost:(NSError * __autoreleasing *)error;
 
 /*!
 	@method httpDataAsyncWithdelegate:

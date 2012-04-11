@@ -100,12 +100,12 @@ NSNumber		*notAutoOpen;
 - (NSDictionary *) generateElementDict
 {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-		[NSNumber numberWithInteger:elementIndexResponse], elementKeyResponse,
-		[NSNumber numberWithInteger:elementIndexTicket], elementKeyTicket,
-		[NSNumber numberWithInteger:elementIndexStatus], elementKeyStatus,
-		[NSNumber numberWithInteger:elementIndexUserID], elementKeyUserID, 
-		[NSNumber numberWithInteger:elementIndexUserName], elementKeyUserName, 
-		[NSNumber numberWithInteger:elementIndexCommunity], elementKeyCommunity, 
+		[NSNumber numberWithInteger:indexResponse], elementKeyResponse,
+		[NSNumber numberWithInteger:indexTicket], elementKeyTicket,
+		[NSNumber numberWithInteger:indexStatus], elementKeyStatus,
+		[NSNumber numberWithInteger:indexUserID], elementKeyUserID, 
+		[NSNumber numberWithInteger:indexUserName], elementKeyUserName, 
+		[NSNumber numberWithInteger:indexCommunity], elementKeyCommunity, 
 	nil];
 
 	return dict;
@@ -235,13 +235,13 @@ NSNumber		*notAutoOpen;
 {		// set current element
 	currentElement = [[elements valueForKey:elementName] integerValue];
 		// check xml status
-	if ((elementIndexResponse == currentElement) || (elementIndexStatus == currentElement))
+	if ((indexResponse == currentElement) || (indexStatus == currentElement))
 	{
 		if ([[attributeDict valueForKey:keyXMLStatus] isEqualToString:resultOK] != YES)
 			@throw [NSException exceptionWithName:RESULTERRORNAME reason:RESULTERRORREASON userInfo:attributeDict];
 		// end if status attribute is not OK
 			// allocate channels dictionary
-		if (elementIndexStatus == currentElement)
+		if (indexStatus == currentElement)
 			channels = [[NSMutableDictionary alloc] init];
 		// end if alertstatus is OK
 	}// end check xml status
@@ -267,17 +267,17 @@ NSNumber		*notAutoOpen;
 	NSString *channel = NULL;
 	switch ([[elements valueForKey:elementName] integerValue])
 	{
-		case elementIndexTicket:
+		case indexTicket:
 			ticket = [[NSString alloc] initWithString:stringBuffer];
 			break;
-		case elementIndexUserID:
+		case indexUserID:
 			uid = [stringBuffer integerValue];
 			userid = [[NSNumber alloc] initWithUnsignedInteger:uid];
 			break;
-		case elementIndexUserName:
+		case indexUserName:
 			username = [[NSString alloc] initWithString:stringBuffer];
 			break;
-		case elementIndexCommunity:
+		case indexCommunity:
 			channel = [NSString stringWithString:stringBuffer];
 			[channels setValue:notAutoOpen forKey:channel];
 			break;

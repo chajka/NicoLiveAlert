@@ -12,6 +12,7 @@
 - (NSMutableDictionary *) makeAccounts:(NSArray *)users;
 - (void) updateCurrentWatchlist;
 - (void) creteUserStateMenu;
+- (void) calcUserState;
 @end
 
 @implementation NLUsers

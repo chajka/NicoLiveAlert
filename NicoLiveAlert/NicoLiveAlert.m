@@ -11,8 +11,8 @@
 
 @interface NicoLiveAlert ()
 - (BOOL) checkFirstLaunch;
-- (void) doBeforeSleep:(NSNotification *)note;
-- (void) doAfterWakeup:(NSNotification *)note;
+- (void) listenHalt:(NSNotification *)note;
+- (void) listenRestart:(NSNotification *)note;
 @end
 
 @implementation NicoLiveAlert
@@ -38,38 +38,60 @@
 		// sleep and wakeup notification hook
 			// hook to sleep notification
 	[[[NSWorkspace sharedWorkspace] notificationCenter]
-		addObserver: self selector: @selector(doBeforeSleep:)
+		addObserver:self selector: @selector(listenHalt:)
 	 name: NSWorkspaceWillSleepNotification object: NULL];
 			// hook to wakeup notification
 	[[[NSWorkspace sharedWorkspace] notificationCenter]
-	 addObserver: self selector: @selector(doAfterWakeup:)
+	 addObserver:self selector: @selector(listenRestart:)
 	 name: NSWorkspaceDidWakeNotification object: NULL];
+			// hook to connection lost notification
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:NULL];
+			// hook to connection reactive notification
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
 	
+		// start monitor
+	programListServer = [[NLProgramList alloc] init];
+	[programListServer setWatchList:[nicoliveAccounts watchlist]];
+	[programListServer startListen];
+	[statusBar toggleConnected];
 }// end - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 
 - (void) applicationWillTerminate:(NSNotification *)notification
 {
+	[programListServer stopListen];
+
 		// release sleep and wakeup notifidation
-			// release sleep notification
+			// remove sleep notification
 	[[[NSWorkspace sharedWorkspace] notificationCenter]
 	 removeObserver:self 
 	 name:NSWorkspaceWillSleepNotification object:NULL];
-		// release wakeup notification
+			// remove wakeup notification
 	[[[NSWorkspace sharedWorkspace] notificationCenter]
 	 removeObserver:self 
 	 name:NSWorkspaceDidWakeNotification object:NULL];
+			// remove Connection lost notification
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationConnectionLost object:NULL];
+			// remove Connection Rised notification
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationConnectionRised object:NULL];
+	
 #if __has_feature(objc_arc) == 0
 	[statusBar release];
+	[programListServer release];
+	programListServer = NULL;
 #endif
 }// end - (void) applicationWillTerminate:(NSNotification *)notification
 
-- (void) doBeforeSleep:(NSNotification *)note
+- (void) listenHalt:(NSNotification *)note
 {
-}// end - (void) doBeforeSleep:(NSNotification *)note
+	[statusBar toggleConnected];
+	[programListServer stopListen];
+}// end - (void) listenHalt:(NSNotification *)note
 
-- (void) doAfterWakeup:(NSNotification *)note
+- (void) listenRestart:(NSNotification *)note
 {
-}// end - (void) doAfterSleep:(NSNotification *)note
+	[programListServer startListen];
+	[statusBar toggleConnected];
+}// end - (void) listenRestart:(NSNotification *)note
 
 - (BOOL) checkFirstLaunch
 {
@@ -141,4 +163,5 @@
 - (IBAction) deleteFromWatchList:(id)sender
 {
 }// end - (IBAction) deleteFromWatchList:(id)sender
+
 @end

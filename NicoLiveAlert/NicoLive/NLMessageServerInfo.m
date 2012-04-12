@@ -87,11 +87,11 @@ NSUInteger		currentElement;
 - (void) elementDictonary
 {
 	elementDict = [NSDictionary dictionaryWithObjectsAndKeys:
-	  [NSNumber numberWithInteger:elementIndexResponse], elementKeyResponse,
-	  [NSNumber numberWithInteger:elementIndexStatus], elementKeyStatus,
-	  [NSNumber numberWithInteger:elementIndexAddress], elementKeyAddress, 
-	  [NSNumber numberWithInteger:elementIndexPort], elementKeyPort, 
-	  [NSNumber numberWithInteger:elementIndexThread], elementKeyThread,
+	  [NSNumber numberWithInteger:indexResponse], elementKeyResponse,
+	  [NSNumber numberWithInteger:indexStatus], elementKeyStatus,
+	  [NSNumber numberWithInteger:indexAddress], elementKeyAddress, 
+	  [NSNumber numberWithInteger:indexPort], elementKeyPort, 
+	  [NSNumber numberWithInteger:indexThread], elementKeyThread,
 	  nil];
 }// end - (NSDictionary *) contentDictonary
 
@@ -109,7 +109,7 @@ NSUInteger		currentElement;
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
 {
 	currentElement = [[elementDict valueForKey:elementName] integerValue];
-	if (currentElement == elementIndexResponse)
+	if (currentElement == indexResponse)
 		if ([[attributeDict valueForKey:keyXMLStatus] isEqualToString:resultOK] != YES)
 		   @throw [NSException exceptionWithName:RESULTERRORNAME reason:RESULTERRORREASON userInfo:attributeDict];
 		// end if result is not OK
@@ -124,13 +124,13 @@ NSUInteger		currentElement;
 {
 	switch ([[elementDict valueForKey:elementName] integerValue])
 	{
-		case elementIndexAddress:
+		case indexAddress:
 			serveName = [[NSString alloc] initWithString:contentStr];
 			break;
-		case elementIndexPort:
+		case indexPort:
 			port = [contentStr integerValue];
 			break;
-		case elementIndexThread:
+		case indexThread:
 			thread = [[NSString alloc] initWithString:contentStr];
 			break;
 		default:

@@ -11,11 +11,15 @@
 @interface NLProgramList ()
 - (void) checkProgram:(NSString *)progInfo;
 - (void) checkConnectionActive;
+- (void) checkConnectionRised;
 @end
 
 @implementation NLProgramList
 @synthesize watchList;
+@synthesize activePrograms;
 @synthesize watchOfficial;
+NSMutableData		*programListDataBuffer;
+BOOL sendrequest;
 
 - (id) init
 {
@@ -26,10 +30,12 @@
 		watchList = NULL;
 		serverInfo = NULL;
 		lastTime = NULL;
-		aliveMonitor = NULL;
-		dataBuffer = NULL;
+		keepAliveMonitor = NULL;
+		connectionRiseMonitor = NULL;
+		programListDataBuffer = NULL;
 		sendrequest = NO;
 		isOfficial = NO;
+		watchOfficial = YES;
 	}// end if self
 	return self;
 }// end - (id) init
@@ -45,15 +51,15 @@
 	programListSocket = [[SocketConnection alloc] initWithServer:[serverInfo serveName] andPort:[serverInfo port] direction:SCDirectionBoth];
 	[programListSocket setStreamEventDelegate:self];
 	success = [programListSocket connect];
-	aliveMonitor = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(checkConnectionActive) userInfo:NULL repeats:YES];
-	[aliveMonitor fire];
+	keepAliveMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionAliveCheckInterval target:self selector:@selector(checkConnectionActive) userInfo:NULL repeats:YES];
+	[keepAliveMonitor fire];
 
 	return success;
 }// end - (void) startListen
 
 - (void) stopListen
 {
-	[aliveMonitor invalidate];
+	[keepAliveMonitor invalidate];
 	if (programListSocket == NULL)
 		return;
 	// end if not connection
@@ -66,13 +72,18 @@
 - (void) checkProgram:(NSString *)progInfo
 {
 	NSArray *program = [progInfo componentsSeparatedByString:dataSeparator];
-	if (([program count] == 2) || ([[program objectAtIndex:offsetCommuCh] isEqualToString:liveOfficialString] == YES))
+	if ((watchOfficial == YES) && ([program count] == 2))
+	{
+		[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo]];
 		NSLog(@"%@", progInfo);
+		return;
+	}
 
 	for (NSString *prog in program)
 	{		// process official
 		if (isOfficial)
 		{
+			[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo]];
 			NSLog(@"%@", progInfo);
 			isOfficial = NO;
 		}// end is Official
@@ -80,64 +91,76 @@
 		if ((watchOfficial == YES) && ([prog isEqualToString:liveOfficialString] == YES))
 			isOfficial = YES;
 		if ([watchList valueForKey:prog] != NULL)
+		{
+			[activePrograms addUserProgram:[program objectAtIndex:offsetLiveNo] community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner]];
 			NSLog(@"%@", progInfo);
+		}
 	}// end for
 }// end - (void) checkProgram:(NSString *)progInfo
 
 - (void) checkConnectionActive
 {
 	NSTimeInterval diff = [lastTime timeIntervalSinceNow];
-	if (diff < -disconnectionInterval)
-		NSLog(@"%lf", diff);
+	if (diff > -ServerTimeOut)
+		return;
+	// end if check connection is alive
+
+		// maybe timeout stop self and start reactive checker
+	[[NSNotificationCenter defaultCenter] postNotificationName:NLNotificationConnectionLost object:NULL];
+	connectionRiseMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionReactiveCheckInterval target:self selector:@selector(checkConnectionRised) userInfo:NULL repeats:YES];
+	[connectionRiseMonitor fire];
+	[keepAliveMonitor invalidate];
 }// end - (void) checkConnectionActive
+
+- (void) checkConnectionRised
+{
+	NSURL *ping = [NSURL URLWithString:MSQUERYAPI];
+	NSURLResponse *resp = NULL;
+	NSData *data = [HTTPConnection HTTPData:ping response:&resp];
+	if ([data length] == 0)
+		return;
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:NLNotificationConnectionRised object:NULL];
+	[connectionRiseMonitor invalidate];
+}// end - (void) checkConnectionRised
 
 #pragma mark -
 #pragma mark StreamEventDelegate
-NSMutableData *dataBuffer;
 - (void) streamEventHasBytesAvailable:(NSStream *)stream
 {
 	NSInputStream *iStream = (NSInputStream *)stream;
 	uint8_t oneByte;
 	NSUInteger actuallyRead = 0;
-	if (dataBuffer == NULL)
-		dataBuffer = [[NSMutableData alloc] init];
+	if (programListDataBuffer == NULL)
+		programListDataBuffer = [[NSMutableData alloc] init];
 	// end if data buffer is cleard
 
 	actuallyRead = [iStream read:&oneByte maxLength:1U];
 	if (actuallyRead == 1)
-		[dataBuffer appendBytes:&oneByte length:1];
+		[programListDataBuffer appendBytes:&oneByte length:1];
 	// end if read
 
 		// check databyte is not terminator
 	if (oneByte != '\0')
 		return;
 
-#if __has_feature(objc_arc)
-	@autoreleasepool {
-#else
-	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 	if (lastTime != NULL)
 		[lastTime release];
-#endif
-
-
 		// store last data recieve time;
 	lastTime = [[NSDate alloc] init];
 		// databyte is terminator
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:dataBuffer];
-	[parser setDelegate:self];
-	[parser parse];
-#if __has_feature(objc_arc)
-	}
-#else
-	[parser release];
-	[dataBuffer release];
-	[arp release];
+	NSString *msg = [[NSString alloc] initWithData:programListDataBuffer encoding:NSUTF8StringEncoding];
+	OnigRegexp *chat = [OnigRegexp compile:@"<chat.*>(.*)</chat>"];
+	OnigResult *chatResult = [chat search:msg];
+		if (chatResult != NULL)
+			[self checkProgram:[NSString stringWithFormat:liveNoAppendFormat,[chatResult stringAt:1]]];
+#if __has_feature(objc_arc) == 0
+	if (msg != NULL) [msg release];
+	[programListDataBuffer release];
 #endif
-	dataBuffer = NULL;
+	programListDataBuffer = NULL;
 }// end - (void) NSStreamEventHasBytesAvailable:(NSStream *)stream
 
-BOOL sendrequest;
 - (void) streamEventHasSpaceAvailable:(NSStream *)stream
 {
 	if ((sendrequest == NO) && ([programListSocket isOutputStream:stream] == YES))
@@ -153,107 +176,18 @@ BOOL sendrequest;
 
 - (void) streamEventErrorOccurred:(NSStream *)stream
 {
-	NSLog(@"streamEventErrorOccurred: : %@", stream);
 }// end - (void) streamEventErrorOccurred:(NSStream *)stream
 
 #pragma mark StreamEventDelegate (optional)
 - (void) streamEventOpenCompleted:(NSStream *)stream
 {
-	NSLog(@"streamEventOpenCompleted: : %@", stream);
 }// end - (void) streamEventOpenCompleted:(NSStream *)stream
 
 - (void) streamEventEndEncountered:(NSStream *)stream
 {
-	NSLog(@"streamEventEndEncountered: : %@", stream);
 }// end - (void) streamEventEndEncountered:(NSStream *)stream
 
 - (void) streamEventNone:(NSStream *)stream
 {
-	NSLog(@"streamEventNone: : %@", stream);
 }// end - (void) streamEventNone:(NSStream *)stream
-
-#pragma mark -
-#pragma mark NSXMLParserDelegate methods
-- (void)parserDidStartDocument:(NSXMLParser *)parser
-{
-}// end - (void)parserDidStartDocument:(NSXMLParser *)parser
-
-- (void)parserDidEndDocument:(NSXMLParser *)parser
-{
-}// end - (void)parserDidEndDocument:(NSXMLParser *)parser
-
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
-{
-}// end - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
-
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-{
-}// end - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
-{
-	NSString *progInfo = [NSString stringWithFormat:liveNoAppendFormat, string];
-	[self checkProgram:progInfo];
-}// end - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
-
-- (void)parser:(NSXMLParser *)parser foundAttributeDeclarationWithName:(NSString *)attributeName forElement:(NSString *)elementName type:(NSString *)type defaultValue:(NSString *)defaultValue
-{
-}// end - (void)parser:(NSXMLParser *)parser foundAttributeDeclarationWithName:(NSString *)attributeName forElement:(NSString *)elementName type:(NSString *)type defaultValue:(NSString *)defaultValue
-
-- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
-{
-}// end - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
-
-- (void)parser:(NSXMLParser *)parser validationErrorOccurred:(NSError *)validError
-{
-}// end - (void)parser:(NSXMLParser *)parser validationErrorOccurred:(NSError *)validError
-
-- (void)parser:(NSXMLParser *)parser didEndMappingPrefix:(NSString *)prefix
-{
-}// end - (void)parser:(NSXMLParser *)parser didEndMappingPrefix:(NSString *)prefix
-
-- (void)parser:(NSXMLParser *)parser didStartMappingPrefix:(NSString *)prefix toURI:(NSString *)namespaceURI
-{
-}// end - (void)parser:(NSXMLParser *)parser didStartMappingPrefix:(NSString *)prefix toURI:(NSString *)namespaceURI
-
-- (void)parser:(NSXMLParser *)parser foundCDATA:(NSData *)CDATABlock
-{
-}// end - (void)parser:(NSXMLParser *)parser foundCDATA:(NSData *)CDATABlock
-
-- (void)parser:(NSXMLParser *)parser foundComment:(NSString *)comment
-{
-}// end - (void)parser:(NSXMLParser *)parser foundComment:(NSString *)comment
-
-- (void)parser:(NSXMLParser *)parser foundElementDeclarationWithName:(NSString *)elementName model:(NSString *)model
-{
-}// end - (void)parser:(NSXMLParser *)parser foundElementDeclarationWithName:(NSString *)elementName model:(NSString *)model
-
-- (void)parser:(NSXMLParser *)parser foundExternalEntityDeclarationWithName:(NSString *)entityName publicID:(NSString *)publicID systemID:(NSString *)systemID
-{
-}// end - (void)parser:(NSXMLParser *)parser foundExternalEntityDeclarationWithName:(NSString *)entityName publicID:(NSString *)publicID systemID:(NSString *)systemID
-
-- (void)parser:(NSXMLParser *)parser foundIgnorableWhitespace:(NSString *)whitespaceString
-{
-}// end - (void)parser:(NSXMLParser *)parser foundIgnorableWhitespace:(NSString *)whitespaceString
-
-- (void)parser:(NSXMLParser *)parser foundInternalEntityDeclarationWithName:(NSString *)name value:(NSString *)value
-{
-}// end - (void)parser:(NSXMLParser *)parser foundInternalEntityDeclarationWithName:(NSString *)name value:(NSString *)value
-
-- (void)parser:(NSXMLParser *)parser foundNotationDeclarationWithName:(NSString *)name publicID:(NSString *)publicID systemID:(NSString *)systemID
-{
-}// end - (void)parser:(NSXMLParser *)parser foundNotationDeclarationWithName:(NSString *)name publicID:(NSString *)publicID systemID:(NSString *)systemID
-
-- (void)parser:(NSXMLParser *)parser foundProcessingInstructionWithTarget:(NSString *)target data:(NSString *)data
-{
-}// end - (void)parser:(NSXMLParser *)parser foundProcessingInstructionWithTarget:(NSString *)target data:(NSString *)data
-
-- (void)parser:(NSXMLParser *)parser foundUnparsedEntityDeclarationWithName:(NSString *)name publicID:(NSString *)publicID systemID:(NSString *)systemID notationName:(NSString *)notationName
-{
-}// end - (void)parser:(NSXMLParser *)parser foundUnparsedEntityDeclarationWithName:(NSString *)name publicID:(NSString *)publicID systemID:(NSString *)systemID notationName:(NSString *)notationName
-
-- (NSData *)parser:(NSXMLParser *)parser resolveExternalEntityName:(NSString *)entityName systemID:(NSString *)systemID
-{
-	return NULL;
-}// end - (NSData *)parser:(NSXMLParser *)parser resolveExternalEntityName:(NSString *)entityName systemID:(NSString *)systemID
 @end

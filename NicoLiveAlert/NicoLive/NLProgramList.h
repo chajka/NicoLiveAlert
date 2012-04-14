@@ -10,13 +10,17 @@
 #import "SocketConnection.h"
 #import "NicoLiveAlertDefinitions.h"
 #import "NLMessageServerInfo.h"
+#import "NLActivePrograms.h"
+#import "OnigRegexp.h"
 
-@interface NLProgramList : NSObject <NSXMLParserDelegate, StreamEventDelegate> {
+@interface NLProgramList : NSObject <StreamEventDelegate> {
 	SocketConnection	*programListSocket;
 	NSMutableDictionary	*watchList;
 	NLMessageServerInfo	*serverInfo;
+	NLActivePrograms	*activePrograms;
 	NSDate				*lastTime;
-	NSTimer				*aliveMonitor;
+	NSTimer				*keepAliveMonitor;
+	NSTimer				*connectionRiseMonitor;
 	BOOL				watchOfficial;
 	BOOL				isOfficial;
 #ifdef DEBUG
@@ -24,7 +28,8 @@
 	NSFileHandle		*watchlog;
 #endif
 }
-@property (retain, readwrite) NSMutableDictionary	*watchList;
+@property (assign, readwrite) NSMutableDictionary	*watchList;
+@property (retain, readwrite) NLActivePrograms		*activePrograms;
 @property (assign, readwrite) BOOL					watchOfficial;
 
 - (BOOL) startListen;

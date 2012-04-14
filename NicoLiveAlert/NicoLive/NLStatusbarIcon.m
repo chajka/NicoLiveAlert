@@ -54,6 +54,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	if (self)
 	{
 		connected = NO;
+		userState = 0;
 		numberOfPrograms = 0;
 		statusbarMenu = menu;
 		drawPoint = NSMakePoint(progCountPointSingleDigitX, progCountPointY);
@@ -161,7 +162,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 {
 	CIImage *invertImage = NULL;
 	CIImage *destImage = NULL;
-	if (numberOfPrograms == 0)
+	if ((numberOfPrograms == 0) && (userState == 0))
 	{		// crop image
 		[statusbarIcon setSize:iconSize];
 		[statusbarAlt setSize:iconSize];
@@ -278,6 +279,17 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		numberOfPrograms--;
 	[self makeStatusbarIcon];
 }// end - (BOOL) decleaseProgCount
+
+- (NSInteger) userState
+{
+	return userState;
+}// end - (NSInteger) userState
+
+- (void) setUserState:(NSInteger)state
+{
+	userState = state;
+	[self makeStatusbarIcon];
+}// end - (void) setUserState:(NSInteger)state
 
 #pragma mark accessor for connected
 - (BOOL) connected

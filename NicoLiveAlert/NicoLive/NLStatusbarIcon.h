@@ -20,6 +20,7 @@
 	__strong	NSStatusBar		*statusBar;
 	NSMenu						*statusbarMenu;
 	BOOL						connected;
+	NSInteger					userState;
 	NSInteger					numberOfPrograms;
 	NSSize						iconSize;
 	CIImage						*sourceImage;
@@ -39,6 +40,7 @@
 	NSColor						*progCountBackColor;
 	NSColor						*disconnectColor;
 }
+@property (readwrite) NSInteger	userState;
 @property (readonly) NSInteger	numberOfPrograms;
 @property (readwrite) BOOL		connected;
 

@@ -52,6 +52,9 @@
 - (id) initWithMenu:(NSMenu *)menu andImageName:(NSString *)imageName;
 
 #pragma mark accessor
+- (void) addUserMenu:(NSMenuItem *)item;
+- (void) addOfficialMenu:(NSMenuItem *)item;
+
 /*!
 	@method incleaseProgCount
 	@abstract notify pogram count need inclease.

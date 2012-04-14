@@ -180,12 +180,6 @@ static CGFloat disconnectedColorAlpha = 0.70;
 
 	NSCIImageRep *sb = [NSCIImageRep imageRepWithCIImage:destImage];
 	NSCIImageRep *alt = [NSCIImageRep imageRepWithCIImage:invertImage];
-//	NSArray *sbreps = [statusbarIcon representations];
-//	NSArray *altreps = [statusbarAlt representations];
-//	for (NSImageRep *aRep in sbreps)
-//		[statusbarIcon removeRepresentation:aRep];
-//	for (NSImageRep *aRep in altreps)
-//		[statusbarAlt removeRepresentation:aRep];
 
 		// draw program count on image
 	NSString *progCountStr = [NSString stringWithFormat:@"%d", numberOfPrograms];
@@ -195,8 +189,6 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		[progCountBackground removeAllPoints];
 		[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
 		[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX + (progCountBackDigitOffset * 2), progCountBackGrountToY)];
-//		[statusbarIcon setSize:NSMakeSize(haveProgWidth + (progCountBackDigitOffset * 2), iconSizeW)];
-//		[statusbarAlt setSize:NSMakeSize(haveProgWidth + (progCountBackDigitOffset * 2), iconSizeW)];
 		statusbarIcon = [[NSImage alloc] initWithSize:NSMakeSize(haveProgWidth + (progCountBackDigitOffset * 2), iconSizeW)];
 		statusbarAlt = [[NSImage alloc] initWithSize:NSMakeSize(haveProgWidth + (progCountBackDigitOffset * 2), iconSizeW)];
 	}
@@ -205,8 +197,6 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		[progCountBackground removeAllPoints];
 		[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
 		[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX + progCountBackDigitOffset, progCountBackGrountToY)];
-//		[statusbarIcon setSize:NSMakeSize(haveProgWidth + progCountBackDigitOffset, iconSizeW)];
-//		[statusbarAlt setSize:NSMakeSize(haveProgWidth + progCountBackDigitOffset, iconSizeW)];
 		statusbarIcon = [[NSImage alloc] initWithSize:NSMakeSize(haveProgWidth + progCountBackDigitOffset, iconSizeW)];
 		statusbarAlt = [[NSImage alloc] initWithSize:NSMakeSize(haveProgWidth + progCountBackDigitOffset, iconSizeW)];
 	}
@@ -215,15 +205,11 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		[progCountBackground removeAllPoints];
 		[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
 		[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX, progCountBackGrountToY)];
-//		[statusbarIcon setSize:NSMakeSize(haveProgWidth, iconSizeW)];
-//		[statusbarAlt setSize:NSMakeSize(haveProgWidth, iconSizeW)];
 		statusbarIcon = [[NSImage alloc] initWithSize:NSMakeSize(haveProgWidth, iconSizeW)];
 		statusbarAlt = [[NSImage alloc] initWithSize:NSMakeSize(haveProgWidth, iconSizeW)];
 	}
 	else
 	{
-//		[statusbarIcon setSize:NSMakeSize(noProgWidth, iconSizeW)];
-//		[statusbarAlt setSize:NSMakeSize(noProgWidth, iconSizeW)];
 		statusbarIcon = [[NSImage alloc] initWithSize:NSMakeSize(noProgWidth, iconSizeW)];
 		statusbarAlt = [[NSImage alloc] initWithSize:NSMakeSize(noProgWidth, iconSizeW)];
 	}// end if adjust icon withd by program count.
@@ -267,6 +253,18 @@ static CGFloat disconnectedColorAlpha = 0.70;
 }// end - (CIImage *) makeStatusbarIcon
 
 #pragma mark accessor
+- (void) addUserMenu:(NSMenuItem *)item
+{
+	[[[statusbarMenu itemWithTag:tagPorgrams] submenu] addItem:item];
+	[self incleaseProgCount];
+}
+
+- (void) addOfficialMenu:(NSMenuItem *)item
+{
+	[[[statusbarMenu itemWithTag:tagOfficial] submenu] addItem:item];
+	[self incleaseProgCount];
+}
+
 - (void) incleaseProgCount
 {
 	numberOfPrograms++;
@@ -281,7 +279,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	[self makeStatusbarIcon];
 }// end - (BOOL) decleaseProgCount
 
-#pragma mark connectorsAccessor
+#pragma mark accessor for connected
 - (BOOL) connected
 {
 	return connected;

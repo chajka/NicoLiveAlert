@@ -10,6 +10,7 @@
 #import "NLStatusbarIcon.h"
 #import "NLUsers.h"
 #import "NLProgramList.h"
+#import "NLActivePrograms.h"
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @interface NicoLiveAlert : NSObject <NSApplicationDelegate> {

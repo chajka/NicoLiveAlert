@@ -51,9 +51,16 @@
 	
 		// start monitor
 	programListServer = [[NLProgramList alloc] init];
+	NLActivePrograms *activeprograms = [[NLActivePrograms alloc] init];
+	[activeprograms setSbItem:statusBar];
+	[activeprograms setUsers:nicoliveAccounts];
 	[programListServer setWatchList:[nicoliveAccounts watchlist]];
+	[programListServer setActivePrograms:activeprograms];
 	[programListServer startListen];
-	[statusBar toggleConnected];
+	[statusBar setConnected:YES];
+#if __has_feature(objc_arc) == 0
+	[activeprograms release];
+#endif
 }// end - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 
 - (void) applicationWillTerminate:(NSNotification *)notification
@@ -126,6 +133,7 @@
 {
 	[nicoliveAccounts toggleUserState:(NSMenuItem *)sender];
 	[menuAccounts setState:[nicoliveAccounts userState]];
+	[statusBar setUserState:[nicoliveAccounts userState]];
 }// end - (IBAction) toggleUserState:(id)sender
 
 #pragma mark preference panel interface

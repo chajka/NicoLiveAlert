@@ -135,6 +135,21 @@
 
 	return error;
 }// end - (OSStatus) addUser:(NSString *)useraccount andPassword:(NSString *)userpassword
+
+- (NLAccount *) primaryAccountForCommunity:(NSString *)community
+{
+	for (NSString *username in [usersState allKeys])
+	{
+		if ([usersState valueForKey:username] == active)
+		{
+			NLAccount *account = [accounts valueForKey:username];
+			if ([[account channels] valueForKey:community] != NULL)
+				return account;
+		}// end if account is active
+	}// end for
+	return NULL;
+}// end if - (NLAccount *) primaryAccountForCommunity:(NSString *)community
+
 #pragma mark -
 #pragma mark menu management
 - (void) creteUserStateMenu

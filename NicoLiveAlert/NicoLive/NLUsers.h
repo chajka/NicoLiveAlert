@@ -53,10 +53,20 @@
 	@abstract add user account by maila ddress with password.
 	This user hold by NLAccount instance in reciever.
 	this account store to keychain for nicovideo.
+	@param mailaddress for login to niconico live
+	@param password for login to niconico live
 	@result status for store to keychain.
 	Or 1 is failed to login nicovideo.
  */
 - (OSStatus) addUser:(NSString *)useraccount withPassword:(NSString *)userpassword;
+
+/*!
+ @method primaryAccountForCommunity:
+ @abstract return primary account of reciever stored accounts communities.
+ @param community no of program.
+ @result account information by NLAccount.
+ */
+- (NLAccount *) primaryAccountForCommunity:(NSString *)community;
 
 #pragma mark -
 #pragma mark menu management

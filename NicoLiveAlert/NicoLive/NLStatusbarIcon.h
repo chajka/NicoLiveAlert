@@ -39,6 +39,8 @@
 	NSBezierPath				*disconnectPath;
 	NSColor						*progCountBackColor;
 	NSColor						*disconnectColor;
+	NSInteger					userProgramCount;
+	NSInteger					officialProgramCount;
 }
 @property (readwrite) NSInteger	userState;
 @property (readonly) NSInteger	numberOfPrograms;
@@ -54,8 +56,33 @@
 - (id) initWithMenu:(NSMenu *)menu andImageName:(NSString *)imageName;
 
 #pragma mark accessor
+/*!
+	@method addUserMenu:
+	@abstract add Program menu item into user programs submenu
+	@param menu item of program to add
+*/
 - (void) addUserMenu:(NSMenuItem *)item;
+
+/*!
+	@method removeUserMenu:
+	@abstract remove Program menu item from user programs submenu
+	@param menu item of program to remove
+*/
+- (void) removeUserMenu:(NSMenuItem *)item;
+
+/*!
+	@method addOfficialMenu:
+	@abstract add Official Program menu item into official programs submenu
+	@param menu item of program to add
+*/
 - (void) addOfficialMenu:(NSMenuItem *)item;
+
+/*!
+	@method removeOfficialMenu:
+	@abstract remove Official Program menu item from official programs submenu
+	@param menu item of program to remove
+*/
+- (void) removeOfficialMenu:(NSMenuItem *)item;
 
 /*!
 	@method incleaseProgCount

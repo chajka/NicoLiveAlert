@@ -97,6 +97,8 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		[disconnectPath retain];
 		[disconnectColor retain];
 #endif
+		userProgramCount = 0;
+		officialProgramCount = 0;
 		[self installStatusbarMenu];
 		[self makeStatusbarIcon];
 	}// end if
@@ -248,7 +250,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 #if __has_feature(objc_arc) == 0
 	[statusbarIcon release];
 	[statusbarAlt release];
-	if (numberOfPrograms != 0)
+	if ((numberOfPrograms != 0) || (userState != 0))
 		[destImage release];
 #endif
 }// end - (CIImage *) makeStatusbarIcon
@@ -258,13 +260,33 @@ static CGFloat disconnectedColorAlpha = 0.70;
 {
 	[[[statusbarMenu itemWithTag:tagPorgrams] submenu] addItem:item];
 	[self incleaseProgCount];
+	if (++userProgramCount > 0)
+		[[statusbarMenu itemWithTag:tagPorgrams] setState:NSOnState];	
 }
+
+- (void) removeUserMenu:(NSMenuItem *)item
+{
+	[[[statusbarMenu itemWithTag:tagPorgrams] submenu] removeItem:item];
+	[self decleaseProgCount];
+	if (--userProgramCount == 0)
+		[[statusbarMenu itemWithTag:tagPorgrams] setState:NSOffState];
+}// end - (void) removeUserMenu:(NSMenuItem *)item
 
 - (void) addOfficialMenu:(NSMenuItem *)item
 {
 	[[[statusbarMenu itemWithTag:tagOfficial] submenu] addItem:item];
 	[self incleaseProgCount];
+	if (++officialProgramCount > 0)
+		[[statusbarMenu itemWithTag:tagOfficial] setState:NSOnState];	
 }
+
+- (void) removeOfficialMenu:(NSMenuItem *)item
+{
+	[[[statusbarMenu itemWithTag:tagOfficial] submenu] removeItem:item];
+	[self decleaseProgCount];
+	if (--officialProgramCount == 0)
+		[[statusbarMenu itemWithTag:tagOfficial] setState:NSOffState];	
+}// end - (void) removeOfficialMenu:(NSMenuItem *)item
 
 - (void) incleaseProgCount
 {

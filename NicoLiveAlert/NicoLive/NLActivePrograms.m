@@ -78,7 +78,7 @@
 - (void) removeEndedProgram:(NSNotification *)notification
 {		// iterate for find ended program.
 NSLog(@"%@", notification);
-	for (NLProgram *program in programs)
+	for (NLProgram *program in [programs reverseObjectEnumerator])
 	{		// check program was ended.
 		if ([program isBroadCasting] == NO)
 		{		// remove ended program

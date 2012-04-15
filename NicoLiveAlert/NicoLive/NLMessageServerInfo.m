@@ -48,8 +48,9 @@ NSUInteger		currentElement;
 - (void) dealloc
 {
 #if __has_feature(objc_arc) == 0
-    if (serveName != NULL) {	[serveName release]; }
-	if (thread != NULL) {		[thread release]; }
+    if (serveName != NULL)	[serveName release];
+	if (thread != NULL)		[thread release];
+
     [super dealloc];
 #endif
 }// end - (void) dealloc

@@ -57,11 +57,12 @@
 	if ((iStream != NULL) || (oStream != NULL))
 		[self closeStream];
 #if __has_feature(objc_arc) == 0
-	if (iStream != NULL) {	[iStream release]; }
-	if (oStream != NULL) {	[oStream release]; }
-	if (server != NULL) {	[server release]; }
-	if (streamDelegate != self) {	[streamDelegate release]; }
-	if (streamEventDelegate != self) {	[streamEventDelegate release]; }
+	if (iStream != NULL)				[iStream release];
+	if (oStream != NULL)				[oStream release];
+	if (server != NULL)					[server release];
+	if (streamDelegate != self)			[streamDelegate release];
+	if (streamEventDelegate != self)	[streamEventDelegate release];
+
 	[super dealloc];
 #endif
 }// end - (void) dealloc
@@ -71,6 +72,7 @@
 {
 	if ((iStream != NULL) || (oStream != NULL))
 		[self closeStream];
+
 	[super finalize];
 }// end - (void) finalize
 #endif

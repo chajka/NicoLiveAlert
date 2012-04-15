@@ -98,18 +98,13 @@ const UInt8 maskBitsInetOptional =
 
 - (void) dealloc
 {
-	if (keychain != NULL)
-		CFRelease(keychain);
-	if (keychainItem != NULL)
-		CFRelease(keychainItem);
+	if (keychain != NULL)		CFRelease(keychain);
+	if (keychainItem != NULL)	CFRelease(keychainItem);
 #if __has_feature(objc_arc) == 0
 	// relase account
-    if (account != NULL)
-		[account release];
+    if (account != NULL)		[account release];
 	// relase password
-	if (password != NULL)
-		[password release];
-	// no need care synced
+	if (password != NULL)		[password release];
 	[super dealloc];
 #endif
 }// end - (void) dealloc
@@ -117,10 +112,8 @@ const UInt8 maskBitsInetOptional =
 #ifdef __OBJC_GC__
 - (void) finalize
 {
-	if (keychain != NULL)
-		CFRelease(keychain);
-	if (keychainItem != NULL)
-		CFRelease(keychainItem);
+	if (keychain != NULL)		CFRelease(keychain);
+	if (keychainItem != NULL)	CFRelease(keychainItem);
 	[super finalize];
 }// end - (void) finalize
 #endif
@@ -517,12 +510,10 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 - (void) dealloc
 {
 #if __has_feature(objc_arc) == 0
-	if (serverName)
-		[serverName release];
-	if (serverPath)
-		[serverPath release];
-	if (securityDomain)
-		[securityDomain release];
+	if (serverName)			[serverName release];
+	if (serverPath)			[serverPath release];
+	if (securityDomain)		[securityDomain release];
+
 	[super dealloc];
 #endif
 }// end - (void) dealloc

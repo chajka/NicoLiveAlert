@@ -78,20 +78,15 @@ NSNumber		*notAutoOpen;
 {
 #if __has_feature(objc_arc) == 0
 		// cleanup user information variables.
-	if (mailaddr != NULL) {			[mailaddr release]; }
-	if (password != NULL) {			[password release]; }
-	if (username != NULL) {			[username release]; }
-	if (userid != NULL)	{			[userid release]; }
+	if (mailaddr != NULL)		[mailaddr release];
+	if (password != NULL)		[password release];
+	if (username != NULL)		[username release];
+	if (userid != NULL)			[userid release];
 		// cleanup connection information variables.
-	if (ticket != NULL)	{			[ticket release]; }
-//	if (userHash != NULL) {			[userHash release]; }
-	if (channels != NULL)	{		[channels release]; }
-	if (stringBuffer != NULL)	{	[stringBuffer release]; }
-//	if (messageServerName != NULL)
-//		[messageServerName release];
-//	if (messageServerThreadID != NULL)
-//		[messageServerThreadID release];
-		// internal variables are already cleanuped at constructor.
+	if (ticket != NULL)			[ticket release];
+	if (channels != NULL)		[channels release];
+	if (stringBuffer != NULL)	[stringBuffer release];
+
 	[super dealloc];
 #endif
 }// end - (void) dealloc

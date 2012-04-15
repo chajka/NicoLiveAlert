@@ -42,12 +42,12 @@
 - (void) dealloc
 {
 #if __has_feature(objc_arc) == 0
-	if (active != NULL) {				[active release]; }
-	if (deactive != NULL) {				[deactive release]; }
-	if (usersState != NULL) {			[usersState release]; }
-	if (accounts != NULL) {				[accounts release]; }
-	if (originalWatchList != NULL) {	[originalWatchList release]; }
-	if (watchlist != NULL) {			[watchlist release]; }
+	if (active != NULL)				[active release];
+	if (deactive != NULL)			[deactive release];
+	if (usersState != NULL)			[usersState release];
+	if (accounts != NULL)			[accounts release];
+	if (originalWatchList != NULL)	[originalWatchList release];
+	if (watchlist != NULL)			[watchlist release];
 	if (usersMenu != NULL)
 	{
 		for (NSMenuItem *item in [usersMenu itemArray])
@@ -55,6 +55,7 @@
 		// end foreach delete users menuitem.
 		[usersMenu release];
 	}// end if cleanup usersMenu
+
 	[super dealloc];
 #endif
 }// end - (void) dealloc

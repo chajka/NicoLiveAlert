@@ -34,7 +34,8 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationPorgramEnd object:NULL];
 #if __has_feature(objc_arc) == 0
-	[programs release];
+	if (programs != NULL)	[programs release];
+
     [super dealloc];
 #endif
 }// end - (void) dealloc

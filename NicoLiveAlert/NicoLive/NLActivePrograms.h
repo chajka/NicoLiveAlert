@@ -12,13 +12,15 @@
 #import "NLProgram.h"
 
 @interface NLActivePrograms : NSObject {
-	NLStatusbarIcon	*sbItem;
-	NLUsers			*users;
-	NSMutableArray	*programs;
+	NSNumber			*yes;
+	NLStatusbarIcon		*sbItem;
+	NLUsers				*users;
+	NSMutableArray		*programs;
+	NSMutableDictionary *liveNumbers;
 }
 @property (assign, readwrite) NLStatusbarIcon	*sbItem;
 @property (assign, readwrite) NLUsers			*users;
 
-- (void) addUserProgram:(NSString *)liveNo community:(NSString *)community owner:owner;
-- (void) addOfficialProgram:(NSString *)liveNo;
+- (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:owner;
+- (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date;
 @end

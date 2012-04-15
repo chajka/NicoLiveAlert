@@ -9,7 +9,7 @@
 #import "NLProgramList.h"
 
 @interface NLProgramList ()
-- (void) checkProgram:(NSString *)progInfo;
+- (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date;
 - (void) checkConnectionActive;
 - (void) checkConnectionRised;
 @end
@@ -69,12 +69,12 @@ BOOL sendrequest;
 
 #pragma mark -
 #pragma mark internal
-- (void) checkProgram:(NSString *)progInfo
+- (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date
 {
 	NSArray *program = [progInfo componentsSeparatedByString:dataSeparator];
 	if ((watchOfficial == YES) && ([program count] == 2))
 	{
-		[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo]];
+		[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo] withDate:date];
 		NSLog(@"%@", progInfo);
 		return;
 	}
@@ -83,7 +83,7 @@ BOOL sendrequest;
 	{		// process official
 		if (isOfficial)
 		{
-			[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo]];
+			[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo] withDate:date];
 			NSLog(@"%@", progInfo);
 			isOfficial = NO;
 		}// end is Official
@@ -92,7 +92,7 @@ BOOL sendrequest;
 			isOfficial = YES;
 		if ([watchList valueForKey:prog] != NULL)
 		{
-			[activePrograms addUserProgram:[program objectAtIndex:offsetLiveNo] community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner]];
+			[activePrograms addUserProgram:[program objectAtIndex:offsetLiveNo] withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner]];
 			NSLog(@"%@", progInfo);
 		}
 	}// end for
@@ -153,7 +153,12 @@ BOOL sendrequest;
 	OnigRegexp *chat = [OnigRegexp compile:@"<chat.*>(.*)</chat>"];
 	OnigResult *chatResult = [chat search:msg];
 		if (chatResult != NULL)
-			[self checkProgram:[NSString stringWithFormat:liveNoAppendFormat,[chatResult stringAt:1]]];
+		{
+			OnigRegexp *date = [OnigRegexp compile:@"date=\"(\\d+)\""];
+			OnigResult *dateResult = [date search:msg];
+			NSDate *broadcastDate = [NSDate dateWithTimeIntervalSince1970:[[dateResult stringAt:1] longLongValue]];
+			[self checkProgram:[NSString stringWithFormat:liveNoAppendFormat,[chatResult stringAt:1]] withDate:broadcastDate];
+		}
 #if __has_feature(objc_arc) == 0
 	if (msg != NULL) [msg release];
 	[programListDataBuffer release];

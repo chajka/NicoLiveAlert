@@ -22,6 +22,7 @@
 	self = [super init];
 	if (self)
 	{
+		yes = [[NSNumber alloc] initWithBool:YES];
 		sbItem = NULL;
 		users = NULL;
 		programs = [[NSMutableArray alloc] init];
@@ -34,20 +35,25 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationPorgramEnd object:NULL];
 #if __has_feature(objc_arc) == 0
-	if (programs != NULL)	[programs release];
+	if (programs != NULL)		[programs release];
+	if (liveNumbers != NULL)	[liveNumbers release];
+	if (yes != NULL)			[yes release];
 
     [super dealloc];
 #endif
 }// end - (void) dealloc
 
 #pragma mark -
-- (void) addUserProgram:(NSString *)liveNo community:(NSString *)community owner:owner
+- (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:owner
 {
-	if ([programs containsObject:liveNo] == YES)
+	if ([[liveNumbers valueForKey:liveNo] isEqualTo:yes])
 		return;
+	else
+		[liveNumbers setValue:yes forKey:liveNo];
 
+	
 	NLAccount *account = [users primaryAccountForCommunity:community];
-	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo forAccount:account];
+	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo withDate:date forAccount:account];
 	if (program == NULL)
 		return;
 #if __has_feature(objc_arc) == 0
@@ -60,9 +66,14 @@
 	[sbItem addUserMenu:item];
 }// end - (void) addUserProgram:(NSString *)liveNo community:(NSString *)community owner:owner
 
-- (void) addOfficialProgram:(NSString *)liveNo
+- (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date
 {
-	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo];
+	if ([[liveNumbers valueForKey:liveNo] isEqualTo:yes])
+		return;
+	else
+		[liveNumbers setValue:yes forKey:liveNo];
+
+	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo  withDate:date];
 	if (program == NULL)
 		return;
 #if __has_feature(objc_arc) == 0
@@ -81,7 +92,9 @@ NSLog(@"%@", notification);
 	for (NLProgram *program in [programs reverseObjectEnumerator])
 	{		// check program was ended.
 		if ([program isBroadCasting] == NO)
-		{		// remove ended program
+		{		// remove from dictionary
+			[liveNumbers removeObjectForKey:[program programNumber]];
+				// remove menu item
 			NSMenuItem *item = [program programMenu];
 			if ([program isOfficial] == YES)
 				[sbItem removeOfficialMenu:item];

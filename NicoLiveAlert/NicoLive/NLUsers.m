@@ -140,7 +140,7 @@
 {
 	for (NSString *username in [usersState allKeys])
 	{
-		if ([usersState valueForKey:username] == active)
+		if ([[usersState valueForKey:username] isEqual:active])
 		{
 			NLAccount *account = [accounts valueForKey:username];
 			if ([[account channels] valueForKey:community] != NULL)

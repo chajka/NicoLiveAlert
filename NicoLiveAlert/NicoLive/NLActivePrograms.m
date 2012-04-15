@@ -8,6 +8,88 @@
 
 #import "NLActivePrograms.h"
 
-@implementation NLActivePrograms
+@interface NLActivePrograms ()
+- (void) removeEndedProgram:(NSNotification *)notification;
+@end
 
+@implementation NLActivePrograms
+@synthesize sbItem;
+@synthesize users;
+
+#pragma mark construct / destruct
+- (id) init
+{
+	self = [super init];
+	if (self)
+	{
+		sbItem = NULL;
+		users = NULL;
+		programs = [[NSMutableArray alloc] init];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeEndedProgram:) name:NLNotificationPorgramEnd object:NULL];
+	}// end if
+	return self;
+}// end - (id) init
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationPorgramEnd object:NULL];
+#if __has_feature(objc_arc) == 0
+	[programs release];
+    [super dealloc];
+#endif
+}// end - (void) dealloc
+
+#pragma mark -
+- (void) addUserProgram:(NSString *)liveNo community:(NSString *)community owner:owner
+{
+	if ([programs containsObject:liveNo] == YES)
+		return;
+
+	NLAccount *account = [users primaryAccountForCommunity:community];
+	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo forAccount:account];
+	if (program == NULL)
+		return;
+#if __has_feature(objc_arc) == 0
+	[program autorelease];
+#endif
+	NSMenuItem *item = [program programMenu];
+	if (item == NULL)
+		return;
+	[programs addObject:program];
+	[sbItem addUserMenu:item];
+}// end - (void) addUserProgram:(NSString *)liveNo community:(NSString *)community owner:owner
+
+- (void) addOfficialProgram:(NSString *)liveNo
+{
+	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo];
+	if (program == NULL)
+		return;
+#if __has_feature(objc_arc) == 0
+	[program autorelease];
+#endif
+	NSMenuItem *item = [program programMenu];
+	if (item == NULL)
+		return;
+	[programs addObject:program];
+	[sbItem addOfficialMenu:item];
+}// end - (void) addOfficialProgram:(NSString *)liveNo
+
+- (void) removeEndedProgram:(NSNotification *)notification
+{		// iterate for find ended program.
+NSLog(@"%@", notification);
+	for (NLProgram *program in programs)
+	{		// check program was ended.
+		if ([program isBroadCasting] == NO)
+		{		// remove ended program
+			NSMenuItem *item = [program programMenu];
+			if ([program isOfficial] == YES)
+				[sbItem removeOfficialMenu:item];
+			else 
+				[sbItem removeUserMenu:item];
+			// end if official program or user program
+				// remove but no release, because already autorelease it.
+			[programs removeObject:program];
+		}// end if program was ended.
+	}// end foreach member of active programs.
+}// end - (void) removeEndedProgram:(NSNotification *)notification
 @end

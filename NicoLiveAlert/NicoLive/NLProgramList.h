@@ -15,7 +15,7 @@
 
 @interface NLProgramList : NSObject <StreamEventDelegate> {
 	SocketConnection	*programListSocket;
-	NSMutableDictionary	*watchList;
+	__unsafe_unretained NSMutableDictionary	*watchList;
 	NLMessageServerInfo	*serverInfo;
 	NLActivePrograms	*activePrograms;
 	NSDate				*lastTime;

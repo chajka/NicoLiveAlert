@@ -59,7 +59,7 @@ BOOL sendrequest;
 
 - (void) stopListen
 {
-	[keepAliveMonitor invalidate];
+	[keepAliveMonitor invalidate];	keepAliveMonitor = NULL;
 	if (programListSocket == NULL)
 		return;
 	// end if not connection
@@ -109,7 +109,7 @@ BOOL sendrequest;
 	[[NSNotificationCenter defaultCenter] postNotificationName:NLNotificationConnectionLost object:NULL];
 	connectionRiseMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionReactiveCheckInterval target:self selector:@selector(checkConnectionRised) userInfo:NULL repeats:YES];
 	[connectionRiseMonitor fire];
-	[keepAliveMonitor invalidate];
+	[keepAliveMonitor invalidate];	keepAliveMonitor = NULL;
 }// end - (void) checkConnectionActive
 
 - (void) checkConnectionRised
@@ -121,7 +121,7 @@ BOOL sendrequest;
 		return;
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:NLNotificationConnectionRised object:NULL];
-	[connectionRiseMonitor invalidate];
+	[connectionRiseMonitor invalidate];	connectionRiseMonitor = NULL;
 }// end - (void) checkConnectionRised
 
 #pragma mark -
@@ -144,8 +144,10 @@ BOOL sendrequest;
 	if (oneByte != '\0')
 		return;
 
+#if __has_feature(objc_arc) == 0
 	if (lastTime != NULL)
 		[lastTime release];
+#endif
 		// store last data recieve time;
 	lastTime = [[NSDate alloc] init];
 		// databyte is terminator

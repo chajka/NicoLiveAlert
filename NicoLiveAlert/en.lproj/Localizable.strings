@@ -14,3 +14,12 @@
 "TitlePreference" = "Preference…";
 "TitleAbout" = "About NicoLiveAlert…";
 "TitleQuit" = "Quit";
+// menubar alternate title
+"TitleUserNoProgram" = "No Program";
+"TitleUserSingleProgram" = "Program";
+"TitleUserSomePrograms" = "Programs";
+"TitleOfficialNoProgram" = "No Offical program";
+"TitleOfficialSingleProgram" = "Official program";
+"TitleOfficialSomePrograms" = "Official programs";
+// program menu item string
+"OfficialTitleString" = "Official";

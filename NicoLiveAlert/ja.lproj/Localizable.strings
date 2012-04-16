@@ -14,3 +14,12 @@
 "TitlePreference" = "環境設定…";
 "TitleAbout" = "NicoLiveAlertについて…";
 "TitleQuit" = "終了";
+// menubar alternate title
+"TitleUserNoProgram" = "ユーザー生はありません";
+"TitleUserSingleProgram" = "生放送中";
+"TitleUserSomePrograms" = "生放送中";
+"TitleOfficialNoProgram" = "公式生はありません";
+"TitleOfficialSingleProgram" = "公式生放送中";
+"TitleOfficialSomePrograms" = "公式生放送中";
+// program menu item string
+"OfficialTitleString" = "公式";

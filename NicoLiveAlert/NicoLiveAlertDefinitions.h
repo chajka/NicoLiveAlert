@@ -23,6 +23,10 @@
 #define ALERTAPIURL		@"http://live.nicovideo.jp/api/getalertstatus"
 #define ALERTQUERY		@"http://live.nicovideo.jp/api/getalertstatus?ticket=%@"
 #define MSQUERYAPI		@"http://live.nicovideo.jp/api/getalertinfo"
+#define REQUESTFORMAT		@"<thread thread=\"%@\" version=\"20061206\" res_from=\"-1\"/>\0"
+#define STREAMINFOQUERY	@"http://live.nicovideo.jp/api/getstreaminfo/%@"
+#define STREMEMBEDQUERY	@"http://live.nicovideo.jp/embed/%@"
+#define PROGRAMURLFORMAT	@"http://live.nicovideo.jp/watch/%@"
 
 #pragma mark definitions for class NicoLiveAlert
 	// Tag indexes of Status Bar Menu items
@@ -43,13 +47,21 @@ enum statusBarMenuItems {
 };
 
 	// Status Bar menu's localized string definition
-#define TITLEAUTOOPEN	NSLocalizedString(@"TitleAutoOpen", @"")
-#define	TITLEPROGRAMS	NSLocalizedString(@"TitlePrograms", @"")
-#define	TITLEACCOUNTS	NSLocalizedString(@"TitleAccounts", @"")
-#define	TITLELAUNCHER	NSLocalizedString(@"TitleLauncher", @"")
-#define	TITLEPREFERENCE	NSLocalizedString(@"TitlePreference", @"")
-#define TITLEABOUT		NSLocalizedString(@"TitleAbout", @"")
-#define	TITLEQUIT		NSLocalizedString(@"TitleQuit", @"")
+#define TITLEAUTOOPEN			NSLocalizedString(@"TitleAutoOpen", @"")
+#define	TITLEPROGRAMS			NSLocalizedString(@"TitlePrograms", @"")
+#define	TITLEACCOUNTS			NSLocalizedString(@"TitleAccounts", @"")
+#define	TITLELAUNCHER			NSLocalizedString(@"TitleLauncher", @"")
+#define	TITLEPREFERENCE			NSLocalizedString(@"TitlePreference", @"")
+#define TITLEABOUT				NSLocalizedString(@"TitleAbout", @"")
+#define	TITLEQUIT				NSLocalizedString(@"TitleQuit", @"")
+	// Status Bar menu's alternative strings definition
+#define TITLEUSERNOPROG			NSLocalizedString(@"TitleUserNoProgram", @"")
+#define TITLEUSERSINGLEPROG		NSLocalizedString(@"TitleUserSingleProgram", @"")
+#define TITLEUSERSOMEPROG		NSLocalizedString(@"TitleUserSomePrograms", @"")
+#define TITLEOFFICIALNOPROG		NSLocalizedString(@"TitleOfficialNoProgram", @"")
+#define TITLEOFFICIALSINGLEPROG	NSLocalizedString(@"TitleOfficialSingleProgram", @"")
+#define TITLEOFFICIALSOMEPROG	NSLocalizedString(@"TitleOfficialSomePrograms", @"")
+
 
 	// string riteral definition
 #define PARTIALPATHFORMAT	@"~/Library/Preferences/%@"
@@ -81,19 +93,86 @@ enum statusBarMenuItems {
 #define elementKeyThread	@"thread"
 
 enum elementLiteralIndex {
-	elementIndexResponse = 1,
-	elementIndexTicket,
-	elementIndexStatus,
-	elementIndexUserID,
-	elementIndexHash,
-	elementIndexUserName,
-	elementIndexCommunity,
-	elementIndexAddress,
-	elementIndexPort,
-	elementIndexThread
+	indexResponse = 1,
+	indexTicket,
+	indexStatus,
+	indexUserID,
+	indexHash,
+	indexUserName,
+	indexCommunity,
+	indexAddress,
+	indexPort,
+	indexThread
 };
 
 #define keyXMLStatus	@"status"
 #define resultOK		@"ok"
 
-#endif
+#pragma mark -
+#pragma mark definitions for class NLProgramList
+
+#define NLNotificationConnectionLost	@"NLNotificationConnectionLost"
+#define NLNotificationConnectionRised	@"NLNotificationConnectionRised"
+#define dataSeparator					@","
+#define liveNoAppendFormat				@"lv%@"
+#define liveOfficialString				@"official"
+#define ConnectionAliveCheckInterval	(3.0)
+#define ServerTimeOut					(60 * 1.5)
+#define ConnectionReactiveCheckInterval	(60 * 5)
+
+enum {
+	offsetLiveNo = 0,
+	offsetCommuCh,
+	offsetOwner
+};
+
+#pragma mark -
+#pragma mark definitions for class NLProgram
+
+#define OfficialTitleString	NSLocalizedString(@"OfficialTitleString", @"")
+#define StartTimeFormat		@" %H:%M + 00:00"
+#define ElapsedTimeFormat	@"%02ld:%02ld"
+#define TimeFormatString	@"%H:%M"
+	// reguler expressions
+#define ProgramTitleRegex	@"title=\"(.*)\""
+#define ThumbImageRegex		@"<img src=\"(http://.*)\" class=\"banner\">"
+#define ProgStartTimeRegex	@"<div id=\"data\">(.*)</div>"
+#define ProgramURLRegex		@"<a href=\"(http://live.nicovideo.jp/watch/lv\\d+)\""
+
+	// XML element literal
+#define elementStreaminfo	@"getstreaminfo"
+#define elementRequestID	@"request_id"
+#define elementDescription	@"description"
+#define elementTitle		@"title"
+#define elementComuName		@"name"
+#define elementThumbnail	@"thumbnail"
+
+enum elementStreamInfoIndex {
+	indexStreaminfo = 1,
+	indexRequestID,
+	indexDescription,
+	indexTitle,
+	indexComuName,
+	indexThumbnail,
+};
+
+#define NLNotificationTimeUpdated	@"NLNotificationTimeUpdated"
+#define NLNotificationPorgramEnd	@"NLNotificationPorgramEnd"
+
+#pragma mark -
+#pragma mark for debug
+#ifdef DEBUG
+#define LOGPATH	@"~/Log"
+#define XMLLOGFILENAME	@"XMLData.txt"
+#define WATCHFILENAME	@"watchData.txt"
+#define XMLTAGCHAT		@"chat"
+#endif /* DEBUG */
+
+#ifdef TRACECALL
+#define TRACEFUNC   NSLog(@"%@ : %@", NSStringFromSelector(_cmd), [self class]);
+#else
+#define TRACEFUNC
+#endif /* TRACECALL */
+
+
+#endif	/* NicoLiveAlert_NicoLiveAlertDefinitions_h */

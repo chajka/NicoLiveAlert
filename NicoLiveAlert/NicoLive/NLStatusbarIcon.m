@@ -42,6 +42,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 - (CIImage *) createFromResource:(NSString *)imageName;
 - (void) installStatusbarMenu;
 - (void) makeStatusbarIcon;
+- (void) updateMenuItem:(NSNotification *)notification;
 @end
 
 @implementation NLStatusbarIcon
@@ -149,7 +150,8 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	[statusBarItem setHighlightMode:YES];
     // localize
     [[statusbarMenu itemWithTag:tagAutoOpen] setTitle:TITLEAUTOOPEN];
-    [[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEPROGRAMS];
+    [[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEUSERNOPROG];
+	[[statusbarMenu itemWithTag:tagOfficial] setTitle:TITLEOFFICIALNOPROG];
     [[statusbarMenu itemWithTag:tagAccounts] setTitle:TITLEACCOUNTS];
     [[statusbarMenu	itemWithTag:tagLaunchApplications] setTitle:TITLELAUNCHER];
     [[statusbarMenu itemWithTag:tagPreference] setTitle:TITLEPREFERENCE];
@@ -255,9 +257,28 @@ static CGFloat disconnectedColorAlpha = 0.70;
 #endif
 }// end - (CIImage *) makeStatusbarIcon
 
+- (void) updateMenuItem:(NSNotification *)notification
+{
+	NSLog(@"%@", notification);
+}// end - (void) updateMenuItem:(NSNotification *)notification
+
 #pragma mark accessor
 - (void) addUserMenu:(NSMenuItem *)item
 {
+	if (userProgramCount == 0)
+	{
+		NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
+		[[statusbarMenu itemWithTag:tagPorgrams] setSubmenu:menu];
+		[[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEUSERSINGLEPROG];
+		[[statusbarMenu itemWithTag:tagPorgrams] setEnabled:YES];
+#if __has_feature(objc_arc) == 0
+		[menu autorelease];
+#endif
+	}
+	else if (userProgramCount == 1)
+	{
+		[[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEUSERSOMEPROG];		
+	}
 	[[[statusbarMenu itemWithTag:tagPorgrams] submenu] addItem:item];
 	[self incleaseProgCount];
 	if (++userProgramCount > 0)
@@ -269,11 +290,35 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	[[[statusbarMenu itemWithTag:tagPorgrams] submenu] removeItem:item];
 	[self decleaseProgCount];
 	if (--userProgramCount == 0)
+	{
 		[[statusbarMenu itemWithTag:tagPorgrams] setState:NSOffState];
+		[[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEUSERNOPROG];
+		[[statusbarMenu itemWithTag:tagPorgrams] setSubmenu:NULL];
+		[[statusbarMenu itemWithTag:tagPorgrams] setEnabled:NO];
+
+	}
+	else if (userProgramCount == 1)
+	{
+		[[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEUSERSINGLEPROG];
+	}// end if
 }// end - (void) removeUserMenu:(NSMenuItem *)item
 
 - (void) addOfficialMenu:(NSMenuItem *)item
 {
+	if (officialProgramCount == 0)
+	{
+		NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
+		[[statusbarMenu itemWithTag:tagOfficial] setSubmenu:menu];
+		[[statusbarMenu itemWithTag:tagOfficial] setTitle:TITLEOFFICIALSINGLEPROG];
+		[[statusbarMenu itemWithTag:tagOfficial] setEnabled:YES];
+#if __has_feature(objc_arc) == 0
+		[menu autorelease];
+#endif
+	}
+	else if (officialProgramCount == 1)
+	{
+		[[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEOFFICIALSOMEPROG];		
+	}
 	[[[statusbarMenu itemWithTag:tagOfficial] submenu] addItem:item];
 	[self incleaseProgCount];
 	if (++officialProgramCount > 0)
@@ -285,7 +330,16 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	[[[statusbarMenu itemWithTag:tagOfficial] submenu] removeItem:item];
 	[self decleaseProgCount];
 	if (--officialProgramCount == 0)
-		[[statusbarMenu itemWithTag:tagOfficial] setState:NSOffState];	
+	{
+		[[statusbarMenu itemWithTag:tagOfficial] setState:NSOffState];
+		[[statusbarMenu itemWithTag:tagOfficial] setTitle:TITLEOFFICIALNOPROG];
+		[[statusbarMenu itemWithTag:tagOfficial] setSubmenu:NULL];		
+		[[statusbarMenu itemWithTag:tagOfficial] setEnabled:NO];
+	}
+	else if (officialProgramCount == 1)
+	{
+		[[statusbarMenu itemWithTag:tagOfficial] setTitle:TITLEOFFICIALSINGLEPROG];
+	}// end if
 }// end - (void) removeOfficialMenu:(NSMenuItem *)item
 
 - (void) incleaseProgCount

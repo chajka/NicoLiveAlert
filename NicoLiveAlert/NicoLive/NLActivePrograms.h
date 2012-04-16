@@ -13,8 +13,8 @@
 
 @interface NLActivePrograms : NSObject {
 	NSNumber			*yes;
-	NLStatusbarIcon		*sbItem;
-	NLUsers				*users;
+	__unsafe_unretained NLStatusbarIcon		*sbItem;
+	__unsafe_unretained NLUsers				*users;
 	NSMutableArray		*programs;
 	NSMutableDictionary *liveNumbers;
 }

@@ -46,12 +46,11 @@
 #pragma mark -
 - (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:owner
 {
-	if ([[liveNumbers valueForKey:liveNo] isEqualTo:yes])
+	if ([liveNumbers valueForKey:liveNo] != NULL)
 		return;
 	else
 		[liveNumbers setValue:yes forKey:liveNo];
 
-	
 	NLAccount *account = [users primaryAccountForCommunity:community];
 	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo withDate:date forAccount:account];
 	if (program == NULL)

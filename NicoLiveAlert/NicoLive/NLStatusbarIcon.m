@@ -43,6 +43,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 - (void) installStatusbarMenu;
 - (void) makeStatusbarIcon;
 - (void) updateMenuItem:(NSNotification *)notification;
+- (void) updateToolTip;
 @end
 
 @implementation NLStatusbarIcon
@@ -102,12 +103,14 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		officialProgramCount = 0;
 		[self installStatusbarMenu];
 		[self makeStatusbarIcon];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMenuItem:) name:NLNotificationTimeUpdated object:NULL];
 	}// end if
 	return self;
 }// end - (id) initWithImage:(NSString *)imageName
 
 - (void) dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationTimeUpdated object:NULL];
 	[statusBar removeStatusItem:statusBarItem];
 #if __has_feature(objc_arc) == 0
 	[statusBarItem release];
@@ -259,11 +262,67 @@ static CGFloat disconnectedColorAlpha = 0.70;
 
 - (void) updateMenuItem:(NSNotification *)notification
 {
-	NSLog(@"%@", notification);
+	NLProgram *prog = [notification object];
+	NSMenuItem *progMenu = [prog programMenu];
+	NSArray *menuItems = NULL;
+	if ([prog isOfficial] == YES)
+		menuItems = [[[statusbarMenu itemWithTag:tagOfficial] submenu] itemArray];
+	else
+		menuItems = [[[statusbarMenu itemWithTag:tagPorgrams] submenu] itemArray];
+
+	for (NSMenuItem *item in menuItems)
+	{
+		if (progMenu == item)
+		{
+			[item setState:NSMixedState];
+			[item setState:NSOffState];
+		}// end if
+	}// end foreach menuItem
+
+	[self updateToolTip];
 }// end - (void) updateMenuItem:(NSNotification *)notification
 
+- (void) updateToolTip
+{
+	NSMutableString *tooltip = NULL;
+	NSMutableArray *array = [NSMutableArray array];
+	if (connected == NO)
+	{
+		[statusBarItem setToolTip:DeactiveConnection];
+		return;
+	}// end if disconnected
+
+	if ((userProgramCount == 0) && (officialProgramCount == 0))
+	{
+		[statusBarItem setToolTip:ActiveNoprogString];
+		return;
+	}// end if program not found
+
+	if (userProgramCount > 0)
+	{
+		tooltip = [NSMutableString stringWithFormat:userProgramOnly, userProgramCount];
+		if (userProgramCount > 1)
+			[tooltip appendString:TwoOrMoreSuffix];
+		// end if program count is two or more
+		[array addObject:tooltip];
+		tooltip = NULL;
+	}// end if user program found
+
+	if (officialProgramCount > 0)
+	{
+		tooltip = [NSMutableString stringWithFormat:officialProgramOnly, officialProgramCount];
+		if (officialProgramCount > 1)
+			[tooltip appendString:TwoOrMoreSuffix];
+			// end if program count is two or more
+		[array addObject:tooltip];
+		tooltip = NULL;
+	}// end if user program found
+
+	[statusBarItem setToolTip:[array componentsJoinedByString:StringConcatinater]];
+}// end - (void) updateToolTip
+
 #pragma mark accessor
-- (void) addUserMenu:(NSMenuItem *)item
+- (void) addToUserMenu:(NSMenuItem *)item
 {
 	if (userProgramCount == 0)
 	{
@@ -283,9 +342,10 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	[self incleaseProgCount];
 	if (++userProgramCount > 0)
 		[[statusbarMenu itemWithTag:tagPorgrams] setState:NSOnState];	
+	[self updateToolTip];
 }
 
-- (void) removeUserMenu:(NSMenuItem *)item
+- (void) removeFromUserMenu:(NSMenuItem *)item
 {
 	[[[statusbarMenu itemWithTag:tagPorgrams] submenu] removeItem:item];
 	[self decleaseProgCount];
@@ -301,9 +361,11 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	{
 		[[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEUSERSINGLEPROG];
 	}// end if
-}// end - (void) removeUserMenu:(NSMenuItem *)item
 
-- (void) addOfficialMenu:(NSMenuItem *)item
+	[self updateToolTip];
+}// end - (void) removeFromUserMenu:(NSMenuItem *)item
+
+- (void) addToOfficialMenu:(NSMenuItem *)item
 {
 	if (officialProgramCount == 0)
 	{
@@ -317,15 +379,16 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	}
 	else if (officialProgramCount == 1)
 	{
-		[[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEOFFICIALSOMEPROG];		
+		[[statusbarMenu itemWithTag:tagOfficial] setTitle:TITLEOFFICIALSOMEPROG];		
 	}
 	[[[statusbarMenu itemWithTag:tagOfficial] submenu] addItem:item];
 	[self incleaseProgCount];
 	if (++officialProgramCount > 0)
 		[[statusbarMenu itemWithTag:tagOfficial] setState:NSOnState];	
+	[self updateToolTip];
 }
 
-- (void) removeOfficialMenu:(NSMenuItem *)item
+- (void) removeFromOfficialMenu:(NSMenuItem *)item
 {
 	[[[statusbarMenu itemWithTag:tagOfficial] submenu] removeItem:item];
 	[self decleaseProgCount];
@@ -340,7 +403,9 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	{
 		[[statusbarMenu itemWithTag:tagOfficial] setTitle:TITLEOFFICIALSINGLEPROG];
 	}// end if
-}// end - (void) removeOfficialMenu:(NSMenuItem *)item
+
+	[self updateToolTip];
+}// end - (void) removeFromOfficialMenu:(NSMenuItem *)item
 
 - (void) incleaseProgCount
 {

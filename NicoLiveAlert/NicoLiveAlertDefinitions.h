@@ -67,6 +67,18 @@ enum statusBarMenuItems {
 #define PARTIALPATHFORMAT	@"~/Library/Preferences/%@"
 #define KEYBUNDLEIDENTIFY	@"CFBundleIdentifier"
 
+#pragma mark -
+#pragma mark definitions for NLStatusbarIcon
+
+#define DeactiveConnection	@"Disconnected"
+#define ActiveNoprogString	@"Monitoring"
+#define userProgramOnly		@"%ld User program"
+#define officialProgramOnly	@"%ld Official program"
+#define TwoOrMoreSuffix		@"s"
+#define StringConcatinater	@", "
+
+
+#pragma mark -
 #pragma mark definitions for class NLUsers
 
 #define systemDefaultKeychain	NULL
@@ -130,14 +142,17 @@ enum {
 #pragma mark definitions for class NLProgram
 
 #define OfficialTitleString	NSLocalizedString(@"OfficialTitleString", @"")
-#define StartTimeFormat		@" %H:%M + 00:00"
-#define ElapsedTimeFormat	@"%02ld:%02ld"
-#define TimeFormatString	@"%H:%M"
+#define StartUserTimeFormat			@" %H:%M + 00:00"
+#define StartOfficialTimeFormat		@"  %H:%M + 00:00"
+#define ElapsedTimeFormat			@"%02ld:%02ld"
+#define TimeFormatString			@"%H:%M"
 	// reguler expressions
 #define ProgramTitleRegex	@"title=\"(.*)\""
 #define ThumbImageRegex		@"<img src=\"(http://.*)\" class=\"banner\">"
 #define ProgStartTimeRegex	@"<div id=\"data\">(.*)</div>"
 #define ProgramURLRegex		@"<a href=\"(http://live.nicovideo.jp/watch/lv\\d+)\""
+#define OnAirRegex			@"class=\"(onair|beforeTS)\""
+#define MaintRegex			@"<code>maintenance</code>"
 
 	// XML element literal
 #define elementStreaminfo	@"getstreaminfo"

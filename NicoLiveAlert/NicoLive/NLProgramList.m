@@ -40,6 +40,20 @@ BOOL sendrequest;
 	return self;
 }// end - (id) init
 
+- (void) dealloc
+{
+	[programListSocket disconnect];
+#if __has_feature(objc_arc) == 0
+	if (watchList != NULL)				[watchList release];
+	if (serverInfo != NULL)				[serverInfo release];
+	if (lastTime != NULL)				[lastTime release];
+	if (keepAliveMonitor != NULL)		[keepAliveMonitor release];
+	if (programListSocket != NULL)		[programListSocket release];
+
+	[super dealloc];
+#endif
+}// end - (void) dealloc
+
 - (BOOL) startListen
 {
 	BOOL success = NO;
@@ -58,13 +72,16 @@ BOOL sendrequest;
 }// end - (void) startListen
 
 - (void) stopListen
-{
+{		//
+	[programListSocket disconnect];
+
+		// stop & reset keepAliveMonitor
 	[keepAliveMonitor invalidate];	keepAliveMonitor = NULL;
+	keepAliveMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionAliveCheckInterval target:self selector:@selector(checkConnectionActive) userInfo:NULL repeats:YES];
 	if (programListSocket == NULL)
 		return;
 	// end if not connection
 
-	[programListSocket disconnect];
 }// end - (void) stopListen
 
 #pragma mark -
@@ -75,7 +92,6 @@ BOOL sendrequest;
 	if ((watchOfficial == YES) && ([program count] == 2))
 	{
 		[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo] withDate:date];
-		NSLog(@"%@", progInfo);
 		return;
 	}
 
@@ -84,8 +100,8 @@ BOOL sendrequest;
 		if (isOfficial)
 		{
 			[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo] withDate:date];
-			NSLog(@"%@", progInfo);
 			isOfficial = NO;
+			break;
 		}// end is Official
 			// check official
 		if ((watchOfficial == YES) && ([prog isEqualToString:liveOfficialString] == YES))
@@ -93,7 +109,10 @@ BOOL sendrequest;
 		if ([watchList valueForKey:prog] != NULL)
 		{
 			[activePrograms addUserProgram:[program objectAtIndex:offsetLiveNo] withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner]];
-			NSLog(@"%@", progInfo);
+			BOOL autoOpen = [[watchList valueForKey:prog] boolValue];
+			if (autoOpen == YES)
+				;
+			// end if autoopen;
 		}
 	}// end for
 }// end - (void) checkProgram:(NSString *)progInfo
@@ -109,19 +128,26 @@ BOOL sendrequest;
 	[[NSNotificationCenter defaultCenter] postNotificationName:NLNotificationConnectionLost object:NULL];
 	connectionRiseMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionReactiveCheckInterval target:self selector:@selector(checkConnectionRised) userInfo:NULL repeats:YES];
 	[connectionRiseMonitor fire];
+		// stop & reset keepAliveMonitor
 	[keepAliveMonitor invalidate];	keepAliveMonitor = NULL;
+	keepAliveMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionAliveCheckInterval target:self selector:@selector(checkConnectionActive) userInfo:NULL repeats:YES];
 }// end - (void) checkConnectionActive
 
 - (void) checkConnectionRised
 {
 	NSURL *ping = [NSURL URLWithString:MSQUERYAPI];
-	NSURLResponse *resp = NULL;
-	NSData *data = [HTTPConnection HTTPData:ping response:&resp];
-	if ([data length] == 0)
+	NSError *err = NULL;
+	NSString *alertinfo	= [NSString stringWithContentsOfURL:ping encoding:NSUTF8StringEncoding error:&err];
+	OnigRegexp *maint = [OnigRegexp compile:MaintRegex];
+	OnigResult *maintResult = [maint search:alertinfo];
+	if (maintResult != NULL)
 		return;
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:NLNotificationConnectionRised object:NULL];
+		// stop & reset connectionRiseMonitor
 	[connectionRiseMonitor invalidate];	connectionRiseMonitor = NULL;
+	connectionRiseMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionReactiveCheckInterval target:self selector:@selector(checkConnectionRised) userInfo:NULL repeats:YES];
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:NLNotificationConnectionRised object:NULL];
 }// end - (void) checkConnectionRised
 
 #pragma mark -

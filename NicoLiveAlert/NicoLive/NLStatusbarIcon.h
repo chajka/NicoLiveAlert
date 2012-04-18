@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NicoLiveAlertDefinitions.h"
+#import "NLProgram.h"
 /*!
 	@header NLStatusbarIcon.h
 
@@ -57,32 +58,32 @@
 
 #pragma mark accessor
 /*!
-	@method addUserMenu:
+	@method addToUserMenu:
 	@abstract add Program menu item into user programs submenu
 	@param menu item of program to add
 */
-- (void) addUserMenu:(NSMenuItem *)item;
+- (void) addToUserMenu:(NSMenuItem *)item;
 
 /*!
-	@method removeUserMenu:
+	@method removeFromUserMenu:
 	@abstract remove Program menu item from user programs submenu
 	@param menu item of program to remove
 */
-- (void) removeUserMenu:(NSMenuItem *)item;
+- (void) removeFromUserMenu:(NSMenuItem *)item;
 
 /*!
-	@method addOfficialMenu:
+	@method addToOfficialMenu:
 	@abstract add Official Program menu item into official programs submenu
 	@param menu item of program to add
 */
-- (void) addOfficialMenu:(NSMenuItem *)item;
+- (void) addToOfficialMenu:(NSMenuItem *)item;
 
 /*!
-	@method removeOfficialMenu:
+	@method removeFromOfficialMenu:
 	@abstract remove Official Program menu item from official programs submenu
 	@param menu item of program to remove
 */
-- (void) removeOfficialMenu:(NSMenuItem *)item;
+- (void) removeFromOfficialMenu:(NSMenuItem *)item;
 
 /*!
 	@method incleaseProgCount

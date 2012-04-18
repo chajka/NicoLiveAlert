@@ -11,6 +11,8 @@
 
 @interface NicoLiveAlert ()
 - (BOOL) checkFirstLaunch;
+- (void) hookNotifications;
+- (void) removeNotifications;
 - (void) listenHalt:(NSNotification *)note;
 - (void) listenRestart:(NSNotification *)note;
 @end
@@ -21,7 +23,7 @@
 
 - (void) awakeFromNib
 {
-	statusBar = [[NLStatusbarIcon alloc] initWithMenu:menuStatusbar andImageName:@"sbicon"];
+	statusBar = [[NLStatusbar alloc] initWithMenu:menuStatusbar andImageName:@"sbicon"];
 #if __has_feature(objc_arc) == 0
 	[statusBar retain];
 #endif
@@ -35,20 +37,9 @@
 	[accountsItem setState:[nicoliveAccounts userState]];
 	[accountsItem setEnabled:YES];
 
-		// sleep and wakeup notification hook
-			// hook to sleep notification
-	[[[NSWorkspace sharedWorkspace] notificationCenter]
-		addObserver:self selector: @selector(listenHalt:)
-	 name: NSWorkspaceWillSleepNotification object: NULL];
-			// hook to wakeup notification
-	[[[NSWorkspace sharedWorkspace] notificationCenter]
-	 addObserver:self selector: @selector(listenRestart:)
-	 name: NSWorkspaceDidWakeNotification object: NULL];
-			// hook to connection lost notification
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:NULL];
-			// hook to connection reactive notification
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
-	
+		// hook notifications
+	[self hookNotifications];
+
 		// start monitor
 	programListServer = [[NLProgramList alloc] init];
 	NLActivePrograms *activeprograms = [[NLActivePrograms alloc] init];
@@ -67,7 +58,33 @@
 {
 	[programListServer stopListen];
 
-		// release sleep and wakeup notifidation
+	[self removeNotifications];
+
+#if __has_feature(objc_arc) == 0
+	[statusBar release];
+	[programListServer release];
+	programListServer = NULL;
+#endif
+}// end - (void) applicationWillTerminate:(NSNotification *)notification
+
+- (void) hookNotifications
+{		// sleep and wakeup notification hook
+			// hook to sleep notification
+	[[[NSWorkspace sharedWorkspace] notificationCenter]
+		addObserver:self selector: @selector(listenHalt:)
+	 name: NSWorkspaceWillSleepNotification object: NULL];
+			// hook to wakeup notification
+	[[[NSWorkspace sharedWorkspace] notificationCenter]
+	 addObserver:self selector: @selector(listenRestart:)
+	 name: NSWorkspaceDidWakeNotification object: NULL];
+			// hook to connection lost notification
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:NULL];
+			// hook to connection reactive notification
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
+}// end - (void) hookNotifications
+
+- (void) removeNotifications
+{		// release sleep and wakeup notifidation
 			// remove sleep notification
 	[[[NSWorkspace sharedWorkspace] notificationCenter]
 	 removeObserver:self 
@@ -80,13 +97,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationConnectionLost object:NULL];
 			// remove Connection Rised notification
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationConnectionRised object:NULL];
-	
-#if __has_feature(objc_arc) == 0
-	[statusBar release];
-	[programListServer release];
-	programListServer = NULL;
-#endif
-}// end - (void) applicationWillTerminate:(NSNotification *)notification
+}// end - (void) hookNotifications
 
 - (void) listenHalt:(NSNotification *)note
 {
@@ -127,6 +138,12 @@
 
 - (IBAction) openProgram:(id)sender
 {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7
+		// open by NSWorkspace
+	[[NSWorkspace sharedWorkspace] openURL:[sender representedObject]];
+#else
+		// open by XPC
+#endif
 }// end - (IBAction) openProgram:(id)sender
 
 - (IBAction) toggleUserState:(id)sender

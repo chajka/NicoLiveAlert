@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "NLStatusbarIcon.h"
+#import "NLStatusbar.h"
 #import "NLUsers.h"
 #import "NLProgramList.h"
 #import "NLActivePrograms.h"
@@ -53,7 +53,7 @@
 	__strong IBOutlet NSArrayController *aryManualWatchlist;
 	
 	__strong NSStatusItem *sbItem;
-	NLStatusbarIcon	*statusBar;
+	NLStatusbar	*statusBar;
 	NLUsers			*nicoliveAccounts;
 	NLProgramList	*programListServer;
 }

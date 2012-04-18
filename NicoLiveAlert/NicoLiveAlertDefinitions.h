@@ -68,7 +68,7 @@ enum statusBarMenuItems {
 #define KEYBUNDLEIDENTIFY	@"CFBundleIdentifier"
 
 #pragma mark -
-#pragma mark definitions for NLStatusbarIcon
+#pragma mark definitions for NLStatusbar
 
 #define DeactiveConnection	@"Disconnected"
 #define ActiveNoprogString	@"Monitoring"

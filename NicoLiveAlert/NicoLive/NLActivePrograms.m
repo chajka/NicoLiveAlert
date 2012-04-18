@@ -62,7 +62,7 @@
 	if (item == NULL)
 		return;
 	[programs addObject:program];
-	[sbItem addUserMenu:item];
+	[sbItem addToUserMenu:item];
 }// end - (void) addUserProgram:(NSString *)liveNo community:(NSString *)community owner:owner
 
 - (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date
@@ -82,27 +82,20 @@
 	if (item == NULL)
 		return;
 	[programs addObject:program];
-	[sbItem addOfficialMenu:item];
+	[sbItem addToOfficialMenu:item];
 }// end - (void) addOfficialProgram:(NSString *)liveNo
 
 - (void) removeEndedProgram:(NSNotification *)notification
 {		// iterate for find ended program.
 NSLog(@"%@", notification);
-	for (NLProgram *program in [programs reverseObjectEnumerator])
-	{		// check program was ended.
-		if ([program isBroadCasting] == NO)
-		{		// remove from dictionary
-			[liveNumbers removeObjectForKey:[program programNumber]];
-				// remove menu item
-			NSMenuItem *item = [program programMenu];
-			if ([program isOfficial] == YES)
-				[sbItem removeOfficialMenu:item];
-			else 
-				[sbItem removeUserMenu:item];
-			// end if official program or user program
-				// remove but no release, because already autorelease it.
-			[programs removeObject:program];
-		}// end if program was ended.
-	}// end foreach member of active programs.
+	NLProgram *prog = [notification object];
+	NSMenuItem *item = [prog programMenu];
+	if ([prog isOfficial] == YES)
+		[sbItem removeFromOfficialMenu:item];
+	else 
+		[sbItem removeFromUserMenu:item];
+
+	[liveNumbers removeObjectForKey:[prog programNumber]];
+	[programs removeObject:prog];
 }// end - (void) removeEndedProgram:(NSNotification *)notification
 @end

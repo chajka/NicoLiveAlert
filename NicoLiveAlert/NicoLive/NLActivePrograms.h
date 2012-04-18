@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NLStatusbarIcon.h"
+#import "NLStatusbar.h"
 #import "NLUsers.h"
 #import "NLProgram.h"
 
 @interface NLActivePrograms : NSObject {
 	NSNumber			*yes;
-	__unsafe_unretained NLStatusbarIcon		*sbItem;
+	__unsafe_unretained NLStatusbar		*sbItem;
 	__unsafe_unretained NLUsers				*users;
 	NSMutableArray		*programs;
 	NSMutableDictionary *liveNumbers;
 }
-@property (assign, readwrite) NLStatusbarIcon	*sbItem;
+@property (assign, readwrite) NLStatusbar	*sbItem;
 @property (assign, readwrite) NLUsers			*users;
 
 - (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:owner;

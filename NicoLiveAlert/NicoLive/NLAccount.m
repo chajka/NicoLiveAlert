@@ -53,7 +53,7 @@ NSNumber		*notAutoOpen;
 #endif
 		stringBuffer = NULL;
 		currentElement = 0;
-		notAutoOpen = [NSNumber numberWithInteger:0];
+		notAutoOpen = [NSNumber numberWithBool:NO];
 		if ([self getLoginTicket] != YES)
 		{
 #if __has_feature(objc_arc) == 0

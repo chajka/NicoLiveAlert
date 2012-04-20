@@ -14,7 +14,7 @@
 @interface NLActivePrograms : NSObject {
 	NSNumber			*yes;
 	__unsafe_unretained NLStatusbar		*sbItem;
-	__unsafe_unretained NLUsers				*users;
+	__unsafe_unretained NLUsers			*users;
 	NSMutableArray		*programs;
 	NSMutableDictionary *liveNumbers;
 }

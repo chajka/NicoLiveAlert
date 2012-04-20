@@ -25,12 +25,13 @@
 	NSString				*primaryAccount;
 	NSDate					*startTime;
 	NSString				*startTimeString;
-	NSUInteger				lastMintue;
+	NSInteger				lastMintue;
 	NSDictionary			*localeDict;
 	NSURL					*programURL;
 	NSTimer					*programStatusTimer;
 	NSTimer					*elapseTimer;
 	NSNotificationCenter	*center;
+	BOOL					reservedProgram;
 	BOOL					isOfficial;
 	BOOL					isBroadCasting;
 }

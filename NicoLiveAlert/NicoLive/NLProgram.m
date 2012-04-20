@@ -20,7 +20,7 @@ const CGFloat titleComuKernValue = 0.0;
 const CGFloat timeStringWidth = 110.0;
 const CGFloat timeStringHeight = 14.0;
 const CGFloat elapesedStringWidth = 39;
-const CGFloat elapesedStringHeight = 14.0;
+const CGFloat elapesedStringHeight = timeStringHeight;
 
 #pragma mark user program constant
 const CGFloat programBoundsW = 293.0;
@@ -78,11 +78,14 @@ const CGFloat TimeColorBlue = (64.0 / 255);
 
 #pragma timer constant
 const NSTimeInterval checkActivityCycle = (60.0 * 3);
-const NSTimeInterval elapseCheckCycle = (5.0);
+const NSTimeInterval elapseCheckCycle = (10.0);
 
 @interface NLProgram ()
+- (void) clearAllMember;
+- (void) setupEachMember:(NSString *)liveNo;
 - (NSDictionary *) elementDict;
-- (BOOL) parseProgramInfo:(NSString *)urlString;
+- (void) checkStartTime:(NSDate *)date forLive:(NSString *)liveNo;
+- (void) parseProgramInfo:(NSString *)liveNo;
 - (void) drawUserProgram;
 - (void) drawOfficialProgram;
 - (void) createMenuItem;
@@ -98,6 +101,7 @@ const NSTimeInterval elapseCheckCycle = (5.0);
 NSMutableString *dataString;
 NSInteger currentElement;
 NSDictionary *elementDict;
+NSString *embedContent;
 
 #pragma mark construct / destruct
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account
@@ -105,84 +109,47 @@ NSDictionary *elementDict;
 	self = [super init];
 	if (self)
 	{		// initialize member variables
-		dataString = NULL;
-			//		programDataBuffer = NULL;
-		programMenu = NULL;
-		menuImage = NULL;
-		programNumber = NULL;
-		programTitle = NULL;
-		programDescription = NULL;
-		communityName = NULL;
-		primaryAccount = [account username];
-		programURL = NULL;
-		programStatusTimer = NULL;
-		isOfficial = NO;
-		isBroadCasting = NO;
+		[self clearAllMember];
 
-		NSString *streamQuery = [NSString stringWithFormat:STREAMINFOQUERY, liveNo];
-		BOOL success = [self parseProgramInfo:streamQuery];
-		if (success == NO)
-		{
+		@try {
+			[self checkStartTime:date forLive:liveNo];
+			[self parseProgramInfo:liveNo];
+		}
+		@catch (NSException *exception) {
+			NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
 #if __has_feature(objc_arc) == 0
 			[self dealloc];
 #endif
 			return NULL;
 		}
-		programNumber = [liveNo copy];
-		startTime = [date copy];
-		localeDict = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
-		startTimeString = [[NSString alloc] initWithString:[startTime descriptionWithCalendarFormat:StartUserTimeFormat timeZone:NULL locale:localeDict]];
-		center = [NSNotificationCenter defaultCenter];
-		[self drawUserProgram];
-		[self createMenuItem];
-		elapseTimer = [NSTimer scheduledTimerWithTimeInterval:elapseCheckCycle target:self selector:@selector(updateElapse) userInfo:NULL repeats:YES];
-		programStatusTimer = [NSTimer scheduledTimerWithTimeInterval:checkActivityCycle target:self selector:@selector(checkBroadcasting) userInfo:NULL repeats:YES];
-		isBroadCasting = YES;
-		lastMintue = 0;
+		primaryAccount = [account username];
+		[self setupEachMember:liveNo];
 		[elapseTimer fire];
 		[programStatusTimer fire];
 	}// end if
 	return self;
 }// end - (id) initWithProgram:(NSString *)liveNo forAccount:(NLAccount *)account
+
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date
 {
 	self = [super init];
 	if (self)
 	{		// initialize member variables
-		dataString = NULL;
-			//		programDataBuffer = NULL;
-		programMenu = NULL;
-		menuImage = NULL;
-		programNumber = NULL;
-		programTitle = NULL;
-		programDescription = NULL;
-		communityName = NULL;
-		primaryAccount = [[NSString alloc] initWithString:OfficialTitleString];
-		programURL = NULL;
-		programStatusTimer = NULL;
-		isOfficial = YES;
-		isBroadCasting = NO;
+		[self clearAllMember];
 		
-		NSString *streamQuery = [NSString stringWithFormat:STREMEMBEDQUERY, liveNo];
-		BOOL success = [self parseProgramInfo:streamQuery];
-		if (success == NO)
-		{
+		isOfficial = YES;
+		@try {
+			[self checkStartTime:date forLive:liveNo];
+			[self parseOfficialProgram];
+		}
+		@catch (NSException *exception) {
 #if __has_feature(objc_arc) == 0
 			[self dealloc];
 #endif
 			return NULL;
 		}
-		programNumber = [liveNo copy];
-		startTime = [date copy];
-		localeDict = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
-		startTimeString = [[NSString alloc] initWithString:[startTime descriptionWithCalendarFormat:StartOfficialTimeFormat timeZone:NULL locale:localeDict]];
-		center = [NSNotificationCenter defaultCenter];
-		[self drawOfficialProgram];
-		[self createMenuItem];
-		elapseTimer = [NSTimer scheduledTimerWithTimeInterval:elapseCheckCycle target:self selector:@selector(updateElapse) userInfo:NULL repeats:YES];
-		programStatusTimer = [NSTimer scheduledTimerWithTimeInterval:checkActivityCycle target:self selector:@selector(checkBroadcasting) userInfo:NULL repeats:YES];
-		isBroadCasting = YES;
-		lastMintue = 0;
+		primaryAccount = [[NSString alloc] initWithString:OfficialTitleString];
+		[self setupEachMember:liveNo];
 		[elapseTimer fire];
 		[programStatusTimer fire];
 	}// end if
@@ -208,12 +175,60 @@ NSDictionary *elementDict;
 	if (startTimeString != NULL)	[startTimeString release];
 	if (programURL != NULL)			[programURL release];
 
+	if (embedContent != NULL)		[embedContent release];
+
 	[super dealloc];
 #endif
 }// end - (void) dealloc
 
 #pragma mark -
 #pragma mark construction support
+- (void) clearAllMember
+{
+	programMenu = NULL;
+	menuImage = NULL;
+	thumnbail = NULL;
+	background = NULL;
+	timeMask = NULL;
+	stringAttributes = NULL;
+	programNumber = NULL;
+	programTitle = NULL;
+	programDescription = NULL;
+	communityName = NULL;
+	primaryAccount = NULL;
+	startTime = NULL;
+	startTimeString = NULL;
+	lastMintue = 0;
+	localeDict = NULL;
+	programURL = NULL;
+	programStatusTimer = NULL;
+	elapseTimer = NULL;
+	center = NULL;
+	reservedProgram = NO;
+	isOfficial = NO;
+	isBroadCasting = NO;
+
+	dataString = NULL;
+	currentElement = 0;
+	elementDict = NULL;
+	embedContent = NULL;
+}// end - (void) clearAllMember
+
+- (void) setupEachMember:(NSString *)liveNo
+{
+	programNumber = [liveNo copy];
+	localeDict = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+	center = [NSNotificationCenter defaultCenter];
+	startTimeString = [[self makeStartString] copy];
+	if (isOfficial == YES)
+		[self drawOfficialProgram];
+	else
+		[self drawUserProgram];
+	[self createMenuItem];
+	elapseTimer = [NSTimer scheduledTimerWithTimeInterval:elapseCheckCycle target:self selector:@selector(updateElapse) userInfo:NULL repeats:YES];
+	programStatusTimer = [NSTimer scheduledTimerWithTimeInterval:checkActivityCycle target:self selector:@selector(checkBroadcasting) userInfo:NULL repeats:YES];
+	isBroadCasting = YES;
+}// end - (void) setupEachMember:(NSString *)liveNo
 
 - (NSDictionary *) elementDict
 {
@@ -228,57 +243,130 @@ NSDictionary *elementDict;
 	return elementDict;
 }// end - (NSDictionary *) elementDict
 
-- (BOOL) parseProgramInfo:(NSString *)urlString
+- (void) checkStartTime:(NSDate *)date forLive:(NSString *)liveNo
 {
+	OnigRegexp *onAirKindRegex = [OnigRegexp compile:OnAirRegex];
+	OnigRegexp *broadcastTimeRegex = [OnigRegexp compile:ProgStartTimeRegex];
+	NSURL *embedURL = [NSURL URLWithString:[NSString stringWithFormat:STREMEMBEDQUERY, liveNo]];
+
+	NSError *err;
+	embedContent = [[NSString alloc] initWithContentsOfURL:embedURL encoding:NSUTF8StringEncoding error:&err];
+	if ((err != NULL) || (embedContent == NULL))
+		@throw [NSException exceptionWithName:EmbedFetchFailed reason:EMPTYSTRING userInfo:NULL];
+
+	OnigResult *checkOnair = [onAirKindRegex search:embedContent];
+	OnigResult *broadcastTime = [broadcastTimeRegex search:embedContent];
+	if (broadcastTime == NULL)
+	{
+		startTime = [date copy];
+		return;
+	}
+
+	NSDate *broadcastDate = [NSDate dateWithNaturalLanguageString:[broadcastTime stringAt:1] locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
+	NSInteger diff = (NSInteger)[date timeIntervalSinceDate:broadcastDate];
+	if (([[checkOnair stringAt:1] isEqualToString:BEFORESTATE] == YES)
+		|| ((abs(diff / 60) != 0)))
+	{
+		startTime = [broadcastDate copy];
+		lastMintue = (diff / 60) % 60;
+		reservedProgram = YES;
+
+		return;
+	}// endif befor program start
+
+	startTime = [date copy];
+	lastMintue = 0;
+}// end - (void) checkStartTime:(NSDate *)date forLive:(NSString *)liveNo
+
+- (NSString *) makeStartString
+{
+	NSString *startString = NULL;
+	NSUInteger minute = 0;
+	if (reservedProgram == YES)
+		minute = abs([[NSDate date] timeIntervalSinceDate:startTime] / 60);
+	
+	if (isOfficial != YES)
+	{		// user program check reserve or not
+		if (reservedProgram == YES)
+		{
+			NSString *calFromat = [NSString stringWithFormat:ReserveUserTimeFormat, minute];
+			startString = [startTime descriptionWithCalendarFormat:calFromat timeZone:NULL locale:localeDict];
+		}
+		else
+		{
+			startString = [startTime descriptionWithCalendarFormat:StartUserTimeFormat timeZone:NULL locale:localeDict];
+		}
+	}
+	else
+	{		// official program it must reserved
+		if (reservedProgram == YES)
+		{
+			NSString *calFromat = [NSString stringWithFormat:ReserveOfficialTimeFormat, minute];
+			startString = [startTime descriptionWithCalendarFormat:calFromat timeZone:NULL locale:localeDict];
+		}
+		else
+		{
+			startString = [startTime descriptionWithCalendarFormat:StartOfficialTimeFormat timeZone:NULL locale:localeDict];
+		}
+	}// end if official or user program
+
+	return startString;
+}// end - (NSString *) makeStartString
+
+- (void) parseOfficialProgram
+{
+	OnigRegexp *titleRegex = [OnigRegexp compile:ProgramTitleRegex];
+	OnigRegexp *imgRegex = [OnigRegexp compile:ThumbImageRegex];
+	OnigRegexp *programRegex = [OnigRegexp compile:ProgramURLRegex];
+	OnigResult *result = NULL;
+
+	result = [titleRegex search:embedContent];
+	if (result == NULL)
+		@throw [NSException exceptionWithName:EmbedParseFailed reason:ProgramTitleCollectFail userInfo:NULL];
+	programTitle = [[NSString alloc] initWithString:[result stringAt:1]];
+
+	result = [imgRegex search:embedContent];
+	if (result == NULL)
+		@throw [NSException exceptionWithName:EmbedParseFailed reason:ImageURLCollectFail userInfo:NULL];
+	thumnbail = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:[result stringAt:1]]];
+	[thumnbail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
+	
+	result = [programRegex search:embedContent];
+	if (result == NULL)
+		@throw [NSException exceptionWithName:EmbedParseFailed reason:ProgramURLCollectFail userInfo:NULL];
+	programURL = [[NSURL alloc] initWithString:[result stringAt:1]];
+#if __has_feature(objc_arc) == 0
+	[embedContent release];
+	embedContent = NULL;
+#endif
+}// end - (void) parseOfficialProgram
+
+- (void) parseProgramInfo:(NSString *)liveNo
+{
+#if __has_feature(objc_arc) == 0
+	[embedContent release];
+	embedContent = NULL;
+#endif
 	BOOL success = NO;
-	elementDict = [self elementDict];
-	NSURL *queryURL = [NSURL URLWithString:urlString];
-		//	NSURLResponse *resp = NULL;
-		//	NSData *response = [HTTPConnection HTTPData:queryURL response:&resp];
-	NSData *response = [[NSData alloc] initWithContentsOfURL:queryURL];
 	NSXMLParser *parser = NULL;
+	elementDict = [self elementDict];
+	NSString *streamQueryURL = [NSString stringWithFormat:STREAMINFOQUERY, liveNo];
+	NSURL *queryURL = [NSURL URLWithString:streamQueryURL];
+	NSData *response = [[NSData alloc] initWithContentsOfURL:queryURL];
 #if __has_feature(objc_arc)
 	@autoreleasepool {
 #else
 	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 #endif
-	if (isOfficial)
-	{
-		NSString *embed = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-		OnigRegexp *titleRegex = [OnigRegexp compile:ProgramTitleRegex];
-		OnigResult *result = [titleRegex search:embed];
-		if (result == NULL)
-			success = NO;
-		programTitle = [[NSString alloc] initWithString:[result stringAt:1]];
-
-		OnigRegexp *imgRegex = [OnigRegexp compile:ThumbImageRegex];
-		result = [imgRegex search:embed];
-		if (result == NULL)
-			success = NO;
-		thumnbail = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:[result stringAt:1]]];
-		[thumnbail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
-		
-		OnigRegexp *programRegex = [OnigRegexp compile:ProgramURLRegex];
-		result = [programRegex search:embed];
-		if (result == NULL)
-			success = NO;
-		programURL = [[NSURL alloc] initWithString:[result stringAt:1]];
-#if __has_feature(objc_arc) == 0
-		[embed release];
-#endif
-		success = YES;
+	parser = [[NSXMLParser alloc] initWithData:response];
+	[parser setDelegate:self];
+	@try {
+		success = [parser parse];
 	}
-	else
-	{
-		parser = [[NSXMLParser alloc] initWithData:response];
-		[parser setDelegate:self];
-		@try {
-			success = [parser parse];
-		}
-		@catch (NSException *exception) {
-			success = NO;
-		}// end exception handling
-	}
+	@catch (NSException *exception) {
+		NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
+		success = NO;
+	}// end exception handling
 	
 #if __has_feature(objc_arc) == 0
 	[parser release];
@@ -286,7 +374,8 @@ NSDictionary *elementDict;
 #else
 	}
 #endif
-	return success;
+	if (success != YES)
+		@throw [NSException exceptionWithName:StreamInforFetchFaild reason:UserProgXMLParseFail userInfo:NULL];
 }// end - (BOOL) parseProgramInfo:(NSString *)urlString
 
 - (BOOL) isEqual:(id)object
@@ -438,13 +527,46 @@ NSDictionary *elementDict;
 #pragma mark timer driven methods
 - (void) updateElapse
 {
-	NSUInteger now = (NSUInteger)-[startTime timeIntervalSinceNow];
-	NSUInteger elapsedMinute = (now / 60) % 60;	
+	NSInteger now = (NSInteger)[[NSDate date] timeIntervalSinceDate:startTime];
+	NSUInteger elapsedMinute = abs((now / 60) % 60);	
 	if (elapsedMinute == lastMintue)
 		return;
 
-	NSUInteger elapsedHour = now / (60 *60);
-	NSString *elapesdTime = [NSString stringWithFormat:ElapsedTimeFormat, elapsedHour, elapsedMinute];
+	if ((elapsedMinute == 0) && (reservedProgram == YES))
+	{
+		if (isOfficial == YES)
+		{
+			NSBezierPath *path = [NSBezierPath bezierPath];
+			[path moveToPoint:NSMakePoint(officialTimeOffsetX, (timeStringHeight / 2))];
+			[path lineToPoint:NSMakePoint(officialBoundsW, (timeStringHeight / 2))];
+			[path setLineWidth:timeStringHeight];
+			NSString *string = [startTime descriptionWithCalendarFormat:StartOfficialTimeFormat timeZone:NULL locale:localeDict];
+			[menuImage lockFocus];
+			[[NSColor whiteColor] set];
+			[path stroke];
+			[string drawAtPoint:NSMakePoint(userTimeOffsetX, userTimeOffsetY) withAttributes:stringAttributes];
+			[menuImage unlockFocus];
+		}
+		else
+		{
+			NSBezierPath *path = [NSBezierPath bezierPath];
+			[path moveToPoint:NSMakePoint(userTimeOffsetX, (timeStringHeight / 2))];
+			[path lineToPoint:NSMakePoint(programBoundsW, (timeStringHeight / 2))];
+			[path setLineWidth:timeStringHeight];
+			NSString *string = [startTime descriptionWithCalendarFormat:StartUserTimeFormat timeZone:NULL locale:localeDict];
+			[menuImage lockFocus];
+			[[NSColor whiteColor] set];
+			[path stroke];
+			[string drawAtPoint:NSMakePoint(userTimeOffsetX, userTimeOffsetY) withAttributes:stringAttributes];
+			[menuImage unlockFocus];
+		}
+		lastMintue = elapsedMinute;
+		return;
+	}// end if just start reserved program
+
+	NSUInteger elapsedHour = abs(now / (60 * 60));
+	NSString *elapesdTime = NULL;
+	elapesdTime = [NSString stringWithFormat:ElapsedTimeFormat, elapsedHour, elapsedMinute];
 	lastMintue = elapsedMinute;
 	[menuImage lockFocus];
 	[[NSColor whiteColor] set];
@@ -470,7 +592,7 @@ NSDictionary *elementDict;
 		isBroadCasting = NO;
 		[elapseTimer invalidate];			elapseTimer = NULL;
 		[programStatusTimer invalidate];	programStatusTimer = NULL;
-		[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:NULL]];
+		[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
 	}
 }// end - (void) checkBroadcasting
 

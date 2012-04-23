@@ -14,7 +14,7 @@
 @interface NLProgram : NSObject <NSXMLParserDelegate> {
 	NSMenuItem				*programMenu;
 	NSImage					*menuImage;
-	NSImage					*thumnbail;
+	NSImage					*thumbnail;
 	NSBezierPath			*background;
 	NSBezierPath			*timeMask;
 	NSMutableDictionary		*stringAttributes;
@@ -23,6 +23,8 @@
 	NSString				*programDescription;
 	NSString				*communityName;
 	NSString				*primaryAccount;
+	NSString				*communityID;
+	NSString				*broadcastOwner;
 	NSDate					*startTime;
 	NSString				*startTimeString;
 	NSInteger				lastMintue;
@@ -31,16 +33,22 @@
 	NSTimer					*programStatusTimer;
 	NSTimer					*elapseTimer;
 	NSNotificationCenter	*center;
-	BOOL					reservedProgram;
+	__strong OnigRegexp		*liveStateRegex;
+	BOOL					isReservedProgram;
 	BOOL					isOfficial;
-	BOOL					isBroadCasting;
+	BOOL					broadCasting;
 }
 @property (readonly) NSMenuItem			*programMenu;
 @property (readonly) NSString			*programNumber;
+@property (readonly) NSString			*communityID;
+@property (readonly) NSString			*broadcastOwner;
 @property (readonly) BOOL				isOfficial;
-@property (readonly) BOOL				isBroadCasting;
+@property (readonly) BOOL				broadCasting;
 
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date;
-- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account;
+- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner;
 - (BOOL) isEqual:(id)object;
+- (void) terminate;
+- (void) suspend;
+- (BOOL) resume;
 @end

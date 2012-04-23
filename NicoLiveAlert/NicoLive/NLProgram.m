@@ -81,30 +81,42 @@ const NSTimeInterval checkActivityCycle = (60.0 * 3);
 const NSTimeInterval elapseCheckCycle = (10.0);
 
 @interface NLProgram ()
+	// construction support methods
 - (void) clearAllMember;
 - (void) setupEachMember:(NSString *)liveNo;
 - (NSDictionary *) elementDict;
 - (void) checkStartTime:(NSDate *)date forLive:(NSString *)liveNo;
 - (void) parseProgramInfo:(NSString *)liveNo;
+	// activity control method
+- (BOOL) isBroadCasting;
+	// drawing methods
 - (void) drawUserProgram;
 - (void) drawOfficialProgram;
 - (void) createMenuItem;
-- (void) updateElapse;
-- (void) checkBroadcasting;
+	// timer driven methods
+- (void) updateElapse:(NSTimer *)theTimer;
+- (void) checkBroadcasting:(NSTimer *)theTimer;
+	// timer management methods
+- (void) stopProgramStatusTimer;
+- (void) stopElapsedTimer;
+- (void) resetProgramStatusTimer;
+- (void) resetElapsedTimer;
 @end
 
 @implementation NLProgram
 @synthesize programMenu;
 @synthesize programNumber;
+@synthesize communityID;
+@synthesize broadcastOwner;
 @synthesize isOfficial;
-@synthesize isBroadCasting;
+@synthesize broadCasting;
 NSMutableString *dataString;
 NSInteger currentElement;
 NSDictionary *elementDict;
 NSString *embedContent;
 
 #pragma mark construct / destruct
-- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account
+- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner
 {
 	self = [super init];
 	if (self)
@@ -117,13 +129,15 @@ NSString *embedContent;
 		}
 		@catch (NSException *exception) {
 			NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
+			NSLog(@"Exception : %@, %@, %@", [exception name], [exception reason], [exception userInfo]);
 #if __has_feature(objc_arc) == 0
 			[self dealloc];
 #endif
 			return NULL;
 		}
-		primaryAccount = [account username];
+		primaryAccount = [[account username] copy];
 		[self setupEachMember:liveNo];
+		broadcastOwner = [owner copy];
 		[elapseTimer fire];
 		[programStatusTimer fire];
 	}// end if
@@ -143,6 +157,8 @@ NSString *embedContent;
 			[self parseOfficialProgram];
 		}
 		@catch (NSException *exception) {
+			NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
+			NSLog(@"Exception : %@, %@, %@", [exception name], [exception reason], [exception userInfo]);
 #if __has_feature(objc_arc) == 0
 			[self dealloc];
 #endif
@@ -164,16 +180,19 @@ NSString *embedContent;
 	if (menuImage != NULL)			[menuImage release];
 	if (background != NULL)			[background release];
 	if (timeMask != NULL)			[timeMask release];
-	if (thumnbail != NULL)			[thumnbail release];
+	if (thumbnail != NULL)			[thumbnail release];
 	if (stringAttributes != NULL)	[stringAttributes release];
 	if (programNumber != NULL)		[programNumber release];
 	if (programTitle != NULL)		[programTitle release];
 	if (programDescription != NULL)	[programDescription release];
 	if (communityName != NULL)		[communityName release];
 	if (primaryAccount != NULL)		[primaryAccount release];
+	if (communityID != NULL)		[communityID release];
+	if (broadcastOwner != NULL)		[broadcastOwner release];
 	if (startTime != NULL)			[startTime release];
 	if (startTimeString != NULL)	[startTimeString release];
 	if (programURL != NULL)			[programURL release];
+	if (liveStateRegex != NULL)		[liveStateRegex release];
 
 	if (embedContent != NULL)		[embedContent release];
 
@@ -187,7 +206,7 @@ NSString *embedContent;
 {
 	programMenu = NULL;
 	menuImage = NULL;
-	thumnbail = NULL;
+	thumbnail = NULL;
 	background = NULL;
 	timeMask = NULL;
 	stringAttributes = NULL;
@@ -196,6 +215,8 @@ NSString *embedContent;
 	programDescription = NULL;
 	communityName = NULL;
 	primaryAccount = NULL;
+	communityID = NULL;
+	broadcastOwner = NULL;
 	startTime = NULL;
 	startTimeString = NULL;
 	lastMintue = 0;
@@ -204,9 +225,10 @@ NSString *embedContent;
 	programStatusTimer = NULL;
 	elapseTimer = NULL;
 	center = NULL;
-	reservedProgram = NO;
+	isReservedProgram = NO;
 	isOfficial = NO;
-	isBroadCasting = NO;
+	broadCasting = NO;
+	liveStateRegex = NULL;
 
 	dataString = NULL;
 	currentElement = 0;
@@ -225,9 +247,13 @@ NSString *embedContent;
 	else
 		[self drawUserProgram];
 	[self createMenuItem];
-	elapseTimer = [NSTimer scheduledTimerWithTimeInterval:elapseCheckCycle target:self selector:@selector(updateElapse) userInfo:NULL repeats:YES];
-	programStatusTimer = [NSTimer scheduledTimerWithTimeInterval:checkActivityCycle target:self selector:@selector(checkBroadcasting) userInfo:NULL repeats:YES];
-	isBroadCasting = YES;
+	[self resetElapsedTimer];
+	[self resetProgramStatusTimer];
+	liveStateRegex = [OnigRegexp compile:ProgStateRegex];
+#if __has_feature(objc_arc) == 0
+	[liveStateRegex retain];
+#endif
+	broadCasting = YES;
 }// end - (void) setupEachMember:(NSString *)liveNo
 
 - (NSDictionary *) elementDict
@@ -245,16 +271,23 @@ NSString *embedContent;
 
 - (void) checkStartTime:(NSDate *)date forLive:(NSString *)liveNo
 {
-	OnigRegexp *onAirKindRegex = [OnigRegexp compile:OnAirRegex];
 	OnigRegexp *broadcastTimeRegex = [OnigRegexp compile:ProgStartTimeRegex];
 	NSURL *embedURL = [NSURL URLWithString:[NSString stringWithFormat:STREMEMBEDQUERY, liveNo]];
 
-	NSError *err;
+	NSError *err = NULL;
 	embedContent = [[NSString alloc] initWithContentsOfURL:embedURL encoding:NSUTF8StringEncoding error:&err];
-	if ((err != NULL) || (embedContent == NULL))
-		@throw [NSException exceptionWithName:EmbedFetchFailed reason:EMPTYSTRING userInfo:NULL];
-
-	OnigResult *checkOnair = [onAirKindRegex search:embedContent];
+	if (embedContent == NULL)
+		@throw [NSException exceptionWithName:EmbedFetchFailed reason:StringIsEmpty userInfo:NULL];
+/*
+	if (err != NULL)
+	{
+		NSLog(@"Error %@ : %@", NSStringFromSelector(_cmd), [self class]);
+		NSLog(@"%@", err);
+		NSLog(@"%ld, %@, %@", [err code], [err domain], [err userInfo]);
+			//		@throw [NSException exceptionWithName:EmbedFetchFailed reason:ErrorIsNotNULL userInfo:[NSDictionary dictionaryWithObject:err forKey:@"OSError"]];
+	}
+*/
+	OnigResult *checkOnair = [liveStateRegex search:embedContent];
 	OnigResult *broadcastTime = [broadcastTimeRegex search:embedContent];
 	if (broadcastTime == NULL)
 	{
@@ -269,7 +302,7 @@ NSString *embedContent;
 	{
 		startTime = [broadcastDate copy];
 		lastMintue = (diff / 60) % 60;
-		reservedProgram = YES;
+		isReservedProgram = YES;
 
 		return;
 	}// endif befor program start
@@ -282,12 +315,12 @@ NSString *embedContent;
 {
 	NSString *startString = NULL;
 	NSUInteger minute = 0;
-	if (reservedProgram == YES)
+	if (isReservedProgram == YES)
 		minute = abs([[NSDate date] timeIntervalSinceDate:startTime] / 60);
 	
 	if (isOfficial != YES)
 	{		// user program check reserve or not
-		if (reservedProgram == YES)
+		if (isReservedProgram == YES)
 		{
 			NSString *calFromat = [NSString stringWithFormat:ReserveUserTimeFormat, minute];
 			startString = [startTime descriptionWithCalendarFormat:calFromat timeZone:NULL locale:localeDict];
@@ -299,7 +332,7 @@ NSString *embedContent;
 	}
 	else
 	{		// official program it must reserved
-		if (reservedProgram == YES)
+		if (isReservedProgram == YES)
 		{
 			NSString *calFromat = [NSString stringWithFormat:ReserveOfficialTimeFormat, minute];
 			startString = [startTime descriptionWithCalendarFormat:calFromat timeZone:NULL locale:localeDict];
@@ -322,18 +355,19 @@ NSString *embedContent;
 
 	result = [titleRegex search:embedContent];
 	if (result == NULL)
-		@throw [NSException exceptionWithName:EmbedParseFailed reason:ProgramTitleCollectFail userInfo:NULL];
+		@throw [NSException exceptionWithName:EmbedParseFailed reason:ProgramTitleCollectFail userInfo:[NSDictionary dictionaryWithObject:embedContent forKey:@"embedContent"]];
 	programTitle = [[NSString alloc] initWithString:[result stringAt:1]];
 
 	result = [imgRegex search:embedContent];
 	if (result == NULL)
-		@throw [NSException exceptionWithName:EmbedParseFailed reason:ImageURLCollectFail userInfo:NULL];
-	thumnbail = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:[result stringAt:1]]];
-	[thumnbail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
+		@throw [NSException exceptionWithName:EmbedParseFailed reason:ImageURLCollectFail userInfo:[NSDictionary dictionaryWithObject:embedContent forKey:@"embedContent"]];
+	thumbnail = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:[result stringAt:1]]];
+NSLog(@"thumbnail isValid : %c", ([thumbnail isValid] == YES ? 'Y' : 'N'));
+	[thumbnail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
 	
 	result = [programRegex search:embedContent];
 	if (result == NULL)
-		@throw [NSException exceptionWithName:EmbedParseFailed reason:ProgramURLCollectFail userInfo:NULL];
+		@throw [NSException exceptionWithName:EmbedParseFailed reason:ProgramURLCollectFail userInfo:[NSDictionary dictionaryWithObject:embedContent forKey:@"embedContent"]];
 	programURL = [[NSURL alloc] initWithString:[result stringAt:1]];
 #if __has_feature(objc_arc) == 0
 	[embedContent release];
@@ -349,15 +383,15 @@ NSString *embedContent;
 #endif
 	BOOL success = NO;
 	NSXMLParser *parser = NULL;
-	elementDict = [self elementDict];
-	NSString *streamQueryURL = [NSString stringWithFormat:STREAMINFOQUERY, liveNo];
-	NSURL *queryURL = [NSURL URLWithString:streamQueryURL];
-	NSData *response = [[NSData alloc] initWithContentsOfURL:queryURL];
 #if __has_feature(objc_arc)
 	@autoreleasepool {
 #else
 	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 #endif
+	elementDict = [self elementDict];
+	NSString *streamQueryURL = [NSString stringWithFormat:STREAMINFOQUERY, liveNo];
+	NSURL *queryURL = [NSURL URLWithString:streamQueryURL];
+	NSData *response = [[NSData alloc] initWithContentsOfURL:queryURL];
 	parser = [[NSXMLParser alloc] initWithData:response];
 	[parser setDelegate:self];
 	@try {
@@ -365,6 +399,7 @@ NSString *embedContent;
 	}
 	@catch (NSException *exception) {
 		NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
+		NSLog(@"Exception : %@, %@, %@", [exception name], [exception reason], [exception userInfo]);
 		success = NO;
 	}// end exception handling
 	
@@ -396,6 +431,41 @@ NSString *embedContent;
 	}
 	return NO;
 }// end - (BOOL) isEqual:(id)object
+
+#pragma mark -
+#pragma mark activity control
+- (void) terminate
+{
+	broadCasting = NO;
+	if ([elapseTimer isValid] == YES)			[elapseTimer invalidate];
+	if ([programStatusTimer isValid] == YES)	[programStatusTimer invalidate];
+	[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
+}// end - (void) terminate
+
+- (void) suspend
+{
+	[self resetElapsedTimer];
+	[self resetProgramStatusTimer];
+}// end - (void) suspend;
+
+- (BOOL) resume
+{
+	BOOL status = YES;
+	if ([self isBroadCasting] == YES)
+	{
+		[elapseTimer fire];
+		[programStatusTimer fire];
+	}
+	else
+	{
+		[self stopElapsedTimer];
+		[self stopProgramStatusTimer];
+		[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
+		status = NO;
+	}
+
+	return status;
+}// end - (void) resume
 
 #pragma mark -
 #pragma mark drawing
@@ -437,7 +507,7 @@ NSString *embedContent;
 	[[NSColor whiteColor] set];
 	[background fill];
 		// draw thumbnail
-	[thumnbail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
+	[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
 		// draw program title
 	[stringAttributes setValue:titleColor forKey:NSForegroundColorAttributeName];
 	[programTitle drawAtPoint:NSMakePoint(progTitleOffsetX, progTitleOffsetY) withAttributes:stringAttributes];
@@ -499,7 +569,7 @@ NSString *embedContent;
 	[[NSColor whiteColor] set];
 	[background fill];
 		// draw thumbnail
-	[thumnbail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
+	[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
 		// draw title / description
 	[programTitle drawInRect:NSMakeRect(officialDescX, officialDescY, officialDescW, officialDescH) withAttributes:stringAttributes];
 		// draw official announce
@@ -525,14 +595,14 @@ NSString *embedContent;
 
 #pragma mark-
 #pragma mark timer driven methods
-- (void) updateElapse
+- (void) updateElapse:(NSTimer*)theTimer
 {
 	NSInteger now = (NSInteger)[[NSDate date] timeIntervalSinceDate:startTime];
 	NSUInteger elapsedMinute = abs((now / 60) % 60);	
 	if (elapsedMinute == lastMintue)
 		return;
 
-	if ((elapsedMinute == 0) && (reservedProgram == YES))
+	if ((elapsedMinute == 0) && (isReservedProgram == YES))
 	{
 		if (isOfficial == YES)
 		{
@@ -579,22 +649,65 @@ NSString *embedContent;
 	[center postNotification:[NSNotification notificationWithName:NLNotificationTimeUpdated object:self]];
 }// end - (void) updateRemain
 
-- (void) checkBroadcasting
+- (void) checkBroadcasting:(NSTimer*)theTimer
+{
+	if ([self isBroadCasting] == NO)
+	{	// program is done stop each timer and post notification
+NSLog(@"%@ Program done", programNumber);
+		broadCasting = NO;
+		[self stopElapsedTimer];
+		[self stopProgramStatusTimer];
+		[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
+	}
+}// end - (void) checkBroadcasting
+
+- (BOOL) isBroadCasting
 {
 	NSString *urlStr = [NSString stringWithFormat:STREMEMBEDQUERY, programNumber];
 	NSURL *url = [NSURL URLWithString:urlStr];
 	NSError *err;
 	NSString *embed = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&err];
-	OnigRegexp *liveAlive = [OnigRegexp compile:OnAirRegex];
-	OnigResult *result = [liveAlive search:embed];
-	if (result == NULL)
-	{
-		isBroadCasting = NO;
-		[elapseTimer invalidate];			elapseTimer = NULL;
-		[programStatusTimer invalidate];	programStatusTimer = NULL;
-		[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
-	}
-}// end - (void) checkBroadcasting
+	OnigResult *result = [liveStateRegex search:embed];
+	if ((result == NULL) || ([[result stringAt:1] isEqualToString:DONESTATE]== YES))
+		return NO;
+	else
+		return YES;
+}// end - (BOOL) isBroadCasting:(BOOL)needPost
+
+#pragma mark -
+#pragma mark timer management methods
+- (void) stopProgramStatusTimer
+{		// check timer is running
+	if ([programStatusTimer isValid] == YES)
+		[programStatusTimer invalidate];
+	programStatusTimer = NULL;
+}// end - (void) stopProgramStatusTimer
+
+- (void) stopElapsedTimer
+{		// check timer is running
+	if ([elapseTimer isValid] == YES)
+		[elapseTimer invalidate];
+	elapseTimer = NULL;
+	
+}// end - (void) stopElapsedTimer
+
+- (void) resetProgramStatusTimer
+{		// check timer is running
+	if ([programStatusTimer isValid] == YES)
+		[programStatusTimer invalidate];
+
+		// setup timer object
+	programStatusTimer = [NSTimer scheduledTimerWithTimeInterval:checkActivityCycle target:self selector:@selector(checkBroadcasting:) userInfo:NULL repeats:YES];
+}// end - (void) resetProgramStatusTimer
+
+- (void) resetElapsedTimer
+{		// check timer is running
+	if ([elapseTimer isValid] == YES)
+		[elapseTimer invalidate];
+
+		// setup timer object
+	elapseTimer = [NSTimer scheduledTimerWithTimeInterval:elapseCheckCycle target:self selector:@selector(updateElapse:) userInfo:NULL repeats:YES];
+}// end - (void) resetElapsedTimer
 
 #pragma mark -
 #pragma mark NSXMLParserDelegate methods
@@ -610,7 +723,7 @@ NSString *embedContent;
 {
 	if ([elementName isEqualToString:elementStreaminfo] == YES)
 		if ([[attributeDict valueForKey:keyXMLStatus] isEqualToString:resultOK] == NO)
-			@throw [NSException exceptionWithName:RESULTERRORNAME reason:RESULTERRORREASON userInfo:NULL];
+			@throw [NSException exceptionWithName:RESULTERRORNAME reason:RESULTERRORREASON userInfo:attributeDict];
 		// end if result is not ok
 	// end if element is status
 
@@ -624,23 +737,32 @@ NSString *embedContent;
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
+	NSError *err = NULL;
+	NSData *thumbData = NULL;
 	switch (currentElement) {
 		case indexRequestID:
 			programURL = [[NSURL alloc] initWithString:[NSString stringWithFormat:PROGRAMURLFORMAT, dataString]];
 			break;
-		case indexDescription:
-			programDescription = [[NSString alloc] initWithString:dataString];
-			break;
 		case indexTitle:
 			programTitle = [[NSString alloc] initWithString:dataString];
+			break;
+		case indexDescription:
+			programDescription = [[NSString alloc] initWithString:dataString];
 			break;
 		case indexComuName:
 			if (communityName == NULL)
 				communityName = [[NSString alloc] initWithString:dataString];
 			break;
+		case indexComuID:
+			communityID = [[NSString alloc] initWithString:dataString];
+			break;
 		case indexThumbnail:
-			thumnbail = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:dataString]];
-			[thumnbail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
+			thumbData = [NSData dataWithContentsOfURL:[NSURL URLWithString:dataString] options:NSDataReadingUncached error:&err];
+			thumbnail = [[NSImage alloc] initWithData:thumbData];
+			if ([thumbnail isValid] == NO)
+			{	// retry fetch image
+			}
+			[thumbnail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
 			break;
 			
 		default:

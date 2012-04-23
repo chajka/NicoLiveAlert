@@ -21,6 +21,7 @@
 	__strong	NSStatusBar		*statusBar;
 	NSMenu						*statusbarMenu;
 	BOOL						connected;
+	BOOL						watchOfficial;
 	NSInteger					userState;
 	NSInteger					numberOfPrograms;
 	NSSize						iconSize;
@@ -46,6 +47,7 @@
 @property (readwrite) NSInteger	userState;
 @property (readonly) NSInteger	numberOfPrograms;
 @property (readwrite) BOOL		connected;
+@property (readwrite) BOOL		watchOfficial;
 
 /*!
 	@method initWithMenu:andImageName:

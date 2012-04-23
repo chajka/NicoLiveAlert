@@ -252,6 +252,9 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	[statusBarItem setImage:statusbarIcon];
     [statusBarItem setAlternateImage:statusbarAlt];
 
+		// update tooltip
+	[self updateToolTip];
+
 #if __has_feature(objc_arc) == 0
 	[statusbarIcon release];
 	[statusbarAlt release];
@@ -320,6 +323,21 @@ static CGFloat disconnectedColorAlpha = 0.70;
 
 	[statusBarItem setToolTip:[array componentsJoinedByString:StringConcatinater]];
 }// end - (void) updateToolTip
+
+#pragma mark -
+#pragma mark accessor of watchOfficial
+- (BOOL) watchOfficial
+{
+	return watchOfficial;
+}// end - (BOOL) watchOfficial
+
+- (void) setWatchOfficial:(BOOL)watch
+{
+	watchOfficial = watch;
+	[[statusbarMenu itemWithTag:tagOfficial] setHidden:!watchOfficial];
+}
+
+
 
 #pragma mark accessor
 - (void) addToUserMenu:(NSMenuItem *)item

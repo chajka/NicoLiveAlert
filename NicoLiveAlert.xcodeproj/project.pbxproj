@@ -51,6 +51,22 @@
 		1D1E523C151B0BA900BDD43D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1E5231151B0B9900BDD43D /* Localizable.strings */; };
 		1D2AD092151F693A001496E6 /* NLAccountTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2AD090151F693A001496E6 /* NLAccountTests.m */; };
 		1D2AD093151F693A001496E6 /* NLAccountTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2AD090151F693A001496E6 /* NLAccountTests.m */; };
+		1D36A5C31545739500516CDF /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D36A5C21545739500516CDF /* Growl.framework */; };
+		1D36A5C41545739500516CDF /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D36A5C21545739500516CDF /* Growl.framework */; };
+		1D36A5C7154573D100516CDF /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1D36A5C21545739500516CDF /* Growl.framework */; };
+		1D36A5C9154573F300516CDF /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1D878104154573610075B151 /* Growl.framework */; };
+		1D36A5DA154575F000516CDF /* LinkTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */; };
+		1D36A5DB154575F000516CDF /* LinkTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */; };
+		1D36A5DC154575F000516CDF /* LinkTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */; };
+		1D36A5DD154575F000516CDF /* LinkTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */; };
+		1D36A5E01545760E00516CDF /* NSAttributedStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5DE1545760E00516CDF /* NSAttributedStringAdditions.m */; };
+		1D36A5E11545760E00516CDF /* NSAttributedStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5DE1545760E00516CDF /* NSAttributedStringAdditions.m */; };
+		1D36A5E21545760E00516CDF /* NSAttributedStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5DE1545760E00516CDF /* NSAttributedStringAdditions.m */; };
+		1D36A5E31545760E00516CDF /* NSAttributedStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5DE1545760E00516CDF /* NSAttributedStringAdditions.m */; };
+		1D36A5F01546202500516CDF /* NicoLivePrefManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */; };
+		1D36A5F11546202500516CDF /* NicoLivePrefManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */; };
+		1D36A5F21546202500516CDF /* NicoLivePrefManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */; };
+		1D36A5F31546202500516CDF /* NicoLivePrefManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */; };
 		1D5558171529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D5558181529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D6500BE150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
@@ -67,6 +83,8 @@
 		1D72B11A152B5CB400F7944C /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
 		1D72B11B152B5CB400F7944C /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
 		1D72B11C152B5CB400F7944C /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
+		1D878105154573610075B151 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D878104154573610075B151 /* Growl.framework */; };
+		1D878106154573610075B151 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D878104154573610075B151 /* Growl.framework */; };
 		1D93A153153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A154153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; };
 		1D93A155153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; };
@@ -194,10 +212,33 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1D36A5C6154573B600516CDF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1D36A5C7154573D100516CDF /* Growl.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D36A5C8154573E500516CDF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1D36A5C9154573F300516CDF /* Growl.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1D07EB8C151C5C1E00CEF855 /* HTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTTPConnection.h; path = Network/HTTPConnection.h; sourceTree = "<group>"; };
 		1D07EB8D151C5C1E00CEF855 /* HTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPConnection.m; path = Network/HTTPConnection.m; sourceTree = "<group>"; };
-		1D141CF1151D8DAA00CEB686 /* NLStatusbar.h */ = {isa = PBXFileReference; fileEncoding = 4; name = NLStatusbar.h; path = NicoLive/NLStatusbar.h; sourceTree = "<group>"; };
+		1D141CF1151D8DAA00CEB686 /* NLStatusbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLStatusbar.h; path = NicoLive/NLStatusbar.h; sourceTree = "<group>"; };
 		1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLStatusbar.m; path = NicoLive/NLStatusbar.m; sourceTree = "<group>"; };
 		1D141CFD151DAA1300CEB686 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1D1CE2C1150C77BA001E7E39 /* NicoLiveAlert Lion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NicoLiveAlert Lion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,8 +251,8 @@
 		1D1CE2D1150C77BA001E7E39 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1D1CE2D3150C77BA001E7E39 /* NicoLiveAlert-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NicoLiveAlert-Prefix.pch"; sourceTree = "<group>"; };
 		1D1CE2D5150C77BA001E7E39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		1D1CE2D7150C77BA001E7E39 /* NicoLiveAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NicoLiveAlert.h; sourceTree = "<group>"; };
-		1D1CE2D8150C77BA001E7E39 /* NicoLiveAlert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NicoLiveAlert.m; sourceTree = "<group>"; };
+		1D1CE2D7150C77BA001E7E39 /* NicoLiveAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NicoLiveAlert.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		1D1CE2D8150C77BA001E7E39 /* NicoLiveAlert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NicoLiveAlert.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1D1CE2DB150C77BB001E7E39 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		1D1CE2E2150C77BB001E7E39 /* NicoLiveAlertTests Lion.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NicoLiveAlertTests Lion.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1CE2E3150C77BB001E7E39 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -227,6 +268,13 @@
 		1D1E5238151B0BA900BDD43D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = NicoLiveAlert/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1D2AD090151F693A001496E6 /* NLAccountTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLAccountTests.m; path = NicoLive/NLAccountTests.m; sourceTree = "<group>"; };
 		1D2AD091151F693A001496E6 /* NLAccountTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccountTests.h; path = NicoLive/NLAccountTests.h; sourceTree = "<group>"; };
+		1D36A5C21545739500516CDF /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = NicoLiveAlert/Growl/1.3/Growl.framework; sourceTree = "<group>"; };
+		1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinkTextFieldCell.m; path = GUI/LinkTextFieldCell.m; sourceTree = "<group>"; };
+		1D36A5D9154575F000516CDF /* LinkTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinkTextFieldCell.h; path = GUI/LinkTextFieldCell.h; sourceTree = "<group>"; };
+		1D36A5DE1545760E00516CDF /* NSAttributedStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSAttributedStringAdditions.m; path = Categories/NSAttributedStringAdditions.m; sourceTree = "<group>"; };
+		1D36A5DF1545760E00516CDF /* NSAttributedStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSAttributedStringAdditions.h; path = Categories/NSAttributedStringAdditions.h; sourceTree = "<group>"; };
+		1D36A5EE1546202500516CDF /* NicoLivePrefManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NicoLivePrefManager.h; path = ApplicationSupport/NicoLivePrefManager.h; sourceTree = "<group>"; };
+		1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NicoLivePrefManager.m; path = ApplicationSupport/NicoLivePrefManager.m; sourceTree = "<group>"; };
 		1D5558151529392000221516 /* SocketConnectionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnectionTests.h; path = Network/SocketConnectionTests.h; sourceTree = "<group>"; };
 		1D5558161529392000221516 /* SocketConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnectionTests.m; path = Network/SocketConnectionTests.m; sourceTree = "<group>"; };
 		1D6500BC150CB0DE002F5A8B /* KCSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUser.h; path = KeychainAccess/KCSUser.h; sourceTree = "<group>"; };
@@ -236,6 +284,7 @@
 		1D6500C9150CBE98002F5A8B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1D72B117152B5CB400F7944C /* NLProgramList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLProgramList.h; path = NicoLive/NLProgramList.h; sourceTree = "<group>"; };
 		1D72B118152B5CB400F7944C /* NLProgramList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLProgramList.m; path = NicoLive/NLProgramList.m; sourceTree = "<group>"; };
+		1D878104154573610075B151 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = NicoLiveAlert/Growl/Legacy/Growl.framework; sourceTree = "<group>"; };
 		1D93A139153856DA00328D5C /* OnigRegexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexp.h; sourceTree = "<group>"; };
 		1D93A13A153856DA00328D5C /* OnigRegexp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexp.m; sourceTree = "<group>"; };
 		1D93A13B153856DA00328D5C /* OnigRegexpUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexpUtility.h; sourceTree = "<group>"; };
@@ -269,8 +318,8 @@
 		1DA0978A15365D4C0083A2E1 /* NLActivePrograms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLActivePrograms.m; path = NicoLive/NLActivePrograms.m; sourceTree = "<group>"; };
 		1DAAB8F8151B4BA500D0D2B3 /* NLAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccount.h; path = NicoLive/NLAccount.h; sourceTree = "<group>"; };
 		1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLAccount.m; path = NicoLive/NLAccount.m; sourceTree = "<group>"; };
-		1DC5A7B1153320A80077B187 /* NLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLProgram.h; path = NicoLive/NLProgram.h; sourceTree = "<group>"; };
-		1DC5A7B2153320A80077B187 /* NLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLProgram.m; path = NicoLive/NLProgram.m; sourceTree = "<group>"; };
+		1DC5A7B1153320A80077B187 /* NLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = NLProgram.h; path = NicoLive/NLProgram.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		1DC5A7B2153320A80077B187 /* NLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = NLProgram.m; path = NicoLive/NLProgram.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1DD73A201526B9ED00DAC3EB /* NLMessageServerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLMessageServerInfo.h; path = NicoLive/NLMessageServerInfo.h; sourceTree = "<group>"; };
 		1DD73A211526B9ED00DAC3EB /* NLMessageServerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLMessageServerInfo.m; path = NicoLive/NLMessageServerInfo.m; sourceTree = "<group>"; };
 		1DD73A461527214E00DAC3EB /* NLMessageServerInfoTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLMessageServerInfoTests.h; path = NicoLive/NLMessageServerInfoTests.h; sourceTree = "<group>"; };
@@ -292,6 +341,7 @@
 				1D1CE2C6150C77BA001E7E39 /* Cocoa.framework in Frameworks */,
 				1D6500CA150CBE98002F5A8B /* Security.framework in Frameworks */,
 				1D141CFE151DAA1300CEB686 /* QuartzCore.framework in Frameworks */,
+				1D36A5C31545739500516CDF /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +353,7 @@
 				1D1CE2E5150C77BB001E7E39 /* Cocoa.framework in Frameworks */,
 				1D6500CC150CBE98002F5A8B /* Security.framework in Frameworks */,
 				1D141D00151DAA1300CEB686 /* QuartzCore.framework in Frameworks */,
+				1D36A5C41545739500516CDF /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +364,7 @@
 				1D1CE2FF150C7849001E7E39 /* Cocoa.framework in Frameworks */,
 				1D6500CB150CBE98002F5A8B /* Security.framework in Frameworks */,
 				1D141CFF151DAA1300CEB686 /* QuartzCore.framework in Frameworks */,
+				1D878105154573610075B151 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +376,7 @@
 				1D1CE319150C7849001E7E39 /* Cocoa.framework in Frameworks */,
 				1D6500CD150CBE98002F5A8B /* Security.framework in Frameworks */,
 				1D141D01151DAA1300CEB686 /* QuartzCore.framework in Frameworks */,
+				1D878106154573610075B151 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +401,8 @@
 				1D1CE2D7150C77BA001E7E39 /* NicoLiveAlert.h */,
 				1D1CE2D8150C77BA001E7E39 /* NicoLiveAlert.m */,
 				1D1CE2DA150C77BB001E7E39 /* MainMenu.xib */,
+				1D36A5EE1546202500516CDF /* NicoLivePrefManager.h */,
+				1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -380,6 +435,7 @@
 				1D141CFD151DAA1300CEB686 /* QuartzCore.framework */,
 				1D6500C9150CBE98002F5A8B /* Security.framework */,
 				1D1CE2E3150C77BB001E7E39 /* SenTestingKit.framework */,
+				1D4E35C015457231000EAE03 /* Growl */,
 				1D1CE2C7150C77BA001E7E39 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -401,6 +457,8 @@
 				1D07EB8B151C5B7F00CEF855 /* Application */,
 				1DAAB8F6151B4ADF00D0D2B3 /* NicoLive */,
 				1D555846152AC02400221516 /* GUI */,
+				1D36A5CA1545742200516CDF /* Growl */,
+				1D36A5CB1545750A00516CDF /* Categories */,
 				1D6500BA150CB07E002F5A8B /* Keychain */,
 				1D07EB89151C5B6E00CEF855 /* Network */,
 				1DAFFC1D1535A6C7005004C6 /* External */,
@@ -456,6 +514,47 @@
 			name = NicoLive;
 			sourceTree = "<group>";
 		};
+		1D36A5CA1545742200516CDF /* Growl */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Growl;
+			sourceTree = "<group>";
+		};
+		1D36A5CB1545750A00516CDF /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				1D36A5DE1545760E00516CDF /* NSAttributedStringAdditions.m */,
+				1D36A5DF1545760E00516CDF /* NSAttributedStringAdditions.h */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		1D4E35C015457231000EAE03 /* Growl */ = {
+			isa = PBXGroup;
+			children = (
+				1D4E35C215457248000EAE03 /* 1.3 */,
+				1D4E35C11545723E000EAE03 /* Legacy */,
+			);
+			name = Growl;
+			sourceTree = "<group>";
+		};
+		1D4E35C11545723E000EAE03 /* Legacy */ = {
+			isa = PBXGroup;
+			children = (
+				1D878104154573610075B151 /* Growl.framework */,
+			);
+			name = Legacy;
+			sourceTree = "<group>";
+		};
+		1D4E35C215457248000EAE03 /* 1.3 */ = {
+			isa = PBXGroup;
+			children = (
+				1D36A5C21545739500516CDF /* Growl.framework */,
+			);
+			name = 1.3;
+			sourceTree = "<group>";
+		};
 		1D555813152938E900221516 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -468,6 +567,8 @@
 		1D555846152AC02400221516 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */,
+				1D36A5D9154575F000516CDF /* LinkTextFieldCell.h */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -593,6 +694,7 @@
 				1D1CE2BD150C77BA001E7E39 /* Sources */,
 				1D1CE2BE150C77BA001E7E39 /* Frameworks */,
 				1D1CE2BF150C77BA001E7E39 /* Resources */,
+				1D36A5C6154573B600516CDF /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -629,6 +731,7 @@
 				1D1CE2F9150C7849001E7E39 /* Sources */,
 				1D1CE2FA150C7849001E7E39 /* Frameworks */,
 				1D1CE2FB150C7849001E7E39 /* Resources */,
+				1D36A5C8154573E500516CDF /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -818,6 +921,9 @@
 				1D93A187153856DA00328D5C /* regtrav.c in Sources */,
 				1D93A18B153856DA00328D5C /* regversion.c in Sources */,
 				1D93A18F153856DA00328D5C /* st.c in Sources */,
+				1D36A5DA154575F000516CDF /* LinkTextFieldCell.m in Sources */,
+				1D36A5E01545760E00516CDF /* NSAttributedStringAdditions.m in Sources */,
+				1D36A5F01546202500516CDF /* NicoLivePrefManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -856,6 +962,9 @@
 				1D93A189153856DA00328D5C /* regtrav.c in Sources */,
 				1D93A18D153856DA00328D5C /* regversion.c in Sources */,
 				1D93A191153856DA00328D5C /* st.c in Sources */,
+				1D36A5DC154575F000516CDF /* LinkTextFieldCell.m in Sources */,
+				1D36A5E21545760E00516CDF /* NSAttributedStringAdditions.m in Sources */,
+				1D36A5F21546202500516CDF /* NicoLivePrefManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -890,6 +999,9 @@
 				1D93A188153856DA00328D5C /* regtrav.c in Sources */,
 				1D93A18C153856DA00328D5C /* regversion.c in Sources */,
 				1D93A190153856DA00328D5C /* st.c in Sources */,
+				1D36A5DB154575F000516CDF /* LinkTextFieldCell.m in Sources */,
+				1D36A5E11545760E00516CDF /* NSAttributedStringAdditions.m in Sources */,
+				1D36A5F11546202500516CDF /* NicoLivePrefManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -928,6 +1040,9 @@
 				1D93A18A153856DA00328D5C /* regtrav.c in Sources */,
 				1D93A18E153856DA00328D5C /* regversion.c in Sources */,
 				1D93A192153856DA00328D5C /* st.c in Sources */,
+				1D36A5DD154575F000516CDF /* LinkTextFieldCell.m in Sources */,
+				1D36A5E31545760E00516CDF /* NSAttributedStringAdditions.m in Sources */,
+				1D36A5F31546202500516CDF /* NicoLivePrefManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1046,6 +1161,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/1.3\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
@@ -1059,6 +1178,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/1.3\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
@@ -1073,7 +1196,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NicoLiveAlert Lion.app/Contents/MacOS/NicoLiveAlert Lion";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/1.3\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlertTests/NicoLiveAlertTests-Info.plist";
@@ -1090,7 +1216,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NicoLiveAlert Lion.app/Contents/MacOS/NicoLiveAlert Lion";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/1.3\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlertTests/NicoLiveAlertTests-Info.plist";
@@ -1106,6 +1235,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/Legacy\"",
+				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
@@ -1123,6 +1256,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/Legacy\"",
+				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
@@ -1141,7 +1278,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NicoLiveAlert Leopard.app/Contents/MacOS/NicoLiveAlert Leopard";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/Legacy\"",
+				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
@@ -1159,7 +1299,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NicoLiveAlert Leopard.app/Contents/MacOS/NicoLiveAlert Leopard";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/Legacy\"",
+				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";

@@ -78,7 +78,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX, progCountBackGrountToY)];
 
 			// create bezier path for dissconect cross mark
-		disconnectPath = [NSBezierPath bezierPath];
+		disconnectPath = [[NSBezierPath alloc] init];
 		[disconnectPath setLineCapStyle:NSRoundLineCapStyle];
 		[disconnectPath setLineWidth:disconnectPathWidth];
 		[disconnectPath moveToPoint:NSMakePoint(disconnectPathOffset, disconnectPathOffset)];
@@ -96,7 +96,6 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		[invertFilter retain];
 		[progCountBackground retain];
 		[progCountBackColor retain];
-		[disconnectPath retain];
 		[disconnectColor retain];
 #endif
 		userProgramCount = 0;
@@ -165,6 +164,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 }// end - (void) installStatusbarMenu
 
 #pragma mark -
+#pragma mark indicator management
 - (void) makeStatusbarIcon
 {
 	CIImage *invertImage = NULL;
@@ -225,7 +225,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		// draw for image.
 	[statusbarIcon lockFocus];
 	[sb drawAtPoint:NSMakePoint(origin, origin)];
-	// set connect/disconnect status
+		// set connect/disconnect status
 	if (connected == NO)
 	{
 		[disconnectColor set];
@@ -338,7 +338,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	{
 		[[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEUSERSOMEPROG];		
 	}
-	[[[statusbarMenu itemWithTag:tagPorgrams] submenu] addItem:item];
+	[[[statusbarMenu itemWithTag:tagPorgrams] submenu] insertItem:item atIndex:0];
 	[self incleaseProgCount];
 	if (++userProgramCount > 0)
 		[[statusbarMenu itemWithTag:tagPorgrams] setState:NSOnState];	
@@ -381,7 +381,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	{
 		[[statusbarMenu itemWithTag:tagOfficial] setTitle:TITLEOFFICIALSOMEPROG];		
 	}
-	[[[statusbarMenu itemWithTag:tagOfficial] submenu] addItem:item];
+	[[[statusbarMenu itemWithTag:tagOfficial] submenu] insertItem:item atIndex:0];
 	[self incleaseProgCount];
 	if (++officialProgramCount > 0)
 		[[statusbarMenu itemWithTag:tagOfficial] setState:NSOnState];	
@@ -449,5 +449,19 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	connected = !connected;
 	[self makeStatusbarIcon];
 }// end - (void) toggleConnected
+
+#pragma mark -
+#pragma mark connection status management
+- (void) connectionRised
+{
+	connected = YES;
+	[self makeStatusbarIcon];
+}// end - (void) connectionRised
+
+- (void) connectionDown
+{
+	connected = NO;
+	[self makeStatusbarIcon];	
+}// end - (void) connectionDown
 
 @end

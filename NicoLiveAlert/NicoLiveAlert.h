@@ -55,7 +55,7 @@
 	__strong NSStatusItem *sbItem;
 	NLStatusbar	*statusBar;
 	NLUsers			*nicoliveAccounts;
-	NLProgramList	*programListServer;
+	NLProgramList	*programSieves;
 }
 @property (retain) NSMenu *menuStatusbar;
 @property (assign) NSPanel *prefencePanel;

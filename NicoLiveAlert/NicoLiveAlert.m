@@ -11,6 +11,7 @@
 
 @interface NicoLiveAlert ()
 - (BOOL) checkFirstLaunch;
+- (void) setupAccounts;
 - (void) hookNotifications;
 - (void) removeNotifications;
 - (void) listenHalt:(NSNotification *)note;
@@ -20,6 +21,9 @@
 @implementation NicoLiveAlert
 @synthesize menuStatusbar;
 @synthesize prefencePanel;
+
+#pragma mark -
+#pragma mark override / delegate
 
 - (void) awakeFromNib
 {
@@ -31,84 +35,99 @@
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {		// setup for account
-	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:NULL andManualWatchList:[NSDictionary dictionary]];
-	NSMenuItem *accountsItem = [menuStatusbar itemWithTag:tagAccounts];
-	[accountsItem setSubmenu:[nicoliveAccounts usersMenu]];
-	[accountsItem setState:[nicoliveAccounts userState]];
-	[accountsItem setEnabled:YES];
+	[self setupAccounts];
 
 		// hook notifications
 	[self hookNotifications];
 
 		// start monitor
-	programListServer = [[NLProgramList alloc] init];
-	NLActivePrograms *activeprograms = [[NLActivePrograms alloc] init];
-	[activeprograms setSbItem:statusBar];
-	[activeprograms setUsers:nicoliveAccounts];
-	[programListServer setWatchList:[nicoliveAccounts watchlist]];
-	[programListServer setActivePrograms:activeprograms];
-	[programListServer startListen];
+	[self setupMonitor];
+	[programSieves kick];
 	[statusBar setConnected:YES];
-#if __has_feature(objc_arc) == 0
-	[activeprograms release];
-#endif
 }// end - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 
 - (void) applicationWillTerminate:(NSNotification *)notification
 {
-	[programListServer stopListen];
+	[programSieves stopListen];
 
 	[self removeNotifications];
 
 #if __has_feature(objc_arc) == 0
 	[statusBar release];
-	[programListServer release];
-	programListServer = NULL;
+	[programSieves release];
+	programSieves = NULL;
 #endif
 }// end - (void) applicationWillTerminate:(NSNotification *)notification
 
+#pragma mark -
+
+- (void) setupAccounts
+{
+	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:NULL andManualWatchList:[NSDictionary dictionary]];
+	NSMenuItem *accountsItem = [menuStatusbar itemWithTag:tagAccounts];
+	[accountsItem setSubmenu:[nicoliveAccounts usersMenu]];
+	[accountsItem setState:[nicoliveAccounts userState]];
+	[accountsItem setEnabled:YES];
+}// end - (void) setupAccounts
+
+- (void) setupMonitor
+{
+	programSieves = [[NLProgramList alloc] init];
+	NLActivePrograms *activeprograms = [[NLActivePrograms alloc] init];
+	[activeprograms setSbItem:statusBar];
+	[activeprograms setUsers:nicoliveAccounts];
+	[programSieves setWatchList:[nicoliveAccounts watchlist]];
+	[programSieves setActivePrograms:activeprograms];
+#if __has_feature(objc_arc) == 0
+		// activeprograms keep in programSieves
+	[activeprograms release];
+#endif
+}// end - (void) setupMonitor
+
 - (void) hookNotifications
-{		// sleep and wakeup notification hook
+{
+	NSNotificationCenter *shared = [[NSWorkspace sharedWorkspace] notificationCenter];
+	NSNotificationCenter *application = [NSNotificationCenter defaultCenter];
+		// sleep and wakeup notification hook
 			// hook to sleep notification
-	[[[NSWorkspace sharedWorkspace] notificationCenter]
-		addObserver:self selector: @selector(listenHalt:)
-	 name: NSWorkspaceWillSleepNotification object: NULL];
+	[shared addObserver:self selector: @selector(listenHalt:) name: NSWorkspaceWillSleepNotification object: NULL];
 			// hook to wakeup notification
-	[[[NSWorkspace sharedWorkspace] notificationCenter]
-	 addObserver:self selector: @selector(listenRestart:)
-	 name: NSWorkspaceDidWakeNotification object: NULL];
+	[shared addObserver:self selector: @selector(listenRestart:) name: NSWorkspaceDidWakeNotification object: NULL];
+		// Connection Notification Hook
 			// hook to connection lost notification
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:NULL];
+	[application addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:NULL];
 			// hook to connection reactive notification
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
+	[application addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
 }// end - (void) hookNotifications
 
 - (void) removeNotifications
-{		// release sleep and wakeup notifidation
+{
+	NSNotificationCenter *shared = [[NSWorkspace sharedWorkspace] notificationCenter];
+	NSNotificationCenter *application = [NSNotificationCenter defaultCenter];
+		// release sleep and wakeup notifidation
 			// remove sleep notification
-	[[[NSWorkspace sharedWorkspace] notificationCenter]
-	 removeObserver:self 
-	 name:NSWorkspaceWillSleepNotification object:NULL];
+	[shared removeObserver:self name:NSWorkspaceWillSleepNotification object:NULL];
 			// remove wakeup notification
-	[[[NSWorkspace sharedWorkspace] notificationCenter]
-	 removeObserver:self 
-	 name:NSWorkspaceDidWakeNotification object:NULL];
+	[shared removeObserver:self name:NSWorkspaceDidWakeNotification object:NULL];
+		// Connection Notification Hook
 			// remove Connection lost notification
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationConnectionLost object:NULL];
+	[application removeObserver:self name:NLNotificationConnectionLost object:NULL];
 			// remove Connection Rised notification
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationConnectionRised object:NULL];
+	[application removeObserver:self name:NLNotificationConnectionRised object:NULL];
 }// end - (void) hookNotifications
 
 - (void) listenHalt:(NSNotification *)note
 {
 	[statusBar toggleConnected];
-	[programListServer stopListen];
+	if ([[note name] isEqualToString:NSWorkspaceWillSleepNotification])
+		[programSieves stopListen];
 }// end - (void) listenHalt:(NSNotification *)note
 
 - (void) listenRestart:(NSNotification *)note
 {
-	[programListServer startListen];
 	[statusBar toggleConnected];
+	if ([[note name] isEqualToString:NSWorkspaceDidWakeNotification])
+		[programSieves startListen];
 }// end - (void) listenRestart:(NSNotification *)note
 
 - (BOOL) checkFirstLaunch

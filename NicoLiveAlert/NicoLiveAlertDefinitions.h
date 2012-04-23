@@ -10,6 +10,9 @@
 #define NicoLiveAlert_NicoLiveAlertDefinitions_h
 
 // common definition
+
+#define EMPTYSTRING		@""
+
 /*!
  @defined 
 */
@@ -143,36 +146,57 @@ enum {
 
 #define OfficialTitleString	NSLocalizedString(@"OfficialTitleString", @"")
 #define StartUserTimeFormat			@" %H:%M + 00:00"
+#define ReserveUserTimeFormat		@" %%H:%%M - 00:%02ld"
 #define StartOfficialTimeFormat		@"  %H:%M + 00:00"
+#define ReserveOfficialTimeFormat	@"  %%H:%%M - 00:%02ld"
 #define ElapsedTimeFormat			@"%02ld:%02ld"
+#define CountDownTimeFormat			@"%02ld:%02ld"
 #define TimeFormatString			@"%H:%M"
 	// reguler expressions
 #define ProgramTitleRegex	@"title=\"(.*)\""
 #define ThumbImageRegex		@"<img src=\"(http://.*)\" class=\"banner\">"
-#define ProgStartTimeRegex	@"<div id=\"data\">(.*)</div>"
+#define ProgStartTimeRegex	@"(\\d+:\\d+)</div></?[ap]>"
 #define ProgramURLRegex		@"<a href=\"(http://live.nicovideo.jp/watch/lv\\d+)\""
-#define OnAirRegex			@"class=\"(onair|beforeTS)\""
+#define ProgStateRegex		@"class=\"(beforeTS|onair|done)\""
 #define MaintRegex			@"<code>maintenance</code>"
+
+#define ONAIRSTATE			@"onair"
+#define BEFORESTATE			@"beforeTS"
+#define DONESTATE			@"done"
 
 	// XML element literal
 #define elementStreaminfo	@"getstreaminfo"
 #define elementRequestID	@"request_id"
-#define elementDescription	@"description"
 #define elementTitle		@"title"
+#define elementDescription	@"description"
 #define elementComuName		@"name"
+#define elementComuID		@"default_community"
 #define elementThumbnail	@"thumbnail"
 
 enum elementStreamInfoIndex {
 	indexStreaminfo = 1,
 	indexRequestID,
-	indexDescription,
 	indexTitle,
+	indexDescription,
 	indexComuName,
+	indexComuID,
 	indexThumbnail,
 };
 
+	// notification constant
 #define NLNotificationTimeUpdated	@"NLNotificationTimeUpdated"
 #define NLNotificationPorgramEnd	@"NLNotificationPorgramEnd"
+
+	// exception constant
+#define EmbedFetchFailed		@"EmbedFetchFailed"
+#define ErrorIsNotNULL			@"ErrorIsNotNULL"
+#define StringIsEmpty			@"StringIsEmpty"
+#define StreamInforFetchFaild	@"StreamInforFetchFaild"
+#define EmbedParseFailed		@"EmbedParseFailed"
+#define ProgramTitleCollectFail	@"ProgramTitleCollectFail"
+#define ImageURLCollectFail		@"ImageURLCollectFail"
+#define ProgramURLCollectFail	@"ProgramURLCollectFail"
+#define UserProgXMLParseFail	@"UserProgXMLParseFail"
 
 #pragma mark -
 #pragma mark for debug

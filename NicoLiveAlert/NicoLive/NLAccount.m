@@ -165,6 +165,7 @@ NSNumber		*notAutoOpen;
 		success = [parser parse];
 	}
 	@catch (NSException *exception) {
+		NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
 		return success;
 	}// end parse get ticket
 #if __has_feature(objc_arc)
@@ -206,6 +207,7 @@ NSNumber		*notAutoOpen;
 		success = [parser parse];
 	}
 	@catch (NSException *exception) {
+		NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
 		return success;
 	}// end parse get ticket
 #if __has_feature(objc_arc)

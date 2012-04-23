@@ -18,11 +18,13 @@
 	__unsafe_unretained NSMutableDictionary	*watchList;
 	NLMessageServerInfo	*serverInfo;
 	NLActivePrograms	*activePrograms;
+	__strong NSNotificationCenter *center;
 	NSDate				*lastTime;
 	NSTimer				*keepAliveMonitor;
 	NSTimer				*connectionRiseMonitor;
 	BOOL				watchOfficial;
 	BOOL				isOfficial;
+	BOOL				connected;
 #ifdef DEBUG
 	NSFileHandle		*xmllog;
 	NSFileHandle		*watchlog;
@@ -32,6 +34,8 @@
 @property (retain, readwrite) NLActivePrograms		*activePrograms;
 @property (assign, readwrite) BOOL					watchOfficial;
 
+- (void) kick;
+- (void) halt;
 - (BOOL) startListen;
 - (void) stopListen;
 

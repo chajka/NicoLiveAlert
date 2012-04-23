@@ -10,8 +10,8 @@
 
 @interface NLProgramList ()
 - (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date;
-- (void) checkConnectionActive;
-- (void) checkConnectionRised;
+- (void) checkConnectionActive:(NSTimer *)theTimer;
+- (void) checkConnectionRised:(NSTimer *)theTimer;
 @end
 
 @implementation NLProgramList
@@ -29,6 +29,10 @@ BOOL sendrequest;
 		programListSocket = NULL;
 		watchList = NULL;
 		serverInfo = NULL;
+		center = [NSNotificationCenter defaultCenter];
+#if __has_feature(objc_arc) == 0
+		[center retain];
+#endif
 		lastTime = NULL;
 		keepAliveMonitor = NULL;
 		connectionRiseMonitor = NULL;
@@ -36,6 +40,7 @@ BOOL sendrequest;
 		sendrequest = NO;
 		isOfficial = NO;
 		watchOfficial = YES;
+		connected = NO;
 	}// end if self
 	return self;
 }// end - (id) init
@@ -43,16 +48,32 @@ BOOL sendrequest;
 - (void) dealloc
 {
 	[programListSocket disconnect];
+	if ([keepAliveMonitor isValid])			[keepAliveMonitor invalidate];
+	if ([connectionRiseMonitor isValid])	[connectionRiseMonitor invalidate];
 #if __has_feature(objc_arc) == 0
-	if (watchList != NULL)				[watchList release];
-	if (serverInfo != NULL)				[serverInfo release];
-	if (lastTime != NULL)				[lastTime release];
-	if (keepAliveMonitor != NULL)		[keepAliveMonitor release];
+	if (watchList != NULL)					[watchList release];
+	if (serverInfo != NULL)					[serverInfo release];
+	if (center != NULL)						[center release];
+	if (lastTime != NULL)					[lastTime release];
 	if (programListSocket != NULL)		[programListSocket release];
 
 	[super dealloc];
 #endif
 }// end - (void) dealloc
+
+#pragma -
+#pragma mark controll methods
+
+- (void) kick
+{
+	[self startListen];
+}// end - (void) kick
+
+- (void) halt
+{
+	[programListSocket disconnect];
+	connected = NO;	
+}// end - (void) halt
 
 - (BOOL) startListen
 {
@@ -64,60 +85,105 @@ BOOL sendrequest;
 
 	programListSocket = [[SocketConnection alloc] initWithServer:[serverInfo serveName] andPort:[serverInfo port] direction:SCDirectionBoth];
 	[programListSocket setStreamEventDelegate:self];
-	success = [programListSocket connect];
-	keepAliveMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionAliveCheckInterval target:self selector:@selector(checkConnectionActive) userInfo:NULL repeats:YES];
-	[keepAliveMonitor fire];
+	if ([programListSocket connect] == YES)
+	{
+		success = YES;
+		connected = YES;
+		[self resetKeepAliveMonitor];
+		[keepAliveMonitor fire];
+	}// end if connect to program server success
 
 	return success;
 }// end - (void) startListen
 
 - (void) stopListen
 {		//
-	[programListSocket disconnect];
-
+	[self halt];
 		// stop & reset keepAliveMonitor
-	[keepAliveMonitor invalidate];	keepAliveMonitor = NULL;
-	keepAliveMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionAliveCheckInterval target:self selector:@selector(checkConnectionActive) userInfo:NULL repeats:YES];
-	if (programListSocket == NULL)
-		return;
-	// end if not connection
+	[self resetConnectionRiseMonitor];
+	[connectionRiseMonitor fire];
 
+#if __has_feature(objc_arc) == 0
+	if (programListSocket != NULL)
+		[programListSocket release];
+	// end if not connection
+#endif
 }// end - (void) stopListen
 
 #pragma mark -
 #pragma mark internal
+#pragma mark timer control methods
+- (void) resetKeepAliveMonitor
+{		// stop & reset keepAliveMonitor
+	if ([keepAliveMonitor isValid] == YES)
+	{
+		[keepAliveMonitor invalidate];
+		keepAliveMonitor = NULL;
+	}// end if keepAliveMonitor is running
+	
+		// re-setup keepAliveMonitor for fire
+	keepAliveMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionAliveCheckInterval target:self selector:@selector(checkConnectionActive:) userInfo:NULL repeats:YES];
+}// end - (void) resetKeepAliveMonitor
+
+- (void) resetConnectionRiseMonitor
+{		// stop & reset connectionRiseMonitor
+	if ([connectionRiseMonitor isValid] == YES)
+	{
+		[connectionRiseMonitor invalidate];
+		connectionRiseMonitor = NULL;
+	}// end if connectionRiseMonitor is running
+	
+		// re-setup connectionRiseMonitor for fire
+	connectionRiseMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionReactiveCheckInterval target:self selector:@selector(checkConnectionRised:) userInfo:NULL repeats:YES];
+}// end - (void) resetConnectionRiseMonitor
+
+#pragma mark program sieve method
 - (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date
 {
 	NSArray *program = [progInfo componentsSeparatedByString:dataSeparator];
 	if ((watchOfficial == YES) && ([program count] == 2))
 	{
+NSLog(@"WatchOfficial %@",progInfo);
 		[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo] withDate:date];
 		return;
 	}
 
 	for (NSString *prog in program)
 	{		// process official
-		if (isOfficial)
+		if (isOfficial == YES)
+			isOfficial = NO;
+			// check official
+		if ((watchOfficial == YES) && ([prog isEqualToString:liveOfficialString] == YES))
 		{
+NSLog(@"WatchOfficial Channel %@",progInfo);
+			isOfficial = YES;
 			[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo] withDate:date];
 			isOfficial = NO;
 			break;
-		}// end is Official
-			// check official
-		if ((watchOfficial == YES) && ([prog isEqualToString:liveOfficialString] == YES))
-			isOfficial = YES;
+		}
 		if ([watchList valueForKey:prog] != NULL)
 		{
-			[activePrograms addUserProgram:[program objectAtIndex:offsetLiveNo] withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner]];
-			BOOL autoOpen = [[watchList valueForKey:prog] boolValue];
-			if (autoOpen == YES)
-				;
+NSLog(@"watchUser %@",progInfo);
+			if (isOfficial)
+			{
+				[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo] withDate:date];
+			}
+			else
+			{
+				[activePrograms addUserProgram:[program objectAtIndex:offsetLiveNo] withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner]];
+				BOOL autoOpen = [[watchList valueForKey:prog] boolValue];
+				if (autoOpen == YES)
+				{	// open program
+				}
+			}
 			// end if autoopen;
 		}
 	}// end for
 }// end - (void) checkProgram:(NSString *)progInfo
 
-- (void) checkConnectionActive
+#pragma mark -
+#pragma mark periodial action methods
+- (void) checkConnectionActive:(NSTimer *)theTimer
 {
 	NSTimeInterval diff = [lastTime timeIntervalSinceNow];
 	if (diff > -ServerTimeOut)
@@ -125,29 +191,30 @@ BOOL sendrequest;
 	// end if check connection is alive
 
 		// maybe timeout stop self and start reactive checker
-	[[NSNotificationCenter defaultCenter] postNotificationName:NLNotificationConnectionLost object:NULL];
-	connectionRiseMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionReactiveCheckInterval target:self selector:@selector(checkConnectionRised) userInfo:NULL repeats:YES];
-	[connectionRiseMonitor fire];
-		// stop & reset keepAliveMonitor
-	[keepAliveMonitor invalidate];	keepAliveMonitor = NULL;
-	keepAliveMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionAliveCheckInterval target:self selector:@selector(checkConnectionActive) userInfo:NULL repeats:YES];
+	[self stopListen];
+	[center postNotificationName:NLNotificationConnectionLost object:NULL];
+		// stop chek connection is active
+	[self resetKeepAliveMonitor];
+		// start wait a connection regain
+	[self stopListen];
 }// end - (void) checkConnectionActive
 
-- (void) checkConnectionRised
+- (void) checkConnectionRised:(NSTimer *)theTimer
 {
 	NSURL *ping = [NSURL URLWithString:MSQUERYAPI];
 	NSError *err = NULL;
 	NSString *alertinfo	= [NSString stringWithContentsOfURL:ping encoding:NSUTF8StringEncoding error:&err];
+	if ([alertinfo length] == 0)
+		return;
+
 	OnigRegexp *maint = [OnigRegexp compile:MaintRegex];
 	OnigResult *maintResult = [maint search:alertinfo];
 	if (maintResult != NULL)
 		return;
 
 		// stop & reset connectionRiseMonitor
-	[connectionRiseMonitor invalidate];	connectionRiseMonitor = NULL;
-	connectionRiseMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionReactiveCheckInterval target:self selector:@selector(checkConnectionRised) userInfo:NULL repeats:YES];
-
-	[[NSNotificationCenter defaultCenter] postNotificationName:NLNotificationConnectionRised object:NULL];
+	[self startListen];
+	[center postNotificationName:NLNotificationConnectionRised object:NULL];
 }// end - (void) checkConnectionRised
 
 #pragma mark -
@@ -214,10 +281,14 @@ BOOL sendrequest;
 #pragma mark StreamEventDelegate (optional)
 - (void) streamEventOpenCompleted:(NSStream *)stream
 {
+	if ((connected == NO) && ([programListSocket isInputStream:stream]))
+		[center postNotificationName:NLNotificationConnectionRised object:NULL];
 }// end - (void) streamEventOpenCompleted:(NSStream *)stream
 
 - (void) streamEventEndEncountered:(NSStream *)stream
 {
+	if ((connected == YES) && ([programListSocket isInputStream:stream]))
+		[center postNotificationName:NLNotificationConnectionLost object:NULL];
 }// end - (void) streamEventEndEncountered:(NSStream *)stream
 
 - (void) streamEventNone:(NSStream *)stream

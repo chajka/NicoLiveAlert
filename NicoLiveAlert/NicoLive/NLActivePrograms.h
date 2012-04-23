@@ -13,14 +13,19 @@
 
 @interface NLActivePrograms : NSObject {
 	NSNumber			*yes;
-	__unsafe_unretained NLStatusbar		*sbItem;
-	__unsafe_unretained NLUsers			*users;
+	NLStatusbar			*sbItem;
+	NLUsers				*users;
+		// store current programs
 	NSMutableArray		*programs;
+		// store program for guard double notify
 	NSMutableDictionary *liveNumbers;
 }
-@property (assign, readwrite) NLStatusbar	*sbItem;
-@property (assign, readwrite) NLUsers			*users;
+@property (retain, readwrite) NLStatusbar	*sbItem;
+@property (retain, readwrite) NLUsers		*users;
 
 - (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:owner;
 - (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date;
+	//
+- (void) suspend;
+- (void) resume;
 @end

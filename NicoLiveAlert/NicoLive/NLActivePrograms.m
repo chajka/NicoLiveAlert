@@ -36,9 +36,11 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationPorgramEnd object:NULL];
 #if __has_feature(objc_arc) == 0
+	if (sbItem != NULL)			[sbItem release];
+	if (users != NULL)			[users release];
+	if (yes != NULL)			[yes release];
 	if (programs != NULL)		[programs release];
 	if (liveNumbers != NULL)	[liveNumbers release];
-	if (yes != NULL)			[yes release];
 
     [super dealloc];
 #endif
@@ -53,7 +55,7 @@
 		[liveNumbers setValue:yes forKey:liveNo];
 
 	NLAccount *account = [users primaryAccountForCommunity:community];
-	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo withDate:date forAccount:account];
+	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo withDate:date forAccount:account owner:owner];
 	if (program == NULL)
 		return;
 
@@ -70,8 +72,19 @@
 	[programs addObject:program];
 	[sbItem addToUserMenu:item];
 #if __has_feature(objc_arc) == 0
+		// decrease retain count for remove means relase
 	[program release];
 #endif
+
+		// check and remove prefeerd same community & owner's program
+	NSString *communityID = [program communityID];
+	for (NLProgram *prog in [programs reverseObjectEnumerator])
+	{
+		if (([[prog communityID] isEqualToString:communityID] == YES)
+			&& ([[prog broadcastOwner] isEqualToString:owner] == YES))
+			[prog terminate];
+		// end if last user program
+	}// end foreach active programs
 }// end - (void) addUserProgram:(NSString *)liveNo community:(NSString *)community owner:owner
 
 - (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date
@@ -98,9 +111,36 @@
 	[programs addObject:program];
 	[sbItem addToOfficialMenu:item];
 #if __has_feature(objc_arc) == 0
+		// decrease retain count for remove means relase
 	[program release];
 #endif
 }// end - (void) addOfficialProgram:(NSString *)liveNo
+
+- (void) suspend
+{
+	for (NLProgram *program in programs)
+	{
+		[program suspend];
+	}// end for each programs
+}// end - (void) suspend
+
+- (void) resume
+{
+	for (NLProgram *program in [programs reverseObjectEnumerator])
+	{
+		if ([program resume] == NO)
+		{
+			if ([program isOfficial] == YES)
+				[sbItem removeFromOfficialMenu:[program programMenu]];
+			else
+				[sbItem removeFromUserMenu:[program programMenu]];
+			//end if remove program item by kind
+
+			[liveNumbers removeObjectForKey:[program programNumber]];
+			[programs removeObject:program];
+		}// end if program was already ended
+	}// end for each programs
+}// end - (void) resume
 
 - (void) removeEndedProgram:(NSNotification *)notification
 {		// iterate for find ended program.

@@ -151,6 +151,22 @@
 	return NULL;
 }// end if - (NLAccount *) primaryAccountForCommunity:(NSString *)community
 
+- (NSArray *) activeUsers
+{
+	NSMutableArray *users = [NSMutableArray array];
+
+	for (NSString *username in [usersState allKeys])
+		if ([usersState valueForKey:username] == active)
+			[users addObject:username];
+		// end if user is active
+	//end foreach all users
+
+	if ([users count] == 0)
+		return NULL;
+	else
+		return [NSArray arrayWithArray:users];
+}// end - (NSArray *) activeUsers
+
 #pragma mark -
 #pragma mark menu management
 - (void) creteUserStateMenu

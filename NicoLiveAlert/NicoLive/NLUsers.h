@@ -61,20 +61,27 @@
 - (OSStatus) addUser:(NSString *)useraccount withPassword:(NSString *)userpassword;
 
 /*!
- @method primaryAccountForCommunity:
- @abstract return primary account of reciever stored accounts communities.
- @param community no of program.
- @result account information by NLAccount.
+	@method primaryAccountForCommunity:
+	@abstract return primary account of reciever stored accounts communities.
+	@param community no of program.
+	@result account information by NLAccount.
  */
 - (NLAccount *) primaryAccountForCommunity:(NSString *)community;
+
+/*!
+	@method activeUsers
+	@abstract return array of active user's username
+	@result NSArray contains user's name by NSString
+*/
+- (NSArray *) activeUsers;
 
 #pragma mark -
 #pragma mark menu management
 /*!
- @method toggleUserState:
- @abstract switch sender to watch or unwatch.
- result status shown by users menuItem's check mark.
- It effect to reconstruct content of watchlist of reciever.
+	@method toggleUserState:
+	@abstract switch sender to watch or unwatch.
+	result status shown by users menuItem's check mark.
+	It effect to reconstruct content of watchlist of reciever.
 */
 - (void) toggleUserState:(NSMenuItem *)item;
 @end

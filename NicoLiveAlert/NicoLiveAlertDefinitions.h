@@ -12,6 +12,9 @@
 // common definition
 
 #define EMPTYSTRING		@""
+#define WatchListPasteboardType	@"tv.from.chajka.NicoLiveAlert.watchlist"
+#define LauncherPasteboardType	@"tv.from.chajka.NicoLiveAlert.launcher"
+
 
 /*!
  @defined 
@@ -31,6 +34,19 @@
 #define STREMEMBEDQUERY	@"http://live.nicovideo.jp/embed/%@"
 #define PROGRAMURLFORMAT	@"http://live.nicovideo.jp/watch/%@"
 
+#pragma mark -
+#pragma makr defaultKey definition
+	// watch array
+#define keyManualWatchList	@"ManualWatchList"
+
+#pragma mark -
+#pragma makr xib item definition
+	// watch array
+#define keyAutoOpen			@"AutoOpen"
+#define keyWatchItem		@"WatchItem"
+#define keyNote				@"Note"
+
+#pragma mark -
 #pragma mark definitions for class NicoLiveAlert
 	// Tag indexes of Status Bar Menu items
 /*!
@@ -65,6 +81,24 @@ enum statusBarMenuItems {
 #define TITLEOFFICIALSINGLEPROG	NSLocalizedString(@"TitleOfficialSingleProgram", @"")
 #define TITLEOFFICIALSOMEPROG	NSLocalizedString(@"TitleOfficialSomePrograms", @"")
 
+	// regular expression definition
+#define WatchKindRegex		@"^(co|ch|lv)\\d+"
+
+	//
+#define kindCommunity		@"co"
+#define kindChannel			@"ch"
+#define kindProgram			@"lv"
+
+enum WatchTargetKind {
+	indexWatchCommunity = 1,
+	indexWatchChannel,
+	indexWatchProgram
+};
+	// url format definition
+#define URLFormatCommunity	@"http://com.nicovideo.jp/community/%@"
+#define URLFormatChannel	@"http://ch.nicovideo.jp/channel/%@"
+#define URLFormatLive		@"http://live.nicovideo.jp/watch/%@"
+#define URLFormatUser		@"http://www.nicovideo.jp/user/%@"
 
 	// string riteral definition
 #define PARTIALPATHFORMAT	@"~/Library/Preferences/%@"
@@ -89,6 +123,7 @@ enum statusBarMenuItems {
 #define NICOKEYCHAINLABEL		@"Web form password"
 
 #define kNoUsers				(0)
+
 
 #pragma mark definitions for XMLParsing
 	// Exception definition
@@ -197,6 +232,16 @@ enum elementStreamInfoIndex {
 #define ImageURLCollectFail		@"ImageURLCollectFail"
 #define ProgramURLCollectFail	@"ProgramURLCollectFail"
 #define UserProgXMLParseFail	@"UserProgXMLParseFail"
+
+#pragma mark -
+#pragma mark GUI
+#pragma mark -
+#pragma mark Definitions for NLLauncherTableDelegate
+
+#define ApplicationExtension	@"app"
+#define keyLauncherIcon			@"Icon"
+#define keyLauncherAppName		@"ApplicationName"
+#define keyLauncherAppPath		@"ApplicationPath"
 
 #pragma mark -
 #pragma mark for debug

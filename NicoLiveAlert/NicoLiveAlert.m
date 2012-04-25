@@ -8,6 +8,9 @@
 
 #import "NicoLiveAlert.h"
 #import "NicoLiveAlertDefinitions.h"
+#import "OnigRegexp.h"
+#import "NSAttributedStringAdditions.h"
+#import "LinkTextFieldCell.h"
 
 @interface NicoLiveAlert ()
 - (BOOL) checkFirstLaunch;
@@ -36,6 +39,13 @@
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {		// setup for account
 	[self setupAccounts];
+
+		// setup Wachlist drag & drop reordering
+	[tblManualWatchList registerForDraggedTypes:[NSArray arrayWithObject:WatchListPasteboardType]];
+	[aryManualWatchlist setWatchListTable:tblManualWatchList];
+		// setup LauncherList drag, dorp and reordering
+	[tblTinyLauncher registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, LauncherPasteboardType, nil]];
+	[aryLauncherItems setLaunchListTable:tblTinyLauncher];
 
 		// hook notifications
 	[self hookNotifications];
@@ -172,7 +182,70 @@
 	[statusBar setUserState:[nicoliveAccounts userState]];
 }// end - (IBAction) toggleUserState:(id)sender
 
+#pragma mark -
 #pragma mark preference panel interface
+	// manual watch list box actions
+- (IBAction) autoOpenChecked:(id)sender
+{
+}// end - (IBAction) autoOpenChecked:(id)sender
+
+- (IBAction) watchOfficialChannels:(id)sender
+{		// sender is chkboxWatchOfficialProgram
+	BOOL state = ([sender state] == NSOnState) ? YES : NO;
+		
+	[programSieves setWatchOfficial:state];
+	[statusBar setWatchOfficial:state]; 
+}//end - (IBAction) watchOfficialChannels:(id)sender
+
+- (IBAction) addToWatchList:(id)sender
+{
+	NSDictionary *watchTargetKindDict = [NSDictionary dictionaryWithObjectsAndKeys:
+		 [NSNumber numberWithInteger:indexWatchCommunity], kindCommunity,
+		 [NSNumber numberWithInteger:indexWatchChannel], kindChannel,
+		 [NSNumber numberWithInteger:indexWatchProgram], kindProgram, nil];
+	NSString *itemName = [watchItemName stringValue];
+	NSString *itemComment = [watchItemComment stringValue];
+	NSAttributedString *watchItem;
+	OnigRegexp *watchKindRegex = [OnigRegexp compile:WatchKindRegex];
+	OnigResult *targetKind = [watchKindRegex search:itemName];
+
+	NSURL *url = NULL;
+	switch ([[watchTargetKindDict valueForKey:[targetKind stringAt:1]] integerValue])
+	{
+		case indexWatchCommunity:
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatCommunity, itemName]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemName];
+			break;
+		case indexWatchChannel:
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatChannel, itemName]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemName];
+			break;
+		case indexWatchProgram:
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatLive, itemName]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemName];
+			break;
+		default:
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatUser, itemName]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemName];
+			break;
+	}
+
+		// add to table
+	NSMutableDictionary *watchListItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+				   [NSNumber numberWithBool:NO], keyAutoOpen,
+				   watchItem, keyWatchItem,
+				   itemComment, keyNote, nil];
+	[aryManualWatchlist addObject:watchListItem];
+
+		// cleanup textfields
+	[watchItemName setStringValue:EMPTYSTRING];
+	[watchItemComment setStringValue:EMPTYSTRING];
+}// end - (IBAction) addToWatchList:(id)sender
+
+- (IBAction) removeFromWatchList:(id)sender
+{
+}// end - (IBAction) deleteFromWatchList:(id)sender
+
 	// login informaion box actions
 - (IBAction) loginNameSelected:(id)sender
 {
@@ -191,21 +264,16 @@
 {
 }// end - (IBAction) appColaboChecked:(id)sender
 
-	// manual watch list box actions
-- (IBAction) autoOpenChecked:(id)sender
-{
-}// end - (IBAction) autoOpenChecked:(id)sender
 
-- (IBAction) watchOfficialChannels:(id)sender
+- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-}//end - (IBAction) watchOfficialChannels:(id)sender
-
-- (IBAction) addToWatchList:(id)sender
-{
-}// end - (IBAction) addToWatchList:(id)sender
-
-- (IBAction) deleteFromWatchList:(id)sender
-{
-}// end - (IBAction) deleteFromWatchList:(id)sender
+    if ([cell isKindOfClass:[LinkTextFieldCell class]]) {
+        LinkTextFieldCell *linkCell = (LinkTextFieldCell *)cell;
+			// Setup the work to be done when a link is clicked
+        linkCell.linkClickedHandler = ^(NSURL *url, id sender) {
+            [[NSWorkspace sharedWorkspace] openURL:url];
+        };
+    }// endif
+}// end - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 
 @end

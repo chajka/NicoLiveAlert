@@ -11,6 +11,8 @@
 #import "NLUsers.h"
 #import "NLProgramList.h"
 #import "NLActivePrograms.h"
+#import "IOMTableViewDragAndDrop.h"
+#import "NLArrayControllerDragAndDrop.h"
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @interface NicoLiveAlert : NSObject <NSApplicationDelegate> {
@@ -27,30 +29,32 @@
 	__strong IBOutlet NSMenuItem *menuAccounts;
 	__strong IBOutlet NSMenuItem *manuLauncApplications;
 
-		// login information items
+		// Preference Panel items
+			// manual wath list items
+	__strong IBOutlet NSButton					*chkboxWatchOfficialProgram;
+	__strong IBOutlet IOMTableViewDragAndDrop	*tblManualWatchList;
+	__strong IBOutlet NSTextField				*watchItemName;
+	__strong IBOutlet NSTextField				*watchItemComment;
+
+			// login information items
 	__strong IBOutlet NSComboBox *comboLoginID;
 	__strong IBOutlet NSSecureTextField *secureFieldPassword;
+	__strong IBOutlet NSButton *btnAddAccount;
 	__strong IBOutlet NSButton *btnIsWatch;
 
-		// other application relation information items
+			// other application relation information items
 	__strong IBOutlet NSButton *chkboxDonotAutoOpenAtBroadcasting;
 	__strong IBOutlet NSButton *chkboxRelationWithFMELauncher;
 	__strong IBOutlet NSButton *chkboxRelationWithCharlestonMyBroadcast;
 	__strong IBOutlet NSButton *chkboxRelationAutoOpenAndCharleston;
 	__strong IBOutlet NSButton *chkboxRelationChooseFromMenuAndCharleston;
 
-		// tiny launcher item
-	__strong IBOutlet NSTableView *tblTinyLauncher;
+			// tiny launcher item
+	__strong IBOutlet IOMTableViewDragAndDrop	*tblTinyLauncher;
 
-		// manual wath list items
-	__strong IBOutlet NSTableView	*tblManualWatchList;
-	__strong IBOutlet NSTextField	*watchItemName;
-	__strong IBOutlet NSTextField	*watchItemComment;
-	__strong IBOutlet NSButton		*chkboxWatchOfficialProgram;
-
-		// array controller items
-	__strong IBOutlet NSArrayController *aryLauncherItems;
-	__strong IBOutlet NSArrayController *aryManualWatchlist;
+			// array controller items
+	__strong IBOutlet NLArrayControllerDragAndDrop *aryManualWatchlist;
+	__strong IBOutlet NLArrayControllerDragAndDrop *aryLauncherItems;
 	
 	__strong NSStatusItem *sbItem;
 	NLStatusbar	*statusBar;

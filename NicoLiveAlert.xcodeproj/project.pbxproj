@@ -67,6 +67,10 @@
 		1D36A5F11546202500516CDF /* NicoLivePrefManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */; };
 		1D36A5F21546202500516CDF /* NicoLivePrefManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */; };
 		1D36A5F31546202500516CDF /* NicoLivePrefManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */; };
+		1D36A60E15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
+		1D36A60F15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
+		1D36A61015478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
+		1D36A61115478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
 		1D5558171529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D5558181529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D6500BE150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
@@ -181,6 +185,10 @@
 		1DD73A4D15272ECD00DAC3EB /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
 		1DD73A4E15272ECD00DAC3EB /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
 		1DD73A4F15272ECD00DAC3EB /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
+		1DDE3970154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */; };
+		1DDE3971154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */; };
+		1DDE3972154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */; };
+		1DDE3973154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */; };
 		1DE87D82151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DE87D83151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DE87D84151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
@@ -275,6 +283,8 @@
 		1D36A5DF1545760E00516CDF /* NSAttributedStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSAttributedStringAdditions.h; path = Categories/NSAttributedStringAdditions.h; sourceTree = "<group>"; };
 		1D36A5EE1546202500516CDF /* NicoLivePrefManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NicoLivePrefManager.h; path = ApplicationSupport/NicoLivePrefManager.h; sourceTree = "<group>"; };
 		1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NicoLivePrefManager.m; path = ApplicationSupport/NicoLivePrefManager.m; sourceTree = "<group>"; };
+		1D36A60C15478BC400516CDF /* IOMTableViewDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IOMTableViewDragAndDrop.h; path = CocoaEnhance/IOMTableViewDragAndDrop.h; sourceTree = "<group>"; };
+		1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IOMTableViewDragAndDrop.m; path = CocoaEnhance/IOMTableViewDragAndDrop.m; sourceTree = "<group>"; };
 		1D5558151529392000221516 /* SocketConnectionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnectionTests.h; path = Network/SocketConnectionTests.h; sourceTree = "<group>"; };
 		1D5558161529392000221516 /* SocketConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnectionTests.m; path = Network/SocketConnectionTests.m; sourceTree = "<group>"; };
 		1D6500BC150CB0DE002F5A8B /* KCSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUser.h; path = KeychainAccess/KCSUser.h; sourceTree = "<group>"; };
@@ -326,6 +336,8 @@
 		1DD73A471527214E00DAC3EB /* NLMessageServerInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLMessageServerInfoTests.m; path = NicoLive/NLMessageServerInfoTests.m; sourceTree = "<group>"; };
 		1DD73A4A15272ECD00DAC3EB /* SocketConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnection.h; path = Network/SocketConnection.h; sourceTree = "<group>"; };
 		1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnection.m; path = Network/SocketConnection.m; sourceTree = "<group>"; };
+		1DDE396E154801150089D0D4 /* NLArrayControllerDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLArrayControllerDragAndDrop.h; path = GUI/NLArrayControllerDragAndDrop.h; sourceTree = "<group>"; };
+		1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLArrayControllerDragAndDrop.m; path = GUI/NLArrayControllerDragAndDrop.m; sourceTree = "<group>"; };
 		1DE87D80151EFFBB006C6EDC /* NLUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLUsers.h; path = NicoLive/NLUsers.h; sourceTree = "<group>"; };
 		1DE87D81151EFFBB006C6EDC /* NLUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLUsers.m; path = NicoLive/NLUsers.m; sourceTree = "<group>"; };
 		1DF062B8151AE2A70025C5DE /* sbicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sbicon.png; path = Images/sbicon.png; sourceTree = "<group>"; };
@@ -458,7 +470,7 @@
 				1DAAB8F6151B4ADF00D0D2B3 /* NicoLive */,
 				1D555846152AC02400221516 /* GUI */,
 				1D36A5CA1545742200516CDF /* Growl */,
-				1D36A5CB1545750A00516CDF /* Categories */,
+				1D36A5CB1545750A00516CDF /* Categories&Enhance */,
 				1D6500BA150CB07E002F5A8B /* Keychain */,
 				1D07EB89151C5B6E00CEF855 /* Network */,
 				1DAFFC1D1535A6C7005004C6 /* External */,
@@ -521,13 +533,15 @@
 			name = Growl;
 			sourceTree = "<group>";
 		};
-		1D36A5CB1545750A00516CDF /* Categories */ = {
+		1D36A5CB1545750A00516CDF /* Categories&Enhance */ = {
 			isa = PBXGroup;
 			children = (
-				1D36A5DE1545760E00516CDF /* NSAttributedStringAdditions.m */,
 				1D36A5DF1545760E00516CDF /* NSAttributedStringAdditions.h */,
+				1D36A5DE1545760E00516CDF /* NSAttributedStringAdditions.m */,
+				1D36A60C15478BC400516CDF /* IOMTableViewDragAndDrop.h */,
+				1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */,
 			);
-			name = Categories;
+			name = "Categories&Enhance";
 			sourceTree = "<group>";
 		};
 		1D4E35C015457231000EAE03 /* Growl */ = {
@@ -569,6 +583,8 @@
 			children = (
 				1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */,
 				1D36A5D9154575F000516CDF /* LinkTextFieldCell.h */,
+				1DDE396E154801150089D0D4 /* NLArrayControllerDragAndDrop.h */,
+				1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -924,6 +940,8 @@
 				1D36A5DA154575F000516CDF /* LinkTextFieldCell.m in Sources */,
 				1D36A5E01545760E00516CDF /* NSAttributedStringAdditions.m in Sources */,
 				1D36A5F01546202500516CDF /* NicoLivePrefManager.m in Sources */,
+				1D36A60E15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
+				1DDE3970154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -965,6 +983,8 @@
 				1D36A5DC154575F000516CDF /* LinkTextFieldCell.m in Sources */,
 				1D36A5E21545760E00516CDF /* NSAttributedStringAdditions.m in Sources */,
 				1D36A5F21546202500516CDF /* NicoLivePrefManager.m in Sources */,
+				1D36A61015478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
+				1DDE3972154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1002,6 +1022,8 @@
 				1D36A5DB154575F000516CDF /* LinkTextFieldCell.m in Sources */,
 				1D36A5E11545760E00516CDF /* NSAttributedStringAdditions.m in Sources */,
 				1D36A5F11546202500516CDF /* NicoLivePrefManager.m in Sources */,
+				1D36A60F15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
+				1DDE3971154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1043,6 +1065,8 @@
 				1D36A5DD154575F000516CDF /* LinkTextFieldCell.m in Sources */,
 				1D36A5E31545760E00516CDF /* NSAttributedStringAdditions.m in Sources */,
 				1D36A5F31546202500516CDF /* NicoLivePrefManager.m in Sources */,
+				1D36A61115478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
+				1DDE3973154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

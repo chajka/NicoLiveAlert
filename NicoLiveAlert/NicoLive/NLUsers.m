@@ -16,12 +16,13 @@
 @end
 
 @implementation NLUsers
+@synthesize originalWatchList;
 @synthesize watchlist;
 @synthesize usersMenu;
 @synthesize userState;
 
 #pragma mark constructor / destructor
-- (id) initWithActiveUsers:(NSArray *)users andManualWatchList:(NSDictionary *)manualWatchList
+- (id) initWithActiveUsers:(NSArray *)users andManualWatchList:(NSMutableDictionary *)manualWatchList
 {
 	self = [super init];
 	if (self)
@@ -225,4 +226,73 @@
 	else
 		userState = NSMixedState;
 }// end - (void) calcUserState
+
+#pragma mark -
+#pragma mark watchlist management
+- (void) addWatchListItem:(NSString *)item autoOpen:(BOOL)autoOpen
+{
+	if (autoOpen == YES)
+		[originalWatchList setValue:active forKey:item];
+	else
+		[originalWatchList setValue:deactive forKey:item];
+}// end - (void) addWatchListItem:(NSString *)item autoOpen:(BOOL)autoOpen
+
+- (void) addWatchListItems:(NSDictionary *)watchDict
+{
+	BOOL autoOpen = NO;
+	for (NSString *item in [watchDict allKeys])
+	{
+		autoOpen = [[watchlist valueForKey:item] boolValue];
+		if (autoOpen == YES)
+			[originalWatchList setValue:active forKey:item];
+		else
+			[originalWatchList setValue:deactive forKey:item];
+	}// end foreach watchDict
+}// end - (void) addWatchListItems:(NSDictionary *)watchlist
+
+- (void) switchWatchListItemProperty:(NSString *)item autoOpen:(BOOL)autoOpen
+{
+	if (autoOpen == YES)
+		[originalWatchList setValue:active forKey:item];
+	else
+		[originalWatchList setValue:deactive forKey:item];
+}// end - (void) switchWatchListItemProperty:(NSString *)item autoOpen:(BOOL)autoOpen
+
+#pragma mark -
+#pragma mark NSCombobox Delegate
+- (NSString *)comboBox:(NSComboBox *)aComboBox completedString:(NSString *)uncompletedString
+{
+	return EMPTYSTRING;
+}// end - (NSString *)comboBox:(NSComboBox *)aComboBox completedString:(NSString *)uncompletedString
+
+- (NSUInteger)comboBox:(NSComboBox *)aComboBox indexOfItemWithStringValue:(NSString *)aString
+{
+	NSInteger index = 0;
+	for (NSString *nickname in [accounts allKeys])
+	{
+		NLAccount *account = [accounts valueForKey:nickname];
+		if ([aString isEqualToString:[account mailaddr]])
+			return index;
+		index++;
+	}// end for
+
+	return  NSNotFound;
+}// end - (NSUInteger)comboBox:(NSComboBox *)aComboBox indexOfItemWithStringValue:(NSString *)aString
+
+- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index
+{
+	NSArray *accountArray = [accounts allKeys];
+	NSInteger itemCount = [accountArray count];
+	NSString *object = NULL;
+	if (index < itemCount)
+		object = [[accounts valueForKey:[accountArray objectAtIndex:index]] mailaddr];
+
+	return object;
+}// end - (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index
+
+- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox
+{
+	return [[accounts allKeys] count];
+}// end - (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox
+
 @end

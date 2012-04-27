@@ -22,16 +22,17 @@
 	• cleate user status menu
 */
 
-@interface NLUsers : NSObject {
+@interface NLUsers : NSObject <NSComboBoxDataSource> {
 	NSNumber			*active;
 	NSNumber			*deactive;
 	NSMutableDictionary	*usersState;
 	NSMutableDictionary	*accounts;
-	NSDictionary		*originalWatchList;
+	NSMutableDictionary	*originalWatchList;
 	NSMutableDictionary	*watchlist;
 	NSMenu				*usersMenu;
 	NSInteger			userState;
 }
+@property (readonly) NSMutableDictionary	*originalWatchList;
 @property (readonly) NSMutableDictionary	*watchlist;
 @property (readonly) NSMenu					*usersMenu;
 @property (readonly) NSInteger				userState;
@@ -84,4 +85,29 @@
 	It effect to reconstruct content of watchlist of reciever.
 */
 - (void) toggleUserState:(NSMenuItem *)item;
+
+#pragma mark -
+#pragma mark watchlist management
+/*!
+	@method addWatchListItem:autoOpen:
+	@abstract Add a single watchlist item with autoOpen property.
+	@param watchlist item as User ID, Community No., ChannelNo. or liveNo.
+	@param item need auto open
+ */
+- (void) addWatchListItem:(NSString *)item autoOpen:(BOOL)autoOpen;
+
+/*!
+	@method addWatchListItems:
+	@abstract add two or more watchlist item
+	@param watchlist item by dictionary
+*/
+- (void) addWatchListItems:(NSDictionary *)watchDict;
+
+/*!
+	@method switchWatchListItemProperty:autoOpen:
+	@abstract set/reset autoOpen property of indexed item
+	@param item name
+	@param autoOpen property
+*/
+- (void) switchWatchListItemProperty:(NSString *)item autoOpen:(BOOL)autoOpen;
 @end

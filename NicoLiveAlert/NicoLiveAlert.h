@@ -39,6 +39,8 @@
 			// login information items
 	__strong IBOutlet NSComboBox *comboLoginID;
 	__strong IBOutlet NSSecureTextField *secureFieldPassword;
+	__strong IBOutlet IOMTableViewDragAndDrop	*tblAccountList;
+	__strong IBOutlet NSView *viewNoAccountNotify;
 	__strong IBOutlet NSButton *btnAddAccount;
 	__strong IBOutlet NSButton *btnIsWatch;
 
@@ -55,6 +57,7 @@
 			// array controller items
 	__strong IBOutlet NLArrayControllerDragAndDrop *aryManualWatchlist;
 	__strong IBOutlet NLArrayControllerDragAndDrop *aryLauncherItems;
+	__strong IBOutlet NLArrayControllerDragAndDrop *aryAccountItems;
 	
 	__strong NSStatusItem *sbItem;
 	NLStatusbar	*statusBar;

@@ -15,6 +15,8 @@
 @interface NicoLiveAlert ()
 - (BOOL) checkFirstLaunch;
 - (void) setupAccounts;
+- (void) setupTables;
+- (void) setupMonitor;
 - (void) hookNotifications;
 - (void) removeNotifications;
 - (void) listenHalt:(NSNotification *)note;
@@ -39,17 +41,10 @@
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {		// setup for account
 	[self setupAccounts];
-
-		// setup Wachlist drag & drop reordering
-	[tblManualWatchList registerForDraggedTypes:[NSArray arrayWithObject:WatchListPasteboardType]];
-	[aryManualWatchlist setWatchListTable:tblManualWatchList];
-		// setup LauncherList drag, dorp and reordering
-	[tblTinyLauncher registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, LauncherPasteboardType, nil]];
-	[aryLauncherItems setLaunchListTable:tblTinyLauncher];
-
+		// setup drag & dorp table in preference panel
+	[self setupTables];
 		// hook notifications
 	[self hookNotifications];
-
 		// start monitor
 	[self setupMonitor];
 	[programSieves kick];
@@ -74,11 +69,26 @@
 - (void) setupAccounts
 {
 	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:NULL andManualWatchList:[NSDictionary dictionary]];
+	[comboLoginID setUsesDataSource:YES];
+	[comboLoginID setDataSource:nicoliveAccounts];
 	NSMenuItem *accountsItem = [menuStatusbar itemWithTag:tagAccounts];
 	[accountsItem setSubmenu:[nicoliveAccounts usersMenu]];
 	[accountsItem setState:[nicoliveAccounts userState]];
 	[accountsItem setEnabled:YES];
 }// end - (void) setupAccounts
+
+- (void) setupTables
+{
+		// setup Wachlist drag & drop reordering
+	[tblManualWatchList registerForDraggedTypes:[NSArray arrayWithObject:WatchListPasteboardType]];
+	[aryManualWatchlist setWatchListTable:tblManualWatchList];
+		// setup AccountList drag & drop reordering
+	[tblAccountList registerForDraggedTypes:[NSArray arrayWithObject:AccountListPasteboardType]];
+	[aryManualWatchlist setAccountInfoTable:tblAccountList];
+		// setup LauncherList drag, dorp and reordering
+	[tblTinyLauncher registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, LauncherPasteboardType, nil]];
+	[aryLauncherItems setLaunchListTable:tblTinyLauncher];
+}// end - (void) setupTables
 
 - (void) setupMonitor
 {

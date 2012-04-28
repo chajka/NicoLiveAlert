@@ -42,8 +42,8 @@
 @property (readonly) NSString			*programNumber;
 @property (readonly) NSString			*communityID;
 @property (readonly) NSString			*broadcastOwner;
-@property (readonly) BOOL				isOfficial;
 @property (readonly) BOOL				broadCasting;
+@property (readonly) BOOL				isOfficial;
 
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date;
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner;

@@ -86,6 +86,8 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 - (void) setupEachMember:(NSString *)liveNo;
 - (NSDictionary *) elementDict;
 - (void) checkStartTime:(NSDate *)date forLive:(NSString *)liveNo;
+- (NSString *) makeStartString;
+- (void) parseOfficialProgram;
 - (void) parseProgramInfo:(NSString *)liveNo;
 	// activity control method
 - (BOOL) isBroadCasting;

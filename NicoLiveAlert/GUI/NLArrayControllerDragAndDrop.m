@@ -10,16 +10,23 @@
 #import "NicoLiveAlertDefinitions.h"
 
 @interface NLArrayControllerDragAndDrop ()
+#pragma mark watchlist
 - (BOOL) watchTableAcceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation;
-- (BOOL) launchTableAcceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operatio;
 - (NSDragOperation) watchTableValidateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation;
-- (NSDragOperation) launchTableValidateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation;
 - (BOOL) watchTableWriteRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard;
+#pragma mark account
+- (BOOL) accountTableAcceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operatio;
+- (NSDragOperation) accountTableValidateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation;
+- (BOOL) accountTableWriteRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard;
+#pragma mark launcher
+- (BOOL) launchTableAcceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operatio;
+- (NSDragOperation) launchTableValidateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation;
 - (BOOL) launchTableWriteRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard;
 @end
 
 @implementation NLArrayControllerDragAndDrop
 @synthesize watchListTable;
+@synthesize accountInfoTable;
 @synthesize launchListTable;
 
 - (id)init
@@ -74,10 +81,15 @@
 - (BOOL) tableView:(NSTableView *)aTableView acceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
 {
 	BOOL dropped = NO;
+
 	if (aTableView == watchListTable)
 		dropped = [self watchTableAcceptDrop:info row:row dropOperation:operation];
 	// end if table is watchlist
 
+	if (aTableView == accountInfoTable)
+		dropped = [self accountTableAcceptDrop:info row:row dropOperation:operation];
+	// end if table is watchlist
+	
 	if (aTableView == launchListTable)
 		dropped = [self launchTableAcceptDrop:info row:row dropOperation:operation];
 	// end if table is launchlist
@@ -87,12 +99,16 @@
 
 - (NSDragOperation)tableView:(NSTableView *)aTableView validateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation
 {
-	NSDragOperation validate;
+	NSDragOperation validate = NSDragOperationNone;
 
 	if (aTableView == watchListTable)
 		validate = [self watchTableValidateDrop:info proposedRow:row proposedDropOperation:operation];
 	// end if table is watchlist
 
+	if (aTableView == accountInfoTable)
+		validate = [self accountTableValidateDrop:info proposedRow:row proposedDropOperation:operation];
+	// end if table is watchlist
+	
 	if (aTableView == launchListTable)
 		validate = [self launchTableValidateDrop:info proposedRow:row proposedDropOperation:operation];
 	// end if table is launchlist
@@ -103,10 +119,15 @@
 - (BOOL) tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
 {
 	BOOL success = NO;
+
 	if (aTableView == watchListTable)
 		success = [self watchTableWriteRowsWithIndexes:rowIndexes toPasteboard:pboard];
 	// end if table is watchlist
 
+	if (aTableView == accountInfoTable)
+		success = [self accountTableWriteRowsWithIndexes:rowIndexes toPasteboard:pboard];
+	// end if table is watchlist
+	
 	if (aTableView == launchListTable)
 		success = [self launchTableWriteRowsWithIndexes:rowIndexes toPasteboard:pboard];
 
@@ -163,6 +184,55 @@
 	
 	return YES;
 }// end - (BOOL) watchTableWriteRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
+
+#pragma mark -
+#pragma mark account item
+- (BOOL) accountTableAcceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
+{
+	NSPasteboard *pb = [info draggingPasteboard];
+	NSArray *pbItems = [pb pasteboardItems];
+	if ([pbItems count] == 1)
+	{
+		NSData *data = [[pbItems lastObject] dataForType:AccountListPasteboardType];
+		NSIndexSet *indexes = [NSUnarchiver unarchiveObjectWithData:data];
+		NSArray *watchLists = [[self arrangedObjects] objectsAtIndexes:indexes];
+		NSRange insert = NSMakeRange(row, [watchLists count]);
+		[self removeObjectsAtArrangedObjectIndexes:indexes];
+		[self insertObjects:watchLists atArrangedObjectIndexes:[NSIndexSet indexSetWithIndexesInRange:insert]];
+	}
+	return YES;
+}// end - (BOOL) accountTableAcceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
+
+- (NSDragOperation) accountTableValidateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation
+{
+	BOOL foudWathList = NO;
+	NSPasteboard *pb = [info draggingPasteboard];
+	NSArray *pbItems = [pb pasteboardItems];
+	NSArray *types;
+	for (NSPasteboardItem *pbItem in pbItems)
+	{
+		types = [pbItem types];
+		for (NSString *type in types)
+		{
+			if ([type isEqualToString:AccountListPasteboardType] == YES)
+				foudWathList = YES;
+		}// end for each pasteboard item
+	}// end for each pasteboard
+	
+	if (foudWathList)
+		return NSDragOperationMove;
+	else
+		return NSDragOperationNone;
+}// end - (NSDragOperation) accountTableValidateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation
+
+- (BOOL) accountTableWriteRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
+{
+	[pboard clearContents];
+	NSData *pbData = [NSArchiver archivedDataWithRootObject:rowIndexes];
+	[pboard setData:pbData forType:AccountListPasteboardType];
+	
+	return YES;
+}// end - (BOOL) accountTableWriteRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
 
 #pragma mark -
 #pragma mark lauchItem

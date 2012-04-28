@@ -11,9 +11,11 @@
 
 @interface NLArrayControllerDragAndDrop : NSArrayController <NSTableViewDataSource, NSTableViewDelegate> {
 	IOMTableViewDragAndDrop *watchListTable;
+	IOMTableViewDragAndDrop *accountInfoTable;
 	IOMTableViewDragAndDrop *launchListTable;
 }
 @property (retain, readwrite) IOMTableViewDragAndDrop *watchListTable;
+@property (retain, readwrite) IOMTableViewDragAndDrop *accountInfoTable;
 @property (retain, readwrite) IOMTableViewDragAndDrop *launchListTable;
 
 @end

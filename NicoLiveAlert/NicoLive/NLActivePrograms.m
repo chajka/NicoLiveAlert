@@ -69,22 +69,21 @@
 		return;
 	}
 
+		// check and remove prefeerd same community & owner's program
+	for (NLProgram *prog in [programs reverseObjectEnumerator])
+	{
+		if ([program isSame:prog] == YES)
+			[prog terminate];
+		// end if same owner and community
+	}// end foreach active programs
+
 	[programs addObject:program];
 	[sbItem addToUserMenu:item];
+
 #if __has_feature(objc_arc) == 0
 		// decrease retain count for remove means relase
 	[program release];
 #endif
-
-		// check and remove prefeerd same community & owner's program
-	NSString *communityID = [program communityID];
-	for (NLProgram *prog in [programs reverseObjectEnumerator])
-	{
-		if (([[prog communityID] isEqualToString:communityID] == YES)
-			&& ([[prog broadcastOwner] isEqualToString:owner] == YES))
-			[prog terminate];
-		// end if last user program
-	}// end foreach active programs
 }// end - (void) addUserProgram:(NSString *)liveNo community:(NSString *)community owner:owner
 
 - (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date

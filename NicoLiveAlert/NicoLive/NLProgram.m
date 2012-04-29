@@ -8,6 +8,7 @@
 
 #import "NLProgram.h"
 #import "HTTPConnection.h"
+#import "Growl/Growl.h"
 
 const CGFloat originX = 0.0;
 const CGFloat originY = 0.0;
@@ -103,6 +104,9 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 - (void) stopElapsedTimer;
 - (void) resetProgramStatusTimer;
 - (void) resetElapsedTimer;
+	// growling;
+- (void) notifyUserToUser;
+- (void) notifyOfficialToUser;
 @end
 
 @implementation NLProgram
@@ -142,6 +146,7 @@ NSString *embedContent;
 		broadcastOwner = [owner copy];
 		[elapseTimer fire];
 		[programStatusTimer fire];
+		[self notifyUserToUser];
 	}// end if
 	return self;
 }// end - (id) initWithProgram:(NSString *)liveNo forAccount:(NLAccount *)account
@@ -170,6 +175,7 @@ NSString *embedContent;
 		[self setupEachMember:liveNo];
 		[elapseTimer fire];
 		[programStatusTimer fire];
+		[self notifyOfficialToUser];
 	}// end if
 	return self;
 }// end - (id) initWithOfficial:(NSString *)liveNo
@@ -433,6 +439,15 @@ NSLog(@"thumbnail isValid : %c", ([thumbnail isValid] == YES ? 'Y' : 'N'));
 	}
 	return NO;
 }// end - (BOOL) isEqual:(id)object
+
+- (BOOL) isSame:(NLProgram *)program
+{
+	if (([[program communityID] isEqualToString:communityID] == YES) &&
+		([[program broadcastOwner] isEqualToString:broadcastOwner]))
+		return YES;
+	else
+		return NO;
+}// end - (BOOL) isSame:(NLProgram *)program
 
 #pragma mark -
 #pragma mark activity control
@@ -710,6 +725,48 @@ NSLog(@"%@ Program done", programNumber);
 		// setup timer object
 	elapseTimer = [NSTimer scheduledTimerWithTimeInterval:elapseCheckCycle target:self selector:@selector(updateElapse:) userInfo:NULL repeats:YES];
 }// end - (void) resetElapsedTimer
+
+#pragma mark -
+#pragma mark Growling
+- (void) notifyUserToUser
+{
+	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
+	NSNumber *priority = [NSNumber numberWithInt:2];
+	NSNumber *isStickey = [NSNumber numberWithBool:NO];
+	[dict setObject:GrowlNotifyFoundUserProgram forKey:GROWL_NOTIFICATION_NAME];
+	[dict setObject:programTitle forKey:GROWL_NOTIFICATION_TITLE];
+	[dict setObject:programDescription forKey:GROWL_NOTIFICATION_DESCRIPTION];
+#ifdef GROWL_NOTIFICATION_ICON_DATA
+	[dict setObject:thumbnail forKey:GROWL_NOTIFICATION_ICON_DATA];
+#else
+	[dict setObject:thumbnail forKey:GROWL_NOTIFICATION_ICON];
+#endif
+	[dict setObject:priority forKey:GROWL_NOTIFICATION_PRIORITY];
+	[dict setObject:isStickey forKey:GROWL_NOTIFICATION_STICKY];
+	[dict setObject:[programURL absoluteString] forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
+	
+	[GrowlApplicationBridge notifyWithDictionary:dict];
+}// end - (void) notifyToUser
+
+- (void) notifyOfficialToUser
+{
+	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
+	NSNumber *priority = [NSNumber numberWithInt:2];
+	NSNumber *isStickey = [NSNumber numberWithBool:NO];
+	[dict setObject:GrowlNotifyFoundOfficialProgram forKey:GROWL_NOTIFICATION_NAME];
+	[dict setObject:programTitle forKey:GROWL_NOTIFICATION_TITLE];
+	[dict setObject:programDescription forKey:GROWL_NOTIFICATION_DESCRIPTION];
+#ifdef GROWL_NOTIFICATION_ICON_DATA
+	[dict setObject:thumbnail forKey:GROWL_NOTIFICATION_ICON_DATA];
+#else
+	[dict setObject:thumbnail forKey:GROWL_NOTIFICATION_ICON];
+#endif
+	[dict setObject:priority forKey:GROWL_NOTIFICATION_PRIORITY];
+	[dict setObject:isStickey forKey:GROWL_NOTIFICATION_STICKY];
+	[dict setObject:[programURL absoluteString] forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
+	
+	[GrowlApplicationBridge notifyWithDictionary:dict];
+}// end - (void) notifyToUser
 
 #pragma mark -
 #pragma mark NSXMLParserDelegate methods

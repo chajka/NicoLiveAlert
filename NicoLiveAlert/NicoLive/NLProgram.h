@@ -48,6 +48,7 @@
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date;
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner;
 - (BOOL) isEqual:(id)object;
+- (BOOL) isSame:(NLProgram *)program;
 - (void) terminate;
 - (void) suspend;
 - (BOOL) resume;

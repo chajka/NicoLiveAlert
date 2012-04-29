@@ -10,7 +10,6 @@
 #import "NicoLiveAlertDefinitions.h"
 #import "OnigRegexp.h"
 #import "NSAttributedStringAdditions.h"
-#import "LinkTextFieldCell.h"
 
 @interface NicoLiveAlert ()
 - (BOOL) checkFirstLaunch;
@@ -21,6 +20,7 @@
 - (void) removeNotifications;
 - (void) listenHalt:(NSNotification *)note;
 - (void) listenRestart:(NSNotification *)note;
+- (void) doOutoOpen:(NSNotification *)note;
 @end
 
 @implementation NicoLiveAlert
@@ -37,6 +37,11 @@
 	[statusBar retain];
 #endif
 }// end - (void) awakeFromNib
+
+- (void) applicationWillFinishLaunching:(NSNotification *)aNotification
+{
+	[GrowlApplicationBridge setGrowlDelegate:self];
+}// end 
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {		// setup for account
@@ -108,16 +113,18 @@
 {
 	NSNotificationCenter *shared = [[NSWorkspace sharedWorkspace] notificationCenter];
 	NSNotificationCenter *application = [NSNotificationCenter defaultCenter];
-		// sleep and wakeup notification hook
+		// sleep and wakeup notification hooks
 			// hook to sleep notification
 	[shared addObserver:self selector: @selector(listenHalt:) name: NSWorkspaceWillSleepNotification object: NULL];
 			// hook to wakeup notification
 	[shared addObserver:self selector: @selector(listenRestart:) name: NSWorkspaceDidWakeNotification object: NULL];
-		// Connection Notification Hook
+		// Connection Notification hooks
 			// hook to connection lost notification
 	[application addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:NULL];
 			// hook to connection reactive notification
 	[application addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
+		// AutoOpen Notification hook
+	[application addObserver:self selector:@selector(doOutoOpen:) name:NLNotificationAutoOpen object:NULL];
 }// end - (void) hookNotifications
 
 - (void) removeNotifications
@@ -134,6 +141,8 @@
 	[application removeObserver:self name:NLNotificationConnectionLost object:NULL];
 			// remove Connection Rised notification
 	[application removeObserver:self name:NLNotificationConnectionRised object:NULL];
+		// AutoOpen Notification
+	[application removeObserver:self name:NLNotificationAutoOpen object:NULL];
 }// end - (void) hookNotifications
 
 - (void) listenHalt:(NSNotification *)note
@@ -149,6 +158,11 @@
 	if ([[note name] isEqualToString:NSWorkspaceDidWakeNotification])
 		[programSieves startListen];
 }// end - (void) listenRestart:(NSNotification *)note
+
+- (void) doOutoOpen:(NSNotification *)note
+{
+	[[NSWorkspace sharedWorkspace] openURL:[note object]];
+}// end - (void) doOutoOpen:(NSNotification *)note
 
 - (BOOL) checkFirstLaunch
 {
@@ -169,28 +183,53 @@
 	// menu item actions
 - (IBAction)menuSelectAutoOpen:(id)sender
 {
+	NSCellStateValue state = [sender state];
+	if (state == NSOnState)
+		[programSieves setEnableAutoOpen:YES];
+	else
+		[programSieves setEnableAutoOpen:NO];
 }// end - (IBAction) menuSelectAutoOpen:(id)sender
 
 - (IBAction)launchApplicaions:(id)sender
 {
+	NSArray *applicationInfo = [aryLauncherItems arrangedObjects];
+	NSWorkspace *ws = [NSWorkspace sharedWorkspace];
+	for (NSDictionary *app in applicationInfo)
+	{
+		[ws launchApplication:[app valueForKey:keyLauncherAppPath]];
+	}// end for
 }// end - (IBAction) launchApplicaions:(id)sender
 
 - (IBAction) openProgram:(id)sender
 {
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7
+/* #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7 */
 		// open by NSWorkspace
 	[[NSWorkspace sharedWorkspace] openURL:[sender representedObject]];
+/*
 #else
 		// open by XPC
 #endif
+*/
 }// end - (IBAction) openProgram:(id)sender
 
 - (IBAction) toggleUserState:(id)sender
 {
-	[nicoliveAccounts toggleUserState:(NSMenuItem *)sender];
-	[menuAccounts setState:[nicoliveAccounts userState]];
-	[statusBar setUserState:[nicoliveAccounts userState]];
+	NSCellStateValue usersState = NSOffState;
+	usersState = [nicoliveAccounts toggleUserState:(NSMenuItem *)sender];
+	[menuAccounts setState:usersState];
+	[statusBar setUserState:usersState];
 }// end - (IBAction) toggleUserState:(id)sender
+
+- (IBAction) showAboutPanel:(id)sender
+{
+	NSDictionary *dict = NULL;
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
+	dict = [NSDictionary dictionaryWithObject:AppnameLion forKey:keyAppName];
+#else
+	dict = [NSDictionary dictionaryWithObject:AppNameLepard forKey:keyAppName];
+#endif
+	[NSApp orderFrontStandardAboutPanelWithOptions:dict];
+}// end - (IBAction) showAboutPanel:(id)sender
 
 #pragma mark -
 #pragma mark preference panel interface
@@ -238,7 +277,7 @@
 			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatUser, itemName]];
 			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemName];
 			break;
-	}
+	}// end switch by watch item kind
 
 		// add to table
 	NSMutableDictionary *watchListItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -274,16 +313,39 @@
 {
 }// end - (IBAction) appColaboChecked:(id)sender
 
-
-- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+#pragma mark -
+#pragma mark delegate
+#pragma mark NSControl delegate
+- (void) controlTextDidChange:(NSNotification *)aNotification
 {
-    if ([cell isKindOfClass:[LinkTextFieldCell class]]) {
-        LinkTextFieldCell *linkCell = (LinkTextFieldCell *)cell;
-			// Setup the work to be done when a link is clicked
-        linkCell.linkClickedHandler = ^(NSURL *url, id sender) {
-            [[NSWorkspace sharedWorkspace] openURL:url];
-        };
-    }// endif
-}// end - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+	switch ([[aNotification object] tag]) {
+		case tagWatchItemBody:
+			if ([[watchItemName stringValue] isEqualToString:EMPTYSTRING] == NO)
+				[btnAddWatchListItem setEnabled:YES];
+			else
+				[btnAddWatchListItem setEnabled:NO];
+			break;
+
+		case tagAccountLoginID:
+		case tagAccountPassword:
+			if (([[comboLoginID stringValue] isEqualToString:EMPTYSTRING] == NO)
+				&& ([[secureFieldPassword stringValue] isEqualToString:EMPTYSTRING] == NO))
+				[btnAddAccount setEnabled:YES];
+			else 
+				[btnAddAccount setEnabled:NO];
+			break;
+			
+		default:
+			break;
+	}// end switch by text field
+}// end - (void) controlTextDidChange:(NSNotification *)aNotification
+
+#pragma mark -
+#pragma mark GrowlApplicationBridge delegate
+- (void) growlNotificationWasClicked:(id)clickContext
+{
+	NSURL *url = [NSURL URLWithString:clickContext];
+	[[NSWorkspace sharedWorkspace] openURL:url];
+}// end - (void) growlNotificationWasClicked:(id)clickContext
 
 @end

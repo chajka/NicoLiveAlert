@@ -13,21 +13,22 @@
 #import "NLActivePrograms.h"
 #import "IOMTableViewDragAndDrop.h"
 #import "NLArrayControllerDragAndDrop.h"
+#import "Growl/Growl.h"
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
-@interface NicoLiveAlert : NSObject <NSApplicationDelegate> {
+@interface NicoLiveAlert : NSObject <NSApplicationDelegate, GrowlApplicationBridgeDelegate> {
 #else
-@interface NicoLiveAlert : NSObject {
+@interface NicoLiveAlert : NSObject <GrowlApplicationBridgeDelegate> {
 #endif
 		// allover interface items
-	__strong IBOutlet NSMenu *menuStatusbar;
-	__strong IBOutlet NSPanel *preferencePanel;
+	__strong IBOutlet NSMenu					*menuStatusbar;
+	__strong IBOutlet NSPanel					*preferencePanel;
 	
 		// menu access item
-	__strong IBOutlet NSMenuItem *menuPrograms;
-	__strong IBOutlet NSMenuItem *menuOfficalPrograms;
-	__strong IBOutlet NSMenuItem *menuAccounts;
-	__strong IBOutlet NSMenuItem *manuLauncApplications;
+	__strong IBOutlet NSMenuItem				*menuPrograms;
+	__strong IBOutlet NSMenuItem				*menuOfficalPrograms;
+	__strong IBOutlet NSMenuItem				*menuAccounts;
+	__strong IBOutlet NSMenuItem				*manuLauncApplications;
 
 		// Preference Panel items
 			// manual wath list items
@@ -35,34 +36,35 @@
 	__strong IBOutlet IOMTableViewDragAndDrop	*tblManualWatchList;
 	__strong IBOutlet NSTextField				*watchItemName;
 	__strong IBOutlet NSTextField				*watchItemComment;
+	__strong IBOutlet NSButton					*btnAddWatchListItem;
 
 			// login information items
-	__strong IBOutlet NSComboBox *comboLoginID;
-	__strong IBOutlet NSSecureTextField *secureFieldPassword;
+	__strong IBOutlet NSComboBox				*comboLoginID;
+	__strong IBOutlet NSSecureTextField			*secureFieldPassword;
 	__strong IBOutlet IOMTableViewDragAndDrop	*tblAccountList;
-	__strong IBOutlet NSView *viewNoAccountNotify;
-	__strong IBOutlet NSButton *btnAddAccount;
-	__strong IBOutlet NSButton *btnIsWatch;
+	__strong IBOutlet NSView					*viewNoAccountNotify;
+	__strong IBOutlet NSButton					*btnAddAccount;
+	__strong IBOutlet NSButton					*btnUpdateAccountInfo;
 
 			// other application relation information items
-	__strong IBOutlet NSButton *chkboxDonotAutoOpenAtBroadcasting;
-	__strong IBOutlet NSButton *chkboxRelationWithFMELauncher;
-	__strong IBOutlet NSButton *chkboxRelationWithCharlestonMyBroadcast;
-	__strong IBOutlet NSButton *chkboxRelationAutoOpenAndCharleston;
-	__strong IBOutlet NSButton *chkboxRelationChooseFromMenuAndCharleston;
+	__strong IBOutlet NSButton		*chkboxDonotAutoOpenAtBroadcasting;
+	__strong IBOutlet NSButton		*chkboxRelationWithFMELauncher;
+	__strong IBOutlet NSButton		*chkboxRelationWithCharlestonMyBroadcast;
+	__strong IBOutlet NSButton		*chkboxRelationAutoOpenAndCharleston;
+	__strong IBOutlet NSButton		*chkboxRelationChooseFromMenuAndCharleston;
 
 			// tiny launcher item
-	__strong IBOutlet IOMTableViewDragAndDrop	*tblTinyLauncher;
+	__strong IBOutlet IOMTableViewDragAndDrop		*tblTinyLauncher;
 
 			// array controller items
-	__strong IBOutlet NLArrayControllerDragAndDrop *aryManualWatchlist;
-	__strong IBOutlet NLArrayControllerDragAndDrop *aryLauncherItems;
-	__strong IBOutlet NLArrayControllerDragAndDrop *aryAccountItems;
+	__strong IBOutlet NLArrayControllerDragAndDrop	*aryManualWatchlist;
+	__strong IBOutlet NLArrayControllerDragAndDrop	*aryAccountItems;
+	__strong IBOutlet NLArrayControllerDragAndDrop	*aryLauncherItems;
 	
-	__strong NSStatusItem *sbItem;
-	NLStatusbar	*statusBar;
-	NLUsers			*nicoliveAccounts;
-	NLProgramList	*programSieves;
+	__strong NSStatusItem							*sbItem;
+	NLStatusbar										*statusBar;
+	NLUsers											*nicoliveAccounts;
+	NLProgramList									*programSieves;
 }
 @property (retain) NSMenu *menuStatusbar;
 @property (assign) NSPanel *prefencePanel;

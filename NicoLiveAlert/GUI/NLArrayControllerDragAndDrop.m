@@ -7,6 +7,7 @@
 //
 
 #import "NLArrayControllerDragAndDrop.h"
+#import "LinkTextFieldCell.h"
 #import "NicoLiveAlertDefinitions.h"
 
 @interface NLArrayControllerDragAndDrop ()
@@ -75,6 +76,21 @@
 	}// end for each pasteboard Item
 	[pb clearContents];
 }// end - (void) animationEffectDidEnd:(void *)contextInfo
+
+#pragma mark -
+#pragma mark TableViewDelegate
+- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    if ([cell isKindOfClass:[LinkTextFieldCell class]]) {
+        LinkTextFieldCell *linkCell = (LinkTextFieldCell *)cell;
+			// Setup the work to be done when a link is clicked
+        linkCell.linkClickedHandler = ^(NSURL *url, id sender) {
+            [[NSWorkspace sharedWorkspace] openURL:url];
+        };
+    }// endif
+}// end - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+
+
 
 #pragma mark -
 #pragma mark NSTableViewDataSource

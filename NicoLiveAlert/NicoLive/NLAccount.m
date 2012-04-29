@@ -17,6 +17,13 @@
 - (BOOL) getAccountInfo;
 @end
 
+@implementation NLAccount
+@synthesize mailaddr;
+@synthesize password;
+@synthesize username;
+@synthesize userid;
+@synthesize channels;
+
 // connection information member variables
 NSString			*ticket;
 
@@ -25,13 +32,6 @@ NSDictionary		*elements;
 NSMutableString	*stringBuffer;
 NSUInteger		currentElement;
 NSNumber		*notAutoOpen;
-
-@implementation NLAccount
-@synthesize mailaddr;
-@synthesize password;
-@synthesize username;
-@synthesize userid;
-@synthesize channels;
 
 #pragma mark construct / destruct
 - (id) initWithAccount:(NSString *)account andPassword:(NSString *)pass

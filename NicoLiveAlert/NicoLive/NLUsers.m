@@ -196,7 +196,7 @@
 	[self calcUserState];
 }// end - (NSMenu *) creteUserStateMenu
 
-- (void) toggleUserState:(NSMenuItem *)item
+- (NSCellStateValue) toggleUserState:(NSMenuItem *)item
 {
 	if ([item state] == NSOnState)
 	{
@@ -210,6 +210,8 @@
 	}// end if
 	[self updateCurrentWatchlist];
 	[self calcUserState];
+
+	return userState;
 }// end - (IBAction) toggleUserState:(id)sender
 
 - (void) calcUserState

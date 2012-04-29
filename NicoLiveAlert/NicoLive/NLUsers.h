@@ -83,8 +83,9 @@
 	@abstract switch sender to watch or unwatch.
 	result status shown by users menuItem's check mark.
 	It effect to reconstruct content of watchlist of reciever.
+	@result new userState
 */
-- (void) toggleUserState:(NSMenuItem *)item;
+- (NSCellStateValue) toggleUserState:(NSMenuItem *)item;
 
 #pragma mark -
 #pragma mark watchlist management

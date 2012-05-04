@@ -105,8 +105,7 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 - (void) resetProgramStatusTimer;
 - (void) resetElapsedTimer;
 	// growling;
-- (void) notifyUserToUser;
-- (void) notifyOfficialToUser;
+- (void) growlProgramNotify:(NSString *)notificationName;
 @end
 
 @implementation NLProgram
@@ -134,19 +133,29 @@ NSString *embedContent;
 			[self parseProgramInfo:liveNo];
 		}
 		@catch (NSException *exception) {
-			NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
-			NSLog(@"Exception : %@, %@, %@", [exception name], [exception reason], [exception userInfo]);
+			NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
 #if __has_feature(objc_arc) == 0
 			[self dealloc];
 #endif
 			return NULL;
 		}
-		primaryAccount = [[account username] copy];
+		if (account != NULL)
+			primaryAccount = [[account username] copy];
+		else
+			primaryAccount = [OriginalWatchList copy];
 		[self setupEachMember:liveNo];
 		broadcastOwner = [owner copy];
 		[elapseTimer fire];
 		[programStatusTimer fire];
-		[self notifyUserToUser];
+		@try {
+			if ([startTime isEqualToDate:date] == YES)
+				[self growlProgramNotify:GrowlNotifyStartUserProgram];
+			else
+				[self growlProgramNotify:GrowlNotifyFoundUserProgram];
+		}
+		@catch (NSException *exception) {
+			NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
+		}
 	}// end if
 	return self;
 }// end - (id) initWithProgram:(NSString *)liveNo forAccount:(NLAccount *)account
@@ -164,8 +173,7 @@ NSString *embedContent;
 			[self parseOfficialProgram];
 		}
 		@catch (NSException *exception) {
-			NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
-			NSLog(@"Exception : %@, %@, %@", [exception name], [exception reason], [exception userInfo]);
+			NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
 #if __has_feature(objc_arc) == 0
 			[self dealloc];
 #endif
@@ -175,7 +183,10 @@ NSString *embedContent;
 		[self setupEachMember:liveNo];
 		[elapseTimer fire];
 		[programStatusTimer fire];
-		[self notifyOfficialToUser];
+		if ([startTime isEqualToDate:date] == YES)
+			[self growlProgramNotify:GrowlNotifyStartOfficialProgram];
+		else
+			[self growlProgramNotify:GrowlNotifyFoundOfficialProgram];
 	}// end if
 	return self;
 }// end - (id) initWithOfficial:(NSString *)liveNo
@@ -286,15 +297,7 @@ NSString *embedContent;
 	embedContent = [[NSString alloc] initWithContentsOfURL:embedURL encoding:NSUTF8StringEncoding error:&err];
 	if (embedContent == NULL)
 		@throw [NSException exceptionWithName:EmbedFetchFailed reason:StringIsEmpty userInfo:NULL];
-/*
-	if (err != NULL)
-	{
-		NSLog(@"Error %@ : %@", NSStringFromSelector(_cmd), [self class]);
-		NSLog(@"%@", err);
-		NSLog(@"%ld, %@, %@", [err code], [err domain], [err userInfo]);
-			//		@throw [NSException exceptionWithName:EmbedFetchFailed reason:ErrorIsNotNULL userInfo:[NSDictionary dictionaryWithObject:err forKey:@"OSError"]];
-	}
-*/
+
 	OnigResult *checkOnair = [liveStateRegex search:embedContent];
 	OnigResult *broadcastTime = [broadcastTimeRegex search:embedContent];
 	if (broadcastTime == NULL)
@@ -370,7 +373,7 @@ NSString *embedContent;
 	if (result == NULL)
 		@throw [NSException exceptionWithName:EmbedParseFailed reason:ImageURLCollectFail userInfo:[NSDictionary dictionaryWithObject:embedContent forKey:@"embedContent"]];
 	thumbnail = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:[result stringAt:1]]];
-NSLog(@"thumbnail isValid : %c", ([thumbnail isValid] == YES ? 'Y' : 'N'));
+//NSLog(@"thumbnail isValid : %c", ([thumbnail isValid] == YES ? 'Y' : 'N'));
 	[thumbnail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
 	
 	result = [programRegex search:embedContent];
@@ -406,8 +409,7 @@ NSLog(@"thumbnail isValid : %c", ([thumbnail isValid] == YES ? 'Y' : 'N'));
 		success = [parser parse];
 	}
 	@catch (NSException *exception) {
-		NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
-		NSLog(@"Exception : %@, %@, %@", [exception name], [exception reason], [exception userInfo]);
+		NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
 		success = NO;
 	}// end exception handling
 	
@@ -443,7 +445,7 @@ NSLog(@"thumbnail isValid : %c", ([thumbnail isValid] == YES ? 'Y' : 'N'));
 - (BOOL) isSame:(NLProgram *)program
 {
 	if (([[program communityID] isEqualToString:communityID] == YES) &&
-		([[program broadcastOwner] isEqualToString:broadcastOwner]))
+		([[program broadcastOwner] isEqualToString:broadcastOwner] == YES))
 		return YES;
 	else
 		return NO;
@@ -616,13 +618,17 @@ NSLog(@"thumbnail isValid : %c", ([thumbnail isValid] == YES ? 'Y' : 'N'));
 {
 	NSInteger now = (NSInteger)[[NSDate date] timeIntervalSinceDate:startTime];
 	NSUInteger elapsedMinute = abs((now / 60) % 60);	
+	NSUInteger elapsedHour = abs(now / (60 * 60));
 	if (elapsedMinute == lastMintue)
 		return;
 
-	if ((elapsedMinute == 0) && (isReservedProgram == YES))
+	if ((isReservedProgram == YES) && ((elapsedMinute + elapsedHour) == 0))
 	{
 		if (isOfficial == YES)
 		{
+			if (isReservedProgram == YES)
+				[self growlProgramNotify:GrowlNotifyStartOfficialProgram];
+			
 			NSBezierPath *path = [NSBezierPath bezierPath];
 			[path moveToPoint:NSMakePoint(officialTimeOffsetX, (timeStringHeight / 2))];
 			[path lineToPoint:NSMakePoint(officialBoundsW, (timeStringHeight / 2))];
@@ -636,6 +642,8 @@ NSLog(@"thumbnail isValid : %c", ([thumbnail isValid] == YES ? 'Y' : 'N'));
 		}
 		else
 		{
+			if (isReservedProgram == YES)
+				[self growlProgramNotify:GrowlNotifyStartUserProgram];
 			NSBezierPath *path = [NSBezierPath bezierPath];
 			[path moveToPoint:NSMakePoint(userTimeOffsetX, (timeStringHeight / 2))];
 			[path lineToPoint:NSMakePoint(programBoundsW, (timeStringHeight / 2))];
@@ -651,7 +659,6 @@ NSLog(@"thumbnail isValid : %c", ([thumbnail isValid] == YES ? 'Y' : 'N'));
 		return;
 	}// end if just start reserved program
 
-	NSUInteger elapsedHour = abs(now / (60 * 60));
 	NSString *elapesdTime = NULL;
 	elapesdTime = [NSString stringWithFormat:ElapsedTimeFormat, elapsedHour, elapsedMinute];
 	lastMintue = elapsedMinute;
@@ -728,45 +735,25 @@ NSLog(@"%@ Program done", programNumber);
 
 #pragma mark -
 #pragma mark Growling
-- (void) notifyUserToUser
+- (void) growlProgramNotify:(NSString *)notificationName
 {
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
 	NSNumber *priority = [NSNumber numberWithInt:2];
 	NSNumber *isStickey = [NSNumber numberWithBool:NO];
-	[dict setObject:GrowlNotifyFoundUserProgram forKey:GROWL_NOTIFICATION_NAME];
-	[dict setObject:programTitle forKey:GROWL_NOTIFICATION_TITLE];
-	[dict setObject:programDescription forKey:GROWL_NOTIFICATION_DESCRIPTION];
+	[dict setValue:notificationName forKey:GROWL_NOTIFICATION_NAME];
+	[dict setValue:programTitle forKey:GROWL_NOTIFICATION_TITLE];
+	[dict setValue:programDescription forKey:GROWL_NOTIFICATION_DESCRIPTION];
 #ifdef GROWL_NOTIFICATION_ICON_DATA
-	[dict setObject:thumbnail forKey:GROWL_NOTIFICATION_ICON_DATA];
+	[dict setValue:thumbnail forKey:GROWL_NOTIFICATION_ICON_DATA];
 #else
-	[dict setObject:thumbnail forKey:GROWL_NOTIFICATION_ICON];
+	[dict setValue:thumbnail forKey:GROWL_NOTIFICATION_ICON];
 #endif
-	[dict setObject:priority forKey:GROWL_NOTIFICATION_PRIORITY];
-	[dict setObject:isStickey forKey:GROWL_NOTIFICATION_STICKY];
-	[dict setObject:[programURL absoluteString] forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
+	[dict setValue:priority forKey:GROWL_NOTIFICATION_PRIORITY];
+	[dict setValue:isStickey forKey:GROWL_NOTIFICATION_STICKY];
+	[dict setValue:[programURL absoluteString] forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
 	
 	[GrowlApplicationBridge notifyWithDictionary:dict];
-}// end - (void) notifyToUser
-
-- (void) notifyOfficialToUser
-{
-	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
-	NSNumber *priority = [NSNumber numberWithInt:2];
-	NSNumber *isStickey = [NSNumber numberWithBool:NO];
-	[dict setObject:GrowlNotifyFoundOfficialProgram forKey:GROWL_NOTIFICATION_NAME];
-	[dict setObject:programTitle forKey:GROWL_NOTIFICATION_TITLE];
-	[dict setObject:programDescription forKey:GROWL_NOTIFICATION_DESCRIPTION];
-#ifdef GROWL_NOTIFICATION_ICON_DATA
-	[dict setObject:thumbnail forKey:GROWL_NOTIFICATION_ICON_DATA];
-#else
-	[dict setObject:thumbnail forKey:GROWL_NOTIFICATION_ICON];
-#endif
-	[dict setObject:priority forKey:GROWL_NOTIFICATION_PRIORITY];
-	[dict setObject:isStickey forKey:GROWL_NOTIFICATION_STICKY];
-	[dict setObject:[programURL absoluteString] forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
-	
-	[GrowlApplicationBridge notifyWithDictionary:dict];
-}// end - (void) notifyToUser
+}// end - (void) growlProgramNotify:(NSString *)notificationName
 
 #pragma mark -
 #pragma mark NSXMLParserDelegate methods

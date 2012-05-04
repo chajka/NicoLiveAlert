@@ -41,6 +41,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 #pragma mark constructor support
 - (CIImage *) createFromResource:(NSString *)imageName;
 - (void) installStatusbarMenu;
+- (void) setupMembers:(NSString *)imageName;
 - (void) makeStatusbarIcon;
 - (void) updateMenuItem:(NSNotification *)notification;
 - (void) updateToolTip;
@@ -59,36 +60,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		userState = 0;
 		numberOfPrograms = 0;
 		statusbarMenu = menu;
-		drawPoint = NSMakePoint(progCountPointSingleDigitX, progCountPointY);
-		iconSize = NSMakeSize(iconSizeW, iconSizeH);
-		sourceImage = [self createFromResource:imageName];
-		statusbarIcon = [[NSImage alloc] initWithSize:iconSize];
-		statusbarAlt = [[NSImage alloc] initWithSize:iconSize];
-		gammaFilter = [CIFilter filterWithName:@"CIGammaAdjust"];
-		gammaPower = [NSNumber numberWithFloat:noProgPower];
-		invertFilter = [CIFilter filterWithName:@"CIColorInvert"];
-		progCountFont = [NSFont fontWithName:@"CourierNewPS-BoldItalicMT" size:progCountFontSize];
-		fontAttrDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, progCountFont,NSFontAttributeName, nil];
-		fontAttrInvertDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSColor blackColor], NSForegroundColorAttributeName, progCountFont ,NSFontAttributeName, nil];
-			// create bezier path for program number's background
-		progCountBackground = [NSBezierPath bezierPath];
-		[progCountBackground setLineCapStyle:NSRoundLineCapStyle];
-		[progCountBackground setLineWidth:progCountBackGroundWidth];
-		[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
-		[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX, progCountBackGrountToY)];
-
-			// create bezier path for dissconect cross mark
-		disconnectPath = [[NSBezierPath alloc] init];
-		[disconnectPath setLineCapStyle:NSRoundLineCapStyle];
-		[disconnectPath setLineWidth:disconnectPathWidth];
-		[disconnectPath moveToPoint:NSMakePoint(disconnectPathOffset, disconnectPathOffset)];
-		[disconnectPath lineToPoint:NSMakePoint((iconSizeW - disconnectPathOffset), (iconSizeH - disconnectPathOffset))];
-		[disconnectPath moveToPoint:NSMakePoint(disconnectPathOffset, (iconSizeH - disconnectPathOffset))];
-		[disconnectPath lineToPoint:NSMakePoint(iconSizeH - disconnectPathOffset, disconnectPathOffset)];
-
-			// make each color for background and disconnect cross
-		progCountBackColor = [NSColor colorWithCalibratedRed:progCountBackColorRed green:progCountBackColorGreen blue:progCountBackColorBlue alpha:progCountBackColorAlpha];
-		disconnectColor = [NSColor colorWithCalibratedRed:disconnectedColorRed green:disconnectedColorGreen blue:disconnectedColorBlue alpha:disconnectedColorAlpha];
+		[self setupMembers:imageName];
 		
 #if __has_feature(objc_arc) == 0
 		[sourceImage retain];
@@ -102,14 +74,20 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		officialProgramCount = 0;
 		[self installStatusbarMenu];
 		[self makeStatusbarIcon];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMenuItem:) name:NLNotificationTimeUpdated object:NULL];
+		NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
+		[this addObserver:self selector:@selector(updateMenuItem:) name:NLNotificationTimeUpdated object:NULL];
+		[this addObserver:self selector:@selector(connectionRised) name:NLNotificationConnectionRised object:NULL];
+		[this addObserver:self selector:@selector(connectionDown) name:NLNotificationConnectionLost object:NULL];
 	}// end if
 	return self;
 }// end - (id) initWithImage:(NSString *)imageName
 
 - (void) dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationTimeUpdated object:NULL];
+	NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
+	[this removeObserver:self name:NLNotificationTimeUpdated object:NULL];
+	[this removeObserver:self name:NLNotificationConnectionRised object:NULL];
+	[this removeObserver:self name:NLNotificationConnectionLost object:NULL];
 	[statusBar removeStatusItem:statusBarItem];
 #if __has_feature(objc_arc) == 0
 	[statusBarItem release];
@@ -128,6 +106,18 @@ static CGFloat disconnectedColorAlpha = 0.70;
 #endif
 }// end - (void) dealloc
 
+#ifdef __OBJC_GC__
+- (void) finalize
+{
+	NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
+	[this removeObserver:self name:NLNotificationTimeUpdated object:NULL];
+	[this removeObserver:self name:NLNotificationConnectionRised object:NULL];
+	[this removeObserver:self name:NLNotificationConnectionLost object:NULL];
+
+	[super finalize];
+}// end - (void) finalize
+#endif
+
 #pragma mark constructor support
 - (CIImage *) createFromResource:(NSString *)imageName
 {
@@ -136,6 +126,40 @@ static CGFloat disconnectedColorAlpha = 0.70;
 
 	return [CIImage imageWithData:imageData];
 }// end - (CIImage *) createFromResource:(NSString *)imageName
+
+- (void) setupMembers:(NSString *)imageName
+{
+	drawPoint = NSMakePoint(progCountPointSingleDigitX, progCountPointY);
+	iconSize = NSMakeSize(iconSizeW, iconSizeH);
+	sourceImage = [self createFromResource:imageName];
+	statusbarIcon = [[NSImage alloc] initWithSize:iconSize];
+	statusbarAlt = [[NSImage alloc] initWithSize:iconSize];
+	gammaFilter = [CIFilter filterWithName:@"CIGammaAdjust"];
+	gammaPower = [NSNumber numberWithFloat:noProgPower];
+	invertFilter = [CIFilter filterWithName:@"CIColorInvert"];
+	progCountFont = [NSFont fontWithName:@"CourierNewPS-BoldItalicMT" size:progCountFontSize];
+	fontAttrDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSColor whiteColor], NSForegroundColorAttributeName, progCountFont,NSFontAttributeName, nil];
+	fontAttrInvertDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSColor blackColor], NSForegroundColorAttributeName, progCountFont ,NSFontAttributeName, nil];
+		// create bezier path for program number's background
+	progCountBackground = [NSBezierPath bezierPath];
+	[progCountBackground setLineCapStyle:NSRoundLineCapStyle];
+	[progCountBackground setLineWidth:progCountBackGroundWidth];
+	[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
+	[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX, progCountBackGrountToY)];
+	
+		// create bezier path for dissconect cross mark
+	disconnectPath = [[NSBezierPath alloc] init];
+	[disconnectPath setLineCapStyle:NSRoundLineCapStyle];
+	[disconnectPath setLineWidth:disconnectPathWidth];
+	[disconnectPath moveToPoint:NSMakePoint(disconnectPathOffset, disconnectPathOffset)];
+	[disconnectPath lineToPoint:NSMakePoint((iconSizeW - disconnectPathOffset), (iconSizeH - disconnectPathOffset))];
+	[disconnectPath moveToPoint:NSMakePoint(disconnectPathOffset, (iconSizeH - disconnectPathOffset))];
+	[disconnectPath lineToPoint:NSMakePoint(iconSizeH - disconnectPathOffset, disconnectPathOffset)];
+	
+		// make each color for background and disconnect cross
+	progCountBackColor = [NSColor colorWithCalibratedRed:progCountBackColorRed green:progCountBackColorGreen blue:progCountBackColorBlue alpha:progCountBackColorAlpha];
+	disconnectColor = [NSColor colorWithCalibratedRed:disconnectedColorRed green:disconnectedColorGreen blue:disconnectedColorBlue alpha:disconnectedColorAlpha];
+}// end - (void) setupMembers
 
 - (void) installStatusbarMenu
 {
@@ -169,7 +193,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 {
 	CIImage *invertImage = NULL;
 	CIImage *destImage = NULL;
-	if ((numberOfPrograms == 0) && (userState == 0))
+	if (((numberOfPrograms == 0) && (userState == 0)) || (connected == NO))
 	{		// crop image
 		[statusbarIcon setSize:iconSize];
 		[statusbarAlt setSize:iconSize];
@@ -180,7 +204,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	}
 	else
 	{
-		destImage = [sourceImage copy];
+		destImage = sourceImage;
 	}// end if number of programs
 
 	[invertFilter setValue:destImage forKey:@"inputImage"];
@@ -258,8 +282,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 #if __has_feature(objc_arc) == 0
 	[statusbarIcon release];
 	[statusbarAlt release];
-	if ((numberOfPrograms != 0) || (userState != 0))
-		[destImage release];
+		//	[destImage release];
 #endif
 }// end - (CIImage *) makeStatusbarIcon
 

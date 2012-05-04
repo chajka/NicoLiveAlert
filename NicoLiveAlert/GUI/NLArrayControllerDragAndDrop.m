@@ -54,9 +54,6 @@
 #pragma mark callback
 - (void) animationEffectDidEnd:(void *)contextInfo
 {
-#ifdef TRACECALL
-	NSLog(@"animationEffectDidEnd: : LauncherArrayController");
-#endif
 	NSPasteboard *pb = [NSPasteboard pasteboardWithName:NSDragPboard];
 	NSArray *pbItems = [pb pasteboardItems];
 	NSData *pbData;
@@ -64,15 +61,18 @@
 	for (NSPasteboardItem *pbItem in pbItems)
 	{
 		pbData = [pbItem dataForType:LauncherPasteboardType];
-		pbTableItem = [NSUnarchiver unarchiveObjectWithData:pbData];
-		for (NSDictionary *tableItem in [self arrangedObjects])
+		if ([pbData length] != 0)
 		{
-			if ([[tableItem objectForKey:keyLauncherAppPath] isEqualToString:[pbTableItem objectForKey:keyLauncherAppPath]] == YES)
+			pbTableItem = [NSUnarchiver unarchiveObjectWithData:pbData];
+			for (NSDictionary *tableItem in [self arrangedObjects])
 			{
-				[self removeObject:tableItem];
-				break;
-			}// end if
-		}// end for each arrangedObjects
+				if ([[tableItem objectForKey:keyLauncherAppPath] isEqualToString:[pbTableItem objectForKey:keyLauncherAppPath]] == YES)
+				{
+					[self removeObject:tableItem];
+					break;
+				}// end if
+			}// end for each arrangedObjects
+		}// end if pasteboard item not empty
 	}// end for each pasteboard Item
 	[pb clearContents];
 }// end - (void) animationEffectDidEnd:(void *)contextInfo
@@ -90,7 +90,14 @@
     }// endif
 }// end - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 
-
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
+{
+	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+						  aTableView, KeyTableView, 
+						  [NSNumber numberWithInteger:rowIndex], keyRow, nil];
+	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:NLNotificationSelectRow object:dict]];
+	return YES;
+}// end - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
 
 #pragma mark -
 #pragma mark NSTableViewDataSource
@@ -164,8 +171,13 @@
 		NSIndexSet *indexes = [NSUnarchiver unarchiveObjectWithData:data];
 		NSArray *watchLists = [[self arrangedObjects] objectsAtIndexes:indexes];
 		NSRange insert = NSMakeRange(row, [watchLists count]);
-		[self removeObjectsAtArrangedObjectIndexes:indexes];
-		[self insertObjects:watchLists atArrangedObjectIndexes:[NSIndexSet indexSetWithIndexesInRange:insert]];
+		[self removeObjects:watchLists];
+		@try {
+			[self insertObjects:watchLists atArrangedObjectIndexes:[NSIndexSet indexSetWithIndexesInRange:insert]];
+		}
+		@catch (NSException *exception) {
+			[self addObjects:watchLists];
+		}
 	}
 	return YES;
 }// end - (BOOL) watchTableAcceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
@@ -213,8 +225,13 @@
 		NSIndexSet *indexes = [NSUnarchiver unarchiveObjectWithData:data];
 		NSArray *watchLists = [[self arrangedObjects] objectsAtIndexes:indexes];
 		NSRange insert = NSMakeRange(row, [watchLists count]);
-		[self removeObjectsAtArrangedObjectIndexes:indexes];
-		[self insertObjects:watchLists atArrangedObjectIndexes:[NSIndexSet indexSetWithIndexesInRange:insert]];
+		[self removeObjects:watchLists];
+		@try {
+			[self insertObjects:watchLists atArrangedObjectIndexes:[NSIndexSet indexSetWithIndexesInRange:insert]];
+		}
+		@catch (NSException *exception) {
+			[self addObjects:watchLists];
+		}
 	}
 	return YES;
 }// end - (BOOL) accountTableAcceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
@@ -327,7 +344,6 @@
 #if __has_feature(objc_arc) == 0
 				[dataString release];
 #endif
-				NSLog(@"pathExtension : %@", ext);
 				if ([ext isEqualToString:ApplicationExtension] == YES)
 					foundApplication = YES;
 			}// end if

@@ -165,7 +165,7 @@ NSNumber		*notAutoOpen;
 		success = [parser parse];
 	}
 	@catch (NSException *exception) {
-		NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
+		NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
 		return success;
 	}// end parse get ticket
 #if __has_feature(objc_arc)
@@ -207,7 +207,7 @@ NSNumber		*notAutoOpen;
 		success = [parser parse];
 	}
 	@catch (NSException *exception) {
-		NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
+		NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
 		return success;
 	}// end parse get ticket
 #if __has_feature(objc_arc)
@@ -260,7 +260,6 @@ NSNumber		*notAutoOpen;
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-	NSUInteger uid = 0;
 	NSString *channel = NULL;
 	switch ([[elements valueForKey:elementName] integerValue])
 	{
@@ -268,8 +267,7 @@ NSNumber		*notAutoOpen;
 			ticket = [[NSString alloc] initWithString:stringBuffer];
 			break;
 		case indexUserID:
-			uid = [stringBuffer integerValue];
-			userid = [[NSNumber alloc] initWithUnsignedInteger:uid];
+			userid = [[NSNumber alloc] initWithUnsignedInteger:[stringBuffer integerValue]];
 			break;
 		case indexUserName:
 			username = [[NSString alloc] initWithString:stringBuffer];

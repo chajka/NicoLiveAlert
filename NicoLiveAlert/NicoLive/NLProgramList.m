@@ -9,6 +9,8 @@
 #import "NLProgramList.h"
 
 @interface NLProgramList ()
+- (void) resetKeepAliveMonitor;
+- (void) resetConnectionRiseMonitor;
 - (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date;
 - (void) checkConnectionActive:(NSTimer *)theTimer;
 - (void) checkConnectionRised:(NSTimer *)theTimer;
@@ -18,8 +20,11 @@
 @synthesize watchList;
 @synthesize activePrograms;
 @synthesize watchOfficial;
+@synthesize enableAutoOpen;
 NSMutableData		*programListDataBuffer;
 BOOL sendrequest;
+OnigRegexp			*programRegex;
+OnigRegexp			*checkstatus;
 
 - (id) init
 {
@@ -41,6 +46,12 @@ BOOL sendrequest;
 		isOfficial = NO;
 		watchOfficial = YES;
 		connected = NO;
+		programRegex = [OnigRegexp compile:ProgramNoRegex];
+		checkstatus = [OnigRegexp compile:RiseConnectRegex];
+#if __has_feature(objc_arc) == 0
+		[programRegex retain];
+		[checkstatus retain];
+#endif
 	}// end if self
 	return self;
 }// end - (id) init
@@ -55,13 +66,14 @@ BOOL sendrequest;
 	if (serverInfo != NULL)					[serverInfo release];
 	if (center != NULL)						[center release];
 	if (lastTime != NULL)					[lastTime release];
-	if (programListSocket != NULL)		[programListSocket release];
+	if (programListSocket != NULL)			[programListSocket release];
+	if (programRegex != NULL)				[programRegex release];
 
 	[super dealloc];
 #endif
 }// end - (void) dealloc
 
-#pragma -
+#pragma mark -
 #pragma mark controll methods
 
 - (void) kick
@@ -72,6 +84,10 @@ BOOL sendrequest;
 - (void) halt
 {
 	[programListSocket disconnect];
+#if __has_feature(objc_arc) == 0
+	[programListSocket release];
+#endif
+	programListSocket = NULL;
 	connected = NO;	
 }// end - (void) halt
 
@@ -88,7 +104,6 @@ BOOL sendrequest;
 	if ([programListSocket connect] == YES)
 	{
 		success = YES;
-		connected = YES;
 		[self resetKeepAliveMonitor];
 		[keepAliveMonitor fire];
 	}// end if connect to program server success
@@ -112,6 +127,70 @@ BOOL sendrequest;
 
 #pragma mark -
 #pragma mark internal
+#pragma mark program sieve method
+- (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date
+{
+	NSArray *program = [progInfo componentsSeparatedByString:dataSeparator];
+		// check official program
+	if ((watchOfficial == YES) && ([program count] == 2))
+	{
+NSLog(@"WatchOfficial %@",progInfo);
+		NSString *live = [program objectAtIndex:offsetLiveNo];
+		[activePrograms addOfficialProgram:live withDate:date];
+		return;
+	}
+
+	NSString *live = NULL;
+		// iterate program info
+	for (NSString *prog in program)
+	{
+		live = [program objectAtIndex:offsetLiveNo];
+			// process official
+		if (isOfficial == YES)
+			isOfficial = NO;
+
+			// check official channel
+		if ((watchOfficial == YES) && ([prog isEqualToString:liveOfficialString] == YES))
+		{
+NSLog(@"WatchOfficial Channel %@",progInfo);
+			isOfficial = YES;
+			[activePrograms addOfficialProgram:live withDate:date];
+			break;
+		}
+			// check watchlist
+		NSNumber *needOpen = [watchList valueForKey:prog];
+		if (needOpen != NULL)
+		{		// found in watchlist or memberd communities program
+NSLog(@"watchUser %@",progInfo);
+			if (isOfficial == YES)
+				[activePrograms addOfficialProgram:live withDate:date];
+			else
+				[activePrograms addUserProgram:live withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner]];
+			// end if Official program or User program
+			
+				// check mutch is program number
+			OnigResult *isPorgram = [programRegex search:prog];
+			if (isPorgram != NULL)
+				[center postNotification:[NSNotification notificationWithName:NLNotificationOpenByLiveNo object:prog]];
+
+				// check auto open of this program
+			if (enableAutoOpen == YES)
+			{
+				BOOL autoOpen = [needOpen boolValue];
+				if (autoOpen == YES)
+				{	// open program
+					NSURL *liveURL = [NSURL URLWithString:[NSString stringWithFormat:URLFormatLive, live]];
+					[center postNotificationName:NLNotificationAutoOpen object:liveURL];
+				}// end if program is auto open
+			}// end if need check auto opend program
+
+			break;
+		}// end if program found
+	}// end foreach program information items
+
+}// end - (void) checkProgram:(NSString *)progInfo
+
+#pragma mark -
 #pragma mark timer control methods
 - (void) resetKeepAliveMonitor
 {		// stop & reset keepAliveMonitor
@@ -137,51 +216,6 @@ BOOL sendrequest;
 	connectionRiseMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionReactiveCheckInterval target:self selector:@selector(checkConnectionRised:) userInfo:NULL repeats:YES];
 }// end - (void) resetConnectionRiseMonitor
 
-#pragma mark program sieve method
-- (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date
-{
-	NSArray *program = [progInfo componentsSeparatedByString:dataSeparator];
-	if ((watchOfficial == YES) && ([program count] == 2))
-	{
-NSLog(@"WatchOfficial %@",progInfo);
-		[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo] withDate:date];
-		return;
-	}
-
-	for (NSString *prog in program)
-	{		// process official
-		if (isOfficial == YES)
-			isOfficial = NO;
-			// check official
-		if ((watchOfficial == YES) && ([prog isEqualToString:liveOfficialString] == YES))
-		{
-NSLog(@"WatchOfficial Channel %@",progInfo);
-			isOfficial = YES;
-			[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo] withDate:date];
-			isOfficial = NO;
-			break;
-		}
-		if ([watchList valueForKey:prog] != NULL)
-		{
-NSLog(@"watchUser %@",progInfo);
-			if (isOfficial)
-			{
-				[activePrograms addOfficialProgram:[program objectAtIndex:offsetLiveNo] withDate:date];
-			}
-			else
-			{
-				[activePrograms addUserProgram:[program objectAtIndex:offsetLiveNo] withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner]];
-				BOOL autoOpen = [[watchList valueForKey:prog] boolValue];
-				if (autoOpen == YES)
-				{	// open program
-				}
-			}
-			// end if autoopen;
-		}
-	}// end for
-}// end - (void) checkProgram:(NSString *)progInfo
-
-#pragma mark -
 #pragma mark periodial action methods
 - (void) checkConnectionActive:(NSTimer *)theTimer
 {
@@ -201,15 +235,13 @@ NSLog(@"watchUser %@",progInfo);
 
 - (void) checkConnectionRised:(NSTimer *)theTimer
 {
-	NSURL *ping = [NSURL URLWithString:MSQUERYAPI];
-	NSError *err = NULL;
-	NSString *alertinfo	= [NSString stringWithContentsOfURL:ping encoding:NSUTF8StringEncoding error:&err];
-	if ([alertinfo length] == 0)
-		return;
-
-	OnigRegexp *maint = [OnigRegexp compile:MaintRegex];
-	OnigResult *maintResult = [maint search:alertinfo];
-	if (maintResult != NULL)
+	NSURLRequest *ping = [NSURLRequest requestWithURL:[NSURL URLWithString:MSQUERYAPI] cachePolicy:NSURLRequestReturnCacheDataDontLoad timeoutInterval:5.0];
+	NSString *alertinfo = [[NSString alloc] initWithData:[ping HTTPBody] encoding:NSUTF8StringEncoding];
+#if __has_feature(objc_arc) == 0
+	[alertinfo autorelease];
+#endif
+	OnigResult *maintResult = [checkstatus search:alertinfo];
+	if (maintResult == NULL)
 		return;
 
 		// stop & reset connectionRiseMonitor

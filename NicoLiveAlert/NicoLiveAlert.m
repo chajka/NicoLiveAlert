@@ -16,16 +16,21 @@
 - (void) setupAccounts;
 - (void) setupTables;
 - (void) setupMonitor;
+- (void) loadPreferences;
+- (void) savePreferences;
 - (void) hookNotifications;
 - (void) removeNotifications;
 - (void) listenHalt:(NSNotification *)note;
 - (void) listenRestart:(NSNotification *)note;
+- (void) removeProgramNoFromTable:(NSNotification *)note;
 - (void) doOutoOpen:(NSNotification *)note;
 @end
 
 @implementation NicoLiveAlert
 @synthesize menuStatusbar;
 @synthesize prefencePanel;
+@synthesize prefs;
+@synthesize broadCasting;
 
 #pragma mark -
 #pragma mark override / delegate
@@ -36,15 +41,19 @@
 #if __has_feature(objc_arc) == 0
 	[statusBar retain];
 #endif
+	broadCasting = NO;
 }// end - (void) awakeFromNib
 
 - (void) applicationWillFinishLaunching:(NSNotification *)aNotification
 {
 	[GrowlApplicationBridge setGrowlDelegate:self];
+	prefs = [[NicoLivePrefManager alloc] init];
 }// end 
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
-{		// setup for account
+{		// restore preference
+	[self loadPreferences];
+		// setup for account
 	[self setupAccounts];
 		// setup drag & dorp table in preference panel
 	[self setupTables];
@@ -53,7 +62,6 @@
 		// start monitor
 	[self setupMonitor];
 	[programSieves kick];
-	[statusBar setConnected:YES];
 }// end - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 
 - (void) applicationWillTerminate:(NSNotification *)notification
@@ -62,10 +70,13 @@
 
 	[self removeNotifications];
 
+	[self savePreferences];
+
 #if __has_feature(objc_arc) == 0
 	[statusBar release];
 	[programSieves release];
 	programSieves = NULL;
+	[prefs release];
 #endif
 }// end - (void) applicationWillTerminate:(NSNotification *)notification
 
@@ -73,7 +84,17 @@
 
 - (void) setupAccounts
 {
-	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:NULL andManualWatchList:[NSDictionary dictionary]];
+	NSMutableDictionary *watchList = [NSMutableDictionary dictionary];
+	for (NSDictionary *item in [aryManualWatchlist arrangedObjects])
+	{
+		NSNumber *autoOpen = [item valueForKey:keyAutoOpen];
+		NSString *watchItem = [[item valueForKey:keyWatchItem] string];
+		
+		[watchList setValue:autoOpen forKey:watchItem];
+	}// end foreach watchList items
+	
+	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:activeAccounts andManualWatchList:watchList];
+	[nicoliveAccounts syncAccountAndTable:aryAccountItems];
 	[comboLoginID setUsesDataSource:YES];
 	[comboLoginID setDataSource:nicoliveAccounts];
 	NSMenuItem *accountsItem = [menuStatusbar itemWithTag:tagAccounts];
@@ -109,6 +130,47 @@
 #endif
 }// end - (void) setupMonitor
 
+- (void) loadPreferences
+{
+	NSArray *ary = NULL;
+		// watch list
+	ary = [prefs loadManualWatchList];
+	if ([ary count] != 0)
+		[aryManualWatchlist	addObjects:ary];
+
+		// account list
+	activeAccounts = [prefs loadAccountsTo:aryAccountItems];
+
+		// launcher items
+	ary = [prefs loadLauncherDict];
+	if ([ary count] != 0)
+		[aryLauncherItems addObjects:ary];
+
+		// collaboration flags
+	dontOpenWhenImBroadcast = [prefs dontOpenWhenImBroadcast];
+	kickFMELauncher = [prefs kickFMELauncher];
+	kickCharlestonOnMyBroadcast = [prefs kickCharlestonOnMyBroadcast];
+	kickCharlestonAtAutoOpen = [prefs kickCharlestonAtAutoOpen];
+	kickCharlestonOpenByMe = [prefs kickCharlestonOpenByMe];
+}// end - (void) loadPreferences
+
+- (void) savePreferences
+{
+		// watch list
+	[prefs saveManualWatchList:[aryManualWatchlist arrangedObjects]];
+		// account list
+	[prefs saveAccountsList:[aryAccountItems arrangedObjects]];
+		// launcher items
+	[prefs saveLauncherList:[aryLauncherItems arrangedObjects]];
+		// collaboration flags
+	[prefs setDontOpenWhenImBroadcast:dontOpenWhenImBroadcast];
+	[prefs setKickFMELauncher:kickFMELauncher];
+	[prefs setKickCharlestonOnMyBroadcast:kickCharlestonOnMyBroadcast];
+	[prefs setKickCharlestonAtAutoOpen:kickCharlestonAtAutoOpen];
+	[prefs setKickCharlestonOpenByMe:kickCharlestonOpenByMe];
+
+}// end - (void) savePreferences
+
 - (void) hookNotifications
 {
 	NSNotificationCenter *shared = [[NSWorkspace sharedWorkspace] notificationCenter];
@@ -123,6 +185,9 @@
 	[application addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:NULL];
 			// hook to connection reactive notification
 	[application addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
+		// open by program number hook
+	[application addObserver:self selector:@selector(removeProgramNoFromTable:) name:NLNotificationOpenByLiveNo object:NULL];
+
 		// AutoOpen Notification hook
 	[application addObserver:self selector:@selector(doOutoOpen:) name:NLNotificationAutoOpen object:NULL];
 }// end - (void) hookNotifications
@@ -141,23 +206,33 @@
 	[application removeObserver:self name:NLNotificationConnectionLost object:NULL];
 			// remove Connection Rised notification
 	[application removeObserver:self name:NLNotificationConnectionRised object:NULL];
+		// remove open by program number hook
+	[application removeObserver:self name:NLNotificationOpenByLiveNo object:NULL];
 		// AutoOpen Notification
 	[application removeObserver:self name:NLNotificationAutoOpen object:NULL];
 }// end - (void) hookNotifications
 
 - (void) listenHalt:(NSNotification *)note
 {
-	[statusBar toggleConnected];
 	if ([[note name] isEqualToString:NSWorkspaceWillSleepNotification])
 		[programSieves stopListen];
 }// end - (void) listenHalt:(NSNotification *)note
 
 - (void) listenRestart:(NSNotification *)note
 {
-	[statusBar toggleConnected];
 	if ([[note name] isEqualToString:NSWorkspaceDidWakeNotification])
 		[programSieves startListen];
 }// end - (void) listenRestart:(NSNotification *)note
+
+- (void) removeProgramNoFromTable:(NSNotification *)note
+{
+	NSString *liveNo = [note object];
+	for (NSDictionary *watchiItem in [aryManualWatchlist arrangedObjects])
+		if ([[[watchiItem objectForKey:keyWatchItem] string] isEqualToString:liveNo] == YES)
+			[aryManualWatchlist removeObject:watchiItem];
+		// end if find notified program number
+	// end foreach watchlist item
+}// end - (void) removeProgramNoFromTable:(NSNotification *)note
 
 - (void) doOutoOpen:(NSNotification *)note
 {
@@ -236,6 +311,11 @@
 	// manual watch list box actions
 - (IBAction) autoOpenChecked:(id)sender
 {
+	NSDictionary *watchListItem = [[aryManualWatchlist arrangedObjects] objectAtIndex:[sender selectedRow]];
+	BOOL autoOpen = [[watchListItem valueForKey:keyAutoOpen] boolValue];
+	NSString *watchItem = [[watchListItem valueForKey:keyWatchItem] string];
+	
+	[nicoliveAccounts switchWatchListItemProperty:watchItem autoOpen:autoOpen];
 }// end - (IBAction) autoOpenChecked:(id)sender
 
 - (IBAction) watchOfficialChannels:(id)sender
@@ -279,6 +359,8 @@
 			break;
 	}// end switch by watch item kind
 
+		// add to watchlist
+	[nicoliveAccounts addWatchListItem:[watchItem string] autoOpen:NO];
 		// add to table
 	NSMutableDictionary *watchListItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 				   [NSNumber numberWithBool:NO], keyAutoOpen,
@@ -289,6 +371,7 @@
 		// cleanup textfields
 	[watchItemName setStringValue:EMPTYSTRING];
 	[watchItemComment setStringValue:EMPTYSTRING];
+	[btnAddWatchListItem setEnabled:NO];
 }// end - (IBAction) addToWatchList:(id)sender
 
 - (IBAction) removeFromWatchList:(id)sender
@@ -300,9 +383,9 @@
 {
 }// end - (IBAction) loginNameSelected:(id)sender
 
-- (IBAction) toggleWatch:(id)sender
+- (IBAction) updateAccountInfo:(id)sender
 {
-}// end - (IBAction) toggleWatch:(id)sender
+}// end - (IBAction) updateAccountInfo:(id)sender
 
 - (IBAction) addAccount:(id)sender
 {
@@ -311,6 +394,25 @@
 	// application collaboration actions
 - (IBAction) appColaboChecked:(id)sender
 {
+	switch ([sender tag]) {
+		case tagDoNotAutoOpenInMyBroadcast:
+			dontOpenWhenImBroadcast = !dontOpenWhenImBroadcast;
+			break;
+		case tagKickFMELauncher:
+			kickFMELauncher = !kickFMELauncher;
+			break;
+		case tagKickCharlestonOnMyBroadcast:
+			kickCharlestonOnMyBroadcast = !kickCharlestonOnMyBroadcast;
+			break;
+		case tagKickCharlestonAtAutoOpen:
+			kickCharlestonAtAutoOpen = !kickCharlestonAtAutoOpen;
+			break;
+		case tagKickCharlestonByOpenFromMe:
+			kickCharlestonOpenByMe = !kickCharlestonOpenByMe;
+			break;
+		default:
+			break;
+	}// end switch by checkbox's tag
 }// end - (IBAction) appColaboChecked:(id)sender
 
 #pragma mark -
@@ -348,4 +450,12 @@
 	[[NSWorkspace sharedWorkspace] openURL:url];
 }// end - (void) growlNotificationWasClicked:(id)clickContext
 
+- (void) growlNotificationTimedOut:(id)clickContext
+{
+}// end - (void) growlNotificationTimedOut:(id)clickContext;
+
+- (BOOL) hasNetworkClientEntitlement
+{
+	return YES;
+}// end - (BOOL) hasNetworkClientEntitlement
 @end

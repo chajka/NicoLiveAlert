@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NicoLivePrefManager.h"
 #import "NLStatusbar.h"
 #import "NLUsers.h"
 #import "NLProgramList.h"
@@ -62,11 +63,24 @@
 	__strong IBOutlet NLArrayControllerDragAndDrop	*aryLauncherItems;
 	
 	__strong NSStatusItem							*sbItem;
+	NSArray											*activeAccounts;
 	NLStatusbar										*statusBar;
+	NicoLivePrefManager								*prefs;
 	NLUsers											*nicoliveAccounts;
 	NLProgramList									*programSieves;
+
+		// application collaboration flags
+	BOOL											dontOpenWhenImBroadcast;
+	BOOL											kickFMELauncher;
+	BOOL											kickCharlestonOnMyBroadcast;
+	BOOL											kickCharlestonAtAutoOpen;
+	BOOL											kickCharlestonOpenByMe;
+		// my status
+	BOOL											broadCasting;
 }
-@property (retain) NSMenu *menuStatusbar;
-@property (assign) NSPanel *prefencePanel;
+@property (retain, readonly)	NSMenu				*menuStatusbar;
+@property (assign,readwrite)	NSPanel				*prefencePanel;
+@property (readonly)			NicoLivePrefManager	*prefs;
+@property (assign, readwrite)	BOOL				broadCasting;
 
 @end

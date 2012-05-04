@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SocketConnection.h"
+#import "HTTPConnection.h"
 #import "NicoLiveAlertDefinitions.h"
 #import "NLMessageServerInfo.h"
 #import "NLActivePrograms.h"
@@ -25,14 +26,12 @@
 	BOOL				watchOfficial;
 	BOOL				isOfficial;
 	BOOL				connected;
-#ifdef DEBUG
-	NSFileHandle		*xmllog;
-	NSFileHandle		*watchlog;
-#endif
+	BOOL				enableAutoOpen;
 }
 @property (assign, readwrite) NSMutableDictionary	*watchList;
 @property (retain, readwrite) NLActivePrograms		*activePrograms;
 @property (assign, readwrite) BOOL					watchOfficial;
+@property (assign, readwrite) BOOL					enableAutoOpen;
 
 - (void) kick;
 - (void) halt;

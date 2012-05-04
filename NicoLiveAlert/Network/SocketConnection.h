@@ -94,18 +94,18 @@ typedef NSInteger SCDirection;
 	id <NSStreamDelegate>		streamDelegate;
 	id <StreamEventDelegate>	streamEventDelegate;
 		// data stream
-	__strong NSInputStream		*iStream;
-	__strong NSOutputStream		*oStream;
+	NSInputStream		*iStream;
+	NSOutputStream		*oStream;
 	SCDirection					direction;
 		// hold server information
 	NSString					*server;
 	NSInteger					port;
 }
-@property (retain, readwrite) id <NSStreamDelegate>		streamDelegate;
-@property (retain, readwrite) id <StreamEventDelegate>	streamEventDelegate;
-@property (assign, readwrite) SCDirection				direction;
-@property (copy, readwrite) NSString					*server;
-@property (assign, readwrite) NSInteger					port;
+@property (retain, readwrite)	id <NSStreamDelegate>		streamDelegate;
+@property (retain, readwrite)	id <StreamEventDelegate>	streamEventDelegate;
+@property (assign, readwrite)	SCDirection					direction;
+@property (copy, readwrite)		NSString					*server;
+@property (assign, readwrite)	NSInteger					port;
 
 /*!
 	@method initWithServer:andPort:direction:

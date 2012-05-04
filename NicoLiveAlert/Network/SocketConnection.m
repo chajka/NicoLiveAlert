@@ -83,12 +83,16 @@
 {
 	if (direction == SCDirectionNothing)
 		return;
+
+#if __has_feature(objc_arc)
+	__strong NSInputStream *_iStream = NULL;	
+	__strong NSOutputStream *_oStream = NULL;
+#endif
 	
 	NSHost *host = [NSHost hostWithName:server];
 	if (direction == SCDirectionListen)
 	{
 #if __has_feature(objc_arc)
-		__strong NSInputStream *_iStream;
 		[NSStream getStreamsToHost:host port:port inputStream:&_iStream outputStream:NULL];
 		iStream = _iStream;
 #else
@@ -100,7 +104,6 @@
 	else if (direction == SCDirectionBroadcast)
 	{
 #if __has_feature(objc_arc)
-		__strong NSOutputStream *_oStream;
 		[NSStream getStreamsToHost:host port:port inputStream:NULL outputStream:&_oStream];
 		oStream = _oStream;
 #else
@@ -112,8 +115,6 @@
 	else if (direction == SCDirectionBoth)
 	{
 #if __has_feature(objc_arc)
-		NSInputStream *_iStream;
-		NSOutputStream *_oStream;
 		[NSStream getStreamsToHost:host port:port inputStream:&_iStream outputStream:&_oStream];
 		iStream = _iStream;
 		oStream = _oStream;

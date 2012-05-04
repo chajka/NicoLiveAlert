@@ -14,6 +14,6 @@ int main(int argc, char *argv[])
 		return NSApplicationMain(argc, (const char **)argv);
 	}
 	@catch (NSException *exception) {
-		NSLog(@"%@, %@, %@", [exception name], [exception reason], [exception userInfo]);
+		NSLog(@"Catch Main %@, %@, %@", [exception name], [exception reason], [exception userInfo]);
 	}
 }

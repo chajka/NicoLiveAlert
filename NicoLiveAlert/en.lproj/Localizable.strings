@@ -23,3 +23,5 @@
 "TitleOfficialSomePrograms" = "Official programs";
 // program menu item string
 "OfficialTitleString" = "Official";
+// NLUser string
+"OriginalWatchList" = "Manual Watch List";

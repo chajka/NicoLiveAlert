@@ -23,3 +23,5 @@
 "TitleOfficialSomePrograms" = "公式生放送中";
 // program menu item string
 "OfficialTitleString" = "公式";
+// NLUser string
+"OriginalWatchList" = "追加ウォッチリスト";

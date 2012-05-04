@@ -74,7 +74,7 @@ NSUInteger		currentElement;
 		success = [parser parse];		
 	}
 	@catch (NSException *exception) {
-		NSLog(@"Catch %@ : %@", NSStringFromSelector(_cmd), [self class]);
+		NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
 		success = NO;
 	}// end try parse
 #if __has_feature(objc_arc)

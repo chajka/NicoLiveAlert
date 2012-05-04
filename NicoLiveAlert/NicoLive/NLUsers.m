@@ -9,20 +9,23 @@
 #import "NLUsers.h"
 
 @interface NLUsers ()
-- (NSMutableDictionary *) makeAccounts:(NSArray *)users;
+- (NSMutableDictionary *) makeAccounts:(NSArray *)activeUsers;
+- (NSMutableDictionary *) makeManualWatchList:(NSDictionary *)list;
+- (void) removeProgramFromWatchList:(NSNotification *)aNotification;
 - (void) updateCurrentWatchlist;
 - (void) creteUserStateMenu;
 - (void) calcUserState;
 @end
 
 @implementation NLUsers
+@synthesize users;
 @synthesize originalWatchList;
 @synthesize watchlist;
 @synthesize usersMenu;
 @synthesize userState;
 
 #pragma mark constructor / destructor
-- (id) initWithActiveUsers:(NSArray *)users andManualWatchList:(NSMutableDictionary *)manualWatchList
+- (id) initWithActiveUsers:(NSArray *)activeUsers andManualWatchList:(NSMutableDictionary *)manualWatchList
 {
 	self = [super init];
 	if (self)
@@ -30,23 +33,27 @@
 		active = [[NSNumber alloc] initWithBool:YES];
 		deactive = [[NSNumber alloc] initWithBool:NO];
 		usersState = [[NSMutableDictionary alloc] init];
-		accounts = [[NSMutableDictionary alloc] initWithDictionary:[self makeAccounts:users]];
-		originalWatchList = manualWatchList;
+		users = [[NSMutableArray alloc] init];
+		accounts = [[NSMutableDictionary alloc] initWithDictionary:[self makeAccounts:activeUsers]];
+		originalWatchList = [self makeManualWatchList:manualWatchList];
 		watchlist = [[NSMutableDictionary alloc] init];
 		[self updateCurrentWatchlist];
 		usersMenu = NULL;
 		[self creteUserStateMenu];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeProgramFromWatchList:) name:NLNotificationOpenByLiveNo object:NULL];
 	}
 	return self;
 }// end - (id) initWithActiveUsers:(NSArray *)users andManualWatchList:(NSDictionary *)manualWatchList
 
 - (void) dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationOpenByLiveNo object:NULL];
 #if __has_feature(objc_arc) == 0
 	if (active != NULL)				[active release];
 	if (deactive != NULL)			[deactive release];
 	if (usersState != NULL)			[usersState release];
 	if (accounts != NULL)			[accounts release];
+	if (users != NULL)				[users release];
 	if (originalWatchList != NULL)	[originalWatchList release];
 	if (watchlist != NULL)			[watchlist release];
 	if (usersMenu != NULL)
@@ -62,7 +69,7 @@
 }// end - (void) dealloc
 
 #pragma mark constructor support
-- (NSMutableDictionary *) makeAccounts:(NSArray *)users
+- (NSMutableDictionary *) makeAccounts:(NSArray *)activeUsers
 {
 	NSArray *usesArray = [KCSInternetUser usersOfAccountsForServer:NICOLOGINSERVER path:NICOLOGINPATH forAuthType:kSecAuthenticationTypeAny inKeychain:systemDefaultKeychain];
 	if ((usesArray == NULL) || ([usesArray count] == 0))
@@ -77,15 +84,40 @@
 		[account autorelease];
 #endif
 		[usersDict setValue:account forKey:[account username]];
-		if ([users containsObject:[user account]] == YES)
+		if ([users containsObject:[account userid]] == YES)
 			[usersState setValue:active forKey:[account username]];
 		else
 			[usersState setValue:deactive forKey:[account username]];
-		// end if is set userState)
+		// end if is set userState
+		[users addObject:[account userid]];
 	}// end for
 
 	return usersDict;
 }// end - (NSDictionary *) makeAccounts
+
+- (NSMutableDictionary *) makeManualWatchList:(NSDictionary *)list
+{
+	NSMutableDictionary	*watchList = [NSMutableDictionary dictionary];
+	for (NSString *item in [list allKeys])
+	{
+		if ([[list valueForKey:item] boolValue] == YES)
+			[watchList setValue:active forKey:item];
+		else
+			[watchList setValue:deactive forKey:item];
+	}// end foreach
+
+	if ([list count] != 0)
+		return [NSMutableDictionary dictionaryWithDictionary:watchList];
+	else
+		return [NSMutableDictionary dictionary];
+}// end - (NSMutableDictionary *) makeManualWatchList:(NSDictionary *)list
+
+- (void) removeProgramFromWatchList:(NSNotification *)aNotification
+{
+	NSString *liveNo = [aNotification object];
+	[originalWatchList removeObjectForKey:liveNo];
+	[self updateCurrentWatchlist];
+}// end - (void) removeProgramFromWatchList:(NSNotification *)aNotification
 
 - (void) updateCurrentWatchlist
 {
@@ -102,6 +134,25 @@
 
 #pragma mark -
 #pragma mark user management
+- (void) syncAccountAndTable:(NSArrayController *)accountTable
+{
+	NSMutableDictionary *tmpEntries = [NSMutableDictionary dictionary];
+	for (NSDictionary *user in [accountTable arrangedObjects])
+		[tmpEntries setObject:active forKey:[user valueForKey:keyAccountUserID]];
+
+	for (NLAccount *account in [accounts allValues])
+	{
+		if ([tmpEntries objectForKey:[account userid]] == NULL)
+		{
+			NSMutableDictionary *tmpEntry = [NSMutableDictionary dictionary];
+			[tmpEntry setValue:active forKey:keyAccountWatchEnabled];
+			[tmpEntry setValue:[account userid] forKey:keyAccountUserID];
+			[tmpEntry setValue:[account username] forKey:keyAccountNickname];
+			[accountTable addObject:tmpEntry];
+		}// end if not in account table
+	}// end foreach accounts
+}// end - (void) syncAccountAndTable:(NSArrayController *)accountTable
+
 - (OSStatus) addUser:(NSString *)useraccount withPassword:(NSString *)userpassword
 {
 	OSStatus error = 1;
@@ -126,9 +177,14 @@
 	[keychainOfUser setKeychainName:[NSString stringWithFormat:NICOKEYCHAINNAMEFORMAT,NICOLOGINSERVER, useraccount]];
 	[keychainOfUser setKeychainKind:NICOKEYCHAINLABEL];
 	if ([keychainOfUser addTokeychain] == YES)
+	{
 		error = noErr;
+		[users addObject:[user userid]];
+	}
 	else
+	{
 		error = [keychainOfUser status];
+	}// end if add to keychain success or not
 
 #if __has_feature(objc_arc) == 0
 	[user autorelease];
@@ -149,23 +205,24 @@
 				return account;
 		}// end if account is active
 	}// end for
+
 	return NULL;
 }// end if - (NLAccount *) primaryAccountForCommunity:(NSString *)community
 
 - (NSArray *) activeUsers
 {
-	NSMutableArray *users = [NSMutableArray array];
+	NSMutableArray *activeUsers = [NSMutableArray array];
 
 	for (NSString *username in [usersState allKeys])
 		if ([usersState valueForKey:username] == active)
-			[users addObject:username];
+			[activeUsers addObject:username];
 		// end if user is active
 	//end foreach all users
 
-	if ([users count] == 0)
+	if ([activeUsers count] == 0)
 		return NULL;
 	else
-		return [NSArray arrayWithArray:users];
+		return [NSArray arrayWithArray:activeUsers];
 }// end - (NSArray *) activeUsers
 
 #pragma mark -
@@ -237,6 +294,7 @@
 		[originalWatchList setValue:active forKey:item];
 	else
 		[originalWatchList setValue:deactive forKey:item];
+NSLog(@"%@", originalWatchList);
 }// end - (void) addWatchListItem:(NSString *)item autoOpen:(BOOL)autoOpen
 
 - (void) addWatchListItems:(NSDictionary *)watchDict
@@ -250,6 +308,7 @@
 		else
 			[originalWatchList setValue:deactive forKey:item];
 	}// end foreach watchDict
+NSLog(@"%@", originalWatchList);
 }// end - (void) addWatchListItems:(NSDictionary *)watchlist
 
 - (void) switchWatchListItemProperty:(NSString *)item autoOpen:(BOOL)autoOpen
@@ -258,6 +317,7 @@
 		[originalWatchList setValue:active forKey:item];
 	else
 		[originalWatchList setValue:deactive forKey:item];
+NSLog(@"%@", originalWatchList);
 }// end - (void) switchWatchListItemProperty:(NSString *)item autoOpen:(BOOL)autoOpen
 
 #pragma mark -

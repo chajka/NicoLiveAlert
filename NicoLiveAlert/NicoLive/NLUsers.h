@@ -27,11 +27,13 @@
 	NSNumber			*deactive;
 	NSMutableDictionary	*usersState;
 	NSMutableDictionary	*accounts;
+	NSMutableArray		*users;
 	NSMutableDictionary	*originalWatchList;
 	NSMutableDictionary	*watchlist;
 	NSMenu				*usersMenu;
 	NSInteger			userState;
 }
+@property (readonly) NSMutableArray			*users;
 @property (readonly) NSMutableDictionary	*originalWatchList;
 @property (readonly) NSMutableDictionary	*watchlist;
 @property (readonly) NSMenu					*usersMenu;
@@ -45,10 +47,16 @@
 	@param manually added watchlist with autoOpen flag.
 	@result active and deactive user management object
 */
-- (id) initWithActiveUsers:(NSArray *)users andManualWatchList:(NSDictionary *)manualWatchList;
+- (id) initWithActiveUsers:(NSArray *)activeUsers andManualWatchList:(NSDictionary *)manualWatchList;
 
 #pragma mark -
 #pragma mark user management
+/*!
+ @method syncAccountAndTable:
+ @param userAccountArrray;
+*/
+- (void) syncAccountAndTable:(NSArrayController *)accountTable;
+
 /*!
 	@method addUser:andPassword:
 	@abstract add user account by maila ddress with password.
@@ -72,7 +80,7 @@
 /*!
 	@method activeUsers
 	@abstract return array of active user's username
-	@result NSArray contains user's name by NSString
+	@result NSArray contains user's name by NSString.
 */
 - (NSArray *) activeUsers;
 
@@ -102,7 +110,7 @@
 	@abstract add two or more watchlist item
 	@param watchlist item by dictionary
 */
-- (void) addWatchListItems:(NSDictionary *)watchDict;
+- (void) addWatchListItems:(NSMutableDictionary *)watchDict;
 
 /*!
 	@method switchWatchListItemProperty:autoOpen:
@@ -111,4 +119,5 @@
 	@param autoOpen property
 */
 - (void) switchWatchListItemProperty:(NSString *)item autoOpen:(BOOL)autoOpen;
+
 @end

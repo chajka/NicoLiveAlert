@@ -280,9 +280,10 @@ NSString *embedContent;
 	NSDictionary *elementDict = [NSDictionary dictionaryWithObjectsAndKeys:
 		 [NSNumber numberWithInteger:indexStreaminfo], elementStreaminfo,
 		 [NSNumber numberWithInteger:indexRequestID], elementRequestID,
-		 [NSNumber numberWithInteger:indexDescription], elementDescription,
 		 [NSNumber numberWithInteger:indexTitle], elementTitle,
+		 [NSNumber numberWithInteger:indexDescription], elementDescription,
 		 [NSNumber numberWithInteger:indexComuName], elementComuName,
+		 [NSNumber numberWithInteger:indexComuID], elementComuID,
 		 [NSNumber numberWithInteger:indexThumbnail], elementThumbnail, nil];
 
 	return elementDict;
@@ -444,6 +445,9 @@ NSString *embedContent;
 
 - (BOOL) isSame:(NLProgram *)program
 {
+	if (isOfficial == YES)
+		return NO;
+
 	if (([[program communityID] isEqualToString:communityID] == YES) &&
 		([[program broadcastOwner] isEqualToString:broadcastOwner] == YES))
 		return YES;
@@ -456,8 +460,8 @@ NSString *embedContent;
 - (void) terminate
 {
 	broadCasting = NO;
-	if ([elapseTimer isValid] == YES)			[elapseTimer invalidate];
-	if ([programStatusTimer isValid] == YES)	[programStatusTimer invalidate];
+	[self stopElapsedTimer];
+	[self stopProgramStatusTimer];
 	[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
 }// end - (void) terminate
 

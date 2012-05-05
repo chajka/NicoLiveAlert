@@ -65,9 +65,9 @@ NSUInteger		currentElement;
 #else
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 #endif
-	NSURL *alrtinfoURL = [NSURL URLWithString:MSQUERYAPI];
+	NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:MSQUERYAPI] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:5.0];
 	NSURLResponse *resp = NULL;
-	NSData *alertInfo = [HTTPConnection HTTPData:alrtinfoURL response:&resp];
+	NSData *alertInfo = [HTTPConnection HTTPDataWithRequest:req response:&resp];
 	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:alertInfo];
 	[parser setDelegate:self];
 	@try {

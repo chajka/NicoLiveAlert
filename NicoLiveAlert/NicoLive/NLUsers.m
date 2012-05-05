@@ -35,7 +35,7 @@
 		usersState = [[NSMutableDictionary alloc] init];
 		users = [[NSMutableArray alloc] init];
 		accounts = [[NSMutableDictionary alloc] initWithDictionary:[self makeAccounts:activeUsers]];
-		originalWatchList = [self makeManualWatchList:manualWatchList];
+		originalWatchList = [[NSMutableDictionary alloc] initWithDictionary:[self makeManualWatchList:manualWatchList]];
 		watchlist = [[NSMutableDictionary alloc] init];
 		[self updateCurrentWatchlist];
 		usersMenu = NULL;

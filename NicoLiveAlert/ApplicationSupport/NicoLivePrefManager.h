@@ -17,7 +17,7 @@
 - (NSArray *) loadManualWatchList;
 - (void) saveManualWatchList:(NSArray *)watchlist;
 	// account tab
-- (NSArray *)loadAccountsTo:(NSArrayController *)accountArray;
+- (NSDictionary *)loadAccounts;
 - (void) saveAccountsList:(NSArray *)accountsList;
 	// application collaboration tab
 - (NSArray *) loadLauncherDict;

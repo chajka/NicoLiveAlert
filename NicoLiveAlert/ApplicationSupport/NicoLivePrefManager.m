@@ -86,26 +86,21 @@
 }// end - (void) saveManualWatchList
 
 	// account tab
-- (NSArray *)loadAccountsTo:(NSArrayController *)accountArray
+- (NSDictionary *)loadAccounts
 {
-	NSArray *accounts = [myDefaults objectForKey:AccountsList];
-	NSMutableArray *ary = [NSMutableArray array];
 
-		// set data to table
-	[accountArray addObjects:accounts];
-	
-		// make enabled accounts array
-	for (NSDictionary *account in accounts)
-		if ([[account objectForKey:keyAccountWatchEnabled] boolValue] == YES)
-			[ary addObject:[account objectForKey:keyAccountUserID]];
-		// end if watch enabled
-	// end for
+	NSMutableDictionary *tmpAccounts = [NSMutableDictionary dictionary];
+	NSArray *savedAccounts = [myDefaults objectForKey:AccountsList];
+	for (NSDictionary *accountData in savedAccounts)
+		[tmpAccounts setValue:[accountData valueForKey:keyAccountWatchEnabled]
+					   forKey:[accountData valueForKey:keyAccountUserID]];
+	// end foreach saved accounts	
 
-	if ([ary count] != 0)
-		return [NSArray arrayWithArray:ary];
+	if ([tmpAccounts count] != 0)
+		return [NSDictionary dictionaryWithDictionary:tmpAccounts];
 	else
 		return NULL;
-}// end - (NSArray *)loadAccountsTo:(NSArrayController *)accountArray
+}// end - (NSDictionary *)loadAccounts
 
 - (void) saveAccountsList:(NSArray *)accountsList
 {

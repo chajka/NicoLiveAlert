@@ -95,6 +95,24 @@ const NSTimeInterval defaultTimeout = 30; // second
 		return receivedData;
 }// end + (NSString *) HTTPSource:(NSURL *)url
 
++ (NSData *) HTTPDataWithRequest:(NSURLRequest *)req response:(NSURLResponse * __autoreleasing *)resp
+{
+	NSError *error = nil;
+	NSURLResponse *re;
+	NSData *receivedData = [NSURLConnection sendSynchronousRequest:req
+												 returningResponse:&re
+															 error:&error];
+	if (resp != NULL)
+		*resp = re;
+		// endif 
+	
+		// error check
+	if ([error code] != noErr)
+		return NULL;
+	else
+		return receivedData;
+}// end + (NSData *) HTTPDataWithRequest:(NSURLRequest *)req response:(NSURLResponse * __autoreleasing *)resp
+
 #pragma mark -
 #pragma mark construct/destruct
 - (id) init

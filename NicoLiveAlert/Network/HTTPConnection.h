@@ -32,13 +32,23 @@
 + (NSString *) HTTPSource:(NSURL *)url response:(NSURLResponse * __autoreleasing *)resp;
 
 /*!
-	@method HTTPSource:
+	@method HTTPData:response:
 	@abstract Return contents of requested URL by NSData.
 	@param URL of request.
 	@param resoponse from server.
 	@result html data by binary format.
  */
 + (NSData *) HTTPData:(NSURL *)url response:(NSURLResponse * __autoreleasing *)resp;
+
+/*!
+	@method HTTPDataWithRequest:response:
+	@abstract Return contents of requested URL by NSData.
+	@param NSURLRequest object.
+	@param resoponse from server.
+	@result html data by binary format.
+*/
++ (NSData *) HTTPDataWithRequest:(NSURLRequest *)req response:(NSURLResponse * __autoreleasing *)resp;
+
 	// constructor
 /*!
 	@method init

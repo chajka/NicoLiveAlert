@@ -344,7 +344,7 @@ NSLog(@"watchUser %@",progInfo);
 
 - (void) streamEventHasSpaceAvailable:(NSStream *)stream
 {
-	if ([programListSocket isOutputStream:stream] == YES)
+	if ((sendrequest == NO) && [programListSocket isOutputStream:stream] == YES)
 	{
 		NSInteger byteToWrite = 0;
 		NSString *request = [NSString stringWithFormat:REQUESTFORMAT,[serverInfo thread]];
@@ -358,6 +358,7 @@ NSLog(@"watchUser %@",progInfo);
 - (void) streamEventErrorOccurred:(NSStream *)stream
 {
 	connected = NO;
+	sendrequest = NO;
 	checkRiseInterval = ConnectionReactiveCheckInterval;
 	[center postNotificationName:NLNotificationConnectionLost object:NULL];
 }// end - (void) streamEventErrorOccurred:(NSStream *)stream
@@ -382,6 +383,7 @@ NSLog(@"watchUser %@",progInfo);
 	if ((connected == YES) && ([programListSocket isInputStream:stream]))
 	{
 		connected = NO;
+		sendrequest = NO;
 		[center postNotificationName:NLNotificationConnectionLost object:NULL];
 	}// end if
 }// end - (void) streamEventEndEncountered:(NSStream *)stream

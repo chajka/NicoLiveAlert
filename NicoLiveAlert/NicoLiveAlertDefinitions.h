@@ -12,26 +12,27 @@
 // common definition
 
 #define EMPTYSTRING		@""
-#define WatchListPasteboardType	@"tv.from.chajka.NicoLiveAlert.watchlist"
-#define LauncherPasteboardType	@"tv.from.chajka.NicoLiveAlert.launcher"
+#define WatchListPasteboardType		@"tv.from.chajka.NicoLiveAlert.watchlist"
+#define AccountListPasteboardType	@"tv.from.chajka.NicoLiveAlert.account"
+#define LauncherPasteboardType		@"tv.from.chajka.NicoLiveAlert.launcher"
 
 
 /*!
  @defined 
 */
-#define NICOVIDEOURI	@"https://secure.nicovideo.jp"
-#define NICOLOGINSERVER	@"secure.nicovideo.jp"
-#define NICOLOGINPATH	@""
-#define NICOLOGINURL	@"https://secure.nicovideo.jp/secure/login"
-#define NICOLOGINPARAM	@"?site=nicolive_antenna"
-#define LOGINQUERYMAIL	@"mail"
-#define LOGINQUERYPASS	@"password"
-#define ALERTAPIURL		@"http://live.nicovideo.jp/api/getalertstatus"
-#define ALERTQUERY		@"http://live.nicovideo.jp/api/getalertstatus?ticket=%@"
-#define MSQUERYAPI		@"http://live.nicovideo.jp/api/getalertinfo"
+#define NICOVIDEOURI		@"https://secure.nicovideo.jp"
+#define NICOLOGINSERVER		@"secure.nicovideo.jp"
+#define NICOLOGINPATH		@""
+#define NICOLOGINURL		@"https://secure.nicovideo.jp/secure/login"
+#define NICOLOGINPARAM		@"?site=nicolive_antenna"
+#define LOGINQUERYMAIL		@"mail"
+#define LOGINQUERYPASS		@"password"
+#define ALERTAPIURL			@"http://live.nicovideo.jp/api/getalertstatus"
+#define ALERTQUERY			@"http://live.nicovideo.jp/api/getalertstatus?ticket=%@"
+#define MSQUERYAPI			@"http://live.nicovideo.jp/api/getalertinfo"
 #define REQUESTFORMAT		@"<thread thread=\"%@\" version=\"20061206\" res_from=\"-1\"/>\0"
-#define STREAMINFOQUERY	@"http://live.nicovideo.jp/api/getstreaminfo/%@"
-#define STREMEMBEDQUERY	@"http://live.nicovideo.jp/embed/%@"
+#define STREAMINFOQUERY		@"http://live.nicovideo.jp/api/getstreaminfo/%@"
+#define STREMEMBEDQUERY		@"http://live.nicovideo.jp/embed/%@"
 #define PROGRAMURLFORMAT	@"http://live.nicovideo.jp/watch/%@"
 
 #pragma mark -
@@ -104,6 +105,16 @@ enum WatchTargetKind {
 #define PARTIALPATHFORMAT	@"~/Library/Preferences/%@"
 #define KEYBUNDLEIDENTIFY	@"CFBundleIdentifier"
 
+	// About panel custmizing keys
+#define keyCredits			@"Credits"
+#define keyAppName			@"ApplicationName"
+#define keyAppIcon			@"ApplicationIcon"
+#define keyVersion			@"Version"
+#define keyCopyright		@"Copyright"
+#define keyAppVersion		@"ApplicationVersion"
+#define AppNameLepard		@"NicoLiveAlert (Leopard)"
+#define AppnameLion			@"NicoLiveAlert (Lion)"
+
 #pragma mark -
 #pragma mark definitions for NLStatusbar
 
@@ -123,6 +134,12 @@ enum WatchTargetKind {
 #define NICOKEYCHAINLABEL		@"Web form password"
 
 #define kNoUsers				(0)
+
+#define keyAccountWatchEnabled	@"WatchEnabled"
+#define keyAccountUserID		@"UserID"
+#define keyAccountNickname		@"Nickname"
+
+#define OriginalWatchList		NSLocalizedString(@"OriginalWatchList", @"")
 
 
 #pragma mark definitions for XMLParsing
@@ -161,14 +178,20 @@ enum elementLiteralIndex {
 #pragma mark -
 #pragma mark definitions for class NLProgramList
 
+#define NLNotificationOpenByLiveNo		@"NLNotificationOpenByLiveNo"
 #define NLNotificationConnectionLost	@"NLNotificationConnectionLost"
 #define NLNotificationConnectionRised	@"NLNotificationConnectionRised"
+#define NLNotificationAutoOpen			@"NLNotificationAutoOpen"
 #define dataSeparator					@","
 #define liveNoAppendFormat				@"lv%@"
 #define liveOfficialString				@"official"
-#define ConnectionAliveCheckInterval	(3.0)
+#define ProgramNoRegex					@"lv\\d+"
 #define ServerTimeOut					(60 * 1.5)
-#define ConnectionReactiveCheckInterval	(60 * 5)
+#define ConnectionAliveCheckInterval	(3.0)
+#define ConnectionReactiveCheckInterval	(60 * 0.5)
+#define MaintainfromReactiveInterval	(60 * 5)
+#define MaintRegex			@"<code>maintenance</code>"
+#define RiseConnectRegex	@"<getalertstatus status=\"ok\" time=\"\\d+\">"
 
 enum {
 	offsetLiveNo = 0,
@@ -193,7 +216,6 @@ enum {
 #define ProgStartTimeRegex	@"(\\d+:\\d+)</div></?[ap]>"
 #define ProgramURLRegex		@"<a href=\"(http://live.nicovideo.jp/watch/lv\\d+)\""
 #define ProgStateRegex		@"class=\"(beforeTS|onair|done)\""
-#define MaintRegex			@"<code>maintenance</code>"
 
 #define ONAIRSTATE			@"onair"
 #define BEFORESTATE			@"beforeTS"
@@ -235,6 +257,12 @@ enum elementStreamInfoIndex {
 
 #pragma mark -
 #pragma mark GUI
+#pragma mark NLArrayControllerDragAndDrop
+
+#define NLNotificationSelectRow	@"NLNotificationSelectRow"
+#define keyRow					@"Row"
+#define KeyTableView			@"Table"
+
 #pragma mark -
 #pragma mark Definitions for NLLauncherTableDelegate
 
@@ -244,13 +272,56 @@ enum elementStreamInfoIndex {
 #define keyLauncherAppPath		@"ApplicationPath"
 
 #pragma mark -
-#pragma mark for debug
-#ifdef DEBUG
-#define LOGPATH	@"~/Log"
-#define XMLLOGFILENAME	@"XMLData.txt"
-#define WATCHFILENAME	@"watchData.txt"
-#define XMLTAGCHAT		@"chat"
-#endif /* DEBUG */
+#pragma mark Preference definition
+
+enum TextfieldTags {
+	tagWatchItemBody = 1001,
+	tagWatchItemComment,
+	tagAccountLoginID = 1011,
+	tagAccountPassword
+};
+
+enum AppCollaboCheckBoxes {
+	tagDoNotAutoOpenInMyBroadcast = 1101,
+	tagKickFMELauncher,
+	tagKickCharlestonOnMyBroadcast,
+	tagKickCharlestonAtAutoOpen,
+	tagKickCharlestonByOpenFromMe
+};
+
+#pragma mark watchlist item keys
+#define WathListTable			@"WathListTable"
+#define AccountsList			@"AccountsList"
+#define CheckOfficialChannel	@"CheckOfficialChannel"
+
+#pragma mark account item keys
+#define AccauntTable			@"AccauntTable"
+
+#pragma mark application collaboration keys
+#define DoNotAutoOpenInMyBroadcast	@"DoNotAutoOpenInMyBroadcast"
+#define KickFMELauncher				@"KickFMELauncher"
+#define KickCharlestonOnMyBroadcast	@"KickCharlestonOnMyBroadcast"
+#define KickCharlestonAtAutoOpen	@"KickCharlestonAtAutoOpen"
+#define KickCharlestonByOpenFromMe	@"KickCharlestonByOpenFromMe"
+#define TinyLauncerApplicatoins		@"TinyLauncerApplicatoins"
+
+#define LauncItemList				@"LauncItemList"
+
+#pragma mark -
+#pragma mark Growling
+
+#define GrowlNotifyStartMonitoring		@"Start monitoring"
+#define GrowlNotifyDisconnected			@"Disconnected"
+#define GrowlNotifyFoundOfficialProgram	@"Found Official Program"
+#define GrowlNotifyStartOfficialProgram	@"Start Official Program"
+#define GrowlNotifyFoundUserProgram		@"Found User Program"
+#define GrowlNotifyStartUserProgram		@"Start User Program"
+#define	GrowlNotifyFoundListedProgram	@"Found in Manual Watch List"
+#define GrowlNotifyStartListedProgram	@"Start in Manual watch List"
+#define GrowlNotifyStartOfficialProgram	@"Start Official Program"
+
+#pragma mark -
+#pragma mark debugging
 
 #ifdef TRACECALL
 #define TRACEFUNC   NSLog(@"%@ : %@", NSStringFromSelector(_cmd), [self class]);

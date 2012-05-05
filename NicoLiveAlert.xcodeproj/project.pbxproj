@@ -15,7 +15,7 @@
 		1D141CF4151D8DAA00CEB686 /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
 		1D141CF5151D8DAA00CEB686 /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
 		1D141CF6151D8DAA00CEB686 /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
-		1D141CFE151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1D141CFE151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		1D141CFF151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1D141D00151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; };
 		1D141D01151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; };
@@ -81,7 +81,7 @@
 		1D6500C6150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
 		1D6500C7150CB63A002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500C8150CB63E002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
-		1D6500CA150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1D6500CA150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		1D6500CB150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1D6500CC150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
 		1D6500CD150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
@@ -1213,6 +1213,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = NicoLiveAlert;
 				PROVISIONING_PROFILE = "";
@@ -1233,6 +1234,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = NicoLiveAlert;
 				PROVISIONING_PROFILE = "";

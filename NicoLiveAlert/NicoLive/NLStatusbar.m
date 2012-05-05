@@ -195,7 +195,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 {
 	CIImage *invertImage = NULL;
 	CIImage *destImage = NULL;
-	if (((numberOfPrograms == 0) && (userState == 0)) || (connected == NO))
+	if (((numberOfPrograms == 0) && (userState == 0)) && (connected == NO))
 	{		// crop image
 		[statusbarIcon setSize:iconSize];
 		[statusbarAlt setSize:iconSize];

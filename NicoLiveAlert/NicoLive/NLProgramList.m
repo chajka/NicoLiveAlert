@@ -47,7 +47,6 @@ OnigRegexp			*checkstatus;
 		sendrequest = NO;
 		isOfficial = NO;
 		watchOfficial = YES;
-		waitingConnection = YES;
 		connected = NO;
 		programRegex = [OnigRegexp compile:ProgramNoRegex];
 		maintRegex = [OnigRegexp compile:MaintRegex];
@@ -100,9 +99,6 @@ OnigRegexp			*checkstatus;
 - (BOOL) startListen
 {
 	BOOL success = NO;
-	if ((waitingConnection == NO) || (connected == YES))
-		return NO;
-
 	if ([connectionRiseMonitor isValid] == YES)
 	{
 		[connectionRiseMonitor invalidate];
@@ -159,7 +155,6 @@ OnigRegexp			*checkstatus;
 
 - (void) stopListen
 {		//
-		//
 	[self halt];
 
 		// stop & reset keepAliveMonitor
@@ -349,7 +344,7 @@ NSLog(@"watchUser %@",progInfo);
 
 - (void) streamEventHasSpaceAvailable:(NSStream *)stream
 {
-	if ((sendrequest == NO) && ([programListSocket isOutputStream:stream] == YES))
+	if ([programListSocket isOutputStream:stream] == YES)
 	{
 		NSInteger byteToWrite = 0;
 		NSString *request = [NSString stringWithFormat:REQUESTFORMAT,[serverInfo thread]];
@@ -363,7 +358,6 @@ NSLog(@"watchUser %@",progInfo);
 - (void) streamEventErrorOccurred:(NSStream *)stream
 {
 	connected = NO;
-	waitingConnection = YES;
 	checkRiseInterval = ConnectionReactiveCheckInterval;
 	[center postNotificationName:NLNotificationConnectionLost object:NULL];
 }// end - (void) streamEventErrorOccurred:(NSStream *)stream
@@ -371,23 +365,25 @@ NSLog(@"watchUser %@",progInfo);
 #pragma mark StreamEventDelegate (optional)
 - (void) streamEventOpenCompleted:(NSStream *)stream
 {
-	if ([programListSocket isInputStream:stream])
+	if ((connected == NO) && ([programListSocket isInputStream:stream]))
 	{
-		connected = YES;
-		waitingConnection = NO;
 #if __has_feature(objc_arc) == 0
 		if (lastTime != NULL)
 			[lastTime release];
 #endif
 		lastTime = [[NSDate alloc] init];
 		[center postNotificationName:NLNotificationConnectionRised object:NULL];
+		connected = YES;
 	}
 }// end - (void) streamEventOpenCompleted:(NSStream *)stream
 
 - (void) streamEventEndEncountered:(NSStream *)stream
 {
 	if ((connected == YES) && ([programListSocket isInputStream:stream]))
+	{
+		connected = NO;
 		[center postNotificationName:NLNotificationConnectionLost object:NULL];
+	}// end if
 }// end - (void) streamEventEndEncountered:(NSStream *)stream
 
 - (void) streamEventNone:(NSStream *)stream

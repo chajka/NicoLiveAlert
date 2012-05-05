@@ -8,7 +8,7 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "SocketConnection.h"
-#import "NLMessageServerData.h"
+#import "NLMessageServerInfo.h"
 
 #define TICKET @"<thread thread=\"%@\" version=\"20061206\" res_from=\"-1\"/>\0"
 
@@ -16,7 +16,7 @@
 	NSMutableData *dataBuffer;
 	NSInteger	currentTestNo;
 	NSString	*dataString;
-	NLMessageServerData *ms;
+	NLMessageServerInfo *ms;
 }
 
 @end

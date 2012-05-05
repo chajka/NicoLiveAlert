@@ -31,7 +31,7 @@
 
 - (void) test_02_init
 {
-	ms = [[NLMessageServerData alloc] init];
+	ms = [[NLMessageServerInfo alloc] init];
 	STAssertNotNil(ms, @"message server allocate fail");
 	SocketConnection *socket = [[SocketConnection alloc] init];
 	STAssertNotNil(socket, @"socket allocate fail");
@@ -52,7 +52,7 @@
 - (void) test_03_initWith
 {
 	currentTestNo = 3;
-	ms = [[NLMessageServerData alloc] init];
+	ms = [[NLMessageServerInfo alloc] init];
 	STAssertNotNil(ms, @"message server allocate fail");
 	SocketConnection *socket = [[SocketConnection alloc] initWithServer:[ms serveName] andPort:[ms port] direction:SCDirectionBoth];
 	STAssertNotNil(socket, @"socket allocate fail");

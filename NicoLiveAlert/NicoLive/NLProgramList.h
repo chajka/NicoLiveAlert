@@ -21,10 +21,13 @@
 	NLActivePrograms	*activePrograms;
 	__strong NSNotificationCenter *center;
 	NSDate				*lastTime;
+	NSTimeInterval		checkRiseInterval;
 	NSTimer				*keepAliveMonitor;
 	NSTimer				*connectionRiseMonitor;
 	BOOL				watchOfficial;
 	BOOL				isOfficial;
+	BOOL				isMaintainance;
+	BOOL				waitingConnection;
 	BOOL				connected;
 	BOOL				enableAutoOpen;
 }

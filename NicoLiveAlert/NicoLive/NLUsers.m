@@ -89,7 +89,7 @@
 		else
 			[usersState setValue:deactive forKey:[account username]];
 		// end if is set userState
-		[users addObject:[account userid]];
+		[users addObject:account];
 	}// end for
 
 	return usersDict;
@@ -134,25 +134,6 @@
 
 #pragma mark -
 #pragma mark user management
-- (void) syncAccountAndTable:(NSArrayController *)accountTable
-{
-	NSMutableDictionary *tmpEntries = [NSMutableDictionary dictionary];
-	for (NSDictionary *user in [accountTable arrangedObjects])
-		[tmpEntries setObject:active forKey:[user valueForKey:keyAccountUserID]];
-
-	for (NLAccount *account in [accounts allValues])
-	{
-		if ([tmpEntries objectForKey:[account userid]] == NULL)
-		{
-			NSMutableDictionary *tmpEntry = [NSMutableDictionary dictionary];
-			[tmpEntry setValue:active forKey:keyAccountWatchEnabled];
-			[tmpEntry setValue:[account userid] forKey:keyAccountUserID];
-			[tmpEntry setValue:[account username] forKey:keyAccountNickname];
-			[accountTable addObject:tmpEntry];
-		}// end if not in account table
-	}// end foreach accounts
-}// end - (void) syncAccountAndTable:(NSArrayController *)accountTable
-
 - (OSStatus) addUser:(NSString *)useraccount withPassword:(NSString *)userpassword
 {
 	OSStatus error = 1;
@@ -179,7 +160,8 @@
 	if ([keychainOfUser addTokeychain] == YES)
 	{
 		error = noErr;
-		[users addObject:[user userid]];
+		[users addObject:user];
+		[self updateUserSateMenu];
 	}
 	else
 	{
@@ -244,6 +226,34 @@
 		else
 			[userItem setState:NSOffState];
 		// end if set user's state
+		[userItem setEnabled:YES];
+		[usersMenu addItem:userItem];
+#if __has_feature(objc_arc) == 0
+		[userItem autorelease];
+#endif
+	}// end foreach user
+	[self calcUserState];
+}// end - (NSMenu *) creteUserStateMenu
+
+- (void) updateUserSateMenu
+{
+	for (NSMenuItem *item in [usersMenu itemArray])
+		[usersMenu removeItem:item];
+	// end foreach delete users menuitem.
+	
+	NSMenuItem *userItem;
+	NSImage *onStateImg = [NSImage imageNamed:@"NLOnState"];
+	NSImage *offStateImg = [NSImage imageNamed:@"NLOffStateRed"];
+	for (NSString *user in [usersState allKeys])
+	{
+		userItem = [[NSMenuItem alloc] initWithTitle:user action:@selector(toggleUserState:) keyEquivalent:@""];
+		[userItem setOnStateImage:onStateImg];
+		[userItem setOffStateImage:offStateImg];
+		if ([[usersState valueForKey:user] isEqual:active] == YES)
+			[userItem setState:NSOnState];
+		else
+			[userItem setState:NSOffState];
+			// end if set user's state
 		[userItem setEnabled:YES];
 		[usersMenu addItem:userItem];
 #if __has_feature(objc_arc) == 0

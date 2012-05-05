@@ -52,12 +52,6 @@
 #pragma mark -
 #pragma mark user management
 /*!
- @method syncAccountAndTable:
- @param userAccountArrray;
-*/
-- (void) syncAccountAndTable:(NSArrayController *)accountTable;
-
-/*!
 	@method addUser:andPassword:
 	@abstract add user account by maila ddress with password.
 	This user hold by NLAccount instance in reciever.

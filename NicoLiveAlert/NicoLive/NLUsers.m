@@ -84,7 +84,7 @@
 		[account autorelease];
 #endif
 		[usersDict setValue:account forKey:[account username]];
-		if ([users containsObject:[account userid]] == YES)
+		if ([activeUsers containsObject:[account userid]] == YES)
 			[usersState setValue:active forKey:[account username]];
 		else
 			[usersState setValue:deactive forKey:[account username]];

@@ -43,8 +43,10 @@ static CGFloat disconnectedColorAlpha = 0.70;
 - (void) installStatusbarMenu;
 - (void) setupMembers:(NSString *)imageName;
 - (void) makeStatusbarIcon;
-- (void) updateMenuItem:(NSNotification *)notification;
 - (void) updateToolTip;
+- (void) updateMenuItem:(NSNotification *)notification;
+- (void) connectionRised:(NSNotification *)notification;
+- (void) connectionDown:(NSNotification *)notification;
 @end
 
 @implementation NLStatusbar
@@ -76,8 +78,8 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		[self makeStatusbarIcon];
 		NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
 		[this addObserver:self selector:@selector(updateMenuItem:) name:NLNotificationTimeUpdated object:NULL];
-		[this addObserver:self selector:@selector(connectionRised) name:NLNotificationConnectionRised object:NULL];
-		[this addObserver:self selector:@selector(connectionDown) name:NLNotificationConnectionLost object:NULL];
+		[this addObserver:self selector:@selector(connectionRised:) name:NLNotificationConnectionRised object:NULL];
+		[this addObserver:self selector:@selector(connectionDown:) name:NLNotificationConnectionLost object:NULL];
 	}// end if
 	return self;
 }// end - (id) initWithImage:(NSString *)imageName
@@ -286,28 +288,6 @@ static CGFloat disconnectedColorAlpha = 0.70;
 #endif
 }// end - (CIImage *) makeStatusbarIcon
 
-- (void) updateMenuItem:(NSNotification *)notification
-{
-	NLProgram *prog = [notification object];
-	NSMenuItem *progMenu = [prog programMenu];
-	NSArray *menuItems = NULL;
-	if ([prog isOfficial] == YES)
-		menuItems = [[[statusbarMenu itemWithTag:tagOfficial] submenu] itemArray];
-	else
-		menuItems = [[[statusbarMenu itemWithTag:tagPorgrams] submenu] itemArray];
-
-	for (NSMenuItem *item in menuItems)
-	{
-		if (progMenu == item)
-		{
-			[item setState:NSMixedState];
-			[item setState:NSOffState];
-		}// end if
-	}// end foreach menuItem
-
-	[self updateToolTip];
-}// end - (void) updateMenuItem:(NSNotification *)notification
-
 - (void) updateToolTip
 {
 	NSMutableString *tooltip = NULL;
@@ -346,6 +326,42 @@ static CGFloat disconnectedColorAlpha = 0.70;
 
 	[statusBarItem setToolTip:[array componentsJoinedByString:StringConcatinater]];
 }// end - (void) updateToolTip
+
+- (void) updateMenuItem:(NSNotification *)notification
+{
+	NLProgram *prog = [notification object];
+	NSMenuItem *progMenu = [prog programMenu];
+	NSArray *menuItems = NULL;
+	if ([prog isOfficial] == YES)
+		menuItems = [[[statusbarMenu itemWithTag:tagOfficial] submenu] itemArray];
+	else
+		menuItems = [[[statusbarMenu itemWithTag:tagPorgrams] submenu] itemArray];
+	
+	for (NSMenuItem *item in menuItems)
+	{
+		if (progMenu == item)
+		{
+			[item setState:NSMixedState];
+			[item setState:NSOffState];
+		}// end if
+	}// end foreach menuItem
+	
+	[self updateToolTip];
+}// end - (void) updateMenuItem:(NSNotification *)notification
+
+#pragma mark -
+#pragma mark connection status management
+- (void) connectionRised:(NSNotification *)aNotification
+{
+	connected = YES;
+	[self makeStatusbarIcon];
+}// end - (void) connectionRised
+
+- (void) connectionDown:(NSNotification *)aNotification
+{
+	connected = NO;
+	[self makeStatusbarIcon];	
+}// end - (void) connectionDown
 
 #pragma mark -
 #pragma mark accessor of watchOfficial
@@ -490,19 +506,5 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	connected = !connected;
 	[self makeStatusbarIcon];
 }// end - (void) toggleConnected
-
-#pragma mark -
-#pragma mark connection status management
-- (void) connectionRised
-{
-	connected = YES;
-	[self makeStatusbarIcon];
-}// end - (void) connectionRised
-
-- (void) connectionDown
-{
-	connected = NO;
-	[self makeStatusbarIcon];	
-}// end - (void) connectionDown
 
 @end

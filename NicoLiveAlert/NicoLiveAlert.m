@@ -84,23 +84,54 @@
 
 - (void) setupAccounts
 {
-	NSMutableDictionary *watchList = [NSMutableDictionary dictionary];
-	for (NSDictionary *item in [aryManualWatchlist arrangedObjects])
+		// make active accounts
+	NSMutableArray *activeAccounts = [NSMutableArray array];
+	NSDictionary *savedAccounts = [prefs loadAccounts];
+	for (NSNumber *userid in [savedAccounts allKeys])
 	{
-		NSNumber *autoOpen = [item valueForKey:keyAutoOpen];
-		NSString *watchItem = [[item valueForKey:keyWatchItem] string];
-		
-		[watchList setValue:autoOpen forKey:watchItem];
+		if ([[savedAccounts objectForKey:userid] boolValue] == YES)
+			[activeAccounts addObject:userid];
 	}// end foreach watchList items
-	
+
+		// make watch list dictionary
+	NSMutableDictionary *watchList = [NSMutableDictionary dictionary];
+	for (NSDictionary *watchItem in [aryManualWatchlist arrangedObjects])
+		[watchList setValue:[watchItem valueForKey:keyAutoOpen]
+							forKey:[[watchItem valueForKey:keyWatchItem] string]];
+	// end foreach watch item
+
 	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:activeAccounts andManualWatchList:watchList];
-	[nicoliveAccounts syncAccountAndTable:aryAccountItems];
+		//	[nicoliveAccounts syncAccountAndTable:aryAccountItems];
 	[comboLoginID setUsesDataSource:YES];
 	[comboLoginID setDataSource:nicoliveAccounts];
 	NSMenuItem *accountsItem = [menuStatusbar itemWithTag:tagAccounts];
 	[accountsItem setSubmenu:[nicoliveAccounts usersMenu]];
 	[accountsItem setState:[nicoliveAccounts userState]];
 	[accountsItem setEnabled:YES];
+
+		// store accounts to table
+	NSMutableDictionary *entry = NULL;
+	NSNumber *enabledAtStartup = NULL;
+	for (NLAccount *account in [nicoliveAccounts users])
+	{
+		enabledAtStartup = [savedAccounts objectForKey:[account userid]];
+		entry = [NSMutableDictionary dictionary];
+		if (enabledAtStartup != NULL)
+		{		// already entried accounts
+			[entry setObject:enabledAtStartup forKey:keyAccountWatchEnabled];
+			[entry setObject:[account userid] forKey:keyAccountUserID];
+			[entry setObject:[account username] forKey:keyAccountNickname];
+		}
+		else
+		{		// newly fetch from keychain
+			[entry setObject:[NSNumber numberWithBool:YES] forKey:keyAccountWatchEnabled];
+			[entry setObject:[account userid] forKey:keyAccountUserID];
+			[entry setObject:[account username] forKey:keyAccountNickname];
+		}// end if known or new entry
+			// add entry to table
+		[aryAccountItems addObject:entry];
+			// cleanup entry for reuse
+	}// end foreach account
 }// end - (void) setupAccounts
 
 - (void) setupTables
@@ -137,9 +168,6 @@
 	ary = [prefs loadManualWatchList];
 	if ([ary count] != 0)
 		[aryManualWatchlist	addObjects:ary];
-
-		// account list
-	activeAccounts = [prefs loadAccountsTo:aryAccountItems];
 
 		// launcher items
 	ary = [prefs loadLauncherDict];
@@ -389,6 +417,24 @@
 
 - (IBAction) addAccount:(id)sender
 {
+	NSString *account = [comboLoginID stringValue];
+	NSString *password = [secureFieldPassword stringValue];
+	OSStatus status;
+	status = [nicoliveAccounts addUser:account withPassword:password];
+	if (status == noErr)
+		for (NLAccount *user in [nicoliveAccounts users])
+		{
+			if ([[user mailaddr] isEqualToString:account] == YES)
+			{
+				NSMutableDictionary *entry = [NSMutableDictionary dictionary];
+				[entry setValue:[NSNumber numberWithBool:YES] forKey:keyAccountWatchEnabled];
+				[entry setValue:[user userid] forKey:keyAccountUserID];
+				[entry setValue:[user username] forKey:keyAccountNickname];
+				[aryAccountItems addObject:entry];
+
+				break;
+			}// end if user is now added
+		}// end foreach user
 }// end - (IBAction) addAccount:(id)sender
 
 	// application collaboration actions
@@ -429,6 +475,7 @@
 			break;
 
 		case tagAccountLoginID:
+			[secureFieldPassword setStringValue:@""];
 		case tagAccountPassword:
 			if (([[comboLoginID stringValue] isEqualToString:EMPTYSTRING] == NO)
 				&& ([[secureFieldPassword stringValue] isEqualToString:EMPTYSTRING] == NO))

@@ -63,7 +63,6 @@
 	__strong IBOutlet NLArrayControllerDragAndDrop	*aryLauncherItems;
 	
 	__strong NSStatusItem							*sbItem;
-	NSArray											*activeAccounts;
 	NLStatusbar										*statusBar;
 	NicoLivePrefManager								*prefs;
 	NLUsers											*nicoliveAccounts;

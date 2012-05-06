@@ -21,7 +21,7 @@
 #else
 @interface NicoLiveAlert : NSObject <GrowlApplicationBridgeDelegate> {
 #endif
-		// allover interface items
+		// all over interface items
 	__strong IBOutlet NSMenu					*menuStatusbar;
 	__strong IBOutlet NSPanel					*preferencePanel;
 	
@@ -38,6 +38,7 @@
 	__strong IBOutlet NSTextField				*watchItemName;
 	__strong IBOutlet NSTextField				*watchItemComment;
 	__strong IBOutlet NSButton					*btnAddWatchListItem;
+	__strong IBOutlet NSButton					*btnRemoveWatchListItem;
 
 			// login information items
 	__strong IBOutlet NSComboBox				*comboLoginID;
@@ -45,6 +46,7 @@
 	__strong IBOutlet IOMTableViewDragAndDrop	*tblAccountList;
 	__strong IBOutlet NSView					*viewNoAccountNotify;
 	__strong IBOutlet NSButton					*btnAddAccount;
+	__strong IBOutlet NSButton					*btnRemoveAccount;
 	__strong IBOutlet NSButton					*btnUpdateAccountInfo;
 
 			// other application relation information items

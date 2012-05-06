@@ -24,6 +24,7 @@
 - (void) listenRestart:(NSNotification *)note;
 - (void) removeProgramNoFromTable:(NSNotification *)note;
 - (void) doOutoOpen:(NSNotification *)note;
+- (void) rowSelected:(NSNotification *)note;
 @end
 
 @implementation NicoLiveAlert
@@ -215,9 +216,10 @@
 	[application addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
 		// open by program number hook
 	[application addObserver:self selector:@selector(removeProgramNoFromTable:) name:NLNotificationOpenByLiveNo object:NULL];
-
 		// AutoOpen Notification hook
 	[application addObserver:self selector:@selector(doOutoOpen:) name:NLNotificationAutoOpen object:NULL];
+		// Tableview Notification hook
+	[application addObserver:self selector:@selector(rowSelected:) name:NLNotificationSelectRow object:NULL];
 }// end - (void) hookNotifications
 
 - (void) removeNotifications
@@ -238,6 +240,8 @@
 	[application removeObserver:self name:NLNotificationOpenByLiveNo object:NULL];
 		// AutoOpen Notification
 	[application removeObserver:self name:NLNotificationAutoOpen object:NULL];
+		// TableView Notification
+	[application removeObserver:self name:NLNotificationSelectRow object:NULL];
 }// end - (void) hookNotifications
 
 - (void) listenHalt:(NSNotification *)note
@@ -266,6 +270,29 @@
 {
 	[[NSWorkspace sharedWorkspace] openURL:[note object]];
 }// end - (void) doOutoOpen:(NSNotification *)note
+
+- (void) rowSelected:(NSNotification *)note
+{
+	IOMTableViewDragAndDrop *targetTable = [[note object] objectForKey:KeyTableView];
+	NSInteger selectedRow = [[[note object] objectForKey:keyRow] integerValue];
+
+	if (targetTable == tblTinyLauncher)
+		return;
+
+	if (targetTable == tblAccountList)
+		if (selectedRow != -1)
+			[btnRemoveAccount setEnabled:YES];
+		else
+			[btnRemoveAccount setEnabled:NO];
+	//end if 
+
+	if (targetTable == tblManualWatchList)
+		if (selectedRow != -1)
+			[btnRemoveAccount setEnabled:YES];
+		else
+			[btnRemoveAccount setEnabled:NO];
+	//end if 
+}// end - (void) rowSelected:(NSNotification *)note
 
 - (BOOL) checkFirstLaunch
 {
@@ -404,16 +431,31 @@
 
 - (IBAction) removeFromWatchList:(id)sender
 {
+	NSInteger row = [tblManualWatchList selectedRow];
+	if (row == -1)
+		return;
+
+		// get removed item
+	NSDictionary *watchItem = [[aryManualWatchlist arrangedObjects] objectAtIndex:row];
+	NSString *item = [[watchItem valueForKey:keyWatchItem] string];
+
+		// remove from watch list
+	[nicoliveAccounts removeWatchListItem:item];
+
+		// remove from watch list table
+	[[aryManualWatchlist arrangedObjects] removeObjectAtIndex:row];
 }// end - (IBAction) deleteFromWatchList:(id)sender
 
 	// login informaion box actions
 - (IBAction) loginNameSelected:(id)sender
 {
+	NSString *userAccount = [sender stringValue];
+	for (NLAccount *user in [nicoliveAccounts users])
+		if ([userAccount isEqualToString:[user mailaddr]] == YES)
+			[secureFieldPassword setStringValue:[user password]];
+		// end if account found
+	// end foreach accounts
 }// end - (IBAction) loginNameSelected:(id)sender
-
-- (IBAction) updateAccountInfo:(id)sender
-{
-}// end - (IBAction) updateAccountInfo:(id)sender
 
 - (IBAction) addAccount:(id)sender
 {
@@ -436,6 +478,30 @@
 			}// end if user is now added
 		}// end foreach user
 }// end - (IBAction) addAccount:(id)sender
+
+- (IBAction) removeAccount:(id)sender
+{
+	
+}// end - (IBAction) removeAccount:(id)sender
+
+- (IBAction) updateAccountInfo:(id)sender
+{
+	BOOL success = [nicoliveAccounts updateUserAccountInforms];
+	if (success == NO)	// update faild nothing about to do
+		return;
+
+		// update table
+			// create userid - nickname table
+	NSMutableDictionary *nicknames = [NSMutableDictionary dictionary];
+	for (NLAccount *user in [nicoliveAccounts users])
+		[nicknames setObject:[user username] forKey:[user userid]];
+	// end foreach users
+
+	for (NSMutableDictionary *info in [aryAccountItems arrangedObjects])
+		[info setValue:[nicknames objectForKey:[info valueForKey:keyAccountUserID]]
+				forKey:keyAccountNickname];
+	// end foreach tableview entry
+}// end - (IBAction) updateAccountInfo:(id)sender
 
 	// application collaboration actions
 - (IBAction) appColaboChecked:(id)sender

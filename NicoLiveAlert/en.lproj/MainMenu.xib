@@ -1562,9 +1562,9 @@
 																							<int key="NSCellFlags">337772096</int>
 																							<int key="NSCellFlags2">2048</int>
 																							<string key="NSContents">Text Cell</string>
-																							<object class="NSFont" key="NSSupport">
-																								<string key="NSName">Courier-Bold</string>
-																								<double key="NSSize">11</double>
+																							<object class="NSFont" key="NSSupport" id="1026020577">
+																								<string key="NSName">Courier</string>
+																								<double key="NSSize">12</double>
 																								<int key="NSfFlags">16</int>
 																							</object>
 																							<reference key="NSControlView" ref="975064964"/>
@@ -1951,9 +1951,9 @@
 															<object class="NSButton" id="950414468">
 																<reference key="NSNextResponder" ref="790802430"/>
 																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{43, 8}, {154, 19}}</string>
+																<string key="NSFrame">{{24, 8}, {140, 19}}</string>
 																<reference key="NSSuperview" ref="790802430"/>
-																<reference key="NSNextKeyView" ref="175045918"/>
+																<reference key="NSNextKeyView" ref="640427336"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSButtonCell" key="NSCell" id="525429398">
@@ -1974,18 +1974,41 @@
 															<object class="NSButton" id="175045918">
 																<reference key="NSNextResponder" ref="790802430"/>
 																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{215, 8}, {88, 19}}</string>
+																<string key="NSFrame">{{237, 8}, {66, 19}}</string>
 																<reference key="NSSuperview" ref="790802430"/>
 																<reference key="NSNextKeyView" ref="454246713"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSButtonCell" key="NSCell" id="1052428655">
-																	<int key="NSCellFlags">-2080244224</int>
+																	<int key="NSCellFlags">-1543373312</int>
 																	<int key="NSCellFlags2">134217728</int>
 																	<string key="NSContents">追加</string>
 																	<reference key="NSSupport" ref="1065625683"/>
 																	<string key="NSCellIdentifier">_NS:9</string>
 																	<reference key="NSControlView" ref="175045918"/>
+																	<int key="NSButtonFlags">-2038152961</int>
+																	<int key="NSButtonFlags2">164</int>
+																	<string key="NSAlternateContents"/>
+																	<string key="NSKeyEquivalent"/>
+																	<int key="NSPeriodicDelay">400</int>
+																	<int key="NSPeriodicInterval">75</int>
+																</object>
+															</object>
+															<object class="NSButton" id="640427336">
+																<reference key="NSNextResponder" ref="790802430"/>
+																<int key="NSvFlags">268</int>
+																<string key="NSFrame">{{168, 8}, {66, 19}}</string>
+																<reference key="NSSuperview" ref="790802430"/>
+																<reference key="NSNextKeyView" ref="175045918"/>
+																<string key="NSReuseIdentifierKey">_NS:9</string>
+																<bool key="NSEnabled">YES</bool>
+																<object class="NSButtonCell" key="NSCell" id="294842374">
+																	<int key="NSCellFlags">-1543373312</int>
+																	<int key="NSCellFlags2">134217728</int>
+																	<string key="NSContents">削除</string>
+																	<reference key="NSSupport" ref="1065625683"/>
+																	<string key="NSCellIdentifier">_NS:9</string>
+																	<reference key="NSControlView" ref="640427336"/>
 																	<int key="NSButtonFlags">-2038152961</int>
 																	<int key="NSButtonFlags2">164</int>
 																	<string key="NSAlternateContents"/>
@@ -2267,11 +2290,7 @@
 																			<int key="NSCellFlags">337772096</int>
 																			<int key="NSCellFlags2">2048</int>
 																			<string key="NSContents">Text Cell</string>
-																			<object class="NSFont" key="NSSupport">
-																				<string key="NSName">Courier</string>
-																				<double key="NSSize">12</double>
-																				<int key="NSfFlags">16</int>
-																			</object>
+																			<reference key="NSSupport" ref="1026020577"/>
 																			<reference key="NSControlView" ref="574466606"/>
 																			<reference key="NSBackgroundColor" ref="465910221"/>
 																			<reference key="NSTextColor" ref="1061107609"/>
@@ -2584,7 +2603,7 @@
 																				<int key="NSvFlags">256</int>
 																				<string key="NSFrameSize">{301, 171}</string>
 																				<reference key="NSSuperview" ref="1026498646"/>
-																				<reference key="NSNextKeyView" ref="883228463"/>
+																				<reference key="NSNextKeyView" ref="91824063"/>
 																				<string key="NSReuseIdentifierKey">_NS:13</string>
 																				<bool key="NSEnabled">YES</bool>
 																				<object class="NSTableHeaderView" key="NSHeaderView" id="880958358">
@@ -2702,7 +2721,6 @@
 																		<int key="NSvFlags">-2147483392</int>
 																		<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 																		<reference key="NSSuperview" ref="964194742"/>
-																		<reference key="NSNextKeyView"/>
 																		<string key="NSReuseIdentifierKey">_NS:60</string>
 																		<int key="NSsFlags">1</int>
 																		<reference key="NSTarget" ref="964194742"/>
@@ -2727,14 +2745,13 @@
 																</array>
 																<string key="NSFrame">{{6, 6}, {303, 189}}</string>
 																<reference key="NSSuperview" ref="947367071"/>
-																<reference key="NSNextKeyView" ref="91824063"/>
+																<reference key="NSNextKeyView" ref="1026498646"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<int key="NSsFlags">133682</int>
 																<reference key="NSVScroller" ref="883228463"/>
 																<reference key="NSHScroller" ref="285552429"/>
 																<reference key="NSContentView" ref="1026498646"/>
 																<reference key="NSHeaderClipView" ref="91824063"/>
-																<reference key="NSCornerView" ref="1065054274"/>
 																<bytes key="NSScrollAmts">QSAAAEEgAABBiAAAQYgAAA</bytes>
 															</object>
 														</array>
@@ -2787,6 +2804,7 @@
 					</array>
 					<string key="NSFrameSize">{357, 407}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSNextKeyView" ref="783973622"/>
 					<string key="NSReuseIdentifierKey">_NS:21</string>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
@@ -2800,7 +2818,6 @@
 					<string>Note</string>
 				</array>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-				<bool key="NSPreservesSelection">YES</bool>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 			</object>
@@ -2812,9 +2829,6 @@
 				</array>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-				<bool key="NSAvoidsEmptySelection">YES</bool>
-				<bool key="NSPreservesSelection">YES</bool>
-				<bool key="NSSelectsInsertedObjects">YES</bool>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 			</object>
@@ -2826,9 +2840,6 @@
 				</array>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-				<bool key="NSAvoidsEmptySelection">YES</bool>
-				<bool key="NSPreservesSelection">YES</bool>
-				<bool key="NSSelectsInsertedObjects">YES</bool>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 			</object>
@@ -3581,20 +3592,116 @@
 					<int key="connectionID">689</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">menuStatusbar</string>
+					<object class="IBActionConnection" key="connection">
+						<string key="label">updateAccountInfo:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="443416823"/>
+						<reference key="destination" ref="950414468"/>
 					</object>
-					<int key="connectionID">685</int>
+					<int key="connectionID">1028</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">preferencePanel</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="129846919"/>
+					</object>
+					<int key="connectionID">1001</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">manuLauncApplications</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="509980532"/>
+					</object>
+					<int key="connectionID">738</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">menuSelectAutoOpen:</string>
+						<string key="label">appColaboChecked:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="37948113"/>
+						<reference key="destination" ref="1042847882"/>
 					</object>
-					<int key="connectionID">729</int>
+					<int key="connectionID">872</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">appColaboChecked:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="833055688"/>
+					</object>
+					<int key="connectionID">875</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">chkboxRelationAutoOpenAndCharleston</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="833055688"/>
+					</object>
+					<int key="connectionID">909</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">loginNameSelected:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="864400827"/>
+					</object>
+					<int key="connectionID">812</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">chkboxRelationChooseFromMenuAndCharleston</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="869161129"/>
+					</object>
+					<int key="connectionID">910</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">btnAddAccount</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="175045918"/>
+					</object>
+					<int key="connectionID">1018</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showAboutPanel:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="378404560"/>
+					</object>
+					<int key="connectionID">1025</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tblManualWatchList</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="975064964"/>
+					</object>
+					<int key="connectionID">891</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">autoOpenChecked:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="758409002"/>
+					</object>
+					<int key="connectionID">847</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">chkboxDonotAutoOpenAtBroadcasting</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="1042847882"/>
+					</object>
+					<int key="connectionID">906</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addAccount:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="175045918"/>
+					</object>
+					<int key="connectionID">810</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -3606,11 +3713,131 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">comboLoginID</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="864400827"/>
+					</object>
+					<int key="connectionID">1012</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tblAccountList</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="574466606"/>
+					</object>
+					<int key="connectionID">1014</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">menuStatusbar</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="443416823"/>
+					</object>
+					<int key="connectionID">685</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">appColaboChecked:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="253192181"/>
+					</object>
+					<int key="connectionID">874</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addToWatchList:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="270532453"/>
+					</object>
+					<int key="connectionID">844</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">menuAccounts</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="999098879"/>
 					</object>
 					<int key="connectionID">732</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">btnAddWatchListItem</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="270532453"/>
+					</object>
+					<int key="connectionID">1020</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">aryAccountItems</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="675516882"/>
+					</object>
+					<int key="connectionID">1011</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tblTinyLauncher</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="979637217"/>
+					</object>
+					<int key="connectionID">911</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">chkboxWatchOfficialProgram</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="1043309445"/>
+					</object>
+					<int key="connectionID">890</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">chkboxRelationWithCharlestonMyBroadcast</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="535448704"/>
+					</object>
+					<int key="connectionID">908</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">viewNoAccountNotify</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="587437842"/>
+					</object>
+					<int key="connectionID">1015</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">watchItemName</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="259336822"/>
+					</object>
+					<int key="connectionID">892</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">secureFieldPassword</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="791657868"/>
+					</object>
+					<int key="connectionID">1013</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">appColaboChecked:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="869161129"/>
+					</object>
+					<int key="connectionID">871</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">removeFromWatchList:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="793167838"/>
+					</object>
+					<int key="connectionID">899</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3621,20 +3848,36 @@
 					<int key="connectionID">733</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">menuSelectAutoOpen:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="37948113"/>
+					</object>
+					<int key="connectionID">729</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">btnUpdateAccountInfo</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="950414468"/>
+					</object>
+					<int key="connectionID">1021</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">appColaboChecked:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="535448704"/>
+					</object>
+					<int key="connectionID">873</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">aryManualWatchlist</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="405713920"/>
 					</object>
 					<int key="connectionID">734</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">manuLauncApplications</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="509980532"/>
-					</object>
-					<int key="connectionID">738</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3653,132 +3896,12 @@
 					<int key="connectionID">757</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">addToWatchList:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="270532453"/>
-					</object>
-					<int key="connectionID">844</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">watchOfficialChannels:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="1043309445"/>
-					</object>
-					<int key="connectionID">846</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">autoOpenChecked:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="758409002"/>
-					</object>
-					<int key="connectionID">847</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">addAccount:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="175045918"/>
-					</object>
-					<int key="connectionID">810</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">loginNameSelected:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="864400827"/>
-					</object>
-					<int key="connectionID">812</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">appColaboChecked:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="869161129"/>
-					</object>
-					<int key="connectionID">871</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">appColaboChecked:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="1042847882"/>
-					</object>
-					<int key="connectionID">872</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">appColaboChecked:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="535448704"/>
-					</object>
-					<int key="connectionID">873</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">appColaboChecked:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="253192181"/>
-					</object>
-					<int key="connectionID">874</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">appColaboChecked:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="833055688"/>
-					</object>
-					<int key="connectionID">875</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">chkboxWatchOfficialProgram</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="1043309445"/>
-					</object>
-					<int key="connectionID">890</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">tblManualWatchList</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="975064964"/>
-					</object>
-					<int key="connectionID">891</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">watchItemName</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="259336822"/>
-					</object>
-					<int key="connectionID">892</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">watchItemComment</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="2366408"/>
 					</object>
 					<int key="connectionID">893</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">removeFromWatchList:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="793167838"/>
-					</object>
-					<int key="connectionID">899</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">chkboxDonotAutoOpenAtBroadcasting</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="1042847882"/>
-					</object>
-					<int key="connectionID">906</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3789,124 +3912,36 @@
 					<int key="connectionID">907</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">chkboxRelationWithCharlestonMyBroadcast</string>
+					<object class="IBActionConnection" key="connection">
+						<string key="label">watchOfficialChannels:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="535448704"/>
+						<reference key="destination" ref="1043309445"/>
 					</object>
-					<int key="connectionID">908</int>
+					<int key="connectionID">846</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">chkboxRelationAutoOpenAndCharleston</string>
+						<string key="label">btnRemoveAccount</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="833055688"/>
+						<reference key="destination" ref="640427336"/>
 					</object>
-					<int key="connectionID">909</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">chkboxRelationChooseFromMenuAndCharleston</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="869161129"/>
-					</object>
-					<int key="connectionID">910</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">tblTinyLauncher</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="979637217"/>
-					</object>
-					<int key="connectionID">911</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">preferencePanel</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="129846919"/>
-					</object>
-					<int key="connectionID">1001</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">aryAccountItems</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="675516882"/>
-					</object>
-					<int key="connectionID">1011</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">comboLoginID</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="864400827"/>
-					</object>
-					<int key="connectionID">1012</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">secureFieldPassword</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="791657868"/>
-					</object>
-					<int key="connectionID">1013</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">tblAccountList</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="574466606"/>
-					</object>
-					<int key="connectionID">1014</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">viewNoAccountNotify</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="587437842"/>
-					</object>
-					<int key="connectionID">1015</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">btnAddAccount</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="175045918"/>
-					</object>
-					<int key="connectionID">1018</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">btnAddWatchListItem</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="270532453"/>
-					</object>
-					<int key="connectionID">1020</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">btnUpdateAccountInfo</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="950414468"/>
-					</object>
-					<int key="connectionID">1021</int>
+					<int key="connectionID">1034</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">showAboutPanel:</string>
+						<string key="label">removeAccount:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="378404560"/>
+						<reference key="destination" ref="640427336"/>
 					</object>
-					<int key="connectionID">1025</int>
+					<int key="connectionID">1035</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">updateAccountInfo:</string>
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">btnRemoveWatchListItem</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="950414468"/>
+						<reference key="destination" ref="793167838"/>
 					</object>
-					<int key="connectionID">1028</int>
+					<int key="connectionID">1036</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -4172,6 +4207,22 @@
 						</object>
 					</object>
 					<int key="connectionID">996</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">argument: self.btnAddAccount</string>
+						<reference key="source" ref="640427336"/>
+						<reference key="destination" ref="976324537"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="640427336"/>
+							<reference key="NSDestination" ref="976324537"/>
+							<string key="NSLabel">argument: self.btnAddAccount</string>
+							<string key="NSBinding">argument</string>
+							<string key="NSKeyPath">self.btnAddAccount</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1032</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -5006,11 +5057,6 @@
 						<reference key="parent" ref="992780483"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">494</int>
-						<reference key="object" ref="976324537"/>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">496</int>
 						<reference key="object" ref="215659978"/>
 						<array class="NSMutableArray" key="children">
@@ -5504,6 +5550,7 @@
 							<reference ref="950414468"/>
 							<reference ref="864400827"/>
 							<reference ref="175045918"/>
+							<reference ref="640427336"/>
 						</array>
 						<reference key="parent" ref="1046589639"/>
 					</object>
@@ -5875,12 +5922,32 @@
 						<reference key="object" ref="623472209"/>
 						<reference key="parent" ref="55988391"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">494</int>
+						<reference key="object" ref="976324537"/>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1030</int>
+						<reference key="object" ref="640427336"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="294842374"/>
+						</array>
+						<reference key="parent" ref="123781285"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1031</int>
+						<reference key="object" ref="294842374"/>
+						<reference key="parent" ref="640427336"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1030.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1031.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="112.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="124.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="125.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6143,7 +6210,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1028</int>
+			<int key="maxID">1036</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

@@ -380,7 +380,7 @@ NSString *embedContent;
 	result = [programRegex search:embedContent];
 	if (result == NULL)
 		@throw [NSException exceptionWithName:EmbedParseFailed reason:ProgramURLCollectFail userInfo:[NSDictionary dictionaryWithObject:embedContent forKey:@"embedContent"]];
-	programURL = [[NSURL alloc] initWithString:[result stringAt:1]];
+	programURL = [[NSString alloc] initWithString:[result stringAt:1]];
 #if __has_feature(objc_arc) == 0
 	[embedContent release];
 	embedContent = NULL;
@@ -754,7 +754,7 @@ NSLog(@"%@ Program done", programNumber);
 #endif
 	[dict setValue:priority forKey:GROWL_NOTIFICATION_PRIORITY];
 	[dict setValue:isStickey forKey:GROWL_NOTIFICATION_STICKY];
-	[dict setValue:[programURL absoluteString] forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
+	[dict setValue:programURL forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
 	
 	[GrowlApplicationBridge notifyWithDictionary:dict];
 }// end - (void) growlProgramNotify:(NSString *)notificationName
@@ -791,7 +791,7 @@ NSLog(@"%@ Program done", programNumber);
 	NSData *thumbData = NULL;
 	switch (currentElement) {
 		case indexRequestID:
-			programURL = [[NSURL alloc] initWithString:[NSString stringWithFormat:PROGRAMURLFORMAT, dataString]];
+			programURL = [[NSString alloc] initWithString:[NSString stringWithFormat:PROGRAMURLFORMAT, dataString]];
 			break;
 		case indexTitle:
 			programTitle = [[NSString alloc] initWithString:dataString];

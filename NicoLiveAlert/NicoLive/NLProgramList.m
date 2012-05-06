@@ -232,7 +232,7 @@ NSLog(@"watchUser %@",progInfo);
 				BOOL autoOpen = [needOpen boolValue];
 				if (autoOpen == YES)
 				{	// open program
-					NSURL *liveURL = [NSURL URLWithString:[NSString stringWithFormat:URLFormatLive, live]];
+					NSString *liveURL = [NSString stringWithFormat:URLFormatLive, live];
 					[center postNotificationName:NLNotificationAutoOpen object:liveURL];
 				}// end if program is auto open
 			}// end if need check auto opend program

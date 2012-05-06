@@ -29,7 +29,7 @@
 	NSString				*startTimeString;
 	NSInteger				lastMintue;
 	NSDictionary			*localeDict;
-	NSURL					*programURL;
+	NSString				*programURL;
 	NSTimer					*programStatusTimer;
 	NSTimer					*elapseTimer;
 	NSNotificationCenter	*center;

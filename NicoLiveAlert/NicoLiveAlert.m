@@ -18,12 +18,13 @@
 - (void) setupMonitor;
 - (void) loadPreferences;
 - (void) savePreferences;
+- (void) openLiveProgram:(NSString *)URLString;
 - (void) hookNotifications;
 - (void) removeNotifications;
 - (void) listenHalt:(NSNotification *)note;
 - (void) listenRestart:(NSNotification *)note;
 - (void) removeProgramNoFromTable:(NSNotification *)note;
-- (void) doOutoOpen:(NSNotification *)note;
+- (void) doAutoOpen:(NSNotification *)note;
 - (void) rowSelected:(NSNotification *)note;
 @end
 
@@ -200,6 +201,12 @@
 
 }// end - (void) savePreferences
 
+- (void) openLiveProgram:(NSString *)URLString
+{
+	NSURL *url = [NSURL URLWithString:URLString];
+	[[NSWorkspace sharedWorkspace] openURL:url];
+}// end - (void) openProgram:(NSString *)URLString
+
 - (void) hookNotifications
 {
 	NSNotificationCenter *shared = [[NSWorkspace sharedWorkspace] notificationCenter];
@@ -217,7 +224,7 @@
 		// open by program number hook
 	[application addObserver:self selector:@selector(removeProgramNoFromTable:) name:NLNotificationOpenByLiveNo object:NULL];
 		// AutoOpen Notification hook
-	[application addObserver:self selector:@selector(doOutoOpen:) name:NLNotificationAutoOpen object:NULL];
+	[application addObserver:self selector:@selector(doAutoOpen:) name:NLNotificationAutoOpen object:NULL];
 		// Tableview Notification hook
 	[application addObserver:self selector:@selector(rowSelected:) name:NLNotificationSelectRow object:NULL];
 }// end - (void) hookNotifications
@@ -266,10 +273,10 @@
 	// end foreach watchlist item
 }// end - (void) removeProgramNoFromTable:(NSNotification *)note
 
-- (void) doOutoOpen:(NSNotification *)note
+- (void) doAutoOpen:(NSNotification *)note
 {
-	[[NSWorkspace sharedWorkspace] openURL:[note object]];
-}// end - (void) doOutoOpen:(NSNotification *)note
+	[self openLiveProgram:[note object]];
+}// end - (void) doAutoOpen:(NSNotification *)note
 
 - (void) rowSelected:(NSNotification *)note
 {
@@ -334,7 +341,7 @@
 {
 /* #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7 */
 		// open by NSWorkspace
-	[[NSWorkspace sharedWorkspace] openURL:[sender representedObject]];
+	[self openLiveProgram:[sender representedObject]];
 /*
 #else
 		// open by XPC
@@ -559,8 +566,8 @@
 #pragma mark GrowlApplicationBridge delegate
 - (void) growlNotificationWasClicked:(id)clickContext
 {
-	NSURL *url = [NSURL URLWithString:clickContext];
-	[[NSWorkspace sharedWorkspace] openURL:url];
+	NSString *url = [NSString stringWithString:clickContext];
+	[self openLiveProgram:url];
 }// end - (void) growlNotificationWasClicked:(id)clickContext
 
 - (void) growlNotificationTimedOut:(id)clickContext

@@ -64,6 +64,10 @@
 - (OSStatus) addUser:(NSString *)useraccount withPassword:(NSString *)userpassword;
 
 /*!
+*/
+- (BOOL) updateUserAccountInforms;
+
+/*!
 	@method primaryAccountForCommunity:
 	@abstract return primary account of reciever stored accounts communities.
 	@param community no of program.
@@ -113,5 +117,11 @@
 	@param autoOpen property
 */
 - (void) switchWatchListItemProperty:(NSString *)item autoOpen:(BOOL)autoOpen;
+
+/*!
+	@method removeWatchListItem:
+	@param watchlist item as User ID, Community No., ChannelNo. or liveNo.
+*/
+- (void) removeWatchListItem:(NSString *)item;
 
 @end

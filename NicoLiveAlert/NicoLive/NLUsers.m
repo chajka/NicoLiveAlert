@@ -176,6 +176,19 @@
 	return error;
 }// end - (OSStatus) addUser:(NSString *)useraccount andPassword:(NSString *)userpassword
 
+- (BOOL) updateUserAccountInforms
+{
+	BOOL updated = NO;
+
+	for (NLAccount *user in users)
+		updated += [user updateAccountInfo];
+
+	if (updated != NO)	// > 1 isn't mean yes
+		return YES;
+	else
+		return NO;
+}// end - (BOOL) updateUserAccountInforms
+
 - (NLAccount *) primaryAccountForCommunity:(NSString *)community
 {
 	for (NSString *username in [usersState allKeys])
@@ -304,7 +317,8 @@
 		[originalWatchList setValue:active forKey:item];
 	else
 		[originalWatchList setValue:deactive forKey:item];
-NSLog(@"%@", originalWatchList);
+
+	[self updateCurrentWatchlist];
 }// end - (void) addWatchListItem:(NSString *)item autoOpen:(BOOL)autoOpen
 
 - (void) addWatchListItems:(NSDictionary *)watchDict
@@ -318,7 +332,8 @@ NSLog(@"%@", originalWatchList);
 		else
 			[originalWatchList setValue:deactive forKey:item];
 	}// end foreach watchDict
-NSLog(@"%@", originalWatchList);
+
+	[self updateCurrentWatchlist];
 }// end - (void) addWatchListItems:(NSDictionary *)watchlist
 
 - (void) switchWatchListItemProperty:(NSString *)item autoOpen:(BOOL)autoOpen
@@ -327,8 +342,15 @@ NSLog(@"%@", originalWatchList);
 		[originalWatchList setValue:active forKey:item];
 	else
 		[originalWatchList setValue:deactive forKey:item];
-NSLog(@"%@", originalWatchList);
+
+	[self updateCurrentWatchlist];
 }// end - (void) switchWatchListItemProperty:(NSString *)item autoOpen:(BOOL)autoOpen
+
+- (void) removeWatchListItem:(NSString *)item
+{
+	[originalWatchList setValue:NULL forKey:item];
+	[self updateCurrentWatchlist];
+}// end - (void) removeWatchListItem:(NSString *)item
 
 #pragma mark -
 #pragma mark NSCombobox Delegate

@@ -19,15 +19,18 @@
 	NSString			*password;
 	NSString			*username;
 	NSNumber			*userid;
+	NSString			*ticket;
 	NSMutableDictionary	*channels;
 }
 @property (readonly)	NSString			*mailaddr;
 @property (readonly)	NSString			*password;
 @property (readonly)	NSString			*username;
 @property (readonly)	NSNumber			*userid;
+@property (readonly)	NSString			*ticket;
 @property (readonly)	NSMutableDictionary	*channels;
 	
 #pragma mark construct
 - (id) initWithAccount:(NSString *)account andPassword:(NSString *)pass;
 
+- (BOOL) updateAccountInfo;
 @end

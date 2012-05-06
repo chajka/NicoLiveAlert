@@ -22,10 +22,8 @@
 @synthesize password;
 @synthesize username;
 @synthesize userid;
+@synthesize ticket;
 @synthesize channels;
-
-// connection information member variables
-NSString			*ticket;
 
 	// internal use variables (when initialize only)
 NSDictionary		*elements;
@@ -131,6 +129,52 @@ NSNumber		*notAutoOpen;
 #endif
 }// end - (void) cleanupInternalVariables
 
+#pragma mark -
+#pragma mark accessor
+- (BOOL) updateAccountInfo
+{
+	BOOL success = NO;
+
+		// save last values
+	NSString			*savedUsername =	username;	username = NULL;
+	NSNumber			*savedUserid =		userid;		userid = NULL;
+	NSString			*savedTicket =		ticket;		ticket = NULL;
+	NSMutableDictionary *savedChannels =	channels;	channels = NULL;
+	success = [self getLoginTicket];
+
+	if (success == YES)
+	{		// cleanup saved values
+#if __has_feature(objc_arc) == 0
+		if (savedUsername != NULL)	[savedUsername release];
+		if (savedUserid != NULL)	[savedUserid release];
+		if (savedTicket != NULL)	[savedTicket release];
+		if (savedChannels != NULL)	[savedChannels release];
+#endif
+		savedUsername = NULL;
+		savedUserid = NULL;
+		savedTicket = NULL;
+		savedChannels = NULL;
+	}
+	else
+	{		// restore saved values
+			// cleanup garbage
+#if __has_feature(objc_arc) == 0
+		if (username != NULL)	[username release];
+		if (userid != NULL)		[userid release];
+		if (ticket != NULL)		[ticket release];
+		if (channels != NULL)	[channels release];
+#endif
+		username = savedUsername;
+		userid = savedUserid;
+		ticket = savedTicket;
+		channels = savedChannels;
+	}// end if success or not
+
+	return success;
+}// end - (void) updateAccountInfo
+
+#pragma mark -
+#pragma mark internal
 - (BOOL) getLoginTicket
 {
 	BOOL success = NO;

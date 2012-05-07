@@ -16,7 +16,7 @@
 
 @interface NLProgramList : NSObject <StreamEventDelegate> {
 	SocketConnection	*programListSocket;
-	__unsafe_unretained NSMutableDictionary	*watchList;
+	NSMutableDictionary	*watchList;
 	NLMessageServerInfo	*serverInfo;
 	NLActivePrograms	*activePrograms;
 	__strong NSNotificationCenter *center;
@@ -25,16 +25,20 @@
 	NSTimer				*keepAliveMonitor;
 	NSTimer				*connectionRiseMonitor;
 	BOOL				watchOfficial;
+	BOOL				watchChannel;
+	BOOL				officialState;
 	BOOL				isOfficial;
 	BOOL				isMaintainance;
 	BOOL				waitingConnection;
 	BOOL				connected;
 	BOOL				enableAutoOpen;
 }
-@property (assign, readwrite) NSMutableDictionary	*watchList;
-@property (retain, readwrite) NLActivePrograms		*activePrograms;
-@property (assign, readwrite) BOOL					watchOfficial;
-@property (assign, readwrite) BOOL					enableAutoOpen;
+@property (retain, readwrite)	NSMutableDictionary	*watchList;
+@property (retain, readwrite)	NLActivePrograms	*activePrograms;
+@property (assign, readwrite)	BOOL				watchOfficial;
+@property (assign, readwrite)	BOOL				watchChannel;
+@property (readonly)			BOOL				officialState;
+@property (assign, readwrite)	BOOL				enableAutoOpen;
 
 - (void) kick;
 - (void) halt;

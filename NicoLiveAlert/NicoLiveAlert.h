@@ -26,14 +26,16 @@
 	__strong IBOutlet NSPanel					*preferencePanel;
 	
 		// menu access item
-	__strong IBOutlet NSMenuItem				*menuPrograms;
-	__strong IBOutlet NSMenuItem				*menuOfficalPrograms;
+	__strong IBOutlet NSMenuItem				*menuItemAutoOpen;
+	__strong IBOutlet NSMenuItem				*menuItemPrograms;
+	__strong IBOutlet NSMenuItem				*menuItemOfficalPrograms;
 	__strong IBOutlet NSMenuItem				*menuAccounts;
 	__strong IBOutlet NSMenuItem				*manuLauncApplications;
 
 		// Preference Panel items
 			// manual wath list items
 	__strong IBOutlet NSButton					*chkboxWatchOfficialProgram;
+	__strong IBOutlet NSButton					*chkboxWatchOfficialChannel;
 	__strong IBOutlet IOMTableViewDragAndDrop	*tblManualWatchList;
 	__strong IBOutlet NSTextField				*watchItemName;
 	__strong IBOutlet NSTextField				*watchItemComment;
@@ -70,6 +72,9 @@
 	NLUsers											*nicoliveAccounts;
 	NLProgramList									*programSieves;
 
+	BOOL											enableAutoOpen;
+	BOOL											watchOfficialProgram;
+	BOOL											watchOfficialChannel;
 		// application collaboration flags
 	BOOL											dontOpenWhenImBroadcast;
 	BOOL											kickFMELauncher;
@@ -84,4 +89,20 @@
 @property (readonly)			NicoLivePrefManager	*prefs;
 @property (assign, readwrite)	BOOL				broadCasting;
 
+		// IBAction’s prototypes
+- (IBAction)menuSelectAutoOpen:(id)sender;
+- (IBAction)launchApplicaions:(id)sender;
+- (IBAction) openProgram:(id)sender;
+- (IBAction) toggleUserState:(id)sender;
+- (IBAction) showAboutPanel:(id)sender;
+- (IBAction) autoOpenChecked:(id)sender;
+- (IBAction) watchOfficialProgram:(id)sender;
+- (IBAction) watchOfficialChannel:(id)sender;
+- (IBAction) addToWatchList:(id)sender;
+- (IBAction) removeFromWatchList:(id)sender;
+- (IBAction) loginNameSelected:(id)sender;
+- (IBAction) addAccount:(id)sender;
+- (IBAction) removeAccount:(id)sender;
+- (IBAction) updateAccountInfo:(id)sender;
+- (IBAction) appColaboChecked:(id)sender;
 @end

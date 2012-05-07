@@ -16,6 +16,12 @@
 	// watchlist tab 
 - (NSArray *) loadManualWatchList;
 - (void) saveManualWatchList:(NSArray *)watchlist;
+- (BOOL) loadAutoOpenMenuState;
+- (void) saveAutoOpenMenuState:(BOOL)state;
+- (BOOL) loadWatchOfficialProgramState;
+- (void) saveWatchOfficialProgramState:(BOOL)state;
+- (BOOL) loadWatchOfficialChannelState;
+- (void) saveWatchOfficialChannelState:(BOOL)state;
 	// account tab
 - (NSDictionary *)loadAccounts;
 - (void) saveAccountsList:(NSArray *)accountsList;

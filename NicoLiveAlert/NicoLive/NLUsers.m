@@ -40,14 +40,14 @@
 		[self updateCurrentWatchlist];
 		usersMenu = NULL;
 		[self creteUserStateMenu];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeProgramFromWatchList:) name:NLNotificationOpenByLiveNo object:NULL];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeProgramFromWatchList:) name:NLNotificationFoundLiveNo object:NULL];
 	}
 	return self;
 }// end - (id) initWithActiveUsers:(NSArray *)users andManualWatchList:(NSDictionary *)manualWatchList
 
 - (void) dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationOpenByLiveNo object:NULL];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationFoundLiveNo object:NULL];
 #if __has_feature(objc_arc) == 0
 	if (active != NULL)				[active release];
 	if (deactive != NULL)			[deactive release];
@@ -183,10 +183,11 @@
 	for (NLAccount *user in users)
 		updated += [user updateAccountInfo];
 
-	if (updated != NO)	// > 1 isn't mean yes
-		return YES;
-	else
+	if (updated == NO)	// > 1 isn't mean yes
 		return NO;
+
+	[self updateCurrentWatchlist];
+	return YES;
 }// end - (BOOL) updateUserAccountInforms
 
 - (NLAccount *) primaryAccountForCommunity:(NSString *)community

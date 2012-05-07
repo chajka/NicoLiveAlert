@@ -19,7 +19,7 @@
 @implementation NLProgramList
 @synthesize watchList;
 @synthesize activePrograms;
-@synthesize watchOfficial;
+@synthesize officialState;
 @synthesize enableAutoOpen;
 NSMutableData		*programListDataBuffer;
 BOOL sendrequest;
@@ -46,7 +46,9 @@ OnigRegexp			*checkstatus;
 		programListDataBuffer = NULL;
 		sendrequest = NO;
 		isOfficial = NO;
-		watchOfficial = YES;
+		watchOfficial = NO;
+		watchChannel = NO;
+		officialState = NO;
 		connected = NO;
 		programRegex = [OnigRegexp compile:ProgramNoRegex];
 		maintRegex = [OnigRegexp compile:MaintRegex];
@@ -77,6 +79,32 @@ OnigRegexp			*checkstatus;
 	[super dealloc];
 #endif
 }// end - (void) dealloc
+
+#pragma mark -
+#pragma mark accessor
+#pragma mark watchOfficial’s accessor
+- (BOOL) watchOfficial
+{
+	return watchOfficial;
+}// end - (BOOL) watchOfficial
+
+- (void) setWatchOfficial:(BOOL)watch
+{
+	watchOfficial = watch;
+	officialState = (watchOfficial | watchChannel);
+}// end - (void) setWatchOfficial:(BOOL)watch
+
+#pragma mark watchChannel’s accessor
+- (BOOL) watchChannel
+{
+	return watchChannel;
+}// end - (BOOL) watchChannel
+
+- (void) setWatchChannel:(BOOL)watch
+{
+	watchChannel = watch;
+	officialState = (watchOfficial | watchChannel);
+}// end - (void) setWatchChannel:(BOOL)watch
 
 #pragma mark -
 #pragma mark controll methods
@@ -187,11 +215,24 @@ OnigRegexp			*checkstatus;
 		// check official program
 	if ((watchOfficial == YES) && ([program count] == 2))
 	{
-NSLog(@"WatchOfficial %@",progInfo);
+NSLog(@"WatchOfficial Program %@",progInfo);
 		NSString *live = [program objectAtIndex:offsetLiveNo];
 		[activePrograms addOfficialProgram:live withDate:date];
+
+			// check in watchlist
+		NSNumber *isInWatchList = [watchList valueForKey:live];
+		if (isInWatchList != NULL)
+		{		// item is in watchlist
+			[center postNotification:[NSNotification notificationWithName:NLNotificationFoundLiveNo object:live]];
+			if ([isInWatchList boolValue] == YES)
+			{
+				NSString *liveURL = [NSString stringWithFormat:URLFormatLive, live];
+				[center postNotificationName:NLNotificationAutoOpen object:liveURL];
+			}// end if need auto open
+		}// end if program is entry in watchlist
+
 		return;
-	}
+	}// end if program is official program
 
 	NSString *live = NULL;
 		// iterate program info
@@ -203,13 +244,13 @@ NSLog(@"WatchOfficial %@",progInfo);
 			isOfficial = NO;
 
 			// check official channel
-		if ((watchOfficial == YES) && ([prog isEqualToString:liveOfficialString] == YES))
+		if ((watchChannel == YES) && ([prog isEqualToString:liveOfficialString] == YES))
 		{
 NSLog(@"WatchOfficial Channel %@",progInfo);
 			isOfficial = YES;
 			[activePrograms addOfficialProgram:live withDate:date];
-			break;
-		}
+		}// end if program is official channel
+		
 			// check watchlist
 		NSNumber *needOpen = [watchList valueForKey:prog];
 		if (needOpen != NULL)
@@ -224,7 +265,8 @@ NSLog(@"watchUser %@",progInfo);
 				// check mutch is program number
 			OnigResult *isPorgram = [programRegex search:prog];
 			if (isPorgram != NULL)
-				[center postNotification:[NSNotification notificationWithName:NLNotificationOpenByLiveNo object:prog]];
+				[center postNotification:[NSNotification notificationWithName:NLNotificationFoundLiveNo object:prog]];
+			// end if found in watch list
 
 				// check auto open of this program
 			if (enableAutoOpen == YES)

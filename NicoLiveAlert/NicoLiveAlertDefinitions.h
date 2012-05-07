@@ -178,7 +178,7 @@ enum elementLiteralIndex {
 #pragma mark -
 #pragma mark definitions for class NLProgramList
 
-#define NLNotificationOpenByLiveNo		@"NLNotificationOpenByLiveNo"
+#define NLNotificationFoundLiveNo		@"NLNotificationFoundLiveNo"
 #define NLNotificationConnectionLost	@"NLNotificationConnectionLost"
 #define NLNotificationConnectionRised	@"NLNotificationConnectionRised"
 #define NLNotificationAutoOpen			@"NLNotificationAutoOpen"
@@ -290,8 +290,10 @@ enum AppCollaboCheckBoxes {
 };
 
 #pragma mark watchlist item keys
+#define EnableAutoOpen			@"EnableAutoOpen"
 #define WathListTable			@"WathListTable"
 #define AccountsList			@"AccountsList"
+#define CheckOfficialProgram	@"CheckOfficialProgram"
 #define CheckOfficialChannel	@"CheckOfficialChannel"
 
 #pragma mark account item keys

@@ -44,6 +44,8 @@
 	
 }// end - (void) registerDefaults
 
+#pragma mark -
+#pragma mark watchlist
 	// watchlist tab
 - (NSArray *) loadManualWatchList
 {
@@ -85,6 +87,37 @@
 		[myDefaults setObject:NULL forKey:WathListTable];
 }// end - (void) saveManualWatchList
 
+- (BOOL) loadAutoOpenMenuState
+{
+	return [myDefaults boolForKey:EnableAutoOpen];
+}// end - (BOOL) loadAutoOpenMenuState
+
+- (void) saveAutoOpenMenuState:(BOOL)state
+{
+	[myDefaults setBool:state forKey:EnableAutoOpen];
+}// end - (void) saveAutoOpenMenuState
+
+- (BOOL) loadWatchOfficialProgramState
+{
+	return [myDefaults boolForKey:CheckOfficialProgram];
+}// end - (BOOL) loadWatchOfficialProgramState
+
+- (void) saveWatchOfficialProgramState:(BOOL)state
+{
+	[myDefaults setBool:state forKey:CheckOfficialProgram];
+}// end - (void) saveWatchOfficialProgramState:(BOOL)state
+
+- (BOOL) loadWatchOfficialChannelState
+{
+	return [myDefaults boolForKey:CheckOfficialChannel];
+}// end - (BOOL) loadWatchOfficialProgramState
+
+- (void) saveWatchOfficialChannelState:(BOOL)state
+{
+	[myDefaults setBool:state forKey:CheckOfficialChannel];
+}// end - (void) saveWatchOfficialProgramState:(BOOL)state
+
+#pragma mark -
 	// account tab
 - (NSDictionary *)loadAccounts
 {
@@ -152,6 +185,8 @@
 	[myDefaults setObject:ary forKey:LauncItemList];
 }// - (void) saveLauncherDict:(NSDictionary *)launcherDict
 
+#pragma mark -
+#pragma mark application collaboration checkbox
 - (BOOL) dontOpenWhenImBroadcast
 {
 	return [myDefaults boolForKey:DoNotAutoOpenInMyBroadcast];

@@ -157,6 +157,8 @@
 	[activeprograms setUsers:nicoliveAccounts];
 	[programSieves setWatchList:[nicoliveAccounts watchlist]];
 	[programSieves setActivePrograms:activeprograms];
+	[programSieves setWatchOfficial:watchOfficialProgram];
+	[programSieves setWatchChannel:watchOfficialChannel];
 #if __has_feature(objc_arc) == 0
 		// activeprograms keep in programSieves
 	[activeprograms release];
@@ -170,6 +172,12 @@
 	ary = [prefs loadManualWatchList];
 	if ([ary count] != 0)
 		[aryManualWatchlist	addObjects:ary];
+	enableAutoOpen = [prefs loadAutoOpenMenuState];
+	[menuItemAutoOpen setState:enableAutoOpen];
+	watchOfficialProgram = [prefs loadWatchOfficialProgramState];
+	[chkboxWatchOfficialProgram setState:watchOfficialProgram];
+	watchOfficialChannel = [prefs loadWatchOfficialChannelState];
+	[chkboxWatchOfficialChannel setState:watchOfficialChannel];
 
 		// launcher items
 	ary = [prefs loadLauncherDict];
@@ -188,6 +196,9 @@
 {
 		// watch list
 	[prefs saveManualWatchList:[aryManualWatchlist arrangedObjects]];
+	[prefs saveAutoOpenMenuState:enableAutoOpen];
+	[prefs saveWatchOfficialProgramState:watchOfficialProgram];
+	[prefs saveWatchOfficialChannelState:watchOfficialChannel];
 		// account list
 	[prefs saveAccountsList:[aryAccountItems arrangedObjects]];
 		// launcher items
@@ -222,7 +233,7 @@
 			// hook to connection reactive notification
 	[application addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
 		// open by program number hook
-	[application addObserver:self selector:@selector(removeProgramNoFromTable:) name:NLNotificationOpenByLiveNo object:NULL];
+	[application addObserver:self selector:@selector(removeProgramNoFromTable:) name:NLNotificationFoundLiveNo object:NULL];
 		// AutoOpen Notification hook
 	[application addObserver:self selector:@selector(doAutoOpen:) name:NLNotificationAutoOpen object:NULL];
 		// Tableview Notification hook
@@ -244,7 +255,7 @@
 			// remove Connection Rised notification
 	[application removeObserver:self name:NLNotificationConnectionRised object:NULL];
 		// remove open by program number hook
-	[application removeObserver:self name:NLNotificationOpenByLiveNo object:NULL];
+	[application removeObserver:self name:NLNotificationFoundLiveNo object:NULL];
 		// AutoOpen Notification
 	[application removeObserver:self name:NLNotificationAutoOpen object:NULL];
 		// TableView Notification
@@ -322,9 +333,17 @@
 {
 	NSCellStateValue state = [sender state];
 	if (state == NSOnState)
-		[programSieves setEnableAutoOpen:YES];
+	{
+		enableAutoOpen = NO;
+		[sender setState:enableAutoOpen];
+		[programSieves setEnableAutoOpen:enableAutoOpen];
+	}
 	else
-		[programSieves setEnableAutoOpen:NO];
+	{
+		enableAutoOpen = YES;
+		[sender setState:enableAutoOpen];
+		[programSieves setEnableAutoOpen:enableAutoOpen];
+	}
 }// end - (IBAction) menuSelectAutoOpen:(id)sender
 
 - (IBAction)launchApplicaions:(id)sender
@@ -380,13 +399,21 @@
 	[nicoliveAccounts switchWatchListItemProperty:watchItem autoOpen:autoOpen];
 }// end - (IBAction) autoOpenChecked:(id)sender
 
-- (IBAction) watchOfficialChannels:(id)sender
+- (IBAction) watchOfficialProgram:(id)sender
 {		// sender is chkboxWatchOfficialProgram
-	BOOL state = ([sender state] == NSOnState) ? YES : NO;
-		
-	[programSieves setWatchOfficial:state];
-	[statusBar setWatchOfficial:state]; 
-}//end - (IBAction) watchOfficialChannels:(id)sender
+	watchOfficialProgram = ([sender state] == NSOnState) ? YES : NO;
+	
+	[programSieves setWatchOfficial:watchOfficialProgram];
+	[statusBar setWatchOfficial:[programSieves officialState]]; 
+}// end - (IBAction) watchOfficialProgram:(id)sender
+
+- (IBAction) watchOfficialChannel:(id)sender
+{		// sender is chkboxWatchOfficialChannel
+	watchOfficialChannel = ([sender state] == NSOnState) ? YES : NO;
+
+	[programSieves setWatchChannel:watchOfficialChannel];
+	[statusBar setWatchOfficial:[programSieves officialState]]; 
+}//end - (IBAction) watchOfficialChannel:(id)sender
 
 - (IBAction) addToWatchList:(id)sender
 {

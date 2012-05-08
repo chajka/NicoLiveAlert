@@ -36,6 +36,7 @@
 	__strong OnigRegexp		*liveStateRegex;
 	BOOL					isReservedProgram;
 	BOOL					isOfficial;
+	BOOL					isMyProgram;
 	BOOL					broadCasting;
 }
 @property (readonly) NSMenuItem			*programMenu;
@@ -46,7 +47,7 @@
 @property (readonly) BOOL				isOfficial;
 
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date;
-- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner;
+- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner isMine:(BOOL)mine;
 - (BOOL) isEqual:(id)object;
 - (BOOL) isSame:(NLProgram *)program;
 - (void) terminate;

@@ -10,6 +10,46 @@
 #import "HTTPConnection.h"
 #import "Growl/Growl.h"
 
+@interface NLProgram ()
+	// construction support methods
+- (void) clearAllMember;
+- (void) setupEachMember:(NSString *)liveNo;
+- (NSDictionary *) elementDict;
+- (void) checkStartTime:(NSDate *)date forLive:(NSString *)liveNo;
+- (NSString *) makeStartString;
+- (void) parseOfficialProgram;
+- (void) parseProgramInfo:(NSString *)liveNo;
+	// activity control method
+- (BOOL) isBroadCasting;
+	// drawing methods
+- (void) drawUserProgram;
+- (void) drawOfficialProgram;
+- (void) createMenuItem;
+	// timer driven methods
+- (void) updateElapse:(NSTimer *)theTimer;
+- (void) checkBroadcasting:(NSTimer *)theTimer;
+	// timer management methods
+- (void) stopProgramStatusTimer;
+- (void) stopElapsedTimer;
+- (void) resetProgramStatusTimer;
+- (void) resetElapsedTimer;
+	// growling;
+- (void) growlProgramNotify:(NSString *)notificationName;
+@end
+
+@implementation NLProgram
+@synthesize programMenu;
+@synthesize programNumber;
+@synthesize communityID;
+@synthesize broadcastOwner;
+@synthesize isOfficial;
+@synthesize broadCasting;
+
+NSMutableString *dataString;
+NSInteger currentElement;
+NSDictionary *elementDict;
+NSString *embedContent;
+
 const CGFloat originX = 0.0;
 const CGFloat originY = 0.0;
 const CGFloat thumbnailSize = 50.0;
@@ -81,52 +121,15 @@ const CGFloat TimeColorBlue = (64.0 / 255);
 const NSTimeInterval checkActivityCycle = (60.0 * 3);
 const NSTimeInterval elapseCheckCycle = (10.0);
 
-@interface NLProgram ()
-	// construction support methods
-- (void) clearAllMember;
-- (void) setupEachMember:(NSString *)liveNo;
-- (NSDictionary *) elementDict;
-- (void) checkStartTime:(NSDate *)date forLive:(NSString *)liveNo;
-- (NSString *) makeStartString;
-- (void) parseOfficialProgram;
-- (void) parseProgramInfo:(NSString *)liveNo;
-	// activity control method
-- (BOOL) isBroadCasting;
-	// drawing methods
-- (void) drawUserProgram;
-- (void) drawOfficialProgram;
-- (void) createMenuItem;
-	// timer driven methods
-- (void) updateElapse:(NSTimer *)theTimer;
-- (void) checkBroadcasting:(NSTimer *)theTimer;
-	// timer management methods
-- (void) stopProgramStatusTimer;
-- (void) stopElapsedTimer;
-- (void) resetProgramStatusTimer;
-- (void) resetElapsedTimer;
-	// growling;
-- (void) growlProgramNotify:(NSString *)notificationName;
-@end
-
-@implementation NLProgram
-@synthesize programMenu;
-@synthesize programNumber;
-@synthesize communityID;
-@synthesize broadcastOwner;
-@synthesize isOfficial;
-@synthesize broadCasting;
-NSMutableString *dataString;
-NSInteger currentElement;
-NSDictionary *elementDict;
-NSString *embedContent;
 
 #pragma mark construct / destruct
-- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner
+- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner isMine:(BOOL)mine
 {
 	self = [super init];
 	if (self)
 	{		// initialize member variables
 		[self clearAllMember];
+		isMyProgram = mine;
 
 		@try {
 			[self checkStartTime:date forLive:liveNo];
@@ -194,6 +197,9 @@ NSString *embedContent;
 
 - (void) dealloc
 {
+	if (isMyProgram == YES)
+		[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:NLNotificationMyBroadcastEnd object:self]];
+
 #if __has_feature(objc_arc) == 0
 	if (programMenu != NULL)		[programMenu release];
 	if (menuImage != NULL)			[menuImage release];
@@ -261,10 +267,17 @@ NSString *embedContent;
 	localeDict = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
 	center = [NSNotificationCenter defaultCenter];
 	startTimeString = [[self makeStartString] copy];
+
 	if (isOfficial == YES)
 		[self drawOfficialProgram];
 	else
 		[self drawUserProgram];
+	// end if is official or user.
+
+	if (isMyProgram == YES)
+		[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:NLNotificationMyBroadcastStart object:self]];
+	// end if program owner is me or not.
+	
 	[self createMenuItem];
 	[self resetElapsedTimer];
 	[self resetProgramStatusTimer];
@@ -742,7 +755,7 @@ NSLog(@"%@ Program done", programNumber);
 - (void) growlProgramNotify:(NSString *)notificationName
 {
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
-	NSNumber *priority = [NSNumber numberWithInt:2];
+	NSNumber *priority = [NSNumber numberWithInt:0];
 	NSNumber *isStickey = [NSNumber numberWithBool:NO];
 	[dict setValue:notificationName forKey:GROWL_NOTIFICATION_NAME];
 	[dict setValue:programTitle forKey:GROWL_NOTIFICATION_TITLE];

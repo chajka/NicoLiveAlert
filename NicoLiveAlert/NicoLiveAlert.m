@@ -24,6 +24,8 @@
 - (void) listenHalt:(NSNotification *)note;
 - (void) listenRestart:(NSNotification *)note;
 - (void) removeProgramNoFromTable:(NSNotification *)note;
+- (void) startMyProgram:(NSNotification *)note;
+- (void) endMyProgram:(NSNotification *)note;
 - (void) doAutoOpen:(NSNotification *)note;
 - (void) rowSelected:(NSNotification *)note;
 @end
@@ -50,6 +52,7 @@
 {
 	[GrowlApplicationBridge setGrowlDelegate:self];
 	prefs = [[NicoLivePrefManager alloc] init];
+	notificationPosted = NO;
 }// end 
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -186,10 +189,19 @@
 
 		// collaboration flags
 	dontOpenWhenImBroadcast = [prefs dontOpenWhenImBroadcast];
+	[chkboxDonotAutoOpenAtBroadcasting setState:dontOpenWhenImBroadcast];
+	
 	kickFMELauncher = [prefs kickFMELauncher];
+	[chkboxRelationWithFMELauncher setState:kickFMELauncher];
+
 	kickCharlestonOnMyBroadcast = [prefs kickCharlestonOnMyBroadcast];
+	[chkboxRelationWithCharlestonMyBroadcast setState:kickCharlestonOnMyBroadcast];
+
 	kickCharlestonAtAutoOpen = [prefs kickCharlestonAtAutoOpen];
+	[chkboxRelationAutoOpenAndCharleston setState:kickCharlestonAtAutoOpen];
+
 	kickCharlestonOpenByMe = [prefs kickCharlestonOpenByMe];
+	[chkboxRelationChooseFromMenuAndCharleston setState:kickCharlestonOpenByMe];
 }// end - (void) loadPreferences
 
 - (void) savePreferences
@@ -216,51 +228,61 @@
 {
 	NSURL *url = [NSURL URLWithString:URLString];
 	[[NSWorkspace sharedWorkspace] openURL:url];
+	notificationPosted = NO;
 }// end - (void) openProgram:(NSString *)URLString
 
 - (void) hookNotifications
 {
-	NSNotificationCenter *shared = [[NSWorkspace sharedWorkspace] notificationCenter];
-	NSNotificationCenter *application = [NSNotificationCenter defaultCenter];
+	NSNotificationCenter *myMac = [[NSWorkspace sharedWorkspace] notificationCenter];
+	NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
 		// sleep and wakeup notification hooks
 			// hook to sleep notification
-	[shared addObserver:self selector: @selector(listenHalt:) name: NSWorkspaceWillSleepNotification object: NULL];
+	[myMac addObserver:self selector: @selector(listenHalt:) name: NSWorkspaceWillSleepNotification object: NULL];
 			// hook to wakeup notification
-	[shared addObserver:self selector: @selector(listenRestart:) name: NSWorkspaceDidWakeNotification object: NULL];
+	[myMac addObserver:self selector: @selector(listenRestart:) name: NSWorkspaceDidWakeNotification object: NULL];
 		// Connection Notification hooks
 			// hook to connection lost notification
-	[application addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:NULL];
+	[this addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:NULL];
 			// hook to connection reactive notification
-	[application addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
+	[this addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
 		// open by program number hook
-	[application addObserver:self selector:@selector(removeProgramNoFromTable:) name:NLNotificationFoundLiveNo object:NULL];
+	[this addObserver:self selector:@selector(removeProgramNoFromTable:) name:NLNotificationFoundLiveNo object:NULL];
+		// broadcast kind notification
+	[this addObserver:self selector:@selector(startMyProgram:) name:NLNotificationMyBroadcastStart object:NULL];
+	[this addObserver:self selector:@selector(endMyProgram:) name:NLNotificationMyBroadcastStart object:NULL];
 		// AutoOpen Notification hook
-	[application addObserver:self selector:@selector(doAutoOpen:) name:NLNotificationAutoOpen object:NULL];
+	[this addObserver:self selector:@selector(doAutoOpen:) name:NLNotificationAutoOpen object:NULL];
 		// Tableview Notification hook
-	[application addObserver:self selector:@selector(rowSelected:) name:NLNotificationSelectRow object:NULL];
+	[this addObserver:self selector:@selector(rowSelected:) name:NLNotificationSelectRow object:NULL];
 }// end - (void) hookNotifications
 
 - (void) removeNotifications
 {
-	NSNotificationCenter *shared = [[NSWorkspace sharedWorkspace] notificationCenter];
-	NSNotificationCenter *application = [NSNotificationCenter defaultCenter];
+	NSNotificationCenter *myMac = [[NSWorkspace sharedWorkspace] notificationCenter];
+	NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
 		// release sleep and wakeup notifidation
 			// remove sleep notification
-	[shared removeObserver:self name:NSWorkspaceWillSleepNotification object:NULL];
+	[myMac removeObserver:self name:NSWorkspaceWillSleepNotification object:NULL];
 			// remove wakeup notification
-	[shared removeObserver:self name:NSWorkspaceDidWakeNotification object:NULL];
+	[myMac removeObserver:self name:NSWorkspaceDidWakeNotification object:NULL];
 		// Connection Notification Hook
 			// remove Connection lost notification
-	[application removeObserver:self name:NLNotificationConnectionLost object:NULL];
+	[this removeObserver:self name:NLNotificationConnectionLost object:NULL];
 			// remove Connection Rised notification
-	[application removeObserver:self name:NLNotificationConnectionRised object:NULL];
+	[this removeObserver:self name:NLNotificationConnectionRised object:NULL];
 		// remove open by program number hook
-	[application removeObserver:self name:NLNotificationFoundLiveNo object:NULL];
+	[this removeObserver:self name:NLNotificationFoundLiveNo object:NULL];
+		// broadcast kind notification
+	[this removeObserver:self name:NLNotificationMyBroadcastStart object:NULL];
+	[this removeObserver:self name:NLNotificationMyBroadcastEnd object:NULL];
 		// AutoOpen Notification
-	[application removeObserver:self name:NLNotificationAutoOpen object:NULL];
+	[this removeObserver:self name:NLNotificationAutoOpen object:NULL];
 		// TableView Notification
-	[application removeObserver:self name:NLNotificationSelectRow object:NULL];
+	[this removeObserver:self name:NLNotificationSelectRow object:NULL];
 }// end - (void) hookNotifications
+
+#pragma mark -
+#pragma mark callback by notification
 
 - (void) listenHalt:(NSNotification *)note
 {
@@ -284,8 +306,51 @@
 	// end foreach watchlist item
 }// end - (void) removeProgramNoFromTable:(NSNotification *)note
 
+- (void) startMyProgram:(NSNotification *)note
+{
+	broadCasting = YES;
+}// end - (void) startMyProgram:(NSNotification *)note
+
+- (void) endMyProgram:(NSNotification *)note
+{
+	broadCasting = NO;
+}// end - (void) endMyProgram:(NSNotification *)note
+
+	// TODO: implement check need kick FMELauncher
+	// TODO: implement check need kick charleston at my program
+	// TODO: implement check need kick charleston at default
 - (void) doAutoOpen:(NSNotification *)note
 {
+	NSNotificationCenter *myMac = [[NSWorkspace sharedWorkspace] notificationCenter];
+	if (broadCasting == YES)
+	{		// check need kick FMELauncher
+			// check need kick charleston
+		NSDictionary *info = 
+			[NSDictionary dictionaryWithObjectsAndKeys:
+				[note object], keyNLNotificationLiveNumber,
+				[NSNumber numberWithBool:YES], keyNLNotificationIsMyLive, nil];
+		if ((kickCharlestonAtAutoOpen == YES) || (kickFMELauncher == YES))
+		{
+			[myMac postNotification:[NSNotification notificationWithName:NLNotificationLiveStart object:info]];
+			notificationPosted = YES;
+		}// end if
+			// check never want auto open when I'm broadcasting
+		if (dontOpenWhenImBroadcast == YES)
+			return;
+	}// end if
+
+		// check need kick charleston
+	if ((notificationPosted == NO) && 
+		(dontOpenWhenImBroadcast == NO) && 
+		(kickCharlestonAtAutoOpen == YES))
+	{
+		NSDictionary *info = 
+			[NSDictionary dictionaryWithObjectsAndKeys:
+				[note object], keyNLNotificationLiveNumber,
+				[NSNumber numberWithBool:NO], keyNLNotificationIsMyLive, nil];
+		[myMac postNotification:[NSNotification notificationWithName:NLNotificationLiveStart object:info]];
+	}// end if
+
 	[self openLiveProgram:[note object]];
 }// end - (void) doAutoOpen:(NSNotification *)note
 
@@ -356,9 +421,20 @@
 	}// end for
 }// end - (IBAction) launchApplicaions:(id)sender
 
+	// TODO: implement check need kick charlestion
 - (IBAction) openProgram:(id)sender
 {
 /* #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7 */
+		// check need kick charlestion
+	if (kickCharlestonOpenByMe == YES)
+	{
+		NSNotificationCenter *myMac = [[NSWorkspace sharedWorkspace] notificationCenter];
+		NSDictionary *info = 
+			[NSDictionary dictionaryWithObjectsAndKeys:
+				[sender representedObject], keyNLNotificationLiveNumber,
+				[NSNumber numberWithBool:NO], keyNLNotificationIsMyLive, nil];
+		[myMac postNotification:[NSNotification notificationWithName:NLNotificationLiveStart object:info]];
+	}
 		// open by NSWorkspace
 	[self openLiveProgram:[sender representedObject]];
 /*
@@ -543,18 +619,23 @@
 	switch ([sender tag]) {
 		case tagDoNotAutoOpenInMyBroadcast:
 			dontOpenWhenImBroadcast = !dontOpenWhenImBroadcast;
+			[chkboxDonotAutoOpenAtBroadcasting setState:dontOpenWhenImBroadcast];
 			break;
 		case tagKickFMELauncher:
 			kickFMELauncher = !kickFMELauncher;
+			[chkboxRelationWithFMELauncher setState:kickFMELauncher];
 			break;
 		case tagKickCharlestonOnMyBroadcast:
 			kickCharlestonOnMyBroadcast = !kickCharlestonOnMyBroadcast;
+			[chkboxRelationWithCharlestonMyBroadcast setState:kickCharlestonOnMyBroadcast];
 			break;
 		case tagKickCharlestonAtAutoOpen:
 			kickCharlestonAtAutoOpen = !kickCharlestonAtAutoOpen;
+			[chkboxRelationAutoOpenAndCharleston setState:kickCharlestonAtAutoOpen];
 			break;
 		case tagKickCharlestonByOpenFromMe:
 			kickCharlestonOpenByMe = !kickCharlestonOpenByMe;
+			[chkboxRelationChooseFromMenuAndCharleston setState:kickCharlestonOpenByMe];
 			break;
 		default:
 			break;

@@ -83,6 +83,8 @@
 	BOOL											kickCharlestonOpenByMe;
 		// my status
 	BOOL											broadCasting;
+	BOOL											notificationPosted;
+
 }
 @property (retain, readonly)	NSMenu				*menuStatusbar;
 @property (assign,readwrite)	NSPanel				*prefencePanel;

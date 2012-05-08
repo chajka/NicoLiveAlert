@@ -256,6 +256,12 @@ enum elementStreamInfoIndex {
 #define UserProgXMLParseFail	@"UserProgXMLParseFail"
 
 #pragma mark -
+#pragma mark definitions for class NLActivePrograms
+
+#define NLNotificationMyBroadcastStart	@"NLNotificationMyBroadcastStart"
+#define NLNotificationMyBroadcastEnd	@"NLNotificationMyBroadcastEnd"
+
+#pragma mark -
 #pragma mark GUI
 #pragma mark NLArrayControllerDragAndDrop
 
@@ -272,7 +278,10 @@ enum elementStreamInfoIndex {
 #define keyLauncherAppPath		@"ApplicationPath"
 
 #pragma mark -
-#pragma mark Preference definition
+#pragma mark definitions for Preferences
+
+#define UserDefaultsFileName	@"UserDefaults"
+#define TypeDefaultsFile			@"plist"
 
 enum TextfieldTags {
 	tagWatchItemBody = 1001,
@@ -300,12 +309,17 @@ enum AppCollaboCheckBoxes {
 #define AccauntTable			@"AccauntTable"
 
 #pragma mark application collaboration keys
+
 #define DoNotAutoOpenInMyBroadcast	@"DoNotAutoOpenInMyBroadcast"
 #define KickFMELauncher				@"KickFMELauncher"
 #define KickCharlestonOnMyBroadcast	@"KickCharlestonOnMyBroadcast"
 #define KickCharlestonAtAutoOpen	@"KickCharlestonAtAutoOpen"
 #define KickCharlestonByOpenFromMe	@"KickCharlestonByOpenFromMe"
 #define TinyLauncerApplicatoins		@"TinyLauncerApplicatoins"
+
+#define keyNLNotificationLiveNumber	@"keyNLNotificationLiveNumber"
+#define keyNLNotificationIsMyLive	@"keyNLNotificationIsMyLive"
+#define NLNotificationLiveStart		@"NLNotificationLiveStart"
 
 #define LauncItemList				@"LauncItemList"
 

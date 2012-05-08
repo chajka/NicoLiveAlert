@@ -89,6 +89,8 @@
 		1D72B11A152B5CB400F7944C /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
 		1D72B11B152B5CB400F7944C /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
 		1D72B11C152B5CB400F7944C /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
+		1D85D2C21557DCA2005D4AFB /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D85D2C11557DCA2005D4AFB /* UserDefaults.plist */; };
+		1D85D2C31557DCA2005D4AFB /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D85D2C11557DCA2005D4AFB /* UserDefaults.plist */; };
 		1D878105154573610075B151 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D878104154573610075B151 /* Growl.framework */; };
 		1D878106154573610075B151 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D878104154573610075B151 /* Growl.framework */; };
 		1D93A153153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -298,6 +300,7 @@
 		1D6500C9150CBE98002F5A8B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1D72B117152B5CB400F7944C /* NLProgramList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLProgramList.h; path = NicoLive/NLProgramList.h; sourceTree = "<group>"; };
 		1D72B118152B5CB400F7944C /* NLProgramList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLProgramList.m; path = NicoLive/NLProgramList.m; sourceTree = "<group>"; };
+		1D85D2C11557DCA2005D4AFB /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = UserDefaults.plist; path = SupportingFiles/UserDefaults.plist; sourceTree = "<group>"; };
 		1D878104154573610075B151 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = NicoLiveAlert/Growl/Legacy/Growl.framework; sourceTree = "<group>"; };
 		1D93A139153856DA00328D5C /* OnigRegexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexp.h; sourceTree = "<group>"; };
 		1D93A13A153856DA00328D5C /* OnigRegexp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexp.m; sourceTree = "<group>"; };
@@ -487,6 +490,7 @@
 		1D1CE2CC150C77BA001E7E39 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1D85D2C11557DCA2005D4AFB /* UserDefaults.plist */,
 				1D2985B1154D1D6C007F80A2 /* Growl Registration Ticket.growlRegDict */,
 				1D1CE2CD150C77BA001E7E39 /* NicoLiveAlert-Info.plist */,
 				1D1E5231151B0B9900BDD43D /* Localizable.strings */,
@@ -825,6 +829,7 @@
 				1D9993961525E3B600786114 /* NLOffStateRed.png in Resources */,
 				1D93A15B153856DA00328D5C /* COPYING in Resources */,
 				1D2985B2154D1D6C007F80A2 /* Growl Registration Ticket.growlRegDict in Resources */,
+				1D85D2C21557DCA2005D4AFB /* UserDefaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,6 +864,7 @@
 				1D9993971525E3B600786114 /* NLOffStateRed.png in Resources */,
 				1D93A15C153856DA00328D5C /* COPYING in Resources */,
 				1D2985B3154D1D6C007F80A2 /* Growl Registration Ticket.growlRegDict in Resources */,
+				1D85D2C31557DCA2005D4AFB /* UserDefaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

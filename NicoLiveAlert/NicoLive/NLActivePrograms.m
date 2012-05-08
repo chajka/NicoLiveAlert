@@ -55,7 +55,12 @@
 		[liveNumbers setValue:yes forKey:liveNo];
 
 	NLAccount *account = [users primaryAccountForCommunity:community];
-	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo withDate:date forAccount:account owner:owner];
+	BOOL isMyBroadcast = NO;
+	if ([owner isEqualToString:[account username]] == YES)
+		isMyBroadcast = YES;
+	// end if program is my broadcast
+		
+	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo withDate:date forAccount:account owner:owner isMine:isMyBroadcast];
 	if (program == NULL)
 		return;
 

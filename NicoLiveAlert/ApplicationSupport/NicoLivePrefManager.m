@@ -25,6 +25,7 @@
 #if __has_feature(objc_arc) == 0
 		[myDefaults retain];
 #endif
+		[self registerDefaults];
 	}// end if
 
 	return self;
@@ -41,7 +42,12 @@
 
 - (void) registerDefaults
 {
-	
+	NSString		*initialDefaultFilePath = NULL;
+	NSDictionary	*initialDefaultDict = NULL;
+
+	initialDefaultFilePath = [[NSBundle mainBundle] pathForResource:UserDefaultsFileName ofType:TypeDefaultsFile];
+	initialDefaultDict = [NSDictionary dictionaryWithContentsOfFile:initialDefaultFilePath];
+	[myDefaults registerDefaults:initialDefaultDict];
 }// end - (void) registerDefaults
 
 #pragma mark -

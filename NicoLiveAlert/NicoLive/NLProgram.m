@@ -313,20 +313,25 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 		@throw [NSException exceptionWithName:EmbedFetchFailed reason:StringIsEmpty userInfo:NULL];
 
 	OnigResult *checkOnair = [liveStateRegex search:embedContent];
+NSLog(@"%@", [checkOnair stringAt:1]);
 	OnigResult *broadcastTime = [broadcastTimeRegex search:embedContent];
-	if (broadcastTime == NULL)
+	if (([[checkOnair stringAt:1] isEqualToString:ONAIRSTATE] == YES)
+		|| (broadcastTime == NULL))
 	{
 		startTime = [date copy];
 		return;
 	}
 
 	NSDate *broadcastDate = [NSDate dateWithNaturalLanguageString:[broadcastTime stringAt:1] locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
-	NSInteger diff = (NSInteger)[date timeIntervalSinceDate:broadcastDate];
+	
+	NSTimeInterval diff = [broadcastDate timeIntervalSinceDate:date];
 	if (([[checkOnair stringAt:1] isEqualToString:BEFORESTATE] == YES)
-		|| ((abs(diff / 60) != 0)))
+		|| ((abs(((NSInteger)diff) / 60) != 0)))
 	{
-		startTime = [broadcastDate copy];
-		lastMintue = (diff / 60) % 60;
+		NSTimeInterval startUnixTime = [date timeIntervalSince1970] + diff;
+		startTime = [[NSDate alloc] initWithTimeIntervalSince1970:startUnixTime];
+		
+		lastMintue = ((NSInteger)([startTime timeIntervalSinceDate:date] / 60)) % 60;
 		isReservedProgram = YES;
 
 		return;
@@ -708,8 +713,15 @@ NSLog(@"%@ Program done", programNumber);
 	NSURL *url = [NSURL URLWithString:urlStr];
 	NSError *err;
 	NSString *embed = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&err];
+	if ((err != NULL) || ([embed length] == 0))
+		return YES;
+
 	OnigResult *result = [liveStateRegex search:embed];
-	if ((result == NULL) || ([[result stringAt:1] isEqualToString:DONESTATE]== YES))
+// !!!: Debug
+	if (result == NULL)
+		NSLog(@"%@", embed);
+//
+	if ((result == NULL) || ([[result stringAt:1] isEqualToString:DONESTATE] == YES))
 		return NO;
 	else
 		return YES;

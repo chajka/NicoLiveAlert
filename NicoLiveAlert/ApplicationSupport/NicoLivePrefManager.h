@@ -13,6 +13,7 @@
 }
 @property (readonly) NSUserDefaults *myDefaults;
 
+- (id) initWithDefaults:(NSUserDefaultsController *)defaults;
 	// watchlist tab 
 - (NSArray *) loadManualWatchList;
 - (void) saveManualWatchList:(NSArray *)watchlist;
@@ -28,16 +29,5 @@
 	// application collaboration tab
 - (NSArray *) loadLauncherDict;
 - (void) saveLauncherList:(NSArray *)launcherItems;
-
-- (BOOL) dontOpenWhenImBroadcast;
-- (void) setDontOpenWhenImBroadcast:(BOOL)flag;
-- (BOOL) kickFMELauncher;
-- (void) setKickFMELauncher:(BOOL)flag;
-- (BOOL) kickCharlestonOnMyBroadcast;
-- (void) setKickCharlestonOnMyBroadcast:(BOOL)flag;
-- (BOOL) kickCharlestonAtAutoOpen;
-- (void) setKickCharlestonAtAutoOpen:(BOOL)flag;
-- (BOOL) kickCharlestonOpenByMe;
-- (void) setKickCharlestonOpenByMe:(BOOL)flag;
 
 @end

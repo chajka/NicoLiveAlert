@@ -16,12 +16,12 @@
 @implementation NicoLivePrefManager
 @synthesize myDefaults;
 
-- (id) init
+- (id) initWithDefaults:(NSUserDefaultsController *)defaults
 {
 	self = [super init];
 	if (self)
 	{
-		myDefaults = [NSUserDefaults standardUserDefaults];
+		myDefaults = [defaults defaults];
 #if __has_feature(objc_arc) == 0
 		[myDefaults retain];
 #endif
@@ -190,57 +190,5 @@
 
 	[myDefaults setObject:ary forKey:LauncItemList];
 }// - (void) saveLauncherDict:(NSDictionary *)launcherDict
-
-#pragma mark -
-#pragma mark application collaboration checkbox
-- (BOOL) dontOpenWhenImBroadcast
-{
-	return [myDefaults boolForKey:DoNotAutoOpenInMyBroadcast];
-}// end - (BOOL) dontOpenWhenImBroadcast
-
-- (void) setDontOpenWhenImBroadcast:(BOOL)flag
-{
-	[myDefaults setBool:flag forKey:DoNotAutoOpenInMyBroadcast];
-}// end setDontOpenWhenImBroadcast:(BOOL)flag
-
-- (BOOL) kickFMELauncher
-{
-	return [myDefaults boolForKey:KickFMELauncher];
-}// end - (BOOL) kickFMELauncher
-
-- (void) setKickFMELauncher:(BOOL)flag
-{
-	[myDefaults setBool:flag forKey:KickFMELauncher];
-}// end setKickFMELauncher:(BOOL)flag
-
-- (BOOL) kickCharlestonOnMyBroadcast
-{
-	return [myDefaults boolForKey:KickCharlestonOnMyBroadcast];
-}// end kickCharlestonOnMyBroadcast
-
-- (void) setKickCharlestonOnMyBroadcast:(BOOL)flag
-{
-	[myDefaults setBool:flag forKey:KickCharlestonOnMyBroadcast];
-}// end - (void) setKickCharlestonOnMyBroadcast:(BOOL)flag
-
-- (BOOL) kickCharlestonAtAutoOpen
-{
-	return [myDefaults boolForKey:KickCharlestonAtAutoOpen];
-}// end - (BOOL) kickCharlestonAtAutoOpen
-
-- (void) setKickCharlestonAtAutoOpen:(BOOL)flag
-{
-	[myDefaults setBool:flag forKey:KickCharlestonAtAutoOpen];
-}// end - (void) setKickCharlestonAtAutoOpen:(BOOL)flag
-
-- (BOOL) kickCharlestonOpenByMe
-{
-	return [myDefaults boolForKey:KickCharlestonByOpenFromMe];
-}// end - (BOOL) kickCharlestonOpenByMe
-
-- (void) setKickCharlestonOpenByMe:(BOOL)flag
-{
-	[myDefaults setBool:flag forKey:KickCharlestonByOpenFromMe];
-}// end - (void) setKickCharlestonOpenByMe:(BOOL)flag
 
 @end

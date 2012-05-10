@@ -66,6 +66,9 @@
 	__strong IBOutlet NLArrayControllerDragAndDrop	*aryManualWatchlist;
 	__strong IBOutlet NLArrayControllerDragAndDrop	*aryAccountItems;
 	__strong IBOutlet NLArrayControllerDragAndDrop	*aryLauncherItems;
+
+			// user's defaults object
+	__strong IBOutlet NSUserDefaultsController		*userDefaults;
 	
 	NLStatusbar										*statusBar;
 	NicoLivePrefManager								*prefs;
@@ -90,6 +93,11 @@
 @property (assign,readwrite)	NSPanel				*prefencePanel;
 @property (readonly)			NicoLivePrefManager	*prefs;
 @property (assign, readwrite)	BOOL				broadCasting;
+@property (assign, readwrite)	BOOL				dontOpenWhenImBroadcast;
+@property (assign, readwrite)	BOOL				kickFMELauncher;
+@property (assign, readwrite)	BOOL				kickCharlestonOnMyBroadcast;
+@property (assign, readwrite)	BOOL				kickCharlestonAtAutoOpen;
+@property (assign, readwrite)	BOOL				kickCharlestonOpenByMe;
 
 		// IBAction’s prototypes
 - (IBAction)menuSelectAutoOpen:(id)sender;

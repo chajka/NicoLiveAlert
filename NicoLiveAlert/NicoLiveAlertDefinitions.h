@@ -138,6 +138,7 @@ enum WatchTargetKind {
 #define keyAccountWatchEnabled	@"WatchEnabled"
 #define keyAccountUserID		@"UserID"
 #define keyAccountNickname		@"Nickname"
+#define keyAccountMailAddr		@"MailAddress"
 
 #define OriginalWatchList		NSLocalizedString(@"OriginalWatchList", @"")
 
@@ -182,6 +183,7 @@ enum elementLiteralIndex {
 #define NLNotificationConnectionLost	@"NLNotificationConnectionLost"
 #define NLNotificationConnectionRised	@"NLNotificationConnectionRised"
 #define NLNotificationAutoOpen			@"NLNotificationAutoOpen"
+#define NLChannelFormat					@"ch%@"
 #define dataSeparator					@","
 #define liveNoAppendFormat				@"lv%@"
 #define liveOfficialString				@"official"

@@ -35,6 +35,11 @@
 @synthesize prefencePanel;
 @synthesize prefs;
 @synthesize broadCasting;
+@synthesize dontOpenWhenImBroadcast;
+@synthesize kickFMELauncher;
+@synthesize kickCharlestonOnMyBroadcast;
+@synthesize kickCharlestonAtAutoOpen;
+@synthesize kickCharlestonOpenByMe;
 
 #pragma mark -
 #pragma mark override / delegate
@@ -51,7 +56,7 @@
 - (void) applicationWillFinishLaunching:(NSNotification *)aNotification
 {
 	[GrowlApplicationBridge setGrowlDelegate:self];
-	prefs = [[NicoLivePrefManager alloc] init];
+	prefs = [[NicoLivePrefManager alloc] initWithDefaults:userDefaults];
 	notificationPosted = NO;
 }// end 
 
@@ -191,25 +196,15 @@
 		[aryLauncherItems addObjects:ary];
 
 		// collaboration flags
-	dontOpenWhenImBroadcast = [prefs dontOpenWhenImBroadcast];
-	[chkboxDonotAutoOpenAtBroadcasting setState:dontOpenWhenImBroadcast];
-	
-	kickFMELauncher = [prefs kickFMELauncher];
-	[chkboxRelationWithFMELauncher setState:kickFMELauncher];
-
-	kickCharlestonOnMyBroadcast = [prefs kickCharlestonOnMyBroadcast];
-	[chkboxRelationWithCharlestonMyBroadcast setState:kickCharlestonOnMyBroadcast];
-
-	kickCharlestonAtAutoOpen = [prefs kickCharlestonAtAutoOpen];
-	[chkboxRelationAutoOpenAndCharleston setState:kickCharlestonAtAutoOpen];
-
-	kickCharlestonOpenByMe = [prefs kickCharlestonOpenByMe];
-	[chkboxRelationChooseFromMenuAndCharleston setState:kickCharlestonOpenByMe];
+	dontOpenWhenImBroadcast = ([chkboxDonotAutoOpenAtBroadcasting state] == NSOnState) ? YES : NO;
+	kickFMELauncher = ([chkboxRelationWithFMELauncher state] == NSOnState) ? YES : NO;
+	kickCharlestonOnMyBroadcast = ([chkboxRelationWithCharlestonMyBroadcast state] == NSOnState) ? YES : NO;
+	kickCharlestonAtAutoOpen = ([chkboxRelationAutoOpenAndCharleston state] == NSOnState) ? YES : NO;
+	kickCharlestonOpenByMe = ([chkboxRelationChooseFromMenuAndCharleston state] == NSOnState) ? YES : NO;
 }// end - (void) loadPreferences
 
 - (void) savePreferences
-{
-		// watch list
+{		// watch list
 	[prefs saveManualWatchList:[aryManualWatchlist arrangedObjects]];
 	[prefs saveAutoOpenMenuState:enableAutoOpen];
 	[prefs saveWatchOfficialProgramState:watchOfficialProgram];
@@ -218,13 +213,6 @@
 	[prefs saveAccountsList:[aryAccountItems arrangedObjects]];
 		// launcher items
 	[prefs saveLauncherList:[aryLauncherItems arrangedObjects]];
-		// collaboration flags
-	[prefs setDontOpenWhenImBroadcast:dontOpenWhenImBroadcast];
-	[prefs setKickFMELauncher:kickFMELauncher];
-	[prefs setKickCharlestonOnMyBroadcast:kickCharlestonOnMyBroadcast];
-	[prefs setKickCharlestonAtAutoOpen:kickCharlestonAtAutoOpen];
-	[prefs setKickCharlestonOpenByMe:kickCharlestonOpenByMe];
-
 }// end - (void) savePreferences
 
 - (void) openLiveProgram:(NSString *)URLString
@@ -625,24 +613,19 @@
 {
 	switch ([sender tag]) {
 		case tagDoNotAutoOpenInMyBroadcast:
-			dontOpenWhenImBroadcast = !dontOpenWhenImBroadcast;
-			[chkboxDonotAutoOpenAtBroadcasting setState:dontOpenWhenImBroadcast];
+			dontOpenWhenImBroadcast = ([chkboxDonotAutoOpenAtBroadcasting state] == NSOnState) ? YES : NO;
 			break;
 		case tagKickFMELauncher:
-			kickFMELauncher = !kickFMELauncher;
-			[chkboxRelationWithFMELauncher setState:kickFMELauncher];
+			kickFMELauncher = ([chkboxRelationWithFMELauncher state] == NSOnState) ? YES : NO;
 			break;
 		case tagKickCharlestonOnMyBroadcast:
-			kickCharlestonOnMyBroadcast = !kickCharlestonOnMyBroadcast;
-			[chkboxRelationWithCharlestonMyBroadcast setState:kickCharlestonOnMyBroadcast];
+			kickCharlestonOnMyBroadcast = ([chkboxRelationWithCharlestonMyBroadcast state] == NSOnState) ? YES : NO;
 			break;
 		case tagKickCharlestonAtAutoOpen:
-			kickCharlestonAtAutoOpen = !kickCharlestonAtAutoOpen;
-			[chkboxRelationAutoOpenAndCharleston setState:kickCharlestonAtAutoOpen];
+			kickCharlestonAtAutoOpen = ([chkboxRelationAutoOpenAndCharleston state] == NSOnState) ? YES : NO;
 			break;
 		case tagKickCharlestonByOpenFromMe:
-			kickCharlestonOpenByMe = !kickCharlestonOpenByMe;
-			[chkboxRelationChooseFromMenuAndCharleston setState:kickCharlestonOpenByMe];
+			kickCharlestonOpenByMe = ([chkboxRelationChooseFromMenuAndCharleston state] == NSOnState) ? YES : NO;
 			break;
 		default:
 			break;

@@ -93,6 +93,10 @@
 		1D85D2C31557DCA2005D4AFB /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D85D2C11557DCA2005D4AFB /* UserDefaults.plist */; };
 		1D878105154573610075B151 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D878104154573610075B151 /* Growl.framework */; };
 		1D878106154573610075B151 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D878104154573610075B151 /* Growl.framework */; };
+		1D922484155B8DA200775B7A /* NLAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D922483155B8DA200775B7A /* NLAccountInfo.m */; };
+		1D922485155B8DA200775B7A /* NLAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D922483155B8DA200775B7A /* NLAccountInfo.m */; };
+		1D922486155B8DA200775B7A /* NLAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D922483155B8DA200775B7A /* NLAccountInfo.m */; };
+		1D922487155B8DA200775B7A /* NLAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D922483155B8DA200775B7A /* NLAccountInfo.m */; };
 		1D93A153153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A154153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; };
 		1D93A155153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; };
@@ -302,6 +306,8 @@
 		1D72B118152B5CB400F7944C /* NLProgramList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLProgramList.m; path = NicoLive/NLProgramList.m; sourceTree = "<group>"; };
 		1D85D2C11557DCA2005D4AFB /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = UserDefaults.plist; path = SupportingFiles/UserDefaults.plist; sourceTree = "<group>"; };
 		1D878104154573610075B151 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = NicoLiveAlert/Growl/Legacy/Growl.framework; sourceTree = "<group>"; };
+		1D922482155B8DA200775B7A /* NLAccountInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccountInfo.h; path = NicoLive/NLAccountInfo.h; sourceTree = "<group>"; };
+		1D922483155B8DA200775B7A /* NLAccountInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLAccountInfo.m; path = NicoLive/NLAccountInfo.m; sourceTree = "<group>"; };
 		1D93A139153856DA00328D5C /* OnigRegexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexp.h; sourceTree = "<group>"; };
 		1D93A13A153856DA00328D5C /* OnigRegexp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexp.m; sourceTree = "<group>"; };
 		1D93A13B153856DA00328D5C /* OnigRegexpUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexpUtility.h; sourceTree = "<group>"; };
@@ -662,20 +668,22 @@
 		1DAAB8F6151B4ADF00D0D2B3 /* NicoLive */ = {
 			isa = PBXGroup;
 			children = (
-				1DE87D80151EFFBB006C6EDC /* NLUsers.h */,
-				1DE87D81151EFFBB006C6EDC /* NLUsers.m */,
 				1DAAB8F8151B4BA500D0D2B3 /* NLAccount.h */,
 				1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */,
-				1D141CF1151D8DAA00CEB686 /* NLStatusbar.h */,
-				1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */,
-				1DD73A201526B9ED00DAC3EB /* NLMessageServerInfo.h */,
-				1DD73A211526B9ED00DAC3EB /* NLMessageServerInfo.m */,
-				1D72B117152B5CB400F7944C /* NLProgramList.h */,
-				1D72B118152B5CB400F7944C /* NLProgramList.m */,
+				1DE87D80151EFFBB006C6EDC /* NLUsers.h */,
+				1DE87D81151EFFBB006C6EDC /* NLUsers.m */,
 				1DC5A7B1153320A80077B187 /* NLProgram.h */,
 				1DC5A7B2153320A80077B187 /* NLProgram.m */,
 				1DA0978915365D4C0083A2E1 /* NLActivePrograms.h */,
 				1DA0978A15365D4C0083A2E1 /* NLActivePrograms.m */,
+				1D72B117152B5CB400F7944C /* NLProgramList.h */,
+				1D72B118152B5CB400F7944C /* NLProgramList.m */,
+				1DD73A201526B9ED00DAC3EB /* NLMessageServerInfo.h */,
+				1DD73A211526B9ED00DAC3EB /* NLMessageServerInfo.m */,
+				1D141CF1151D8DAA00CEB686 /* NLStatusbar.h */,
+				1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */,
+				1D922482155B8DA200775B7A /* NLAccountInfo.h */,
+				1D922483155B8DA200775B7A /* NLAccountInfo.m */,
 			);
 			name = NicoLive;
 			sourceTree = "<group>";
@@ -962,6 +970,7 @@
 				1D36A5F01546202500516CDF /* NicoLivePrefManager.m in Sources */,
 				1D36A60E15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
 				1DDE3970154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
+				1D922484155B8DA200775B7A /* NLAccountInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1005,6 +1014,7 @@
 				1D36A5F21546202500516CDF /* NicoLivePrefManager.m in Sources */,
 				1D36A61015478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
 				1DDE3972154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
+				1D922486155B8DA200775B7A /* NLAccountInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1044,6 +1054,7 @@
 				1D36A5F11546202500516CDF /* NicoLivePrefManager.m in Sources */,
 				1D36A60F15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
 				1DDE3971154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
+				1D922485155B8DA200775B7A /* NLAccountInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1087,6 +1098,7 @@
 				1D36A5F31546202500516CDF /* NicoLivePrefManager.m in Sources */,
 				1D36A61115478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
 				1DDE3973154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
+				1D922487155B8DA200775B7A /* NLAccountInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

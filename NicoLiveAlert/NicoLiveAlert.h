@@ -34,13 +34,14 @@
 
 		// Preference Panel items
 			// manual wath list items
-	__strong IBOutlet NSButton					*chkboxWatchOfficialProgram;
-	__strong IBOutlet NSButton					*chkboxWatchOfficialChannel;
 	__strong IBOutlet IOMTableViewDragAndDrop	*tblManualWatchList;
 	__strong IBOutlet NSTextField				*watchItemName;
 	__strong IBOutlet NSTextField				*watchItemComment;
+	__strong IBOutlet NSButton					*chkboxAutoOpen;
 	__strong IBOutlet NSButton					*btnAddWatchListItem;
 	__strong IBOutlet NSButton					*btnRemoveWatchListItem;
+	__strong IBOutlet NSButton					*chkboxWatchOfficialProgram;
+	__strong IBOutlet NSButton					*chkboxWatchOfficialChannel;
 
 			// login information items
 	__strong IBOutlet NSComboBox				*comboLoginID;
@@ -66,7 +67,6 @@
 	__strong IBOutlet NLArrayControllerDragAndDrop	*aryAccountItems;
 	__strong IBOutlet NLArrayControllerDragAndDrop	*aryLauncherItems;
 	
-	__strong NSStatusItem							*sbItem;
 	NLStatusbar										*statusBar;
 	NicoLivePrefManager								*prefs;
 	NLUsers											*nicoliveAccounts;

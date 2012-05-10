@@ -105,8 +105,9 @@
 							forKey:[[watchItem valueForKey:keyWatchItem] string]];
 	// end foreach watch item
 
-	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:activeAccounts andManualWatchList:watchList];
-		//	[nicoliveAccounts syncAccountAndTable:aryAccountItems];
+	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:activeAccounts
+										 andManualWatchList:watchList];
+	[statusBar setUserState:[nicoliveAccounts userState]];
 	[comboLoginID setUsesDataSource:YES];
 	[comboLoginID setDataSource:nicoliveAccounts];
 	NSMenuItem *accountsItem = [menuStatusbar itemWithTag:tagAccounts];
@@ -123,15 +124,17 @@
 		entry = [NSMutableDictionary dictionary];
 		if (enabledAtStartup != NULL)
 		{		// already entried accounts
-			[entry setObject:enabledAtStartup forKey:keyAccountWatchEnabled];
-			[entry setObject:[account userid] forKey:keyAccountUserID];
-			[entry setObject:[account username] forKey:keyAccountNickname];
+			[entry setValue:enabledAtStartup forKey:keyAccountWatchEnabled];
+			[entry setValue:[account userid] forKey:keyAccountUserID];
+			[entry setValue:[account username] forKey:keyAccountNickname];
+			[entry setValue:[account mailaddr] forKey:keyAccountMailAddr];
 		}
 		else
 		{		// newly fetch from keychain
-			[entry setObject:[NSNumber numberWithBool:YES] forKey:keyAccountWatchEnabled];
-			[entry setObject:[account userid] forKey:keyAccountUserID];
-			[entry setObject:[account username] forKey:keyAccountNickname];
+			[entry setValue:[NSNumber numberWithBool:YES] forKey:keyAccountWatchEnabled];
+			[entry setValue:[account userid] forKey:keyAccountUserID];
+			[entry setValue:[account username] forKey:keyAccountNickname];
+			[entry setValue:[account mailaddr] forKey:keyAccountMailAddr];
 		}// end if known or new entry
 			// add entry to table
 		[aryAccountItems addObject:entry];
@@ -525,10 +528,11 @@
 	}// end switch by watch item kind
 
 		// add to watchlist
-	[nicoliveAccounts addWatchListItem:[watchItem string] autoOpen:NO];
+	BOOL autoOpen = ([chkboxAutoOpen state] == NSOnState) ? YES : NO;
+	[nicoliveAccounts addWatchListItem:[watchItem string] autoOpen:autoOpen];
 		// add to table
 	NSMutableDictionary *watchListItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-				   [NSNumber numberWithBool:NO], keyAutoOpen,
+				   [NSNumber numberWithBool:autoOpen], keyAutoOpen,
 				   watchItem, keyWatchItem,
 				   itemComment, keyNote, nil];
 	[aryManualWatchlist addObject:watchListItem];
@@ -536,6 +540,8 @@
 		// cleanup textfields
 	[watchItemName setStringValue:EMPTYSTRING];
 	[watchItemComment setStringValue:EMPTYSTRING];
+	[chkboxAutoOpen setState:NSOffState];
+	[chkboxAutoOpen setEnabled:NO];
 	[btnAddWatchListItem setEnabled:NO];
 }// end - (IBAction) addToWatchList:(id)sender
 
@@ -582,6 +588,7 @@
 				[entry setValue:[NSNumber numberWithBool:YES] forKey:keyAccountWatchEnabled];
 				[entry setValue:[user userid] forKey:keyAccountUserID];
 				[entry setValue:[user username] forKey:keyAccountNickname];
+				[entry setValue:[user mailaddr] forKey:keyAccountMailAddr];
 				[aryAccountItems addObject:entry];
 
 				break;
@@ -650,9 +657,15 @@
 	switch ([[aNotification object] tag]) {
 		case tagWatchItemBody:
 			if ([[watchItemName stringValue] isEqualToString:EMPTYSTRING] == NO)
+			{
 				[btnAddWatchListItem setEnabled:YES];
+				[chkboxAutoOpen setEnabled:YES];
+			}
 			else
+			{
 				[btnAddWatchListItem setEnabled:NO];
+				[chkboxAutoOpen setEnabled:NO];
+			}
 			break;
 
 		case tagAccountLoginID:

@@ -22,7 +22,7 @@
 	NSMenu						*statusbarMenu;
 	BOOL						connected;
 	BOOL						watchOfficial;
-	NSInteger					userState;
+	NSCellStateValue			userState;
 	NSInteger					numberOfPrograms;
 	NSSize						iconSize;
 	CIImage						*sourceImage;
@@ -44,10 +44,10 @@
 	NSInteger					userProgramCount;
 	NSInteger					officialProgramCount;
 }
-@property (readwrite) NSInteger	userState;
-@property (readonly) NSInteger	numberOfPrograms;
-@property (readwrite) BOOL		connected;
-@property (readwrite) BOOL		watchOfficial;
+@property (readwrite)	NSCellStateValue	userState;
+@property (readonly)	NSInteger			numberOfPrograms;
+@property (readwrite)	BOOL				connected;
+@property (readwrite)	BOOL				watchOfficial;
 
 /*!
 	@method initWithMenu:andImageName:

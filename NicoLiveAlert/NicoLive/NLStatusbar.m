@@ -59,7 +59,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	if (self)
 	{
 		connected = NO;
-		userState = 0;
+		userState = NSOffState;
 		numberOfPrograms = 0;
 		statusbarMenu = menu;
 		[self setupMembers:imageName];
@@ -195,10 +195,10 @@ static CGFloat disconnectedColorAlpha = 0.70;
 {
 	CIImage *invertImage = NULL;
 	CIImage *destImage = NULL;
-	if (((numberOfPrograms == 0) && (userState == 0)) && (connected == NO))
+	[statusbarIcon setSize:iconSize];
+	[statusbarAlt setSize:iconSize];
+	if ((userState == NSOffState) || (connected == NO))
 	{		// crop image
-		[statusbarIcon setSize:iconSize];
-		[statusbarAlt setSize:iconSize];
 			// gamma adjust image
 		[gammaFilter setValue:sourceImage forKey:@"inputImage"];
 		[gammaFilter setValue:gammaPower forKey:@"inputPower"];
@@ -219,7 +219,6 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	NSString *progCountStr = [NSString stringWithFormat:@"%d", numberOfPrograms];
 	if (numberOfPrograms > 99)
 	{
-		[progCountBackground removeAllPoints];
 		[progCountBackground removeAllPoints];
 		[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
 		[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX + (progCountBackDigitOffset * 2), progCountBackGrountToY)];
@@ -478,12 +477,12 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	[self makeStatusbarIcon];
 }// end - (BOOL) decleaseProgCount
 
-- (NSInteger) userState
+- (NSCellStateValue) userState
 {
 	return userState;
 }// end - (NSInteger) userState
 
-- (void) setUserState:(NSInteger)state
+- (void) setUserState:(NSCellStateValue)state
 {
 	userState = state;
 	[self makeStatusbarIcon];

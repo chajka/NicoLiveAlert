@@ -56,7 +56,7 @@
 
 	NLAccount *account = [users primaryAccountForCommunity:community];
 	BOOL isMyBroadcast = NO;
-	if ([owner isEqualToString:[account username]] == YES)
+	if ([owner isEqualToString:[account nickname]] == YES)
 		isMyBroadcast = YES;
 	// end if program is my broadcast
 		

@@ -20,7 +20,7 @@
 @implementation NLAccount
 @synthesize mailaddr;
 @synthesize password;
-@synthesize username;
+@synthesize nickname;
 @synthesize userid;
 @synthesize ticket;
 @synthesize channels;
@@ -39,7 +39,7 @@ NSNumber		*notAutoOpen;
 	{		// initialize user information member variables
 		mailaddr = [account copy];
 		password = [pass copy];
-		username = NULL;
+		nickname = NULL;
 		userid = NULL;
 		channels = NULL;
 			// initialize connection internal variables
@@ -78,7 +78,7 @@ NSNumber		*notAutoOpen;
 		// cleanup user information variables.
 	if (mailaddr != NULL)		[mailaddr release];
 	if (password != NULL)		[password release];
-	if (username != NULL)		[username release];
+	if (nickname != NULL)		[nickname release];
 	if (userid != NULL)			[userid release];
 		// cleanup connection information variables.
 	if (ticket != NULL)			[ticket release];
@@ -89,18 +89,80 @@ NSNumber		*notAutoOpen;
 #endif
 }// end - (void) dealloc
 
+#pragma mark -
+#pragma mark accessor
+- (NSMenuItem *) makeMenuItem
+{
+	NSMenuItem *item;
+	NSImage *onStateImg = [NSImage imageNamed:@"NLOnState"];
+	NSImage *offStateImg = [NSImage imageNamed:@"NLOffStateRed"];
+	NSImage *mixedStateImg = [NSImage imageNamed:@"NLMixedState"];
+	item = [[NSMenuItem alloc] initWithTitle:nickname action:@selector(toggleUserState:) keyEquivalent:EMPTYSTRING];
+	[item setOnStateImage:onStateImg];
+	[item setOffStateImage:offStateImg];
+	[item setMixedStateImage:mixedStateImg];
+#if __has_feature(objc_arc) == 0
+	[item autorelease];
+#endif
+	return item;
+}// end - (NSMenuItem *) makeMenuItem
+
+- (BOOL) updateAccountInfo
+{
+	BOOL success = NO;
+
+		// save last values
+	NSString			*savedNickname =	nickname;	nickname = NULL;
+	NSNumber			*savedUserid =		userid;		userid = NULL;
+	NSString			*savedTicket =		ticket;		ticket = NULL;
+	NSMutableDictionary *savedChannels =	channels;	channels = NULL;
+	success = [self getLoginTicket];
+
+	if (success == YES)
+	{		// cleanup saved values
+#if __has_feature(objc_arc) == 0
+		if (savedNickname != NULL)	[savedNickname release];
+		if (savedUserid != NULL)	[savedUserid release];
+		if (savedTicket != NULL)	[savedTicket release];
+		if (savedChannels != NULL)	[savedChannels release];
+#endif
+		savedNickname = NULL;
+		savedUserid = NULL;
+		savedTicket = NULL;
+		savedChannels = NULL;
+	}
+	else
+	{		// restore saved values
+			// cleanup garbage
+#if __has_feature(objc_arc) == 0
+		if (nickname != NULL)	[nickname release];
+		if (userid != NULL)		[userid release];
+		if (ticket != NULL)		[ticket release];
+		if (channels != NULL)	[channels release];
+#endif
+		nickname = savedNickname;
+		userid = savedUserid;
+		ticket = savedTicket;
+		channels = savedChannels;
+	}// end if success or not
+
+	return success;
+}// end - (void) updateAccountInfo
+
+#pragma mark -
+#pragma mark internal
 #pragma mark constructor support
 - (NSDictionary *) generateElementDict
 {
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-		[NSNumber numberWithInteger:indexResponse], elementKeyResponse,
-		[NSNumber numberWithInteger:indexTicket], elementKeyTicket,
-		[NSNumber numberWithInteger:indexStatus], elementKeyStatus,
-		[NSNumber numberWithInteger:indexUserID], elementKeyUserID, 
-		[NSNumber numberWithInteger:indexUserName], elementKeyUserName, 
-		[NSNumber numberWithInteger:indexCommunity], elementKeyCommunity, 
-	nil];
-
+						  [NSNumber numberWithInteger:indexResponse], elementKeyResponse,
+						  [NSNumber numberWithInteger:indexTicket], elementKeyTicket,
+						  [NSNumber numberWithInteger:indexStatus], elementKeyStatus,
+						  [NSNumber numberWithInteger:indexUserID], elementKeyUserID, 
+						  [NSNumber numberWithInteger:indexUserName], elementKeyUserName, 
+						  [NSNumber numberWithInteger:indexCommunity], elementKeyCommunity, 
+						  nil];
+	
 	return dict;
 }// end - (NSDictionary *) generateElementDict
 
@@ -112,14 +174,14 @@ NSNumber		*notAutoOpen;
 		[ticket autorelease];
 		ticket = NULL;
 	}// end cleanup ticket
-
+	
 		// clanup elements
 	if (elements != NULL)
 	{		// cleanup elements
 		[elements release];
 		elements = NULL;
 	}// end cleanup elements
-
+	
 		// cleanup stringBuffer
 	if (stringBuffer != NULL)
 	{
@@ -130,51 +192,6 @@ NSNumber		*notAutoOpen;
 }// end - (void) cleanupInternalVariables
 
 #pragma mark -
-#pragma mark accessor
-- (BOOL) updateAccountInfo
-{
-	BOOL success = NO;
-
-		// save last values
-	NSString			*savedUsername =	username;	username = NULL;
-	NSNumber			*savedUserid =		userid;		userid = NULL;
-	NSString			*savedTicket =		ticket;		ticket = NULL;
-	NSMutableDictionary *savedChannels =	channels;	channels = NULL;
-	success = [self getLoginTicket];
-
-	if (success == YES)
-	{		// cleanup saved values
-#if __has_feature(objc_arc) == 0
-		if (savedUsername != NULL)	[savedUsername release];
-		if (savedUserid != NULL)	[savedUserid release];
-		if (savedTicket != NULL)	[savedTicket release];
-		if (savedChannels != NULL)	[savedChannels release];
-#endif
-		savedUsername = NULL;
-		savedUserid = NULL;
-		savedTicket = NULL;
-		savedChannels = NULL;
-	}
-	else
-	{		// restore saved values
-			// cleanup garbage
-#if __has_feature(objc_arc) == 0
-		if (username != NULL)	[username release];
-		if (userid != NULL)		[userid release];
-		if (ticket != NULL)		[ticket release];
-		if (channels != NULL)	[channels release];
-#endif
-		username = savedUsername;
-		userid = savedUserid;
-		ticket = savedTicket;
-		channels = savedChannels;
-	}// end if success or not
-
-	return success;
-}// end - (void) updateAccountInfo
-
-#pragma mark -
-#pragma mark internal
 - (BOOL) getLoginTicket
 {
 	BOOL success = NO;
@@ -311,7 +328,7 @@ NSNumber		*notAutoOpen;
 			userid = [[NSNumber alloc] initWithUnsignedInteger:[stringBuffer integerValue]];
 			break;
 		case indexUserName:
-			username = [[NSString alloc] initWithString:stringBuffer];
+			nickname = [[NSString alloc] initWithString:stringBuffer];
 			break;
 		case indexCommunity:
 			channel = [NSString stringWithString:stringBuffer];

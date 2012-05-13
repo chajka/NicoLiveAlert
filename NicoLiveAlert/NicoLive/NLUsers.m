@@ -83,11 +83,11 @@
 #if __has_feature(objc_arc) == 0
 		[account autorelease];
 #endif
-		[usersDict setValue:account forKey:[account username]];
+		[usersDict setValue:account forKey:[account nickname]];
 		if ([activeUsers containsObject:[account userid]] == YES)
-			[usersState setValue:active forKey:[account username]];
+			[usersState setValue:active forKey:[account nickname]];
 		else
-			[usersState setValue:deactive forKey:[account username]];
+			[usersState setValue:deactive forKey:[account nickname]];
 		// end if is set userState
 		[users addObject:account];
 	}// end for
@@ -143,8 +143,8 @@
 		return error;
 	// end if user was logined.
 		// store account
-	[accounts setValue:user forKey:[user username]];
-	[usersState setValue:deactive forKey:[user username]];
+	[accounts setValue:user forKey:[user nickname]];
+	[usersState setValue:deactive forKey:[user nickname]];
 		// update current watch list
 	[self updateCurrentWatchlist];
 

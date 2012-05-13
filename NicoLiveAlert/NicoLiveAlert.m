@@ -131,14 +131,14 @@
 		{		// already entried accounts
 			[entry setValue:enabledAtStartup forKey:keyAccountWatchEnabled];
 			[entry setValue:[account userid] forKey:keyAccountUserID];
-			[entry setValue:[account username] forKey:keyAccountNickname];
+			[entry setValue:[account nickname] forKey:keyAccountNickname];
 			[entry setValue:[account mailaddr] forKey:keyAccountMailAddr];
 		}
 		else
 		{		// newly fetch from keychain
 			[entry setValue:[NSNumber numberWithBool:YES] forKey:keyAccountWatchEnabled];
 			[entry setValue:[account userid] forKey:keyAccountUserID];
-			[entry setValue:[account username] forKey:keyAccountNickname];
+			[entry setValue:[account nickname] forKey:keyAccountNickname];
 			[entry setValue:[account mailaddr] forKey:keyAccountMailAddr];
 		}// end if known or new entry
 			// add entry to table
@@ -575,7 +575,7 @@
 				NSMutableDictionary *entry = [NSMutableDictionary dictionary];
 				[entry setValue:[NSNumber numberWithBool:YES] forKey:keyAccountWatchEnabled];
 				[entry setValue:[user userid] forKey:keyAccountUserID];
-				[entry setValue:[user username] forKey:keyAccountNickname];
+				[entry setValue:[user nickname] forKey:keyAccountNickname];
 				[entry setValue:[user mailaddr] forKey:keyAccountMailAddr];
 				[aryAccountItems addObject:entry];
 
@@ -599,7 +599,7 @@
 			// create userid - nickname table
 	NSMutableDictionary *nicknames = [NSMutableDictionary dictionary];
 	for (NLAccount *user in [nicoliveAccounts users])
-		[nicknames setObject:[user username] forKey:[user userid]];
+		[nicknames setObject:[user nickname] forKey:[user userid]];
 	// end foreach users
 
 	for (NSMutableDictionary *info in [aryAccountItems arrangedObjects])

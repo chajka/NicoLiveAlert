@@ -17,14 +17,14 @@
 		// user information member variables
 	NSString			*mailaddr;
 	NSString			*password;
-	NSString			*username;
+	NSString			*nickname;
 	NSNumber			*userid;
 	NSString			*ticket;
 	NSMutableDictionary	*channels;
 }
 @property (readonly)	NSString			*mailaddr;
 @property (readonly)	NSString			*password;
-@property (readonly)	NSString			*username;
+@property (readonly)	NSString			*nickname;
 @property (readonly)	NSNumber			*userid;
 @property (readonly)	NSString			*ticket;
 @property (readonly)	NSMutableDictionary	*channels;
@@ -32,5 +32,6 @@
 #pragma mark construct
 - (id) initWithAccount:(NSString *)account andPassword:(NSString *)pass;
 
+- (NSMenuItem *) makeMenuItem;
 - (BOOL) updateAccountInfo;
 @end

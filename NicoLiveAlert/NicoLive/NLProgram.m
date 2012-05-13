@@ -143,7 +143,7 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 			return NULL;
 		}
 		if (account != NULL)
-			primaryAccount = [[account username] copy];
+			primaryAccount = [[account nickname] copy];
 		else
 			primaryAccount = [OriginalWatchList copy];
 		[self setupEachMember:liveNo];

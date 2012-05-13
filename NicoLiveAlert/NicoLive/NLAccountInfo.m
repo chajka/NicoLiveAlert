@@ -41,7 +41,7 @@
 	{
 		enableAtStart = enable;
 		userid = [[account userid] copy];
-		nickname = [[account username] copy];
+		nickname = [[account nickname] copy];
 		mailaddr = [[account mailaddr] copy];
 #if __has_feature(objc_arc) == 0
 		[userid retain];

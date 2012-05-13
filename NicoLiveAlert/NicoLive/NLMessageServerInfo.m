@@ -63,25 +63,27 @@ NSUInteger		currentElement;
 #if __has_feature(objc_arc)
 	@autoreleasepool {
 #else
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 #endif
 	NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:MSQUERYAPI] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:5.0];
 	NSURLResponse *resp = NULL;
 	NSData *alertInfo = [HTTPConnection HTTPDataWithRequest:req response:&resp];
 	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:alertInfo];
-	[parser setDelegate:self];
-	@try {
-		success = [parser parse];		
-	}
-	@catch (NSException *exception) {
-		NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
-		success = NO;
-	}// end try parse
+	if (parser != NULL)
+	{
+		[parser setDelegate:self];
+		@try {
+			success = [parser parse];		
+		}
+		@catch (NSException *exception) {
+			NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
+		}// end try parse
+	} // end if parser is allocated
 #if __has_feature(objc_arc)
 	}
 #else
 	[parser release];
-	[pool release];
+	[arp release];
 #endif
 	return success;
 }// end - (BOOL) getMessageServer

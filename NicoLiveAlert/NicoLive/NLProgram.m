@@ -393,7 +393,6 @@ NSLog(@"%@", [checkOnair stringAt:1]);
 	if (result == NULL)
 		@throw [NSException exceptionWithName:EmbedParseFailed reason:ImageURLCollectFail userInfo:[NSDictionary dictionaryWithObject:embedContent forKey:@"embedContent"]];
 	thumbnail = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:[result stringAt:1]]];
-//NSLog(@"thumbnail isValid : %c", ([thumbnail isValid] == YES ? 'Y' : 'N'));
 	[thumbnail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
 	
 	result = [programRegex search:embedContent];
@@ -409,35 +408,36 @@ NSLog(@"%@", [checkOnair stringAt:1]);
 - (void) parseProgramInfo:(NSString *)liveNo
 {
 #if __has_feature(objc_arc) == 0
-	[embedContent release];
+	if (embedContent != NULL)	[embedContent release];
 	embedContent = NULL;
 #endif
 	BOOL success = NO;
+	elementDict = [self elementDict];
 	NSXMLParser *parser = NULL;
 #if __has_feature(objc_arc)
 	@autoreleasepool {
 #else
 	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 #endif
-	elementDict = [self elementDict];
 	NSString *streamQueryURL = [NSString stringWithFormat:STREAMINFOQUERY, liveNo];
 	NSURL *queryURL = [NSURL URLWithString:streamQueryURL];
 	NSData *response = [[NSData alloc] initWithContentsOfURL:queryURL];
 	parser = [[NSXMLParser alloc] initWithData:response];
-	[parser setDelegate:self];
-	@try {
-		success = [parser parse];
+	if (parser != NULL)
+	{
+		[parser setDelegate:self];
+		@try {
+			success = [parser parse];
+		}
+		@catch (NSException *exception) {
+			NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
+		}// end exception handling
+	}// end if parser is allocated
+#if __has_feature(objc_arc)
 	}
-	@catch (NSException *exception) {
-		NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
-		success = NO;
-	}// end exception handling
-	
-#if __has_feature(objc_arc) == 0
-	[parser release];
-	[arp release];
 #else
-	}
+	[parser release];
+	[arp drain];
 #endif
 	if (success != YES)
 		@throw [NSException exceptionWithName:StreamInforFetchFaild reason:UserProgXMLParseFail userInfo:NULL];

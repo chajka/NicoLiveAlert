@@ -192,30 +192,30 @@ NSNumber		*notAutoOpen;
 	NSData *response = [loginServer dataByPost:&err];
 #if __has_feature(objc_arc) == 0
 	[loginServer release];
+	loginServer = NULL;
 #endif
-	if (([err code] != noErr) || (response == NULL))
-		return NO;
-	// end if login failed
-	// start parse for get ticket.
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:response];
+	if ([err code] == noErr)
+	{		// start parse for get ticket.
+		NSXMLParser *parser = [[NSXMLParser alloc] initWithData:response];
+		if (parser != NULL)
+		{
+			[parser setDelegate:(id)self];
+			@try {
+				success = [parser parse];
+			}
+			@catch (NSException *exception) {
+				NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
+			}// end parse get ticket
 #if __has_feature(objc_arc) == 0
-	[parser autorelease];
+			[parser release];
+			parser = NULL;
 #endif
-	if (parser == NULL)
-		return success;
-	// end if not parser allocated.
-	[parser setDelegate:(id)self];
-	@try {
-		success = [parser parse];
-	}
-	@catch (NSException *exception) {
-		NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
-		return success;
-	}// end parse get ticket
+		} // end if not parser allocated.
+	}// end if login success
 #if __has_feature(objc_arc)
 	}
 #else
-	[arp release];
+	[arp drain];
 #endif
 	return success;
 }// end - (BOOL) getLoginTicket
@@ -234,30 +234,27 @@ NSNumber		*notAutoOpen;
 	NSString *userInfoQueryString = [NSString stringWithFormat:ALERTQUERY, ticket];
 	NSURL *userInfoQuery = [NSURL URLWithString:userInfoQueryString];
 	NSData *response = [HTTPConnection HTTPData:userInfoQuery response:&resp];
-	if (response == NULL)
-		return success;
-	// end if no response
-
-		// start parse for get user's information from getalertstatus.
-	parser = [[NSXMLParser alloc] initWithData:response];
+	if (response != NULL)
+	{	// start parse for get user's information from getalertstatus.
+		parser = [[NSXMLParser alloc] initWithData:response];
 #if __has_feature(objc_arc) == 0
 		[parser autorelease];
 #endif
-	if (parser == NULL)
-		return NO;
-	// end if not parser allocated.
-	[parser setDelegate:(id)self];
-	@try {
-		success = [parser parse];
-	}
-	@catch (NSException *exception) {
-		NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
-		return success;
-	}// end parse get ticket
+		if (parser != NULL)
+		{
+			[parser setDelegate:(id)self];
+			@try {
+				success = [parser parse];
+			}
+			@catch (NSException *exception) {
+				NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
+			}// end parse get ticket
+		} // end if not parser allocated.
+	} // end if no response
 #if __has_feature(objc_arc)
 	}
 #else
-	[arp release];
+	[arp drain];
 #endif
 	return success;
 }// end - (void) getAccountInfo

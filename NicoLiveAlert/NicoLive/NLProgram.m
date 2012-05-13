@@ -325,8 +325,9 @@ NSLog(@"%@", [checkOnair stringAt:1]);
 	NSDate *broadcastDate = [NSDate dateWithNaturalLanguageString:[broadcastTime stringAt:1] locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
 	
 	NSTimeInterval diff = [broadcastDate timeIntervalSinceDate:date];
-	if (([[checkOnair stringAt:1] isEqualToString:BEFORESTATE] == YES)
-		|| ((abs(((NSInteger)diff) / 60) != 0)))
+	if (([[checkOnair stringAt:1] isEqualToString:BEFORESTATE] == YES) ||
+		([[checkOnair stringAt:1] isEqualToString:BEFORETSSTATE] == YES) || 
+		((abs(((NSInteger)diff) / 60) != 0)))
 	{
 		NSTimeInterval startUnixTime = [date timeIntervalSince1970] + diff;
 		startTime = [[NSDate alloc] initWithTimeIntervalSince1970:startUnixTime];

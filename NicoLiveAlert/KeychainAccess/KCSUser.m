@@ -39,6 +39,8 @@ const UInt8 maskBitsInetOptional =
 @synthesize keychainItem;
 @synthesize status;
 
+CFMutableDictionaryRef	query;
+
 #pragma mark class method
 + (SecKeychainRef) newkeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error
 {
@@ -147,7 +149,7 @@ const UInt8 maskBitsInetOptional =
 #pragma mark constructor support
 - (NSDictionary *) protocolDict;
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
-CFMutableDictionaryRef makeQuery(CFStringRef server);
+void makeQuery(CFStringRef server);
 #endif
 @end
 
@@ -312,7 +314,6 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		status = SecKeychainFindInternetPassword(NULL, [serverName length], (const char *)[serverName UTF8String], 0, NULL, [account length], (const char *)[account UTF8String], [serverPath length], (const char *)[serverPath UTF8String], port, protocol, authType, &passwordLength, (void **)&passwordString, &keychainItem);
 		if (status != noErr)
 		{
-			SecKeychainItemFreeContent(NULL, (void *)passwordString);
 #if __has_feature(objc_arc) == 0
 			[serverName release];
 			[serverPath release];
@@ -831,8 +832,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	OSStatus status;
 	// Later 10.6 use SecItemCopyMatching
     // create query
-	CFMutableDictionaryRef query = makeQuery((__bridge CFStringRef)server);
-	
+	makeQuery((__bridge CFStringRef)server);
 	
     // get search results
 	CFIndex items = 0;
@@ -889,9 +889,9 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 }// end NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticationType type)
 	
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
-CFMutableDictionaryRef makeQuery(CFStringRef server)
+void makeQuery(CFStringRef server)
 {
-	CFMutableDictionaryRef query = CFDictionaryCreateMutable(kCFAllocatorDefault, 5, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);	
+	query = CFDictionaryCreateMutable(kCFAllocatorDefault, 5, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);	
     CFDictionaryAddValue(query, kSecClass, kSecClassInternetPassword);
 	CFDictionaryAddValue(query, kSecAttrServer, server);
     CFDictionaryAddValue(query, kSecMatchLimit, kSecMatchLimitAll);
@@ -902,8 +902,6 @@ CFMutableDictionaryRef makeQuery(CFStringRef server)
 	CFDictionaryAddValue(query, kSecAttrKeyClass, kSecAttrAuthenticationType);
 	CFDictionaryAddValue(query, kSecAttrKeyClass, kSecAttrPort);
 	CFDictionaryAddValue(query, kSecAttrKeyClass, kSecAttrPath);
-	
-	return query;
 }// end - (CFDictionaryRef) makeQuery
 #endif
 @end

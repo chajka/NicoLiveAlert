@@ -192,6 +192,10 @@ enum elementLiteralIndex {
 #define ConnectionAliveCheckInterval	(3.0)
 #define ConnectionReactiveCheckInterval	(60 * 0.5)
 #define MaintainfromReactiveInterval	(60 * 5)
+#define ChatContentCharset				@"<> /=\""
+#define CountRegalChatContent			(26)
+#define OffsetDateInArray				(12)
+#define OffsetProgramInfoInArray		(22)
 #define MaintRegex			@"<code>maintenance</code>"
 #define RiseConnectRegex	@"<getalertstatus status=\"ok\" time=\"\\d+\">"
 #define ProgramListRegex	@"<chat.*>(.*)</chat>"

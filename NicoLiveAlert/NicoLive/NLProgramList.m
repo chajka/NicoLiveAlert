@@ -39,8 +39,10 @@ __strong OnigRegexp			*startTimeRegex;
 		watchList = NULL;
 		serverInfo = NULL;
 		center = [NSNotificationCenter defaultCenter];
+		chatSeparator = [NSCharacterSet characterSetWithCharactersInString:ChatContentCharset];
 #if __has_feature(objc_arc) == 0
 		[center retain];
+		[chatSeparator retain];
 #endif
 		lastTime = NULL;
 		checkRiseInterval = ConnectionReactiveCheckInterval;
@@ -80,6 +82,7 @@ __strong OnigRegexp			*startTimeRegex;
 	if (watchList != NULL)					[watchList release];
 	if (serverInfo != NULL)					[serverInfo release];
 	if (center != NULL)						[center release];
+	if (chatSeparator != NULL)				[chatSeparator release];
 	if (lastTime != NULL)					[lastTime release];
 	if (programListSocket != NULL)			[programListSocket release];
 	if (programRegex != NULL)				[programRegex release];
@@ -371,24 +374,36 @@ NSLog(@"watchUser %@",progInfo);
 	if (oneByte != '\0')
 		return;
 
+#if __has_feature(objc_arc) == 0
+	if (lastTime != NULL)
+		[lastTime release];
+	lastTime = [[NSDate alloc] init];
+#endif
+	
 #if __has_feature(objc_arc)
 	@autoreleasepool {
 #else
 	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
-	if (lastTime != NULL)
-		[lastTime release];
 #endif
 		// store last data recieve time;
-	lastTime = [[NSDate alloc] init];
 		// databyte is terminator
 	NSString *msg = [[NSString alloc] initWithData:programListDataBuffer encoding:NSUTF8StringEncoding];
+	NSArray *result = [msg componentsSeparatedByCharactersInSet:chatSeparator];
+	if ([result count] == CountRegalChatContent)
+	{
+		NSDate *broadcastDate = [NSDate dateWithTimeIntervalSince1970:[[result objectAtIndex:OffsetDateInArray] longLongValue]];
+		[self checkProgram:[NSString stringWithFormat:liveNoAppendFormat,[result objectAtIndex:OffsetProgramInfoInArray]] withDate:broadcastDate];
+	}// end if <chat></chat>
+
+/*
 	OnigResult *chatResult = [progInfoRegex search:msg];
-		if (chatResult != NULL)
-		{
-			OnigResult *dateResult = [startTimeRegex search:msg];
-			NSDate *broadcastDate = [NSDate dateWithTimeIntervalSince1970:[[dateResult stringAt:1] longLongValue]];
-			[self checkProgram:[NSString stringWithFormat:liveNoAppendFormat,[chatResult stringAt:1]] withDate:broadcastDate];
-		}
+	if (chatResult != NULL)
+	{
+		OnigResult *dateResult = [startTimeRegex search:msg];
+		NSDate *broadcastDate = [NSDate dateWithTimeIntervalSince1970:[[dateResult stringAt:1] longLongValue]];
+		[self checkProgram:[NSString stringWithFormat:liveNoAppendFormat,[chatResult stringAt:1]] withDate:broadcastDate];
+	}
+*/
 /*
 #if __has_feature(objc_arc) == 0
 	[msg release];
@@ -396,6 +411,8 @@ NSLog(@"watchUser %@",progInfo);
 */	
 
 #if __has_feature(objc_arc)
+	programListDataBuffer = NULL;
+	msg = NULL;
 	}
 #else
 	[msg release];						msg = NULL;

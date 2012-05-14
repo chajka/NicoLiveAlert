@@ -121,11 +121,6 @@ const CGFloat TimeColorBlue = (64.0 / 255);
 const NSTimeInterval checkActivityCycle = (60.0 * 3);
 const NSTimeInterval elapseCheckCycle = (10.0);
 
-__strong OnigRegexp *broadcastTimeRegex = NULL;
-__strong OnigRegexp *titleRegex = NULL;
-__strong OnigRegexp *imgRegex = NULL;
-__strong OnigRegexp *programRegex = NULL;
-
 #pragma mark construct / destruct
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner isMine:(BOOL)mine
 {
@@ -134,8 +129,6 @@ __strong OnigRegexp *programRegex = NULL;
 	{		// initialize member variables
 		[self clearAllMember];
 		isMyProgram = mine;
-		titleRegex = [OnigRegexp compile:ProgramTitleRegex];
-		broadcastTimeRegex = [OnigRegexp compile:ProgStartTimeRegex];
 		@try {
 			[self checkStartTime:date forLive:liveNo];
 			[self parseProgramInfo:liveNo];
@@ -164,10 +157,6 @@ __strong OnigRegexp *programRegex = NULL;
 		@catch (NSException *exception) {
 			NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
 		}
-#if __has_feature(objc_arc) == 0
-		[titleRegex retain];
-		[broadcastTimeRegex retain];
-#endif
 	}// end if
 	return self;
 }// end - (id) initWithProgram:(NSString *)liveNo forAccount:(NLAccount *)account
@@ -199,14 +188,6 @@ __strong OnigRegexp *programRegex = NULL;
 			[self growlProgramNotify:GrowlNotifyStartOfficialProgram];
 		else
 			[self growlProgramNotify:GrowlNotifyFoundOfficialProgram];
-		titleRegex = [OnigRegexp compile:ProgramTitleRegex];
-		programRegex = [OnigRegexp compile:ProgramURLRegex];
-		imgRegex = [OnigRegexp compile:ThumbImageRegex];
-#if __has_feature(objc_arc) == 0
-		[titleRegex retain];
-		[programRegex retain];
-		[imgRegex retain];
-#endif
 	}// end if
 	return self;
 }// end - (id) initWithOfficial:(NSString *)liveNo
@@ -234,13 +215,8 @@ __strong OnigRegexp *programRegex = NULL;
 	if (startTime != NULL)			[startTime release];
 	if (startTimeString != NULL)	[startTimeString release];
 	if (programURL != NULL)			[programURL release];
-	if (liveStateRegex != NULL)		[liveStateRegex release];
 
 	if (embedContent != NULL)		[embedContent release];
-	if (broadcastTimeRegex != NULL)	[broadcastTimeRegex release];
-	if (titleRegex != NULL)			[titleRegex retain];
-	if (programRegex != NULL)		[programRegex retain];
-	if (programRegex != NULL)		[imgRegex retain];
 
 	[super dealloc];
 #endif
@@ -274,7 +250,6 @@ __strong OnigRegexp *programRegex = NULL;
 	isReservedProgram = NO;
 	isOfficial = NO;
 	broadCasting = NO;
-	liveStateRegex = NULL;
 
 	dataString = NULL;
 	currentElement = 0;
@@ -302,10 +277,6 @@ __strong OnigRegexp *programRegex = NULL;
 	[self createMenuItem];
 	[self resetElapsedTimer];
 	[self resetProgramStatusTimer];
-	liveStateRegex = [OnigRegexp compile:ProgStateRegex];
-#if __has_feature(objc_arc) == 0
-	[liveStateRegex retain];
-#endif
 	broadCasting = YES;
 }// end - (void) setupEachMember:(NSString *)liveNo
 
@@ -325,6 +296,8 @@ __strong OnigRegexp *programRegex = NULL;
 
 - (void) checkStartTime:(NSDate *)date forLive:(NSString *)liveNo
 {
+	OnigRegexp *liveStateRegex = [OnigRegexp compile:ProgStateRegex];
+	OnigRegexp *broadcastTimeRegex = [OnigRegexp compile:ProgStartTimeRegex];
 	NSURL *embedURL = [NSURL URLWithString:[NSString stringWithFormat:STREMEMBEDQUERY, liveNo]];
 
 	NSError *err = NULL;
@@ -399,6 +372,9 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 
 - (void) parseOfficialProgram
 {
+	OnigRegexp *titleRegex = [OnigRegexp compile:ProgramTitleRegex];
+	OnigRegexp *imgRegex = [OnigRegexp compile:ThumbImageRegex];
+	OnigRegexp *programRegex = [OnigRegexp compile:ProgramURLRegex];
 	OnigResult *result = NULL;
 
 	result = [titleRegex search:embedContent];
@@ -734,6 +710,7 @@ NSLog(@"%@ Program done", programNumber);
 	if ((err != NULL) || ([embed length] == 0))
 		return YES;
 
+	OnigRegexp *liveStateRegex = [OnigRegexp compile:ProgStateRegex];
 	OnigResult *result = [liveStateRegex search:embed];
 // !!!: Debug
 	if (result == NULL)

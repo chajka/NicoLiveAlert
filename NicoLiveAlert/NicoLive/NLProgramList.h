@@ -20,6 +20,7 @@
 	NLMessageServerInfo	*serverInfo;
 	NLActivePrograms	*activePrograms;
 	__strong NSNotificationCenter *center;
+	__strong NSCharacterSet *chatSeparator;
 	NSDate				*lastTime;
 	NSTimeInterval		checkRiseInterval;
 	NSTimer				*keepAliveMonitor;

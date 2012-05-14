@@ -33,7 +33,6 @@
 	NSTimer					*programStatusTimer;
 	NSTimer					*elapseTimer;
 	NSNotificationCenter	*center;
-	__strong OnigRegexp		*liveStateRegex;
 	BOOL					isReservedProgram;
 	BOOL					isOfficial;
 	BOOL					isMyProgram;

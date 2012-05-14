@@ -194,6 +194,8 @@ enum elementLiteralIndex {
 #define MaintainfromReactiveInterval	(60 * 5)
 #define MaintRegex			@"<code>maintenance</code>"
 #define RiseConnectRegex	@"<getalertstatus status=\"ok\" time=\"\\d+\">"
+#define ProgramListRegex	@"<chat.*>(.*)</chat>"
+#define DateStartTimeRegex	@"date=\"(\\d+)\""
 
 enum {
 	offsetLiveNo = 0,

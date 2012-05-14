@@ -12,13 +12,12 @@
 #import "NLProgram.h"
 
 @interface NLActivePrograms : NSObject {
-	NSNumber			*yes;
 	NLStatusbar			*sbItem;
 	NLUsers				*users;
 		// store current programs
-	NSMutableArray		*programs;
+	NSMutableArray		*programs;		// array of NLProgram object
 		// store program for guard double notify
-	NSMutableDictionary *liveNumbers;
+	NSMutableDictionary *liveNumbers;	// value : yes - key : LiveNoString
 }
 @property (retain, readwrite) NLStatusbar	*sbItem;
 @property (retain, readwrite) NLUsers		*users;

@@ -21,11 +21,14 @@
 @synthesize activePrograms;
 @synthesize officialState;
 @synthesize enableAutoOpen;
+
 NSMutableData		*programListDataBuffer;
 BOOL sendrequest;
-OnigRegexp			*programRegex;
-OnigRegexp			*maintRegex;
-OnigRegexp			*checkstatus;
+__strong OnigRegexp			*programRegex;
+__strong OnigRegexp			*maintRegex;
+__strong OnigRegexp			*checkstatus;
+__strong OnigRegexp			*progInfoRegex;
+__strong OnigRegexp			*startTimeRegex;
 
 - (id) init
 {
@@ -53,11 +56,16 @@ OnigRegexp			*checkstatus;
 		programRegex = [OnigRegexp compile:ProgramNoRegex];
 		maintRegex = [OnigRegexp compile:MaintRegex];
 		checkstatus = [OnigRegexp compile:RiseConnectRegex];
+		progInfoRegex = [OnigRegexp compile:ProgramListRegex];
+		startTimeRegex = [OnigRegexp compile:DateStartTimeRegex];
 		[center addObserver:self selector:@selector(startListen) name:NLNotificationConnectionRised object:NULL];
 		[center addObserver:self selector:@selector(stopListen) name:NLNotificationConnectionLost object:NULL];
 #if __has_feature(objc_arc) == 0
 		[programRegex retain];
+		[maintRegex retain];
 		[checkstatus retain];
+		[progInfoRegex retain];
+		[startTimeRegex retain];
 #endif
 	}// end if self
 	return self;
@@ -75,7 +83,10 @@ OnigRegexp			*checkstatus;
 	if (lastTime != NULL)					[lastTime release];
 	if (programListSocket != NULL)			[programListSocket release];
 	if (programRegex != NULL)				[programRegex release];
-
+	if (maintRegex != NULL)					[maintRegex release];
+	if (checkstatus != NULL)				[checkstatus release];
+	if (progInfoRegex != NULL)				[progInfoRegex release];
+	if (startTimeRegex != NULL)				[startTimeRegex release];
 	[super dealloc];
 #endif
 }// end - (void) dealloc
@@ -360,7 +371,10 @@ NSLog(@"watchUser %@",progInfo);
 	if (oneByte != '\0')
 		return;
 
-#if __has_feature(objc_arc) == 0
+#if __has_feature(objc_arc)
+	@autoreleasepool {
+#else
+	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 	if (lastTime != NULL)
 		[lastTime release];
 #endif
@@ -368,20 +382,27 @@ NSLog(@"watchUser %@",progInfo);
 	lastTime = [[NSDate alloc] init];
 		// databyte is terminator
 	NSString *msg = [[NSString alloc] initWithData:programListDataBuffer encoding:NSUTF8StringEncoding];
-	OnigRegexp *chat = [OnigRegexp compile:@"<chat.*>(.*)</chat>"];
-	OnigResult *chatResult = [chat search:msg];
+	OnigResult *chatResult = [progInfoRegex search:msg];
 		if (chatResult != NULL)
 		{
-			OnigRegexp *date = [OnigRegexp compile:@"date=\"(\\d+)\""];
-			OnigResult *dateResult = [date search:msg];
+			OnigResult *dateResult = [startTimeRegex search:msg];
 			NSDate *broadcastDate = [NSDate dateWithTimeIntervalSince1970:[[dateResult stringAt:1] longLongValue]];
 			[self checkProgram:[NSString stringWithFormat:liveNoAppendFormat,[chatResult stringAt:1]] withDate:broadcastDate];
 		}
+/*
 #if __has_feature(objc_arc) == 0
-	if (msg != NULL) [msg release];
-	[programListDataBuffer release];
+	[msg release];
 #endif
-	programListDataBuffer = NULL;
+*/	
+
+#if __has_feature(objc_arc)
+	}
+#else
+	[msg release];						msg = NULL;
+	[programListDataBuffer release];	programListDataBuffer = NULL;
+	[arp drain];
+#endif
+
 }// end - (void) NSStreamEventHasBytesAvailable:(NSStream *)stream
 
 - (void) streamEventHasSpaceAvailable:(NSStream *)stream

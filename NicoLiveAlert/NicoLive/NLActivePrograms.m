@@ -16,6 +16,8 @@
 @synthesize sbItem;
 @synthesize users;
 
+NSNumber *yes;
+
 #pragma mark construct / destruct
 - (id) init
 {

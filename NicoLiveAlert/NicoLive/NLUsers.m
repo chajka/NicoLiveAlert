@@ -24,6 +24,9 @@
 @synthesize usersMenu;
 @synthesize userState;
 
+NSNumber *active;
+NSNumber *inactive;
+
 #pragma mark constructor / destructor
 - (id) initWithActiveUsers:(NSArray *)activeUsers andManualWatchList:(NSMutableDictionary *)manualWatchList
 {
@@ -31,7 +34,7 @@
 	if (self)
 	{
 		active = [[NSNumber alloc] initWithBool:YES];
-		deactive = [[NSNumber alloc] initWithBool:NO];
+		inactive = [[NSNumber alloc] initWithBool:NO];
 		usersState = [[NSMutableDictionary alloc] init];
 		users = [[NSMutableArray alloc] init];
 		accounts = [[NSMutableDictionary alloc] initWithDictionary:[self makeAccounts:activeUsers]];
@@ -50,7 +53,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationFoundLiveNo object:NULL];
 #if __has_feature(objc_arc) == 0
 	if (active != NULL)				[active release];
-	if (deactive != NULL)			[deactive release];
+	if (inactive != NULL)			[inactive release];
 	if (usersState != NULL)			[usersState release];
 	if (accounts != NULL)			[accounts release];
 	if (users != NULL)				[users release];
@@ -87,7 +90,7 @@
 		if ([activeUsers containsObject:[account userid]] == YES)
 			[usersState setValue:active forKey:[account nickname]];
 		else
-			[usersState setValue:deactive forKey:[account nickname]];
+			[usersState setValue:inactive forKey:[account nickname]];
 		// end if is set userState
 		[users addObject:account];
 	}// end for
@@ -103,7 +106,7 @@
 		if ([[list valueForKey:item] boolValue] == YES)
 			[watchList setValue:active forKey:item];
 		else
-			[watchList setValue:deactive forKey:item];
+			[watchList setValue:inactive forKey:item];
 	}// end foreach
 
 	if ([list count] != 0)
@@ -142,9 +145,10 @@
 	if (user == NULL)
 		return error;
 	// end if user was logined.
+
 		// store account
 	[accounts setValue:user forKey:[user nickname]];
-	[usersState setValue:deactive forKey:[user nickname]];
+	[usersState setValue:inactive forKey:[user nickname]];
 		// update current watch list
 	[self updateCurrentWatchlist];
 
@@ -228,51 +232,31 @@
 	usersMenu = [[NSMenu alloc] initWithTitle:@""];
 
 	NSMenuItem *userItem;
-	NSImage *onStateImg = [NSImage imageNamed:@"NLOnState"];
-	NSImage *offStateImg = [NSImage imageNamed:@"NLOffStateRed"];
-	for (NSString *user in [usersState allKeys])
+	for (NLAccount *user in users)
 	{
-		userItem = [[NSMenuItem alloc] initWithTitle:user action:@selector(toggleUserState:) keyEquivalent:@""];
-		[userItem setOnStateImage:onStateImg];
-		[userItem setOffStateImage:offStateImg];
-		if ([[usersState valueForKey:user] isEqual:active] == YES)
+		userItem = [user accountMenu];
+		if ([[usersState valueForKey:[user nickname]] isEqual:active] == YES)
 			[userItem setState:NSOnState];
 		else
 			[userItem setState:NSOffState];
 		// end if set user's state
 		[userItem setEnabled:YES];
 		[usersMenu addItem:userItem];
-#if __has_feature(objc_arc) == 0
-		[userItem autorelease];
-#endif
 	}// end foreach user
 	[self calcUserState];
 }// end - (NSMenu *) creteUserStateMenu
 
 - (void) updateUserSateMenu
 {
-	for (NSMenuItem *item in [usersMenu itemArray])
-		[usersMenu removeItem:item];
-	// end foreach delete users menuitem.
-	
 	NSMenuItem *userItem;
-	NSImage *onStateImg = [NSImage imageNamed:@"NLOnState"];
-	NSImage *offStateImg = [NSImage imageNamed:@"NLOffStateRed"];
-	for (NSString *user in [usersState allKeys])
+	for (NLAccount *user in users)
 	{
-		userItem = [[NSMenuItem alloc] initWithTitle:user action:@selector(toggleUserState:) keyEquivalent:@""];
-		[userItem setOnStateImage:onStateImg];
-		[userItem setOffStateImage:offStateImg];
-		if ([[usersState valueForKey:user] isEqual:active] == YES)
+		userItem = [user accountMenu];
+		if ([[usersState valueForKey:[user nickname]] isEqual:active] == YES)
 			[userItem setState:NSOnState];
 		else
 			[userItem setState:NSOffState];
-			// end if set user's state
-		[userItem setEnabled:YES];
-		[usersMenu addItem:userItem];
-#if __has_feature(objc_arc) == 0
-		[userItem autorelease];
-#endif
+		// end if set user's state
 	}// end foreach user
 	[self calcUserState];
 }// end - (NSMenu *) creteUserStateMenu
@@ -282,7 +266,7 @@
 	if ([item state] == NSOnState)
 	{
 		[item setState:NSOffState];
-		[usersState setValue:deactive forKey:[item title]];
+		[usersState setValue:inactive forKey:[item title]];
 	}
 	else
 	{
@@ -317,7 +301,7 @@
 	if (autoOpen == YES)
 		[originalWatchList setValue:active forKey:item];
 	else
-		[originalWatchList setValue:deactive forKey:item];
+		[originalWatchList setValue:inactive forKey:item];
 
 	[self updateCurrentWatchlist];
 }// end - (void) addWatchListItem:(NSString *)item autoOpen:(BOOL)autoOpen
@@ -331,7 +315,7 @@
 		if (autoOpen == YES)
 			[originalWatchList setValue:active forKey:item];
 		else
-			[originalWatchList setValue:deactive forKey:item];
+			[originalWatchList setValue:inactive forKey:item];
 	}// end foreach watchDict
 
 	[self updateCurrentWatchlist];
@@ -342,7 +326,7 @@
 	if (autoOpen == YES)
 		[originalWatchList setValue:active forKey:item];
 	else
-		[originalWatchList setValue:deactive forKey:item];
+		[originalWatchList setValue:inactive forKey:item];
 
 	[self updateCurrentWatchlist];
 }// end - (void) switchWatchListItemProperty:(NSString *)item autoOpen:(BOOL)autoOpen

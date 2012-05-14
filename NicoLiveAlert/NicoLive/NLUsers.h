@@ -23,11 +23,9 @@
 */
 
 @interface NLUsers : NSObject <NSComboBoxDataSource> {
-	NSNumber			*active;
-	NSNumber			*deactive;
-	NSMutableDictionary	*usersState;
-	NSMutableDictionary	*accounts;
-	NSMutableArray		*users;
+	NSMutableDictionary	*usersState;	// value : (in)active - key : nickname
+	NSMutableDictionary	*accounts;		// value : NLAccount object - key : nickname
+	NSMutableArray		*users;			// array of NLAccount object
 	NSMutableDictionary	*originalWatchList;
 	NSMutableDictionary	*watchlist;
 	NSMenu				*usersMenu;

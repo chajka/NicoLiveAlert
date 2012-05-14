@@ -24,9 +24,10 @@
 @synthesize userid;
 @synthesize ticket;
 @synthesize channels;
+@synthesize accountMenu;
 
 	// internal use variables (when initialize only)
-NSDictionary		*elements;
+NSDictionary	*elements;
 NSMutableString	*stringBuffer;
 NSUInteger		currentElement;
 NSNumber		*notAutoOpen;
@@ -68,6 +69,7 @@ NSNumber		*notAutoOpen;
 		}// end if get Account info was failed
 			// cleanup initialize only variables
 		[self cleanupInternalVariables];
+		[self makeMenuItem];
 	}// end if self
 	return self;
 }// end - (id) initWithAccount:(NSString *)account andPassword:(NSString *)pass
@@ -84,6 +86,8 @@ NSNumber		*notAutoOpen;
 	if (ticket != NULL)			[ticket release];
 	if (channels != NULL)		[channels release];
 	if (stringBuffer != NULL)	[stringBuffer release];
+		// cleanup menu item
+	if (accountMenu != NULL)	[accountMenu release];
 
 	[super dealloc];
 #endif
@@ -91,21 +95,17 @@ NSNumber		*notAutoOpen;
 
 #pragma mark -
 #pragma mark accessor
-- (NSMenuItem *) makeMenuItem
+- (void) makeMenuItem
 {
-	NSMenuItem *item;
 	NSImage *onStateImg = [NSImage imageNamed:@"NLOnState"];
 	NSImage *offStateImg = [NSImage imageNamed:@"NLOffStateRed"];
 	NSImage *mixedStateImg = [NSImage imageNamed:@"NLMixedState"];
-	item = [[NSMenuItem alloc] initWithTitle:nickname action:@selector(toggleUserState:) keyEquivalent:EMPTYSTRING];
-	[item setOnStateImage:onStateImg];
-	[item setOffStateImage:offStateImg];
-	[item setMixedStateImage:mixedStateImg];
-#if __has_feature(objc_arc) == 0
-	[item autorelease];
-#endif
-	return item;
-}// end - (NSMenuItem *) makeMenuItem
+	accountMenu = [[NSMenuItem alloc] initWithTitle:nickname action:@selector(toggleUserState:) keyEquivalent:EMPTYSTRING];
+	[accountMenu setOnStateImage:onStateImg];
+	[accountMenu setOffStateImage:offStateImg];
+	[accountMenu setMixedStateImage:mixedStateImg];
+	[accountMenu setRepresentedObject:self];
+}// end - (void) makeMenuItem
 
 - (BOOL) updateAccountInfo
 {

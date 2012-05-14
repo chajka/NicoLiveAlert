@@ -21,6 +21,7 @@
 	NSNumber			*userid;
 	NSString			*ticket;
 	NSMutableDictionary	*channels;
+	NSMenuItem			*accountMenu;
 }
 @property (readonly)	NSString			*mailaddr;
 @property (readonly)	NSString			*password;
@@ -28,10 +29,10 @@
 @property (readonly)	NSNumber			*userid;
 @property (readonly)	NSString			*ticket;
 @property (readonly)	NSMutableDictionary	*channels;
+@property (readonly)	NSMenuItem			*accountMenu;
 	
 #pragma mark construct
 - (id) initWithAccount:(NSString *)account andPassword:(NSString *)pass;
 
-- (NSMenuItem *) makeMenuItem;
 - (BOOL) updateAccountInfo;
 @end

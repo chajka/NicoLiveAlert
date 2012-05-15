@@ -223,12 +223,13 @@ enum {
 #define ThumbImageRegex		@"<img src=\"(http://.*)\" class=\"banner\">"
 #define ProgStartTimeRegex	@"(\\d+:\\d+)</div></?[ap]>"
 #define ProgramURLRegex		@"<a href=\"(http://live.nicovideo.jp/watch/lv\\d+)\""
-#define ProgStateRegex		@"class=\"(before|beforeTS|onair|done)\""
+#define ProgStateRegex		@"class=\"(before|beforeTS|onair|done|doneTS)\""
 
 #define ONAIRSTATE			@"onair"
 #define BEFORESTATE			@"before"
 #define BEFORETSSTATE		@"beforeTS"
 #define DONESTATE			@"done"
+#define DONETSSTATE			@"doneTS"
 
 	// XML element literal
 #define elementStreaminfo	@"getstreaminfo"

@@ -226,11 +226,11 @@ __strong OnigRegexp			*startTimeRegex;
 - (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date
 {
 	NSArray *program = [progInfo componentsSeparatedByString:dataSeparator];
+	NSString *live = [program objectAtIndex:offsetLiveNo];
 		// check official program
 	if ((watchOfficial == YES) && ([program count] == 2))
 	{
 NSLog(@"WatchOfficial Program %@",progInfo);
-		NSString *live = [program objectAtIndex:offsetLiveNo];
 		[activePrograms addOfficialProgram:live withDate:date];
 
 			// check in watchlist
@@ -248,11 +248,9 @@ NSLog(@"WatchOfficial Program %@",progInfo);
 		return;
 	}// end if program is official program
 
-	NSString *live = NULL;
 		// iterate program info
 	for (NSString *prog in program)
 	{
-		live = [program objectAtIndex:offsetLiveNo];
 			// process official
 		if (isOfficial == YES)
 			isOfficial = NO;

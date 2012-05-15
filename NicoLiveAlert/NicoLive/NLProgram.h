@@ -30,9 +30,12 @@
 	NSInteger				lastMintue;
 	NSDictionary			*localeDict;
 	NSString				*programURL;
+	NSURL					*thumbnailURL;
 	NSTimer					*programStatusTimer;
 	NSTimer					*elapseTimer;
 	NSNotificationCenter	*center;
+	BOOL					iconWasValid;
+	BOOL					iconIsValid;
 	BOOL					isReservedProgram;
 	BOOL					isOfficial;
 	BOOL					isMyProgram;

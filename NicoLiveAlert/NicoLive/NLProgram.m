@@ -129,6 +129,8 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 	{		// initialize member variables
 		[self clearAllMember];
 		isMyProgram = mine;
+		iconWasValid = NO;
+		iconIsValid = NO;
 		@try {
 			[self checkStartTime:date forLive:liveNo];
 			[self parseProgramInfo:liveNo];
@@ -169,6 +171,8 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 		[self clearAllMember];
 		
 		isOfficial = YES;
+		iconWasValid = NO;
+		iconIsValid = NO;
 		@try {
 			[self checkStartTime:date forLive:liveNo];
 			[self parseOfficialProgram];
@@ -244,6 +248,7 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 	lastMintue = 0;
 	localeDict = NULL;
 	programURL = NULL;
+	thumbnailURL = NULL;
 	programStatusTimer = NULL;
 	elapseTimer = NULL;
 	center = NULL;
@@ -386,7 +391,20 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 	if (result == NULL)
 		@throw [NSException exceptionWithName:EmbedParseFailed reason:ImageURLCollectFail userInfo:[NSDictionary dictionaryWithObject:embedContent forKey:@"embedContent"]];
 	thumbnail = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:[result stringAt:1]]];
-	[thumbnail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
+	if ([thumbnail isValid] == YES)
+	{
+		[thumbnail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
+		iconWasValid = YES;
+		iconIsValid = YES;
+	}
+	else
+	{
+#if __has_feature(objc_arc) == 0
+		[thumbnail release];
+#endif
+		thumbnail = NULL;
+		thumbnailURL = [[NSURL alloc] initWithString:[result stringAt:1]];
+	}
 	
 	result = [programRegex search:embedContent];
 	if (result == NULL)
@@ -542,7 +560,8 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 	[[NSColor whiteColor] set];
 	[background fill];
 		// draw thumbnail
-	[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
+	if (iconIsValid == YES)
+		[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
 		// draw program title
 	[stringAttributes setValue:titleColor forKey:NSForegroundColorAttributeName];
 	[programTitle drawAtPoint:NSMakePoint(progTitleOffsetX, progTitleOffsetY) withAttributes:stringAttributes];
@@ -604,7 +623,8 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 	[[NSColor whiteColor] set];
 	[background fill];
 		// draw thumbnail
-	[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
+	if (iconIsValid == YES)
+		[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
 		// draw title / description
 	[programTitle drawInRect:NSMakeRect(officialDescX, officialDescY, officialDescW, officialDescH) withAttributes:stringAttributes];
 		// draw official announce
@@ -638,6 +658,25 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 	if (elapsedMinute == lastMintue)
 		return;
 
+	if (iconWasValid == NO)
+	{
+		thumbnail = [[NSImage alloc] initWithContentsOfURL:thumbnailURL];
+		if ([thumbnail isValid] == YES)
+		{
+			iconIsValid = YES;
+#if __has_feature(objc_arc) == 0
+			[thumbnailURL release];
+#endif
+			thumbnailURL = NULL;
+		}
+		else
+		{
+#if __has_feature(objc_arc) == 0
+			[thumbnail release];
+#endif
+			thumbnail = NULL;
+		}// end if fetched thumbnail is valid
+	}// end if fetch thumbnail
 	if ((isReservedProgram == YES) && ((elapsedMinute + elapsedHour) == 0))
 	{
 		if (isOfficial == YES)
@@ -651,6 +690,11 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 			[path setLineWidth:timeStringHeight];
 			NSString *string = [startTime descriptionWithCalendarFormat:StartOfficialTimeFormat timeZone:NULL locale:localeDict];
 			[menuImage lockFocus];
+			if ((iconWasValid == NO) && (iconIsValid == YES))
+			{
+				[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
+				iconWasValid = YES;
+			}// end if redraw icon
 			[[NSColor whiteColor] set];
 			[path stroke];
 			[string drawAtPoint:NSMakePoint(userTimeOffsetX, userTimeOffsetY) withAttributes:stringAttributes];
@@ -666,6 +710,11 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 			[path setLineWidth:timeStringHeight];
 			NSString *string = [startTime descriptionWithCalendarFormat:StartUserTimeFormat timeZone:NULL locale:localeDict];
 			[menuImage lockFocus];
+			if ((iconWasValid == NO) && (iconIsValid == YES))
+			{
+				[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
+				iconWasValid = YES;
+			}// end if redraw icon
 			[[NSColor whiteColor] set];
 			[path stroke];
 			[string drawAtPoint:NSMakePoint(userTimeOffsetX, userTimeOffsetY) withAttributes:stringAttributes];
@@ -679,6 +728,11 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 	elapesdTime = [NSString stringWithFormat:ElapsedTimeFormat, elapsedHour, elapsedMinute];
 	lastMintue = elapsedMinute;
 	[menuImage lockFocus];
+	if ((iconWasValid == NO) && (iconIsValid == YES))
+	{
+		[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
+		iconWasValid = YES;
+	}// end if redraw icon
 	[[NSColor whiteColor] set];
 	[timeMask fill];
 	if (isOfficial == YES)
@@ -712,11 +766,14 @@ NSLog(@"%@ Program done", programNumber);
 
 	OnigRegexp *liveStateRegex = [OnigRegexp compile:ProgStateRegex];
 	OnigResult *result = [liveStateRegex search:embed];
-// !!!: Debug
 	if (result == NULL)
+	{
+		NSLog(@"Rexgex        : %@",liveStateRegex);
 		NSLog(@"embed content : \n%@", embed);
+	}
 //
-	if ((result == NULL) || ([[result stringAt:1] isEqualToString:DONESTATE] == YES))
+	if (([[result stringAt:1] isEqualToString:DONESTATE] == YES) ||
+		([[result stringAt:1] isEqualToString:DONETSSTATE] == YES))
 		return NO;
 	else
 		return YES;
@@ -829,10 +886,21 @@ NSLog(@"%@ Program done", programNumber);
 		case indexThumbnail:
 			thumbData = [NSData dataWithContentsOfURL:[NSURL URLWithString:dataString] options:NSDataReadingUncached error:&err];
 			thumbnail = [[NSImage alloc] initWithData:thumbData];
-			if ([thumbnail isValid] == NO)
-			{	// retry fetch image
+			if ([thumbnail isValid] == YES)
+			{
+				[thumbnail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
+				iconWasValid = YES;
+				iconIsValid = YES;
 			}
-			[thumbnail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
+			else
+			{	// retry fetch image
+#if __has_feature(objc_arc) == 0
+				[thumbnail release];
+#endif
+				thumbnail = NULL;
+				thumbnailURL = [[NSURL alloc] initWithString:dataString];
+
+			}
 			break;
 			
 		default:

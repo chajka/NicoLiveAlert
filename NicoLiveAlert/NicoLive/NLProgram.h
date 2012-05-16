@@ -11,7 +11,11 @@
 #import "NLAccount.h"
 #import "OnigRegexp.h"
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @interface NLProgram : NSObject <NSXMLParserDelegate> {
+#else
+@interface NLProgram : NSObject {
+#endif
 	NSMenuItem				*programMenu;
 	NSImage					*menuImage;
 	NSImage					*thumbnail;

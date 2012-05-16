@@ -46,7 +46,11 @@ const NSTimeInterval defaultTimeout = 30; // second
 @synthesize timeout;
 
 #pragma mark class methods
+#if __has_feature(objc_arc)
 + (NSString *) HTTPSource:(NSURL *)url response:(NSURLResponse * __autoreleasing *)resp
+#else
++ (NSString *) HTTPSource:(NSURL *)url response:(NSURLResponse **)resp
+#endif
 {		// create detamine encoding constant array 
 	NSArray *encodings = [NSArray arrayWithObjects:
 			  [NSNumber numberWithUnsignedInt:NSUTF8StringEncoding],
@@ -76,7 +80,11 @@ const NSTimeInterval defaultTimeout = 30; // second
 	return data_str;
 }// end + (NSString *) HTTPSource:(NSURL *)url
 
+#if __has_feature(objc_arc)
 + (NSData *) HTTPData:(NSURL *)url response:(NSURLResponse * __autoreleasing *)resp
+#else
++ (NSData *) HTTPData:(NSURL *)url response:(NSURLResponse **)resp
+#endif
 {
 	NSURLRequest *request = [NSURLRequest requestWithURL:url];
 	NSError *error = nil;
@@ -95,7 +103,11 @@ const NSTimeInterval defaultTimeout = 30; // second
 		return receivedData;
 }// end + (NSString *) HTTPSource:(NSURL *)url
 
+#if __has_feature(objc_arc)
 + (NSData *) HTTPDataWithRequest:(NSURLRequest *)req response:(NSURLResponse * __autoreleasing *)resp
+#else
++ (NSData *) HTTPDataWithRequest:(NSURLRequest *)req response:(NSURLResponse **)resp
+#endif
 {
 	NSError *error = nil;
 	NSURLResponse *re;
@@ -191,7 +203,11 @@ const NSTimeInterval defaultTimeout = 30; // second
 	return data;
 }// end - (NSData *) dataByGet
 
+#if __has_feature(objc_arc)
 - (NSString *) stringByPost:(NSError * __autoreleasing *)error
+#else
+- (NSString *) stringByPost:(NSError **)error
+#endif
 {
 	NSData *receivedData = [self post:error];
 	if ([*error code] != noErr)
@@ -221,7 +237,11 @@ const NSTimeInterval defaultTimeout = 30; // second
 	return data_str;
 }// end - (NSString *) stringByPost:(NSError **)error
 
+#if __has_feature(objc_arc)
 - (NSData *) dataByPost:(NSError * __autoreleasing *)error
+#else
+- (NSData *) dataByPost:(NSError **)error
+#endif
 {
 	NSData *data = nil;
 	NSError *err = nil;
@@ -251,7 +271,11 @@ const NSTimeInterval defaultTimeout = 30; // second
 }// end - (NSURLConnection *) httpDataAsync:(NSURL *)url delegate:(id)target
 
 #pragma mark private methods
+#if __has_feature(objc_arc)
 - (NSData*) post:(NSError * __autoreleasing *)err;
+#else
+- (NSData*) post:(NSError **)err;
+#endif
 {
 		// create request
 	NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc]initWithURL:url];

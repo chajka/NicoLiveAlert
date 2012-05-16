@@ -135,7 +135,11 @@
 	return streamDelegate;
 }// end - (id) streamDelegate
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 - (void) setStreamDelegate:(id<NSStreamDelegate>)sd
+#else
+- (void) setStreamDelegate:(id)sd
+#endif
 {
 #if __has_feature(objc_arc) == 0
 	if (streamDelegate != self)

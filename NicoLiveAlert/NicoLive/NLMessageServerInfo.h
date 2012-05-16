@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "HTTPConnection.h"
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @interface NLMessageServerInfo : NSObject <NSXMLParserDelegate> {
+#else
+@interface NLMessageServerInfo : NSObject {
+#endif
 	NSString	*serveName;
 	NSUInteger	port;
 	NSString	*thread;

@@ -10,6 +10,7 @@
 #import "LinkTextFieldCell.h"
 #import "NicoLiveAlertDefinitions.h"
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @interface NLArrayControllerDragAndDrop ()
 #pragma mark watchlist
 - (BOOL) watchTableAcceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation;
@@ -24,8 +25,10 @@
 - (NSDragOperation) launchTableValidateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation;
 - (BOOL) launchTableWriteRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard;
 @end
+#endif
 
 @implementation NLArrayControllerDragAndDrop
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @synthesize watchListTable;
 @synthesize accountInfoTable;
 @synthesize launchListTable;
@@ -388,4 +391,5 @@
 	
 	return YES;
 }// end - (BOOL) launchTableWriteRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
+#endif
 @end

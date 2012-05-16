@@ -90,8 +90,13 @@ typedef NSInteger SCDirection;
 /*!
 	@class SocketConnection
 */
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @interface SocketConnection : NSObject <NSStreamDelegate, StreamEventDelegate> {
 	id <NSStreamDelegate>		streamDelegate;
+#else
+@interface SocketConnection : NSObject <StreamEventDelegate> {
+	id							streamDelegate;
+#endif
 	id <StreamEventDelegate>	streamEventDelegate;
 		// data stream
 	NSInputStream		*iStream;
@@ -101,7 +106,11 @@ typedef NSInteger SCDirection;
 	NSString					*server;
 	NSInteger					port;
 }
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @property (retain, readwrite)	id <NSStreamDelegate>		streamDelegate;
+#else
+@property (retain, readwrite)	id							streamDelegate;
+#endif
 @property (retain, readwrite)	id <StreamEventDelegate>	streamEventDelegate;
 @property (assign, readwrite)	SCDirection					direction;
 @property (copy, readwrite)		NSString					*server;

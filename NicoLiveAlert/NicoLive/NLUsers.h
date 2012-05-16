@@ -21,8 +21,11 @@
 	• calcurate wathclist from active and deactive users 
 	• cleate user status menu
 */
-
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @interface NLUsers : NSObject <NSComboBoxDataSource> {
+#else
+@interface NLUsers : NSObject {
+#endif
 	NSMutableDictionary	*usersState;	// value : (in)active - key : nickname
 	NSMutableDictionary	*accounts;		// value : NLAccount object - key : nickname
 	NSMutableArray		*users;			// array of NLAccount object

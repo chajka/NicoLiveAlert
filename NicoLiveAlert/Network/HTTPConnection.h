@@ -29,7 +29,11 @@
 	@param resoponse from server.
 	@result html data by string format.
 */
+#if __has_feature(objc_arc)
 + (NSString *) HTTPSource:(NSURL *)url response:(NSURLResponse * __autoreleasing *)resp;
+#else
++ (NSString *) HTTPSource:(NSURL *)url response:(NSURLResponse **)resp;
+#endif
 
 /*!
 	@method HTTPData:response:
@@ -38,7 +42,11 @@
 	@param resoponse from server.
 	@result html data by binary format.
  */
+#if __has_feature(objc_arc)
 + (NSData *) HTTPData:(NSURL *)url response:(NSURLResponse * __autoreleasing *)resp;
+#else
++ (NSData *) HTTPData:(NSURL *)url response:(NSURLResponse **)resp;
+#endif
 
 /*!
 	@method HTTPDataWithRequest:response:
@@ -47,7 +55,11 @@
 	@param resoponse from server.
 	@result html data by binary format.
 */
+#if __has_feature(objc_arc)
 + (NSData *) HTTPDataWithRequest:(NSURLRequest *)req response:(NSURLResponse * __autoreleasing *)resp;
+#else
++ (NSData *) HTTPDataWithRequest:(NSURLRequest *)req response:(NSURLResponse **)resp;
+#endif
 
 	// constructor
 /*!
@@ -91,14 +103,22 @@
 	@abstract get contents of URL by string format with posted own parameters.
 	@param error result.
  */
+#if __has_feature(objc_arc)
 - (NSString *) stringByPost:(NSError * __autoreleasing *)error;
+#else
+- (NSString *) stringByPost:(NSError **)error;
+#endif
 
 /*!
 	@method dataByPost:
 	@abstract get contents of URL by binary format with posted own parameters.
 	@param error result.
 */
+#if __has_feature(objc_arc)
 - (NSData *) dataByPost:(NSError * __autoreleasing *)error;
+#else
+- (NSData *) dataByPost:(NSError **)error;
+#endif
 
 /*!
 	@method httpDataAsyncWithdelegate:

@@ -114,7 +114,11 @@
 										 andManualWatchList:watchList];
 	[statusBar setUserState:[nicoliveAccounts userState]];
 	[comboLoginID setUsesDataSource:YES];
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 	[comboLoginID setDataSource:nicoliveAccounts];
+#else
+	[comboLoginID setDataSource:(id)nicoliveAccounts];
+#endif
 	NSMenuItem *accountsItem = [menuStatusbar itemWithTag:tagAccounts];
 	[accountsItem setSubmenu:[nicoliveAccounts usersMenu]];
 	[accountsItem setState:[nicoliveAccounts userState]];
@@ -150,6 +154,7 @@
 - (void) setupTables
 {
 		// setup Wachlist drag & drop reordering
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 	[tblManualWatchList registerForDraggedTypes:[NSArray arrayWithObject:WatchListPasteboardType]];
 	[aryManualWatchlist setWatchListTable:tblManualWatchList];
 		// setup AccountList drag & drop reordering
@@ -158,6 +163,7 @@
 		// setup LauncherList drag, dorp and reordering
 	[tblTinyLauncher registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, LauncherPasteboardType, nil]];
 	[aryLauncherItems setLaunchListTable:tblTinyLauncher];
+#endif
 }// end - (void) setupTables
 
 - (void) setupMonitor

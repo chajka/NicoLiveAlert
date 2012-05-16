@@ -327,8 +327,12 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 		((abs(((NSInteger)diff) / 60) != 0)))
 	{
 		NSTimeInterval startUnixTime = [date timeIntervalSince1970] + diff;
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 		startTime = [[NSDate alloc] initWithTimeIntervalSince1970:startUnixTime];
-		
+#else
+		startTime = [NSDate dateWithTimeIntervalSince1970:startUnixTime];
+		[startTime retain];
+#endif
 		lastMintue = ((NSInteger)([startTime timeIntervalSinceDate:date] / 60)) % 60;
 		isReservedProgram = YES;
 
@@ -435,7 +439,11 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 	parser = [[NSXMLParser alloc] initWithData:response];
 	if (parser != nil)
 	{
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 		[parser setDelegate:self];
+#else
+		[parser setDelegate:(id)self];
+#endif
 		@try {
 			success = [parser parse];
 		}
@@ -887,7 +895,9 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 	NSError *err = nil;
+#endif
 	NSData *thumbData = nil;
 	switch (currentElement) {
 		case indexRequestID:
@@ -907,7 +917,11 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 			communityID = [[NSString alloc] initWithString:dataString];
 			break;
 		case indexThumbnail:
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 			thumbData = [NSData dataWithContentsOfURL:[NSURL URLWithString:dataString] options:NSDataReadingUncached error:&err];
+#else
+			thumbData = [NSData dataWithContentsOfURL:[NSURL URLWithString:dataString]];
+#endif
 			thumbnail = [[NSImage alloc] initWithData:thumbData];
 			if ([thumbnail isValid] == YES)
 			{

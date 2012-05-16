@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EnableAutoOpen</key>
+	<true/>
+	<key>CheckOfficialProgram</key>
+	<true/>
+	<key>CheckOfficialChannel</key>
+	<false/>
+	<key>WathListTable</key>
+	<array>
+		<dict>
+			<key>WatchItem</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhBlOU011dGFibGVBdHRyaWJ1dGVkU3RyaW5nAISEEk5TQXR0cmlidXRlZFN0cmluZwCEhAhOU09iamVjdACFkoSEhA9OU011dGFibGVTdHJpbmcBhIQITlNTdHJpbmcBlYQBKwZjaDI1MjWGhAJpSQEGkoSEhAxOU0RpY3Rpb25hcnkAlYQBaQSShJiYEE5TUGFyYWdyYXBoU3R5bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEBIUAhpKEmJgGTlNMaW5rhpKEhIQFTlNVUkwAlYQBYwCShJiYJWh0dHA6Ly9jaC5uaWNvdmlkZW8uanAvY2hhbm5lbC9jaDI1MjWGhpKEmJgLTlNVbmRlcmxpbmWGkoSEhAhOU051bWJlcgCEhAdOU1ZhbHVlAJWEASqEhAFxpAGGkoSYmAdOU0NvbG9yhpKEhIQHTlNDb2xvcgCVoAGEBGZmZmYAAAEBhoaG</data>
+			<key>Note</key>
+			<string>ニコニコにゅーすちゃんねる</string>
+			<key>AutoOpen</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>AutoOpen</key>
+			<false/>
+			<key>Note</key>
+			<string>名称未設定 (Чайка)</string>
+			<key>WatchItem</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhBlOU011dGFibGVBdHRyaWJ1dGVkU3RyaW5nAISEEk5TQXR0cmlidXRlZFN0cmluZwCEhAhOU09iamVjdACFkoSEhA9OU011dGFibGVTdHJpbmcBhIQITlNTdHJpbmcBlYQBKwhjbzM4NzI4NYaEAmlJAQiShISEDE5TRGljdGlvbmFyeQCVhAFpBJKEmJgQTlNQYXJhZ3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxlAISEEE5TUGFyYWdyYXBoU3R5bGUAlYQEQ0NAUwQEhQCGkoSYmAZOU0xpbmuGkoSEhAVOU1VSTACVhAFjAJKEmJgqaHR0cDovL2NvbS5uaWNvdmlkZW8uanAvY29tbXVuaXR5L2NvMzg3Mjg1hoaShJiYC05TVW5kZXJsaW5lhpKEhIQITlNOdW1iZXIAhIQHTlNWYWx1ZQCVhAEqhIQBcaQBhpKEmJgHTlNDb2xvcoaShISEB05TQ29sb3IAlaABhARmZmZmAAABAYaGhg==</data>
+		</dict>
+		<dict>
+			<key>AutoOpen</key>
+			<false/>
+			<key>Note</key>
+			<string>Чайка(ちゃいか)</string>
+			<key>WatchItem</key>
+			<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhBlOU011dGFibGVBdHRyaWJ1dGVkU3RyaW5nAISEEk5TQXR0cmlidXRlZFN0cmluZwCEhAhOU09iamVjdACFkoSEhA9OU011dGFibGVTdHJpbmcBhIQITlNTdHJpbmcBlYQBKwc2MzQ3NjEyhoQCaUkBB5KEhIQMTlNEaWN0aW9uYXJ5AJWEAWkEkoSYmBBOU1BhcmFncmFwaFN0eWxlhpKEhIQXTlNNdXRhYmxlUGFyYWdyYXBoU3R5bGUAhIQQTlNQYXJhZ3JhcGhTdHlsZQCVhARDQ0BTBASFAIaShJiYBk5TTGlua4aShISEBU5TVVJMAJWEAWMAkoSYmCRodHRwOi8vd3d3Lm5pY292aWRlby5qcC91c2VyLzYzNDc2MTKGhpKEmJgLTlNVbmRlcmxpbmWGkoSEhAhOU051bWJlcgCEhAdOU1ZhbHVlAJWEASqEhAFxpAGGkoSYmAdOU0NvbG9yhpKEhIQHTlNDb2xvcgCVoAGEBGZmZmYAAAEBhoaG</data>
+		</dict>
+	</array>
+	<key>DoNotAutoOpenInMyBroadcast</key>
+	<true/>
+	<key>KickCharlestonAtAutoOpen</key>
+	<false/>
+	<key>KickCharlestonByOpenFromMe</key>
+	<false/>
+	<key>KickCharlestonOnMyBroadcast</key>
+	<false/>
+	<key>KickFMELauncher</key>
+	<false/>
+</dict>
+</plist>

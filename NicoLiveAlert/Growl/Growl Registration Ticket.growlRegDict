@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AllNotifications</key>
+	<array>
+		<string>Start monitoring</string>
+		<string>Disconnected</string>
+		<string>Found Official Program</string>
+		<string>Start Official Program</string>
+		<string>Found User Program</string>
+		<string>Start User Program</string>
+		<string>Found in Manual Watch List</string>
+		<string>Start in Manual watch List</string>
+	</array>
+	<key>DefaultNotifications</key>
+	<array>
+		<string>Start monitoring</string>
+		<string>Disconnected</string>
+		<string>Found Official Program</string>
+		<string>Start Official Program</string>
+		<string>Found User Program</string>
+		<string>Start User Program</string>
+		<string>Found in Manual Watch List</string>
+		<string>Start in Manual watch List</string>
+	</array>
+	<key>HumanReadableNames</key>
+	<dict>
+		<key>Disconnected</key>
+		<string>Network connection is down</string>
+		<key>Found Official Program</key>
+		<string>Found official reserved program</string>
+		<key>Found User Program</key>
+		<string>Found user's reserved program</string>
+		<key>Found in Manual Watch List</key>
+		<string>Found manual watchlisted reserved program</string>
+		<key>Start Official Program</key>
+		<string>Start official program</string>
+		<key>Start User Program</key>
+		<string>Start user's program</string>
+		<key>Start in Manual watch List</key>
+		<string>Start manual watchlisted program</string>
+		<key>Start monitoring</key>
+		<string>Start/Restart Program monitor</string>
+	</dict>
+	<key>NotificationDescriptions</key>
+	<dict>
+		<key>Disconnected</key>
+		<string>Notify when connection is down</string>
+		<key>Start monitoring</key>
+		<string>Connection notification</string>
+	</dict>
+	<key>TicketVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

@@ -76,7 +76,7 @@
 
 - (void) applicationWillTerminate:(NSNotification *)notification
 {
-	[programSieves stopListen];
+	[programSieves halt];
 
 	[self removeNotifications];
 
@@ -85,7 +85,7 @@
 #if __has_feature(objc_arc) == 0
 	[statusBar release];
 	[programSieves release];
-	programSieves = NULL;
+	programSieves = nil;
 	[prefs release];
 #endif
 }// end - (void) applicationWillTerminate:(NSNotification *)notification
@@ -121,13 +121,13 @@
 	[accountsItem setEnabled:YES];
 
 		// store accounts to table
-	NSMutableDictionary *entry = NULL;
-	NSNumber *enabledAtStartup = NULL;
+	NSMutableDictionary *entry = nil;
+	NSNumber *enabledAtStartup = nil;
 	for (NLAccount *account in [nicoliveAccounts users])
 	{
 		enabledAtStartup = [savedAccounts objectForKey:[account userid]];
 		entry = [NSMutableDictionary dictionary];
-		if (enabledAtStartup != NULL)
+		if (enabledAtStartup != nil)
 		{		// already entried accounts
 			[entry setValue:enabledAtStartup forKey:keyAccountWatchEnabled];
 			[entry setValue:[account userid] forKey:keyAccountUserID];
@@ -178,7 +178,7 @@
 
 - (void) loadPreferences
 {
-	NSArray *ary = NULL;
+	NSArray *ary = nil;
 		// watch list
 	ary = [prefs loadManualWatchList];
 	if ([ary count] != 0)
@@ -228,23 +228,23 @@
 	NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
 		// sleep and wakeup notification hooks
 			// hook to sleep notification
-	[myMac addObserver:self selector: @selector(listenHalt:) name: NSWorkspaceWillSleepNotification object: NULL];
+	[myMac addObserver:self selector: @selector(listenHalt:) name: NSWorkspaceWillSleepNotification object: nil];
 			// hook to wakeup notification
-	[myMac addObserver:self selector: @selector(listenRestart:) name: NSWorkspaceDidWakeNotification object: NULL];
+	[myMac addObserver:self selector: @selector(listenRestart:) name: NSWorkspaceDidWakeNotification object: nil];
 		// Connection Notification hooks
 			// hook to connection lost notification
-	[this addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:NULL];
+	[this addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:nil];
 			// hook to connection reactive notification
-	[this addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:NULL];
+	[this addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:nil];
 		// open by program number hook
-	[this addObserver:self selector:@selector(removeProgramNoFromTable:) name:NLNotificationFoundLiveNo object:NULL];
+	[this addObserver:self selector:@selector(removeProgramNoFromTable:) name:NLNotificationFoundLiveNo object:nil];
 		// broadcast kind notification
-	[this addObserver:self selector:@selector(startMyProgram:) name:NLNotificationMyBroadcastStart object:NULL];
-	[this addObserver:self selector:@selector(endMyProgram:) name:NLNotificationMyBroadcastStart object:NULL];
+	[this addObserver:self selector:@selector(startMyProgram:) name:NLNotificationMyBroadcastStart object:nil];
+	[this addObserver:self selector:@selector(endMyProgram:) name:NLNotificationMyBroadcastStart object:nil];
 		// AutoOpen Notification hook
-	[this addObserver:self selector:@selector(doAutoOpen:) name:NLNotificationAutoOpen object:NULL];
+	[this addObserver:self selector:@selector(doAutoOpen:) name:NLNotificationAutoOpen object:nil];
 		// Tableview Notification hook
-	[this addObserver:self selector:@selector(rowSelected:) name:NLNotificationSelectRow object:NULL];
+	[this addObserver:self selector:@selector(rowSelected:) name:NLNotificationSelectRow object:nil];
 }// end - (void) hookNotifications
 
 - (void) removeNotifications
@@ -253,23 +253,23 @@
 	NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
 		// release sleep and wakeup notifidation
 			// remove sleep notification
-	[myMac removeObserver:self name:NSWorkspaceWillSleepNotification object:NULL];
+	[myMac removeObserver:self name:NSWorkspaceWillSleepNotification object:nil];
 			// remove wakeup notification
-	[myMac removeObserver:self name:NSWorkspaceDidWakeNotification object:NULL];
+	[myMac removeObserver:self name:NSWorkspaceDidWakeNotification object:nil];
 		// Connection Notification Hook
 			// remove Connection lost notification
-	[this removeObserver:self name:NLNotificationConnectionLost object:NULL];
+	[this removeObserver:self name:NLNotificationConnectionLost object:nil];
 			// remove Connection Rised notification
-	[this removeObserver:self name:NLNotificationConnectionRised object:NULL];
+	[this removeObserver:self name:NLNotificationConnectionRised object:nil];
 		// remove open by program number hook
-	[this removeObserver:self name:NLNotificationFoundLiveNo object:NULL];
+	[this removeObserver:self name:NLNotificationFoundLiveNo object:nil];
 		// broadcast kind notification
-	[this removeObserver:self name:NLNotificationMyBroadcastStart object:NULL];
-	[this removeObserver:self name:NLNotificationMyBroadcastEnd object:NULL];
+	[this removeObserver:self name:NLNotificationMyBroadcastStart object:nil];
+	[this removeObserver:self name:NLNotificationMyBroadcastEnd object:nil];
 		// AutoOpen Notification
-	[this removeObserver:self name:NLNotificationAutoOpen object:NULL];
+	[this removeObserver:self name:NLNotificationAutoOpen object:nil];
 		// TableView Notification
-	[this removeObserver:self name:NLNotificationSelectRow object:NULL];
+	[this removeObserver:self name:NLNotificationSelectRow object:nil];
 }// end - (void) hookNotifications
 
 #pragma mark -
@@ -278,13 +278,13 @@
 - (void) listenHalt:(NSNotification *)note
 {
 	if ([[note name] isEqualToString:NSWorkspaceWillSleepNotification])
-		[programSieves stopListen];
+		[programSieves halt];
 }// end - (void) listenHalt:(NSNotification *)note
 
 - (void) listenRestart:(NSNotification *)note
 {
 	if ([[note name] isEqualToString:NSWorkspaceDidWakeNotification])
-		[programSieves startListen];
+		[programSieves kick];
 }// end - (void) listenRestart:(NSNotification *)note
 
 - (void) removeProgramNoFromTable:(NSNotification *)note
@@ -445,7 +445,7 @@
 
 - (IBAction) showAboutPanel:(id)sender
 {
-	NSDictionary *dict = NULL;
+	NSDictionary *dict = nil;
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
 	dict = [NSDictionary dictionaryWithObject:AppnameLion forKey:keyAppName];
 #else
@@ -494,7 +494,7 @@
 	OnigRegexp *watchKindRegex = [OnigRegexp compile:WatchKindRegex];
 	OnigResult *targetKind = [watchKindRegex search:itemName];
 
-	NSURL *url = NULL;
+	NSURL *url = nil;
 	switch ([[watchTargetKindDict valueForKey:[targetKind stringAt:1]] integerValue])
 	{
 		case indexWatchCommunity:

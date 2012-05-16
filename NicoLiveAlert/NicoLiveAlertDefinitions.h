@@ -129,7 +129,7 @@ enum WatchTargetKind {
 #pragma mark -
 #pragma mark definitions for class NLUsers
 
-#define systemDefaultKeychain	NULL
+#define systemDefaultKeychain	nil
 #define NICOKEYCHAINNAMEFORMAT	@"%@ (%@)"
 #define NICOKEYCHAINLABEL		@"Web form password"
 
@@ -159,6 +159,9 @@ enum WatchTargetKind {
 #define elementKeyAddress	@"addr"
 #define elementKeyPort		@"port"
 #define elementKeyThread	@"thread"
+#define elementKeyError		@"error"
+#define elementKeyCode		@"code"
+#define elementKeyDesc		@"description"
 
 enum elementLiteralIndex {
 	indexResponse = 1,
@@ -170,7 +173,10 @@ enum elementLiteralIndex {
 	indexCommunity,
 	indexAddress,
 	indexPort,
-	indexThread
+	indexThread,
+	indexError,
+	indexCode,
+	indexDesc
 };
 
 #define keyXMLStatus	@"status"
@@ -179,10 +185,13 @@ enum elementLiteralIndex {
 #pragma mark -
 #pragma mark definitions for class NLProgramList
 
+#define NLNotificationAutoOpen			@"NLNotificationAutoOpen"
 #define NLNotificationFoundLiveNo		@"NLNotificationFoundLiveNo"
 #define NLNotificationConnectionLost	@"NLNotificationConnectionLost"
 #define NLNotificationConnectionRised	@"NLNotificationConnectionRised"
-#define NLNotificationAutoOpen			@"NLNotificationAutoOpen"
+#define NLNotificationStreamOpen		@"NLNotificationStreamOpen"
+#define NLNotificationServerResponce	@"NLNotificationServerResponce"
+
 #define NLChannelFormat					@"ch%@"
 #define dataSeparator					@","
 #define liveNoAppendFormat				@"lv%@"
@@ -209,6 +218,12 @@ enum {
 
 #pragma mark -
 #pragma mark definitions for class NLProgram
+	// Attribute literal
+#define fontNameOfProgramTitle		@"HiraKakuPro-W6"
+#define fontNameOfDescription		@"HiraMaruPro-W4"
+#define fontNameOfCommunity			@"HiraKakuPro-W6"
+#define fontNameOfPrimaryAccount	@"Futura-Medium"
+#define fontNameOfElapsedTime		@"CourierNewPS-BoldMT"
 
 #define OfficialTitleString	NSLocalizedString(@"OfficialTitleString", @"")
 #define StartUserTimeFormat			@" %H:%M + 00:00"
@@ -256,7 +271,7 @@ enum elementStreamInfoIndex {
 
 	// exception constant
 #define EmbedFetchFailed		@"EmbedFetchFailed"
-#define ErrorIsNotNULL			@"ErrorIsNotNULL"
+#define ErrorIsNotnil			@"ErrorIsNotnil"
 #define StringIsEmpty			@"StringIsEmpty"
 #define StreamInforFetchFaild	@"StreamInforFetchFaild"
 #define EmbedParseFailed		@"EmbedParseFailed"

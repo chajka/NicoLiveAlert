@@ -12,13 +12,13 @@
 
 - (void) setUp
 {
-	dataBuffer = NULL;
+	dataBuffer = nil;
 }// end - (void) setUp
 
 - (void) tearDown
 {
 #if __has_feature(objc_arc) == 0
-	if (dataBuffer != NULL)
+	if (dataBuffer != nil)
 		[dataBuffer release];
 #endif
 }// end - (void) tearDown

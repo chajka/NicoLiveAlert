@@ -43,7 +43,5 @@
 
 - (void) kick;
 - (void) halt;
-- (BOOL) startListen;
-- (void) stopListen;
 
 @end

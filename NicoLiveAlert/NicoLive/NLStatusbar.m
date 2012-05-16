@@ -77,9 +77,9 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		[self installStatusbarMenu];
 		[self makeStatusbarIcon];
 		NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
-		[this addObserver:self selector:@selector(updateMenuItem:) name:NLNotificationTimeUpdated object:NULL];
-		[this addObserver:self selector:@selector(connectionRised:) name:NLNotificationConnectionRised object:NULL];
-		[this addObserver:self selector:@selector(connectionDown:) name:NLNotificationConnectionLost object:NULL];
+		[this addObserver:self selector:@selector(updateMenuItem:) name:NLNotificationTimeUpdated object:nil];
+		[this addObserver:self selector:@selector(connectionRised:) name:NLNotificationConnectionRised object:nil];
+		[this addObserver:self selector:@selector(connectionDown:) name:NLNotificationConnectionLost object:nil];
 	}// end if
 	return self;
 }// end - (id) initWithImage:(NSString *)imageName
@@ -87,9 +87,9 @@ static CGFloat disconnectedColorAlpha = 0.70;
 - (void) dealloc
 {
 	NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
-	[this removeObserver:self name:NLNotificationTimeUpdated object:NULL];
-	[this removeObserver:self name:NLNotificationConnectionRised object:NULL];
-	[this removeObserver:self name:NLNotificationConnectionLost object:NULL];
+	[this removeObserver:self name:NLNotificationTimeUpdated object:nil];
+	[this removeObserver:self name:NLNotificationConnectionRised object:nil];
+	[this removeObserver:self name:NLNotificationConnectionLost object:nil];
 	[statusBar removeStatusItem:statusBarItem];
 #if __has_feature(objc_arc) == 0
 	[statusBarItem release];
@@ -112,9 +112,9 @@ static CGFloat disconnectedColorAlpha = 0.70;
 - (void) finalize
 {
 	NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
-	[this removeObserver:self name:NLNotificationTimeUpdated object:NULL];
-	[this removeObserver:self name:NLNotificationConnectionRised object:NULL];
-	[this removeObserver:self name:NLNotificationConnectionLost object:NULL];
+	[this removeObserver:self name:NLNotificationTimeUpdated object:nil];
+	[this removeObserver:self name:NLNotificationConnectionRised object:nil];
+	[this removeObserver:self name:NLNotificationConnectionLost object:nil];
 
 	[super finalize];
 }// end - (void) finalize
@@ -204,8 +204,8 @@ static CGFloat disconnectedColorAlpha = 0.70;
 #else
 	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 #endif
-	CIImage *invertImage = NULL;
-	CIImage *destImage = NULL;
+	CIImage *invertImage = nil;
+	CIImage *destImage = nil;
 	[statusbarIcon setSize:iconSize];
 	[statusbarAlt setSize:iconSize];
 	if ((userState == NSOffState) || (connected == NO))
@@ -228,7 +228,12 @@ static CGFloat disconnectedColorAlpha = 0.70;
 
 		// draw program count on image
 	NSString *progCountStr = [NSString stringWithFormat:@"%d", numberOfPrograms];
-	if (numberOfPrograms > 99)
+	if ((numberOfPrograms == 0) || (connected == NO))
+	{
+		statusbarIcon = [[NSImage alloc] initWithSize:NSMakeSize(noProgWidth, iconSizeW)];
+		statusbarAlt = [[NSImage alloc] initWithSize:NSMakeSize(noProgWidth, iconSizeW)];
+	}
+	else if (numberOfPrograms > 99)
 	{
 		[progCountBackground removeAllPoints];
 		[progCountBackground moveToPoint:NSMakePoint(progCountBackGrountFromX, progCountBackGrountFromY)];
@@ -251,11 +256,6 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		[progCountBackground lineToPoint:NSMakePoint(progCountBackGrountToX, progCountBackGrountToY)];
 		statusbarIcon = [[NSImage alloc] initWithSize:NSMakeSize(haveProgWidth, iconSizeW)];
 		statusbarAlt = [[NSImage alloc] initWithSize:NSMakeSize(haveProgWidth, iconSizeW)];
-	}
-	else
-	{
-		statusbarIcon = [[NSImage alloc] initWithSize:NSMakeSize(noProgWidth, iconSizeW)];
-		statusbarAlt = [[NSImage alloc] initWithSize:NSMakeSize(noProgWidth, iconSizeW)];
 	}// end if adjust icon withd by program count.
 
 		// draw for image.
@@ -305,7 +305,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 
 - (void) updateToolTip
 {
-	NSMutableString *tooltip = NULL;
+	NSMutableString *tooltip = nil;
 	NSMutableArray *array = [NSMutableArray array];
 	if (connected == NO)
 	{
@@ -326,7 +326,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 			[tooltip appendString:TwoOrMoreSuffix];
 		// end if program count is two or more
 		[array addObject:tooltip];
-		tooltip = NULL;
+		tooltip = nil;
 	}// end if user program found
 
 	if (officialProgramCount > 0)
@@ -336,7 +336,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 			[tooltip appendString:TwoOrMoreSuffix];
 			// end if program count is two or more
 		[array addObject:tooltip];
-		tooltip = NULL;
+		tooltip = nil;
 	}// end if user program found
 
 	[statusBarItem setToolTip:[array componentsJoinedByString:StringConcatinater]];
@@ -346,7 +346,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 {
 	NLProgram *prog = [notification object];
 	NSMenuItem *progMenu = [prog programMenu];
-	NSArray *menuItems = NULL;
+	NSArray *menuItems = nil;
 	if ([prog isOfficial] == YES)
 		menuItems = [[[statusbarMenu itemWithTag:tagOfficial] submenu] itemArray];
 	else
@@ -425,7 +425,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	{
 		[[statusbarMenu itemWithTag:tagPorgrams] setState:NSOffState];
 		[[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEUSERNOPROG];
-		[[statusbarMenu itemWithTag:tagPorgrams] setSubmenu:NULL];
+		[[statusbarMenu itemWithTag:tagPorgrams] setSubmenu:nil];
 		[[statusbarMenu itemWithTag:tagPorgrams] setEnabled:NO];
 
 	}
@@ -468,7 +468,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	{
 		[[statusbarMenu itemWithTag:tagOfficial] setState:NSOffState];
 		[[statusbarMenu itemWithTag:tagOfficial] setTitle:TITLEOFFICIALNOPROG];
-		[[statusbarMenu itemWithTag:tagOfficial] setSubmenu:NULL];		
+		[[statusbarMenu itemWithTag:tagOfficial] setSubmenu:nil];		
 		[[statusbarMenu itemWithTag:tagOfficial] setEnabled:NO];
 	}
 	else if (officialProgramCount == 1)

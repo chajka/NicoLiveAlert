@@ -27,10 +27,10 @@
 	{
 		streamDelegate = self;
 		streamEventDelegate = self;
-		iStream = NULL;
-		oStream = NULL;
+		iStream = nil;
+		oStream = nil;
 		direction = SCDirectionBoth;
-		server = NULL;
+		server = nil;
 		port = 0;
 	}// end if self
 	return self;
@@ -43,8 +43,8 @@
 	{
 		streamDelegate = self;
 		streamEventDelegate = self;
-		iStream = NULL;
-		oStream = NULL;
+		iStream = nil;
+		oStream = nil;
 		direction = direction_;
 		server = [server_ copy];
 		port = port_;
@@ -54,12 +54,12 @@
 
 - (void) dealloc
 {
-	if ((iStream != NULL) || (oStream != NULL))
+	if ((iStream != nil) || (oStream != nil))
 		[self closeStream];
 #if __has_feature(objc_arc) == 0
-	if (iStream != NULL)				[iStream release];
-	if (oStream != NULL)				[oStream release];
-	if (server != NULL)					[server release];
+	if (iStream != nil)				[iStream release];
+	if (oStream != nil)				[oStream release];
+	if (server != nil)					[server release];
 	if (streamDelegate != self)			[streamDelegate release];
 	if (streamEventDelegate != self)	[streamEventDelegate release];
 
@@ -70,7 +70,7 @@
 #ifdef __OBJC_GC__
 - (void) finalize
 {
-	if ((iStream != NULL) || (oStream != NULL))
+	if ((iStream != nil) || (oStream != nil))
 		[self closeStream];
 
 	[super finalize];
@@ -85,18 +85,18 @@
 		return;
 
 #if __has_feature(objc_arc)
-	__strong NSInputStream *_iStream = NULL;	
-	__strong NSOutputStream *_oStream = NULL;
+	__strong NSInputStream *_iStream = nil;	
+	__strong NSOutputStream *_oStream = nil;
 #endif
 	
 	NSHost *host = [NSHost hostWithName:server];
 	if (direction == SCDirectionListen)
 	{
 #if __has_feature(objc_arc)
-		[NSStream getStreamsToHost:host port:port inputStream:&_iStream outputStream:NULL];
+		[NSStream getStreamsToHost:host port:port inputStream:&_iStream outputStream:nil];
 		iStream = _iStream;
 #else
-		[NSStream getStreamsToHost:host port:port inputStream:&iStream outputStream:NULL];
+		[NSStream getStreamsToHost:host port:port inputStream:&iStream outputStream:nil];
 		[iStream retain];
 #endif
 		[iStream setDelegate:streamDelegate];
@@ -104,10 +104,10 @@
 	else if (direction == SCDirectionBroadcast)
 	{
 #if __has_feature(objc_arc)
-		[NSStream getStreamsToHost:host port:port inputStream:NULL outputStream:&_oStream];
+		[NSStream getStreamsToHost:host port:port inputStream:nil outputStream:&_oStream];
 		oStream = _oStream;
 #else
-		[NSStream getStreamsToHost:host port:port inputStream:NULL outputStream:&oStream];
+		[NSStream getStreamsToHost:host port:port inputStream:nil outputStream:&oStream];
 		[oStream retain];
 #endif
 		[oStream setDelegate:streamDelegate];
@@ -141,7 +141,7 @@
 	if (streamDelegate != self)
 		[streamDelegate release];
 #endif
-	if (sd == NULL)
+	if (sd == nil)
 		streamDelegate = self;
 	else
 		streamDelegate = sd;
@@ -163,7 +163,7 @@
 	if (streamEventDelegate != self)
 		[streamEventDelegate release];
 #endif
-	if (sd == NULL)
+	if (sd == nil)
 		streamEventDelegate = self;
 	else
 		streamEventDelegate = sd;
@@ -177,13 +177,13 @@
 #pragma mark acction
 - (BOOL) connect
 {
-	if (server == NULL)
+	if (server == nil)
 		return NO;
 
-	if ((iStream == NULL) && (oStream == NULL))
+	if ((iStream == nil) && (oStream == nil))
 		[self createStreams];
 	
-	if ((iStream != NULL) || (oStream != NULL))
+	if ((iStream != nil) || (oStream != nil))
 	{
 		[self openStream];
 		return YES;
@@ -218,9 +218,9 @@
 #pragma mark internal
 - (void) openStream
 {
-	if (iStream != NULL)
+	if (iStream != nil)
 		[iStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-	if (oStream != NULL)
+	if (oStream != nil)
 		[oStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 	[iStream open];
 	[oStream open];
@@ -230,18 +230,18 @@
 {
 	[iStream close];
 	[oStream close];
-	if (iStream != NULL)
+	if (iStream != nil)
 		[iStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-	if (oStream != NULL)
+	if (oStream != nil)
 		[oStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-	[iStream setDelegate:NULL];
-	[oStream setDelegate:NULL];
+	[iStream setDelegate:nil];
+	[oStream setDelegate:nil];
 #if __has_feature(objc_arc) == 0
 	[iStream release];
 	[oStream release];
 #endif
-	iStream = NULL;
-	oStream = NULL;
+	iStream = nil;
+	oStream = nil;
 }// end - (void) closeStream
 
 #pragma mark -
@@ -272,7 +272,7 @@
 
 #pragma mark -
 #pragma mark NSStreamDelegate
-NSNotification *note = NULL;
+NSNotification *note = nil;
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)streamEvent
 {
 	switch (streamEvent) {
@@ -291,7 +291,7 @@ NSNotification *note = NULL;
 		case NSStreamEventErrorOccurred:
 			note = [NSNotification notificationWithName:SocketConnectionErrorNoficationName object:aStream];
 			[[NSNotificationCenter defaultCenter] postNotification:note];
-			note = NULL;
+			note = nil;
 			[streamEventDelegate streamEventErrorOccurred:aStream];
 			break;
 		case NSStreamEventEndEncountered:

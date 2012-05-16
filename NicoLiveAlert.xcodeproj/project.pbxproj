@@ -16,7 +16,7 @@
 		1D141CF5151D8DAA00CEB686 /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
 		1D141CF6151D8DAA00CEB686 /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
 		1D141CFE151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		1D141CFF151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1D141CFF151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		1D141D00151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; };
 		1D141D01151DAA1300CEB686 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D141CFD151DAA1300CEB686 /* QuartzCore.framework */; };
 		1D1CE2C6150C77BA001E7E39 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */; };
@@ -53,9 +53,6 @@
 		1D2985B3154D1D6C007F80A2 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 1D2985B1154D1D6C007F80A2 /* Growl Registration Ticket.growlRegDict */; };
 		1D2AD092151F693A001496E6 /* NLAccountTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2AD090151F693A001496E6 /* NLAccountTests.m */; };
 		1D2AD093151F693A001496E6 /* NLAccountTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2AD090151F693A001496E6 /* NLAccountTests.m */; };
-		1D36A5C31545739500516CDF /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D36A5C21545739500516CDF /* Growl.framework */; };
-		1D36A5C41545739500516CDF /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D36A5C21545739500516CDF /* Growl.framework */; };
-		1D36A5C7154573D100516CDF /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1D36A5C21545739500516CDF /* Growl.framework */; };
 		1D36A5C9154573F300516CDF /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1D878104154573610075B151 /* Growl.framework */; };
 		1D36A5DA154575F000516CDF /* LinkTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */; };
 		1D36A5DB154575F000516CDF /* LinkTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */; };
@@ -73,16 +70,18 @@
 		1D36A60F15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
 		1D36A61015478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
 		1D36A61115478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
+		1D38708B1562543F003807B1 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D38708A1562543F003807B1 /* Growl.framework */; };
+		1D38708C1562543F003807B1 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D38708A1562543F003807B1 /* Growl.framework */; };
 		1D5558171529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D5558181529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D6500BE150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
-		1D6500BF150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
+		1D6500BF150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D6500C5150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
 		1D6500C6150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
 		1D6500C7150CB63A002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500C8150CB63E002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500CA150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		1D6500CB150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1D6500CB150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		1D6500CC150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
 		1D6500CD150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
 		1D72B119152B5CB400F7944C /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
@@ -98,11 +97,11 @@
 		1D922486155B8DA200775B7A /* NLAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D922483155B8DA200775B7A /* NLAccountInfo.m */; };
 		1D922487155B8DA200775B7A /* NLAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D922483155B8DA200775B7A /* NLAccountInfo.m */; };
 		1D93A153153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A154153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; };
+		1D93A154153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A155153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; };
 		1D93A156153856DA00328D5C /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; };
 		1D93A157153856DA00328D5C /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13C153856DA00328D5C /* OnigRegexpUtility.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A158153856DA00328D5C /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13C153856DA00328D5C /* OnigRegexpUtility.m */; };
+		1D93A158153856DA00328D5C /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13C153856DA00328D5C /* OnigRegexpUtility.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A159153856DA00328D5C /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13C153856DA00328D5C /* OnigRegexpUtility.m */; };
 		1D93A15A153856DA00328D5C /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13C153856DA00328D5C /* OnigRegexpUtility.m */; };
 		1D93A15B153856DA00328D5C /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 1D93A13E153856DA00328D5C /* COPYING */; };
@@ -110,55 +109,55 @@
 		1D93A15D153856DA00328D5C /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 1D93A13E153856DA00328D5C /* COPYING */; };
 		1D93A15E153856DA00328D5C /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 1D93A13E153856DA00328D5C /* COPYING */; };
 		1D93A15F153856DA00328D5C /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A141153856DA00328D5C /* ascii.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A160153856DA00328D5C /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A141153856DA00328D5C /* ascii.c */; };
+		1D93A160153856DA00328D5C /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A141153856DA00328D5C /* ascii.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A161153856DA00328D5C /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A141153856DA00328D5C /* ascii.c */; };
 		1D93A162153856DA00328D5C /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A141153856DA00328D5C /* ascii.c */; };
 		1D93A163153856DA00328D5C /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A142153856DA00328D5C /* unicode.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A164153856DA00328D5C /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A142153856DA00328D5C /* unicode.c */; };
+		1D93A164153856DA00328D5C /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A142153856DA00328D5C /* unicode.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A165153856DA00328D5C /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A142153856DA00328D5C /* unicode.c */; };
 		1D93A166153856DA00328D5C /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A142153856DA00328D5C /* unicode.c */; };
 		1D93A167153856DA00328D5C /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A143153856DA00328D5C /* utf16_le.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A168153856DA00328D5C /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A143153856DA00328D5C /* utf16_le.c */; };
+		1D93A168153856DA00328D5C /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A143153856DA00328D5C /* utf16_le.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A169153856DA00328D5C /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A143153856DA00328D5C /* utf16_le.c */; };
 		1D93A16A153856DA00328D5C /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A143153856DA00328D5C /* utf16_le.c */; };
 		1D93A16B153856DA00328D5C /* regcomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A145153856DA00328D5C /* regcomp.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A16C153856DA00328D5C /* regcomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A145153856DA00328D5C /* regcomp.c */; };
+		1D93A16C153856DA00328D5C /* regcomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A145153856DA00328D5C /* regcomp.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A16D153856DA00328D5C /* regcomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A145153856DA00328D5C /* regcomp.c */; };
 		1D93A16E153856DA00328D5C /* regcomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A145153856DA00328D5C /* regcomp.c */; };
 		1D93A16F153856DA00328D5C /* regenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A146153856DA00328D5C /* regenc.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A170153856DA00328D5C /* regenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A146153856DA00328D5C /* regenc.c */; };
+		1D93A170153856DA00328D5C /* regenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A146153856DA00328D5C /* regenc.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A171153856DA00328D5C /* regenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A146153856DA00328D5C /* regenc.c */; };
 		1D93A172153856DA00328D5C /* regenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A146153856DA00328D5C /* regenc.c */; };
 		1D93A173153856DA00328D5C /* regerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A148153856DA00328D5C /* regerror.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A174153856DA00328D5C /* regerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A148153856DA00328D5C /* regerror.c */; };
+		1D93A174153856DA00328D5C /* regerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A148153856DA00328D5C /* regerror.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A175153856DA00328D5C /* regerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A148153856DA00328D5C /* regerror.c */; };
 		1D93A176153856DA00328D5C /* regerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A148153856DA00328D5C /* regerror.c */; };
 		1D93A177153856DA00328D5C /* regexec.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A149153856DA00328D5C /* regexec.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A178153856DA00328D5C /* regexec.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A149153856DA00328D5C /* regexec.c */; };
+		1D93A178153856DA00328D5C /* regexec.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A149153856DA00328D5C /* regexec.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A179153856DA00328D5C /* regexec.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A149153856DA00328D5C /* regexec.c */; };
 		1D93A17A153856DA00328D5C /* regexec.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A149153856DA00328D5C /* regexec.c */; };
 		1D93A17B153856DA00328D5C /* regext.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14A153856DA00328D5C /* regext.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A17C153856DA00328D5C /* regext.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14A153856DA00328D5C /* regext.c */; };
+		1D93A17C153856DA00328D5C /* regext.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14A153856DA00328D5C /* regext.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A17D153856DA00328D5C /* regext.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14A153856DA00328D5C /* regext.c */; };
 		1D93A17E153856DA00328D5C /* regext.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14A153856DA00328D5C /* regext.c */; };
 		1D93A17F153856DA00328D5C /* regparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14C153856DA00328D5C /* regparse.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A180153856DA00328D5C /* regparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14C153856DA00328D5C /* regparse.c */; };
+		1D93A180153856DA00328D5C /* regparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14C153856DA00328D5C /* regparse.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A181153856DA00328D5C /* regparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14C153856DA00328D5C /* regparse.c */; };
 		1D93A182153856DA00328D5C /* regparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14C153856DA00328D5C /* regparse.c */; };
 		1D93A183153856DA00328D5C /* regsyntax.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14E153856DA00328D5C /* regsyntax.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A184153856DA00328D5C /* regsyntax.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14E153856DA00328D5C /* regsyntax.c */; };
+		1D93A184153856DA00328D5C /* regsyntax.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14E153856DA00328D5C /* regsyntax.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A185153856DA00328D5C /* regsyntax.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14E153856DA00328D5C /* regsyntax.c */; };
 		1D93A186153856DA00328D5C /* regsyntax.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14E153856DA00328D5C /* regsyntax.c */; };
 		1D93A187153856DA00328D5C /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14F153856DA00328D5C /* regtrav.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A188153856DA00328D5C /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14F153856DA00328D5C /* regtrav.c */; };
+		1D93A188153856DA00328D5C /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14F153856DA00328D5C /* regtrav.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A189153856DA00328D5C /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14F153856DA00328D5C /* regtrav.c */; };
 		1D93A18A153856DA00328D5C /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14F153856DA00328D5C /* regtrav.c */; };
 		1D93A18B153856DA00328D5C /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A150153856DA00328D5C /* regversion.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A18C153856DA00328D5C /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A150153856DA00328D5C /* regversion.c */; };
+		1D93A18C153856DA00328D5C /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A150153856DA00328D5C /* regversion.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A18D153856DA00328D5C /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A150153856DA00328D5C /* regversion.c */; };
 		1D93A18E153856DA00328D5C /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A150153856DA00328D5C /* regversion.c */; };
 		1D93A18F153856DA00328D5C /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A151153856DA00328D5C /* st.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D93A190153856DA00328D5C /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A151153856DA00328D5C /* st.c */; };
+		1D93A190153856DA00328D5C /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A151153856DA00328D5C /* st.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A191153856DA00328D5C /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A151153856DA00328D5C /* st.c */; };
 		1D93A192153856DA00328D5C /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A151153856DA00328D5C /* st.c */; };
 		1D99938C1525D25D00786114 /* NLOffBadge.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D9993881525D25D00786114 /* NLOffBadge.png */; };
@@ -179,6 +178,7 @@
 		1DAAB8FB151B4BA500D0D2B3 /* NLAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */; };
 		1DAAB8FC151B4BA500D0D2B3 /* NLAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */; };
 		1DAAB8FD151B4BA500D0D2B3 /* NLAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */; };
+		1DB96CCC1562984B00098CDF /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1D38708A1562543F003807B1 /* Growl.framework */; };
 		1DC5A7B3153320A80077B187 /* NLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC5A7B2153320A80077B187 /* NLProgram.m */; };
 		1DC5A7B4153320A80077B187 /* NLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC5A7B2153320A80077B187 /* NLProgram.m */; };
 		1DC5A7B5153320A80077B187 /* NLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC5A7B2153320A80077B187 /* NLProgram.m */; };
@@ -235,7 +235,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1D36A5C7154573D100516CDF /* Growl.framework in CopyFiles */,
+				1DB96CCC1562984B00098CDF /* Growl.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,8 +252,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D07EB8C151C5C1E00CEF855 /* HTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTTPConnection.h; path = Network/HTTPConnection.h; sourceTree = "<group>"; };
-		1D07EB8D151C5C1E00CEF855 /* HTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPConnection.m; path = Network/HTTPConnection.m; sourceTree = "<group>"; };
+		1D07EB8C151C5C1E00CEF855 /* HTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = HTTPConnection.h; path = Network/HTTPConnection.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		1D07EB8D151C5C1E00CEF855 /* HTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = HTTPConnection.m; path = Network/HTTPConnection.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1D141CF1151D8DAA00CEB686 /* NLStatusbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLStatusbar.h; path = NicoLive/NLStatusbar.h; sourceTree = "<group>"; };
 		1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLStatusbar.m; path = NicoLive/NLStatusbar.m; sourceTree = "<group>"; };
 		1D141CFD151DAA1300CEB686 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -285,7 +285,6 @@
 		1D2985B1154D1D6C007F80A2 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Growl Registration Ticket.growlRegDict"; path = "Growl/Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		1D2AD090151F693A001496E6 /* NLAccountTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLAccountTests.m; path = NicoLive/NLAccountTests.m; sourceTree = "<group>"; };
 		1D2AD091151F693A001496E6 /* NLAccountTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccountTests.h; path = NicoLive/NLAccountTests.h; sourceTree = "<group>"; };
-		1D36A5C21545739500516CDF /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = NicoLiveAlert/Growl/1.3/Growl.framework; sourceTree = "<group>"; };
 		1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinkTextFieldCell.m; path = GUI/LinkTextFieldCell.m; sourceTree = "<group>"; };
 		1D36A5D9154575F000516CDF /* LinkTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinkTextFieldCell.h; path = GUI/LinkTextFieldCell.h; sourceTree = "<group>"; };
 		1D36A5DE1545760E00516CDF /* NSAttributedStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSAttributedStringAdditions.m; path = Categories/NSAttributedStringAdditions.m; sourceTree = "<group>"; };
@@ -294,6 +293,7 @@
 		1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NicoLivePrefManager.m; path = ApplicationSupport/NicoLivePrefManager.m; sourceTree = "<group>"; };
 		1D36A60C15478BC400516CDF /* IOMTableViewDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IOMTableViewDragAndDrop.h; path = CocoaEnhance/IOMTableViewDragAndDrop.h; sourceTree = "<group>"; };
 		1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IOMTableViewDragAndDrop.m; path = CocoaEnhance/IOMTableViewDragAndDrop.m; sourceTree = "<group>"; };
+		1D38708A1562543F003807B1 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 		1D5558151529392000221516 /* SocketConnectionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnectionTests.h; path = Network/SocketConnectionTests.h; sourceTree = "<group>"; };
 		1D5558161529392000221516 /* SocketConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnectionTests.m; path = Network/SocketConnectionTests.m; sourceTree = "<group>"; };
 		1D5A2CA9154E5ACE00E74922 /* NicoLiveAlert.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = NicoLiveAlert.entitlements; sourceTree = "<group>"; };
@@ -309,24 +309,24 @@
 		1D922482155B8DA200775B7A /* NLAccountInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccountInfo.h; path = NicoLive/NLAccountInfo.h; sourceTree = "<group>"; };
 		1D922483155B8DA200775B7A /* NLAccountInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLAccountInfo.m; path = NicoLive/NLAccountInfo.m; sourceTree = "<group>"; };
 		1D93A139153856DA00328D5C /* OnigRegexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexp.h; sourceTree = "<group>"; };
-		1D93A13A153856DA00328D5C /* OnigRegexp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexp.m; sourceTree = "<group>"; };
+		1D93A13A153856DA00328D5C /* OnigRegexp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = OnigRegexp.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1D93A13B153856DA00328D5C /* OnigRegexpUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexpUtility.h; sourceTree = "<group>"; };
-		1D93A13C153856DA00328D5C /* OnigRegexpUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexpUtility.m; sourceTree = "<group>"; };
+		1D93A13C153856DA00328D5C /* OnigRegexpUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = OnigRegexpUtility.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1D93A13E153856DA00328D5C /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		1D93A13F153856DA00328D5C /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		1D93A141153856DA00328D5C /* ascii.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ascii.c; sourceTree = "<group>"; };
 		1D93A142153856DA00328D5C /* unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unicode.c; sourceTree = "<group>"; };
 		1D93A143153856DA00328D5C /* utf16_le.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utf16_le.c; sourceTree = "<group>"; };
-		1D93A144153856DA00328D5C /* oniguruma.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oniguruma.h; sourceTree = "<group>"; };
-		1D93A145153856DA00328D5C /* regcomp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regcomp.c; sourceTree = "<group>"; };
-		1D93A146153856DA00328D5C /* regenc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regenc.c; sourceTree = "<group>"; };
-		1D93A147153856DA00328D5C /* regenc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = regenc.h; sourceTree = "<group>"; };
-		1D93A148153856DA00328D5C /* regerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regerror.c; sourceTree = "<group>"; };
-		1D93A149153856DA00328D5C /* regexec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regexec.c; sourceTree = "<group>"; };
-		1D93A14A153856DA00328D5C /* regext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regext.c; sourceTree = "<group>"; };
-		1D93A14B153856DA00328D5C /* regint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = regint.h; sourceTree = "<group>"; };
-		1D93A14C153856DA00328D5C /* regparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regparse.c; sourceTree = "<group>"; };
-		1D93A14D153856DA00328D5C /* regparse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = regparse.h; sourceTree = "<group>"; };
+		1D93A144153856DA00328D5C /* oniguruma.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = oniguruma.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		1D93A145153856DA00328D5C /* regcomp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = regcomp.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		1D93A146153856DA00328D5C /* regenc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = regenc.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		1D93A147153856DA00328D5C /* regenc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = regenc.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		1D93A148153856DA00328D5C /* regerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = regerror.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		1D93A149153856DA00328D5C /* regexec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = regexec.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		1D93A14A153856DA00328D5C /* regext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = regext.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		1D93A14B153856DA00328D5C /* regint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = regint.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		1D93A14C153856DA00328D5C /* regparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = regparse.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		1D93A14D153856DA00328D5C /* regparse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = regparse.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1D93A14E153856DA00328D5C /* regsyntax.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regsyntax.c; sourceTree = "<group>"; };
 		1D93A14F153856DA00328D5C /* regtrav.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regtrav.c; sourceTree = "<group>"; };
 		1D93A150153856DA00328D5C /* regversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regversion.c; sourceTree = "<group>"; };
@@ -348,11 +348,11 @@
 		1DD73A461527214E00DAC3EB /* NLMessageServerInfoTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLMessageServerInfoTests.h; path = NicoLive/NLMessageServerInfoTests.h; sourceTree = "<group>"; };
 		1DD73A471527214E00DAC3EB /* NLMessageServerInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLMessageServerInfoTests.m; path = NicoLive/NLMessageServerInfoTests.m; sourceTree = "<group>"; };
 		1DD73A4A15272ECD00DAC3EB /* SocketConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnection.h; path = Network/SocketConnection.h; sourceTree = "<group>"; };
-		1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnection.m; path = Network/SocketConnection.m; sourceTree = "<group>"; };
+		1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SocketConnection.m; path = Network/SocketConnection.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1DDE396E154801150089D0D4 /* NLArrayControllerDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLArrayControllerDragAndDrop.h; path = GUI/NLArrayControllerDragAndDrop.h; sourceTree = "<group>"; };
 		1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLArrayControllerDragAndDrop.m; path = GUI/NLArrayControllerDragAndDrop.m; sourceTree = "<group>"; };
 		1DE87D80151EFFBB006C6EDC /* NLUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLUsers.h; path = NicoLive/NLUsers.h; sourceTree = "<group>"; };
-		1DE87D81151EFFBB006C6EDC /* NLUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLUsers.m; path = NicoLive/NLUsers.m; sourceTree = "<group>"; };
+		1DE87D81151EFFBB006C6EDC /* NLUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = NLUsers.m; path = NicoLive/NLUsers.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1DF062B8151AE2A70025C5DE /* sbicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sbicon.png; path = Images/sbicon.png; sourceTree = "<group>"; };
 		1DF062B9151AE2A70025C5DE /* NicoLiveAlert.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NicoLiveAlert.icns; path = Images/NicoLiveAlert.icns; sourceTree = "<group>"; };
 		1DF062C6151AE3950025C5DE /* NicoLiveAlertDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NicoLiveAlertDefinitions.h; sourceTree = "<group>"; };
@@ -366,7 +366,7 @@
 				1D1CE2C6150C77BA001E7E39 /* Cocoa.framework in Frameworks */,
 				1D6500CA150CBE98002F5A8B /* Security.framework in Frameworks */,
 				1D141CFE151DAA1300CEB686 /* QuartzCore.framework in Frameworks */,
-				1D36A5C31545739500516CDF /* Growl.framework in Frameworks */,
+				1D38708B1562543F003807B1 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,7 +378,7 @@
 				1D1CE2E5150C77BB001E7E39 /* Cocoa.framework in Frameworks */,
 				1D6500CC150CBE98002F5A8B /* Security.framework in Frameworks */,
 				1D141D00151DAA1300CEB686 /* QuartzCore.framework in Frameworks */,
-				1D36A5C41545739500516CDF /* Growl.framework in Frameworks */,
+				1D38708C1562543F003807B1 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,7 +572,7 @@
 		1D4E35C215457248000EAE03 /* 1.3 */ = {
 			isa = PBXGroup;
 			children = (
-				1D36A5C21545739500516CDF /* Growl.framework */,
+				1D38708A1562543F003807B1 /* Growl.framework */,
 			);
 			name = 1.3;
 			sourceTree = "<group>";
@@ -674,10 +674,10 @@
 				1DE87D81151EFFBB006C6EDC /* NLUsers.m */,
 				1DC5A7B1153320A80077B187 /* NLProgram.h */,
 				1DC5A7B2153320A80077B187 /* NLProgram.m */,
-				1DA0978915365D4C0083A2E1 /* NLActivePrograms.h */,
-				1DA0978A15365D4C0083A2E1 /* NLActivePrograms.m */,
 				1D72B117152B5CB400F7944C /* NLProgramList.h */,
 				1D72B118152B5CB400F7944C /* NLProgramList.m */,
+				1DA0978915365D4C0083A2E1 /* NLActivePrograms.h */,
+				1DA0978A15365D4C0083A2E1 /* NLActivePrograms.m */,
 				1DD73A201526B9ED00DAC3EB /* NLMessageServerInfo.h */,
 				1DD73A211526B9ED00DAC3EB /* NLMessageServerInfo.m */,
 				1D141CF1151D8DAA00CEB686 /* NLStatusbar.h */,
@@ -1024,7 +1024,6 @@
 			files = (
 				1D1CE32C150C79BA001E7E39 /* main.m in Sources */,
 				1D1CE32B150C79B0001E7E39 /* NicoLiveAlert.m in Sources */,
-				1D6500BF150CB0DE002F5A8B /* KCSUser.m in Sources */,
 				1DAAB8FB151B4BA500D0D2B3 /* NLAccount.m in Sources */,
 				1D07EB8F151C5C1E00CEF855 /* HTTPConnection.m in Sources */,
 				1D141CF4151D8DAA00CEB686 /* NLStatusbar.m in Sources */,
@@ -1034,6 +1033,7 @@
 				1D72B11A152B5CB400F7944C /* NLProgramList.m in Sources */,
 				1DC5A7B4153320A80077B187 /* NLProgram.m in Sources */,
 				1DA0978C15365D4D0083A2E1 /* NLActivePrograms.m in Sources */,
+				1D6500BF150CB0DE002F5A8B /* KCSUser.m in Sources */,
 				1D93A154153856DA00328D5C /* OnigRegexp.m in Sources */,
 				1D93A158153856DA00328D5C /* OnigRegexpUtility.m in Sources */,
 				1D93A160153856DA00328D5C /* ascii.c in Sources */,
@@ -1227,6 +1227,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/NicoLiveAlert/Growl/1.3\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
@@ -1248,6 +1249,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/NicoLiveAlert/Growl/1.3\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
@@ -1268,6 +1270,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)/NicoLiveAlert/Growl/1.3\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
@@ -1288,6 +1291,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)/NicoLiveAlert/Growl/1.3\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";

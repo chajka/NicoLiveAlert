@@ -56,9 +56,9 @@
 - (void) dealloc
 {
 #if __has_feature(objc_arc) == 0
-	if (userid != NULL)		[userid retain];
-	if (nickname != NULL)	[nickname retain];
-	if (mailaddr != NULL)	[mailaddr retain];
+	if (userid != nil)		[userid retain];
+	if (nickname != nil)	[nickname retain];
+	if (mailaddr != nil)	[mailaddr retain];
 
 	[super dealloc];
 #endif

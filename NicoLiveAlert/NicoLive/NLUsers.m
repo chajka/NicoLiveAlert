@@ -41,25 +41,25 @@ NSNumber *inactive;
 		originalWatchList = [[NSMutableDictionary alloc] initWithDictionary:[self makeManualWatchList:manualWatchList]];
 		watchlist = [[NSMutableDictionary alloc] init];
 		[self updateCurrentWatchlist];
-		usersMenu = NULL;
+		usersMenu = nil;
 		[self creteUserStateMenu];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeProgramFromWatchList:) name:NLNotificationFoundLiveNo object:NULL];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeProgramFromWatchList:) name:NLNotificationFoundLiveNo object:nil];
 	}
 	return self;
 }// end - (id) initWithActiveUsers:(NSArray *)users andManualWatchList:(NSDictionary *)manualWatchList
 
 - (void) dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationFoundLiveNo object:NULL];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationFoundLiveNo object:nil];
 #if __has_feature(objc_arc) == 0
-	if (active != NULL)				[active release];
-	if (inactive != NULL)			[inactive release];
-	if (usersState != NULL)			[usersState release];
-	if (accounts != NULL)			[accounts release];
-	if (users != NULL)				[users release];
-	if (originalWatchList != NULL)	[originalWatchList release];
-	if (watchlist != NULL)			[watchlist release];
-	if (usersMenu != NULL)
+	if (active != nil)				[active release];
+	if (inactive != nil)			[inactive release];
+	if (usersState != nil)			[usersState release];
+	if (accounts != nil)			[accounts release];
+	if (users != nil)				[users release];
+	if (originalWatchList != nil)	[originalWatchList release];
+	if (watchlist != nil)			[watchlist release];
+	if (usersMenu != nil)
 	{
 		for (NSMenuItem *item in [usersMenu itemArray])
 			[usersMenu removeItem:item];
@@ -75,8 +75,8 @@ NSNumber *inactive;
 - (NSMutableDictionary *) makeAccounts:(NSArray *)activeUsers
 {
 	NSArray *usesArray = [KCSInternetUser usersOfAccountsForServer:NICOLOGINSERVER path:NICOLOGINPATH forAuthType:kSecAuthenticationTypeAny inKeychain:systemDefaultKeychain];
-	if ((usesArray == NULL) || ([usesArray count] == 0))
-		return NULL;
+	if ((usesArray == nil) || ([usesArray count] == 0))
+		return nil;
 
 	NSMutableDictionary *usersDict = [NSMutableDictionary dictionary];
 	NLAccount *account;
@@ -142,7 +142,7 @@ NSNumber *inactive;
 	OSStatus error = 1;
 		// create NLAccount instance
 	NLAccount *user = [[NLAccount alloc] initWithAccount:useraccount andPassword:userpassword];
-	if (user == NULL)
+	if (user == nil)
 		return error;
 	// end if user was logined.
 
@@ -201,12 +201,12 @@ NSNumber *inactive;
 		if ([[usersState valueForKey:username] isEqual:active])
 		{
 			NLAccount *account = [accounts valueForKey:username];
-			if ([[account channels] valueForKey:community] != NULL)
+			if ([[account channels] valueForKey:community] != nil)
 				return account;
 		}// end if account is active
 	}// end for
 
-	return NULL;
+	return nil;
 }// end if - (NLAccount *) primaryAccountForCommunity:(NSString *)community
 
 - (NSArray *) activeUsers
@@ -220,7 +220,7 @@ NSNumber *inactive;
 	//end foreach all users
 
 	if ([activeUsers count] == 0)
-		return NULL;
+		return nil;
 	else
 		return [NSArray arrayWithArray:activeUsers];
 }// end - (NSArray *) activeUsers
@@ -333,7 +333,7 @@ NSNumber *inactive;
 
 - (void) removeWatchListItem:(NSString *)item
 {
-	[originalWatchList setValue:NULL forKey:item];
+	[originalWatchList setValue:nil forKey:item];
 	[self updateCurrentWatchlist];
 }// end - (void) removeWatchListItem:(NSString *)item
 
@@ -362,7 +362,7 @@ NSNumber *inactive;
 {
 	NSArray *accountArray = [accounts allKeys];
 	NSInteger itemCount = [accountArray count];
-	NSString *object = NULL;
+	NSString *object = nil;
 	if (index < itemCount)
 		object = [[accounts valueForKey:[accountArray objectAtIndex:index]] mailaddr];
 

@@ -61,7 +61,7 @@
 	@method initWithURL:withParams:
 	@abstract create HTTPConnection object with URL and query paramerters.
 	@param URL of access this object.
-	@param query parameters by key-value pair dictionary or NULL.
+	@param query parameters by key-value pair dictionary or nil.
 	@result new HTTPConnection object with URL. 
 */
 - (id) initWithURL:(NSURL *)url_ withParams:(NSDictionary *)param;

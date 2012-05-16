@@ -9,8 +9,13 @@
 #import "NLProgramList.h"
 
 @interface NLProgramList ()
-- (void) restartKeepAliveMonitor;
-- (void) restartConnectionRiseMonitor;
+- (void) startListen:(NSNotification *)note;
+- (void) stopListen:(NSNotification *)note;
+- (void) waitListen:(NSNotification *)note;
+- (void) stopKeepAliveMonitor;
+- (void) resetKeepAliveMonitor;
+- (void) stopConnectionRiseMonitor;
+- (void) resetConnectionRiseMonitor;
 - (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date;
 - (void) checkConnectionActive:(NSTimer *)theTimer;
 - (void) checkConnectionRised:(NSTimer *)theTimer;
@@ -35,20 +40,20 @@ __strong OnigRegexp			*startTimeRegex;
 	self = [super init];
 	if (self)
 	{
-		programListSocket = NULL;
-		watchList = NULL;
-		serverInfo = NULL;
+		programListSocket = nil;
+		watchList = nil;
+		serverInfo = nil;
 		center = [NSNotificationCenter defaultCenter];
 		chatSeparator = [NSCharacterSet characterSetWithCharactersInString:ChatContentCharset];
 #if __has_feature(objc_arc) == 0
 		[center retain];
 		[chatSeparator retain];
 #endif
-		lastTime = NULL;
+		lastTime = nil;
 		checkRiseInterval = ConnectionReactiveCheckInterval;
-		keepAliveMonitor = NULL;
-		connectionRiseMonitor = NULL;
-		programListDataBuffer = NULL;
+		keepAliveMonitor = nil;
+		connectionRiseMonitor = nil;
+		programListDataBuffer = nil;
 		sendrequest = NO;
 		isOfficial = NO;
 		watchOfficial = NO;
@@ -60,8 +65,8 @@ __strong OnigRegexp			*startTimeRegex;
 		checkstatus = [OnigRegexp compile:RiseConnectRegex];
 		progInfoRegex = [OnigRegexp compile:ProgramListRegex];
 		startTimeRegex = [OnigRegexp compile:DateStartTimeRegex];
-		[center addObserver:self selector:@selector(startListen) name:NLNotificationConnectionRised object:NULL];
-		[center addObserver:self selector:@selector(stopListen) name:NLNotificationConnectionLost object:NULL];
+		[center addObserver:self selector:@selector(startListen:) name:NLNotificationConnectionRised object:nil];
+		[center addObserver:self selector:@selector(waitListen:) name:NLNotificationConnectionLost object:nil];
 #if __has_feature(objc_arc) == 0
 		[programRegex retain];
 		[maintRegex retain];
@@ -79,17 +84,17 @@ __strong OnigRegexp			*startTimeRegex;
 	if ([keepAliveMonitor isValid])			[keepAliveMonitor invalidate];
 	if ([connectionRiseMonitor isValid])	[connectionRiseMonitor invalidate];
 #if __has_feature(objc_arc) == 0
-	if (watchList != NULL)					[watchList release];
-	if (serverInfo != NULL)					[serverInfo release];
-	if (center != NULL)						[center release];
-	if (chatSeparator != NULL)				[chatSeparator release];
-	if (lastTime != NULL)					[lastTime release];
-	if (programListSocket != NULL)			[programListSocket release];
-	if (programRegex != NULL)				[programRegex release];
-	if (maintRegex != NULL)					[maintRegex release];
-	if (checkstatus != NULL)				[checkstatus release];
-	if (progInfoRegex != NULL)				[progInfoRegex release];
-	if (startTimeRegex != NULL)				[startTimeRegex release];
+	if (watchList != nil)					[watchList release];
+	if (serverInfo != nil)					[serverInfo release];
+	if (center != nil)						[center release];
+	if (chatSeparator != nil)				[chatSeparator release];
+	if (lastTime != nil)					[lastTime release];
+	if (programListSocket != nil)			[programListSocket release];
+	if (programRegex != nil)				[programRegex release];
+	if (maintRegex != nil)					[maintRegex release];
+	if (checkstatus != nil)				[checkstatus release];
+	if (progInfoRegex != nil)				[progInfoRegex release];
+	if (startTimeRegex != nil)				[startTimeRegex release];
 	[super dealloc];
 #endif
 }// end - (void) dealloc
@@ -125,48 +130,43 @@ __strong OnigRegexp			*startTimeRegex;
 
 - (void) kick
 {
-	[self startListen];
+	[self startListen:nil];
 }// end - (void) kick
 
 - (void) halt
 {
-	[programListSocket disconnect];
-#if __has_feature(objc_arc) == 0
-	[programListSocket release];
-#endif
-	programListSocket = NULL;
-	connected = NO;	
+	[self stopListen:nil];
 }// end - (void) halt
 
-- (BOOL) startListen
+- (void) startListen:(NSNotification *)note
 {
-	BOOL success = NO;
-	if ([connectionRiseMonitor isValid] == YES)
-	{
-		[connectionRiseMonitor invalidate];
-		connectionRiseMonitor = NULL;
-	}
+	[self stopConnectionRiseMonitor];
 	serverInfo = [[NLMessageServerInfo alloc] init];
-	if (serverInfo == NULL)
-		return success;
+	if ((serverInfo == nil) || (serverInfo.maintenance == YES))
+	{
+#if __has_feature(objc_arc) == 0
+		[serverInfo release];
+#endif
+		serverInfo = nil;
+		[center postNotificationName:NLNotificationConnectionLost object:nil];
+		return;
+	}
 	// end if cannot correct server information.
 
 	programListSocket = [[SocketConnection alloc] initWithServer:[serverInfo serveName] andPort:[serverInfo port] direction:SCDirectionBoth];
 	[programListSocket setStreamEventDelegate:self];
 	if ([programListSocket connect] == YES)
 	{
-		success = YES;
-		[self restartKeepAliveMonitor];
+		[self resetKeepAliveMonitor];
 		[keepAliveMonitor fire];
 	}// end if connect to program server success
 
 #if __has_feature(objc_arc) == 0
-	if (lastTime != NULL)
+	if (lastTime != nil)
 		[lastTime release];
 #endif
 	lastTime = [[NSDate alloc] init];
 
-	return success;
 }// end - (void) startListen
 
 - (BOOL) restartListen
@@ -181,13 +181,13 @@ __strong OnigRegexp			*startTimeRegex;
 		if ([connectionRiseMonitor isValid] == YES)
 		{
 			[connectionRiseMonitor invalidate];
-			connectionRiseMonitor = NULL;
+			connectionRiseMonitor = nil;
 		}
-		[self restartKeepAliveMonitor];
+		[self resetKeepAliveMonitor];
 		[keepAliveMonitor fire];
 	}// end if connect to program server success
 #if __has_feature(objc_arc) == 0
-	if (lastTime != NULL)
+	if (lastTime != nil)
 		[lastTime release];
 #endif
 	lastTime = [[NSDate alloc] init];
@@ -195,30 +195,56 @@ __strong OnigRegexp			*startTimeRegex;
 	return success;
 }// end - (void) restartListen
 
-- (void) stopListen
+- (void) stopListen:(NSNotification *)note
 {		//
-	[self halt];
+	[programListSocket disconnect];
+#if __has_feature(objc_arc) == 0
+	[programListSocket release];
+#endif
+	programListSocket = nil;
+	connected = NO;	
 
 		// stop & reset keepAliveMonitor
-	if ([keepAliveMonitor isValid] == YES)
-	{
-		[keepAliveMonitor invalidate];
-		keepAliveMonitor = NULL;
-	}
-	[self restartConnectionRiseMonitor];
-	[connectionRiseMonitor fire];
+	[self stopKeepAliveMonitor];
 
 #if __has_feature(objc_arc) == 0
-	if (programListSocket != NULL)
+	if (programListSocket != nil)
 		[programListSocket release];
 	// end if not connection
-	if (serverInfo != NULL)
+	if (serverInfo != nil)
 		[serverInfo release];
 	// end if for serverInfo reallocate
 #endif
-	serverInfo = NULL;
+	serverInfo = nil;
 	connected = NO;
 }// end - (void) stopListen
+
+- (void) waitListen:(NSNotification *)note
+{		//
+	[programListSocket disconnect];
+#if __has_feature(objc_arc) == 0
+	[programListSocket release];
+#endif
+	programListSocket = nil;
+	connected = NO;	
+	
+		// stop & reset keepAliveMonitor
+	[self stopKeepAliveMonitor];
+	[self resetConnectionRiseMonitor];
+	[connectionRiseMonitor fire];
+	
+#if __has_feature(objc_arc) == 0
+	if (programListSocket != nil)
+		[programListSocket release];
+		// end if not connection
+	if (serverInfo != nil)
+		[serverInfo release];
+		// end if for serverInfo reallocate
+#endif
+	serverInfo = nil;
+	connected = NO;
+}// end - (void) waitListen
+
 
 #pragma mark -
 #pragma mark internal
@@ -230,12 +256,11 @@ __strong OnigRegexp			*startTimeRegex;
 		// check official program
 	if ((watchOfficial == YES) && ([program count] == 2))
 	{
-NSLog(@"WatchOfficial Program %@",progInfo);
 		[activePrograms addOfficialProgram:live withDate:date];
 
 			// check in watchlist
 		NSNumber *isInWatchList = [watchList valueForKey:live];
-		if (isInWatchList != NULL)
+		if (isInWatchList != nil)
 		{		// item is in watchlist
 			[center postNotification:[NSNotification notificationWithName:NLNotificationFoundLiveNo object:live]];
 			if ([isInWatchList boolValue] == YES)
@@ -258,16 +283,14 @@ NSLog(@"WatchOfficial Program %@",progInfo);
 			// check official channel
 		if ((watchChannel == YES) && ([prog isEqualToString:liveOfficialString] == YES))
 		{
-NSLog(@"WatchOfficial Channel %@",progInfo);
 			isOfficial = YES;
 			[activePrograms addOfficialProgram:live withDate:date];
 		}// end if program is official channel
 		
 			// check watchlist
 		NSNumber *needOpen = [watchList valueForKey:prog];
-		if (needOpen != NULL)
+		if (needOpen != nil)
 		{		// found in watchlist or memberd communities program
-NSLog(@"watchUser %@",progInfo);
 			if (isOfficial == YES)
 				[activePrograms addOfficialProgram:live withDate:date];
 			else
@@ -276,7 +299,7 @@ NSLog(@"watchUser %@",progInfo);
 			
 				// check mutch is program number
 			OnigResult *isPorgram = [programRegex search:prog];
-			if (isPorgram != NULL)
+			if (isPorgram != nil)
 				[center postNotification:[NSNotification notificationWithName:NLNotificationFoundLiveNo object:prog]];
 			// end if found in watch list
 
@@ -299,28 +322,47 @@ NSLog(@"watchUser %@",progInfo);
 
 #pragma mark -
 #pragma mark timer control methods
-- (void) restartKeepAliveMonitor
+- (void) stopKeepAliveMonitor
 {		// stop & reset keepAliveMonitor
 	if ([keepAliveMonitor isValid] == YES)
 	{
 		[keepAliveMonitor invalidate];
-		keepAliveMonitor = NULL;
+		keepAliveMonitor = nil;
+	}// end if keepAliveMonitor is running
+	keepAliveMonitor = nil;
+}// end - (void) stopKeepAliveMonitor
+
+- (void) resetKeepAliveMonitor
+{		// stop & reset keepAliveMonitor
+	if ([keepAliveMonitor isValid] == YES)
+	{
+		[keepAliveMonitor invalidate];
+		keepAliveMonitor = nil;
 	}// end if keepAliveMonitor is running
 	
 		// re-setup keepAliveMonitor for fire
-	keepAliveMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionAliveCheckInterval target:self selector:@selector(checkConnectionActive:) userInfo:NULL repeats:YES];
+	keepAliveMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionAliveCheckInterval target:self selector:@selector(checkConnectionActive:) userInfo:nil repeats:YES];
 }// end - (void) resetKeepAliveMonitor
 
-- (void) restartConnectionRiseMonitor
+- (void) stopConnectionRiseMonitor
 {		// stop & reset connectionRiseMonitor
 	if ([connectionRiseMonitor isValid] == YES)
 	{
 		[connectionRiseMonitor invalidate];
-		connectionRiseMonitor = NULL;
+	}// end if connectionRiseMonitor is running
+	connectionRiseMonitor = nil;
+}// end - (void) stopConnectionRiseMonitor
+
+- (void) resetConnectionRiseMonitor
+{		// stop & reset connectionRiseMonitor
+	if ([connectionRiseMonitor isValid] == YES)
+	{
+		[connectionRiseMonitor invalidate];
+		connectionRiseMonitor = nil;
 	}// end if connectionRiseMonitor is running
 	
 		// re-setup connectionRiseMonitor for fire
-	connectionRiseMonitor = [NSTimer scheduledTimerWithTimeInterval:checkRiseInterval target:self selector:@selector(checkConnectionRised:) userInfo:NULL repeats:YES];
+	connectionRiseMonitor = [NSTimer scheduledTimerWithTimeInterval:checkRiseInterval target:self selector:@selector(checkConnectionRised:) userInfo:nil repeats:YES];
 }// end - (void) resetConnectionRiseMonitor
 
 #pragma mark periodial action methods
@@ -331,25 +373,30 @@ NSLog(@"watchUser %@",progInfo);
 		return;
 	// end if check connection is alive
 	
-	NSString *msResult = [HTTPConnection HTTPSource:[NSURL URLWithString:MSQUERYAPI] response:NULL];
+	NSString *msResult = [HTTPConnection HTTPSource:[NSURL URLWithString:MSQUERYAPI] response:nil];
 	OnigResult *msStatus = [maintRegex search:msResult];
-	if (msStatus != NULL)
+	if (msStatus != nil)
 		checkRiseInterval = MaintainfromReactiveInterval;
 
 		// start wait a connection regain
-	[self stopListen];
+	[self waitListen:nil];
 }// end - (void) checkConnectionActive
 
 - (void) checkConnectionRised:(NSTimer *)theTimer
 {
 	serverInfo = [[NLMessageServerInfo alloc] init];
-	if (serverInfo == NULL)
+	if ((serverInfo == nil) || (serverInfo.maintenance == YES))
+	{
+#if __has_feature(objc_arc) == 0
+		[serverInfo release];
+#endif
+		serverInfo = nil;
 		return;
+	}// end if 
 
 	sendrequest = NO;
-	[connectionRiseMonitor invalidate];
-	connectionRiseMonitor = NULL;
-	[center postNotificationName:NLNotificationConnectionRised object:NULL];
+	[self stopConnectionRiseMonitor];
+	[center postNotificationName:NLNotificationConnectionRised object:NLNotificationServerResponce];
 }// end - (void) checkConnectionRised
 
 #pragma mark -
@@ -359,7 +406,7 @@ NSLog(@"watchUser %@",progInfo);
 	NSInputStream *iStream = (NSInputStream *)stream;
 	uint8_t oneByte;
 	NSUInteger actuallyRead = 0;
-	if (programListDataBuffer == NULL)
+	if (programListDataBuffer == nil)
 		programListDataBuffer = [[NSMutableData alloc] init];
 	// end if data buffer is cleard
 
@@ -373,7 +420,7 @@ NSLog(@"watchUser %@",progInfo);
 		return;
 
 #if __has_feature(objc_arc) == 0
-	if (lastTime != NULL)
+	if (lastTime != nil)
 		[lastTime release];
 	lastTime = [[NSDate alloc] init];
 #endif
@@ -395,7 +442,7 @@ NSLog(@"watchUser %@",progInfo);
 
 /*
 	OnigResult *chatResult = [progInfoRegex search:msg];
-	if (chatResult != NULL)
+	if (chatResult != nil)
 	{
 		OnigResult *dateResult = [startTimeRegex search:msg];
 		NSDate *broadcastDate = [NSDate dateWithTimeIntervalSince1970:[[dateResult stringAt:1] longLongValue]];
@@ -409,12 +456,12 @@ NSLog(@"watchUser %@",progInfo);
 */	
 
 #if __has_feature(objc_arc)
-	programListDataBuffer = NULL;
-	msg = NULL;
+	programListDataBuffer = nil;
+	msg = nil;
 	}
 #else
-	[msg release];						msg = NULL;
-	[programListDataBuffer release];	programListDataBuffer = NULL;
+	[msg release];						msg = nil;
+	[programListDataBuffer release];	programListDataBuffer = nil;
 	[arp drain];
 #endif
 
@@ -438,7 +485,7 @@ NSLog(@"watchUser %@",progInfo);
 	connected = NO;
 	sendrequest = NO;
 	checkRiseInterval = ConnectionReactiveCheckInterval;
-	[center postNotificationName:NLNotificationConnectionLost object:NULL];
+	[center postNotificationName:NLNotificationConnectionLost object:nil];
 }// end - (void) streamEventErrorOccurred:(NSStream *)stream
 
 #pragma mark StreamEventDelegate (optional)
@@ -447,12 +494,12 @@ NSLog(@"watchUser %@",progInfo);
 	if ((connected == NO) && ([programListSocket isInputStream:stream]))
 	{
 #if __has_feature(objc_arc) == 0
-		if (lastTime != NULL)
+		if (lastTime != nil)
 			[lastTime release];
 #endif
 		lastTime = [[NSDate alloc] init];
-		[center postNotificationName:NLNotificationConnectionRised object:NULL];
 		connected = YES;
+		[center postNotificationName:NLNotificationConnectionRised object:NLNotificationStreamOpen];
 	}
 }// end - (void) streamEventOpenCompleted:(NSStream *)stream
 
@@ -462,7 +509,7 @@ NSLog(@"watchUser %@",progInfo);
 	{
 		connected = NO;
 		sendrequest = NO;
-		[center postNotificationName:NLNotificationConnectionLost object:NULL];
+		[center postNotificationName:NLNotificationConnectionLost object:nil];
 	}// end if
 }// end - (void) streamEventEndEncountered:(NSStream *)stream
 

@@ -58,11 +58,11 @@ const NSTimeInterval defaultTimeout = 30; // second
 
 		// check have data
 	NSData *receivedData = [HTTPConnection HTTPData:url response:resp];
-	if (receivedData == NULL)
-		return NULL;
+	if (receivedData == nil)
+		return nil;
 
 		// datamine encoding
-	NSString *data_str = NULL;
+	NSString *data_str = nil;
 	for (NSNumber *enc in encodings)
 	{
 #if __has_feature(objc_arc)
@@ -84,13 +84,13 @@ const NSTimeInterval defaultTimeout = 30; // second
 	NSData *receivedData = [NSURLConnection sendSynchronousRequest:request
 												 returningResponse:&re
 															 error:&error];
-	if (resp != NULL)
+	if (resp != nil)
 		*resp = re;
 	// endif 
 	
 		// error check
 	if ([error code] != noErr)
-		return NULL;
+		return nil;
 	else
 		return receivedData;
 }// end + (NSString *) HTTPSource:(NSURL *)url
@@ -102,13 +102,13 @@ const NSTimeInterval defaultTimeout = 30; // second
 	NSData *receivedData = [NSURLConnection sendSynchronousRequest:req
 												 returningResponse:&re
 															 error:&error];
-	if (resp != NULL)
+	if (resp != nil)
 		*resp = re;
 		// endif 
 	
 		// error check
 	if ([error code] != noErr)
-		return NULL;
+		return nil;
 	else
 		return receivedData;
 }// end + (NSData *) HTTPDataWithRequest:(NSURLRequest *)req response:(NSURLResponse * __autoreleasing *)resp
@@ -120,10 +120,10 @@ const NSTimeInterval defaultTimeout = 30; // second
 	self = [super init];
 	if (self)
 	{
-		url = NULL;
-		path = NULL;
-		params = NULL;
-		response = NULL;
+		url = nil;
+		path = nil;
+		params = nil;
+		response = nil;
 		timeout = defaultTimeout;
 	}// end if self
 	return self;
@@ -135,9 +135,9 @@ const NSTimeInterval defaultTimeout = 30; // second
 	if (self)
 	{
 		url = [url_ copy];
-		path = NULL;
+		path = nil;
 		params = [param copy];
-		response = NULL;
+		response = nil;
 		timeout = defaultTimeout;
 	}// end if self
 	return self;
@@ -146,10 +146,10 @@ const NSTimeInterval defaultTimeout = 30; // second
 - (void) dealloc
 {
 #if __has_feature(objc_arc) == 0
-    if (url != NULL)		[url release];
-	if (path != NULL)		[path release];
-	if (params != NULL)		[params release];
-	if (response != NULL)	[response release];
+    if (url != nil)		[url release];
+	if (path != nil)		[path release];
+	if (params != nil)		[params release];
+	if (response != nil)	[response release];
 	[super dealloc];
 #endif
 }// end - (void) dealloc
@@ -160,18 +160,18 @@ const NSTimeInterval defaultTimeout = 30; // second
 #if __has_feature(objc_arc) == 0
 	[response autorelease];
 #endif
-	response = NULL;
+	response = nil;
 }// end - (void) clearResponse
 
 - (NSString *) stringByGet
 {
-	NSURL *queryURL = NULL;
-	NSString *query = NULL;
-	if (params != NULL)
+	NSURL *queryURL = nil;
+	NSString *query = nil;
+	if (params != nil)
 		query = [NSString stringWithFormat:QueryConcatFormat, [self buildParam]];
 	queryURL = [NSURL URLWithString:[NSString stringWithFormat:QueryConcatFormat, [url absoluteString], query]];
-	NSURLResponse *resp = NULL;
-	NSString *string = NULL;
+	NSURLResponse *resp = nil;
+	NSString *string = nil;
 	string = [HTTPConnection HTTPSource:queryURL response:&resp];
 	response = [resp copy];
 	
@@ -180,9 +180,9 @@ const NSTimeInterval defaultTimeout = 30; // second
 
 - (NSData *) dataByGet
 {
-	NSURL *queryURL = NULL;
-	NSString *query = NULL;
-	if (params != NULL)
+	NSURL *queryURL = nil;
+	NSString *query = nil;
+	if (params != nil)
 		query = [NSString stringWithFormat:QueryConcatFormat, [self buildParam]];
 	queryURL = [NSURL URLWithString:[NSString stringWithFormat:QueryConcatFormat, [url absoluteString], query]];
 	NSURLResponse *resp;
@@ -195,7 +195,7 @@ const NSTimeInterval defaultTimeout = 30; // second
 {
 	NSData *receivedData = [self post:error];
 	if ([*error code] != noErr)
-		return NULL;
+		return nil;
 		// create detamine encoding constant array 
 	NSArray *encodings = [NSArray arrayWithObjects:
 						  [NSNumber numberWithUnsignedInt:NSUTF8StringEncoding],
@@ -206,7 +206,7 @@ const NSTimeInterval defaultTimeout = 30; // second
 						  [NSNumber numberWithUnsignedInt:NSASCIIStringEncoding], nil];
 
 	// datamine encoding
-	NSString *data_str = NULL;
+	NSString *data_str = nil;
 	for (NSNumber *enc in encodings)
 	{
 #if __has_feature(objc_arc)
@@ -223,10 +223,10 @@ const NSTimeInterval defaultTimeout = 30; // second
 
 - (NSData *) dataByPost:(NSError * __autoreleasing *)error
 {
-	NSData *data = NULL;
-	NSError *err = NULL;
+	NSData *data = nil;
+	NSError *err = nil;
 	data = [self post:&err];
-	if (error != NULL)
+	if (error != nil)
 		*error = err;
 
 	return data;
@@ -234,8 +234,8 @@ const NSTimeInterval defaultTimeout = 30; // second
 
 - (NSURLConnection *) httpDataAsyncWithDelegate:(id)target
 {
-	if (target == NULL)
-		return NULL;
+	if (target == nil)
+		return nil;
 	// end if target isn't there, because self cannot become delegator.
 
 	NSURLRequest *request;
@@ -257,9 +257,9 @@ const NSTimeInterval defaultTimeout = 30; // second
 	NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc]initWithURL:url];
 		// create psot body
 	NSString *message = [self buildParam];
-	NSURLResponse *resp = NULL;
+	NSURLResponse *resp = nil;
 	NSData *httpBody = [message dataUsingEncoding:NSUTF8StringEncoding];
-	NSError *error = NULL;
+	NSError *error = nil;
 	[urlRequest setHTTPMethod:RequestMethodPost];
 	[urlRequest setHTTPBody:httpBody];
 	NSData* result = [NSURLConnection sendSynchronousRequest:urlRequest
@@ -269,17 +269,17 @@ const NSTimeInterval defaultTimeout = 30; // second
 #if __has_feature(objc_arc) == 0
 	[urlRequest release];
 #endif
-	if (err != NULL)
+	if (err != nil)
 		*err = error;
 	if ([error code] != noErr)
-		return NULL;
+		return nil;
 	else
 		return result;
 }// end - (NSData*) post
 
 - (NSString *) buildParam
 {
-	NSString *param = NULL;
+	NSString *param = nil;
 	NSMutableArray *messages = [NSMutableArray array];
 	for (NSString *key in [params allKeys])
 	{

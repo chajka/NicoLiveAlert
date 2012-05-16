@@ -35,8 +35,8 @@
 	self = [super init];
 	if (self)
 	{
-		watchListTable = NULL;
-		launchListTable = NULL;
+		watchListTable = nil;
+		launchListTable = nil;
 	}
 	return self;
 }// end - (id)init
@@ -44,8 +44,8 @@
 - (void) dealloc
 {
 #if __has_feature(objc_arc) == 0
-	if (watchListTable != NULL)		[watchListTable release];
-	if (launchListTable != NULL)	[launchListTable release];
+	if (watchListTable != nil)		[watchListTable release];
+	if (launchListTable != nil)	[launchListTable release];
 
 	[super dealloc];
 #endif
@@ -274,7 +274,7 @@
 	BOOL dropped = NO;
 	NSPasteboard *pasteboard = [info draggingPasteboard];
 	NSArray *pasteboardItems = [pasteboard pasteboardItems];
-	NSArray *types = NULL;
+	NSArray *types = nil;
 	for (NSPasteboard *item in pasteboardItems)
 	{
 		types = [item types];

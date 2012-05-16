@@ -42,8 +42,8 @@
 
 - (void) registerDefaults
 {
-	NSString		*initialDefaultFilePath = NULL;
-	NSDictionary	*initialDefaultDict = NULL;
+	NSString		*initialDefaultFilePath = nil;
+	NSDictionary	*initialDefaultDict = nil;
 
 	initialDefaultFilePath = [[NSBundle mainBundle] pathForResource:UserDefaultsFileName ofType:TypeDefaultsFile];
 	initialDefaultDict = [NSDictionary dictionaryWithContentsOfFile:initialDefaultFilePath];
@@ -57,7 +57,7 @@
 {
 	NSArray *array = [myDefaults objectForKey:WathListTable];
 	if ([array count] == 0)
-		return NULL;
+		return nil;
 
 	NSMutableArray *ary = [NSMutableArray array];
 	for (NSDictionary *dict in array)
@@ -72,7 +72,7 @@
 	if ([ary count] != 0)
 		return ary;
 	else
-		return NULL;
+		return nil;
 }// end - (NSArray *) loadManualWatchList
 
 - (void) saveManualWatchList:(NSArray *)watchlist
@@ -90,7 +90,7 @@
 	if ([array count] != 0)
 		[myDefaults setObject:array forKey:WathListTable];
 	else
-		[myDefaults setObject:NULL forKey:WathListTable];
+		[myDefaults setObject:nil forKey:WathListTable];
 }// end - (void) saveManualWatchList
 
 - (BOOL) loadAutoOpenMenuState
@@ -138,7 +138,7 @@
 	if ([tmpAccounts count] != 0)
 		return [NSDictionary dictionaryWithDictionary:tmpAccounts];
 	else
-		return NULL;
+		return nil;
 }// end - (NSDictionary *)loadAccounts
 
 - (void) saveAccountsList:(NSArray *)accountsList
@@ -151,7 +151,7 @@
 {
 	NSArray *launcherList = [myDefaults objectForKey:LauncItemList];
 	if ([launcherList count] == 0)
-		return NULL;
+		return nil;
 
 	NSMutableArray *launchlist = [NSMutableArray array];
 	NSFileManager *fm = [NSFileManager defaultManager];
@@ -172,14 +172,14 @@
 	if ([launchlist count] != 0)
 		return [NSArray arrayWithArray:launchlist];
 	else
-		return NULL;
+		return nil;
 }// end - (void) loadLauncherDict
 
 - (void) saveLauncherList:(NSArray *)launcherItems
 {
 	if ([launcherItems count] == 0)
 	{
-		[myDefaults setObject:NULL forKey:LauncItemList];
+		[myDefaults setObject:nil forKey:LauncItemList];
 		return;
 	}
 

@@ -49,9 +49,9 @@
 	@abstract create new keychain holder file with password.
 	@param path to new keychain file.
 	@param keychain master password.
-	it can be NULL then prompt password by dialog.
+	it can be nil then prompt password by dialog.
 	@param flag for password from param or prompt dialog.
-	but password is NULL, then force prompt it.
+	but password is nil, then force prompt it.
 	@param return error by OSStatus
 	@result created keychain's SecKeychainRef
 */
@@ -96,7 +96,7 @@
 	 @param path for server. if no path, this parameter set be @""
 	 @param authentication type
 	 @param specify where to serch from keychains.
-	 if this parameter is NULL, then serch in system default keychain.
+	 if this parameter is nil, then serch in system default keychain.
 	 @result found user's array of KCSInternetUser.
 */
 + (NSArray *) usersOfAccountsForServer:(NSString *)where path:(NSString *)path forAuthType:(SecAuthenticationType)type inKeychain:(SecKeychainRef)keychain;
@@ -104,7 +104,7 @@
 /*!
 	 @method init
 	 @abstract create KCSInternetUser instance
-	 of all member value to NULL or zero.
+	 of all member value to nil or zero.
 	 @result empty internet KCSInternetUser instance.
 */
 - (id) init;

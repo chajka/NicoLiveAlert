@@ -199,7 +199,7 @@ const UInt8 portNo = 80;
 - (void) test_07_fetchEmptyUsers
 {
 		// search users
-	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:@"" forAuthType:kSecAuthenticationTypeAny inKeychain:NULL];
+	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:@"" forAuthType:kSecAuthenticationTypeAny inKeychain:nil];
 	STAssertNil(users, @"users of server not found");
 }// end - (void) test_07_fetchEmptyUsers
 
@@ -241,7 +241,7 @@ const UInt8 portNo = 80;
 	STAssertNotNil((__bridge id)[newUser keychainItem], @"keychainItem is Nil");
 	
 		// search users
-	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:@"" forAuthType:kSecAuthenticationTypeAny inKeychain:NULL];
+	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:@"" forAuthType:kSecAuthenticationTypeAny inKeychain:nil];
 	STAssertNotNil(users, @"users of server not found");
 	STAssertTrue(([users count] == 2), @"user count isn't match");
 
@@ -276,7 +276,7 @@ const UInt8 portNo = 80;
 	STAssertTrue((status == noErr), @"change password status failed");
 
 		// search users
-	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:@"" forAuthType:kSecAuthenticationTypeAny inKeychain:NULL];
+	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:@"" forAuthType:kSecAuthenticationTypeAny inKeychain:nil];
 	STAssertNotNil(users, @"users of server not found");
 	STAssertTrue(([users count] == 1), @"user count isn't match");
 		//

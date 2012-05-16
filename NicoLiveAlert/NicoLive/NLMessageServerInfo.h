@@ -13,9 +13,11 @@
 	NSString	*serveName;
 	NSUInteger	port;
 	NSString	*thread;
+	BOOL		maintenance;
 }
 @property (readonly) NSString	*serveName;
 @property (readonly) NSUInteger	port;
 @property (readonly) NSString	*thread;
+@property (readonly) BOOL		maintenance;
 
 @end

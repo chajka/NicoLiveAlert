@@ -19,11 +19,13 @@
 NSDictionary	*elementDict;
 NSMutableString *contentStr;
 NSUInteger		currentElement;
+BOOL			xmlresult;
 
 @implementation NLMessageServerInfo
 @synthesize serveName;
 @synthesize port;
 @synthesize thread;
+@synthesize maintenance;
 #pragma mark -
 #pragma mark constructor / destructor
 - (id) init
@@ -32,14 +34,18 @@ NSUInteger		currentElement;
 	if (self)
 	{
 		[self elementDictonary];
-		contentStr = NULL;
+		serveName = nil;
+		thread = nil;
+		contentStr = nil;
 		currentElement = 0;
+		xmlresult = YES;
+		maintenance = NO;
 		if ([self parseMessageServerData] == NO)
 		{
 #if __has_feature(objc_arc) == 0
 			[self dealloc];
 #endif
-			return NULL;
+			return nil;
 		}// end if get message server information was failed
 	}// end if self
 	return self;
@@ -48,8 +54,8 @@ NSUInteger		currentElement;
 - (void) dealloc
 {
 #if __has_feature(objc_arc) == 0
-    if (serveName != NULL)	[serveName release];
-	if (thread != NULL)		[thread release];
+    if (serveName != nil)	[serveName release];
+	if (thread != nil)		[thread release];
 
     [super dealloc];
 #endif
@@ -66,10 +72,10 @@ NSUInteger		currentElement;
 	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 #endif
 	NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:MSQUERYAPI] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:5.0];
-	NSURLResponse *resp = NULL;
+	NSURLResponse *resp = nil;
 	NSData *alertInfo = [HTTPConnection HTTPDataWithRequest:req response:&resp];
 	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:alertInfo];
-	if (parser != NULL)
+	if (parser != nil)
 	{
 		[parser setDelegate:self];
 		@try {
@@ -91,11 +97,14 @@ NSUInteger		currentElement;
 - (void) elementDictonary
 {
 	elementDict = [NSDictionary dictionaryWithObjectsAndKeys:
-	  [NSNumber numberWithInteger:indexResponse], elementKeyResponse,
-	  [NSNumber numberWithInteger:indexStatus], elementKeyStatus,
-	  [NSNumber numberWithInteger:indexAddress], elementKeyAddress, 
-	  [NSNumber numberWithInteger:indexPort], elementKeyPort, 
-	  [NSNumber numberWithInteger:indexThread], elementKeyThread,
+		[NSNumber numberWithInteger:indexResponse], elementKeyResponse,
+		[NSNumber numberWithInteger:indexStatus], elementKeyStatus,
+		[NSNumber numberWithInteger:indexAddress], elementKeyAddress, 
+		[NSNumber numberWithInteger:indexPort], elementKeyPort, 
+		[NSNumber numberWithInteger:indexThread], elementKeyThread,
+		[NSNumber numberWithInteger:indexError], elementKeyError,
+		[NSNumber numberWithInteger:indexCode], elementKeyCode,
+		[NSNumber numberWithInteger:indexDesc], elementKeyDesc,
 	  nil];
 }// end - (NSDictionary *) contentDictonary
 
@@ -115,7 +124,7 @@ NSUInteger		currentElement;
 	currentElement = [[elementDict valueForKey:elementName] integerValue];
 	if (currentElement == indexResponse)
 		if ([[attributeDict valueForKey:keyXMLStatus] isEqualToString:resultOK] != YES)
-		   @throw [NSException exceptionWithName:RESULTERRORNAME reason:RESULTERRORREASON userInfo:attributeDict];
+			xmlresult = NO;
 		// end if result is not OK
 	// end if element is server response
 	
@@ -137,6 +146,9 @@ NSUInteger		currentElement;
 		case indexThread:
 			thread = [[NSString alloc] initWithString:contentStr];
 			break;
+		case indexCode:
+			if ([contentStr isEqualToString:@"maintenance"] == YES)
+				maintenance = YES;
 		default:
 			break;
 	}// end switch
@@ -206,6 +218,6 @@ NSUInteger		currentElement;
 
 - (NSData *)parser:(NSXMLParser *)parser resolveExternalEntityName:(NSString *)entityName systemID:(NSString *)systemID
 {
-	return NULL;
+	return nil;
 }// end - (NSData *)parser:(NSXMLParser *)parser resolveExternalEntityName:(NSString *)entityName systemID:(NSString *)systemID
 @end

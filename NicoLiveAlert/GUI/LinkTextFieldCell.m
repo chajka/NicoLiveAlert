@@ -93,7 +93,7 @@
 // Factor link click handling into own method - used by tracking and accessibility
 - (void)_handleLinkClick {
     NSAttributedString *attrValue = [self attributedStringValue];
-    NSURL *link = [attrValue attribute:NSLinkAttributeName atIndex:0 effectiveRange:NULL];
+    NSURL *link = [attrValue attribute:NSLinkAttributeName atIndex:0 effectiveRange:nil];
     if (link != nil && _linkClickedHandler != nil) {
 	// We do have a link -- open it!
 	_linkClickedHandler(link, self);

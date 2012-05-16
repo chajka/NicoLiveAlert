@@ -140,9 +140,9 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 #if __has_feature(objc_arc) == 0
 			[self dealloc];
 #endif
-			return NULL;
+			return nil;
 		}
-		if (account != NULL)
+		if (account != nil)
 			primaryAccount = [[account nickname] copy];
 		else
 			primaryAccount = [OriginalWatchList copy];
@@ -182,7 +182,7 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 #if __has_feature(objc_arc) == 0
 			[self dealloc];
 #endif
-			return NULL;
+			return nil;
 		}
 		primaryAccount = [[NSString alloc] initWithString:OfficialTitleString];
 		[self setupEachMember:liveNo];
@@ -203,24 +203,24 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 		[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:NLNotificationMyBroadcastEnd object:self]];
 
 #if __has_feature(objc_arc) == 0
-	if (programMenu != NULL)		[programMenu release];
-	if (menuImage != NULL)			[menuImage release];
-	if (background != NULL)			[background release];
-	if (timeMask != NULL)			[timeMask release];
-	if (thumbnail != NULL)			[thumbnail release];
-	if (stringAttributes != NULL)	[stringAttributes release];
-	if (programNumber != NULL)		[programNumber release];
-	if (programTitle != NULL)		[programTitle release];
-	if (programDescription != NULL)	[programDescription release];
-	if (communityName != NULL)		[communityName release];
-	if (primaryAccount != NULL)		[primaryAccount release];
-	if (communityID != NULL)		[communityID release];
-	if (broadcastOwner != NULL)		[broadcastOwner release];
-	if (startTime != NULL)			[startTime release];
-	if (startTimeString != NULL)	[startTimeString release];
-	if (programURL != NULL)			[programURL release];
+	if (programMenu != nil)		[programMenu release];
+	if (menuImage != nil)			[menuImage release];
+	if (background != nil)			[background release];
+	if (timeMask != nil)			[timeMask release];
+	if (thumbnail != nil)			[thumbnail release];
+	if (stringAttributes != nil)	[stringAttributes release];
+	if (programNumber != nil)		[programNumber release];
+	if (programTitle != nil)		[programTitle release];
+	if (programDescription != nil)	[programDescription release];
+	if (communityName != nil)		[communityName release];
+	if (primaryAccount != nil)		[primaryAccount release];
+	if (communityID != nil)		[communityID release];
+	if (broadcastOwner != nil)		[broadcastOwner release];
+	if (startTime != nil)			[startTime release];
+	if (startTimeString != nil)	[startTimeString release];
+	if (programURL != nil)			[programURL release];
 
-	if (embedContent != NULL)		[embedContent release];
+	if (embedContent != nil)		[embedContent release];
 
 	[super dealloc];
 #endif
@@ -230,36 +230,36 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 #pragma mark construction support
 - (void) clearAllMember
 {
-	programMenu = NULL;
-	menuImage = NULL;
-	thumbnail = NULL;
-	background = NULL;
-	timeMask = NULL;
-	stringAttributes = NULL;
-	programNumber = NULL;
-	programTitle = NULL;
-	programDescription = NULL;
-	communityName = NULL;
-	primaryAccount = NULL;
-	communityID = NULL;
-	broadcastOwner = NULL;
-	startTime = NULL;
-	startTimeString = NULL;
+	programMenu = nil;
+	menuImage = nil;
+	thumbnail = nil;
+	background = nil;
+	timeMask = nil;
+	stringAttributes = nil;
+	programNumber = nil;
+	programTitle = nil;
+	programDescription = nil;
+	communityName = nil;
+	primaryAccount = nil;
+	communityID = nil;
+	broadcastOwner = nil;
+	startTime = nil;
+	startTimeString = nil;
 	lastMintue = 0;
-	localeDict = NULL;
-	programURL = NULL;
-	thumbnailURL = NULL;
-	programStatusTimer = NULL;
-	elapseTimer = NULL;
-	center = NULL;
+	localeDict = nil;
+	programURL = nil;
+	thumbnailURL = nil;
+	programStatusTimer = nil;
+	elapseTimer = nil;
+	center = nil;
 	isReservedProgram = NO;
 	isOfficial = NO;
 	broadCasting = NO;
 
-	dataString = NULL;
+	dataString = nil;
 	currentElement = 0;
-	elementDict = NULL;
-	embedContent = NULL;
+	elementDict = nil;
+	embedContent = nil;
 }// end - (void) clearAllMember
 
 - (void) setupEachMember:(NSString *)liveNo
@@ -305,16 +305,15 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 	OnigRegexp *broadcastTimeRegex = [OnigRegexp compile:ProgStartTimeRegex];
 	NSURL *embedURL = [NSURL URLWithString:[NSString stringWithFormat:STREMEMBEDQUERY, liveNo]];
 
-	NSError *err = NULL;
+	NSError *err = nil;
 	embedContent = [[NSString alloc] initWithContentsOfURL:embedURL encoding:NSUTF8StringEncoding error:&err];
-	if (embedContent == NULL)
-		@throw [NSException exceptionWithName:EmbedFetchFailed reason:StringIsEmpty userInfo:NULL];
+	if (embedContent == nil)
+		@throw [NSException exceptionWithName:EmbedFetchFailed reason:StringIsEmpty userInfo:nil];
 
 	OnigResult *checkOnair = [liveStateRegex search:embedContent];
-NSLog(@"state : %@", [checkOnair stringAt:1]);
 	OnigResult *broadcastTime = [broadcastTimeRegex search:embedContent];
 	if (([[checkOnair stringAt:1] isEqualToString:ONAIRSTATE] == YES)
-		|| (broadcastTime == NULL))
+		|| (broadcastTime == nil))
 	{
 		startTime = [date copy];
 		return;
@@ -342,7 +341,7 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 
 - (NSString *) makeStartString
 {
-	NSString *startString = NULL;
+	NSString *startString = nil;
 	NSUInteger minute = 0;
 	if (isReservedProgram == YES)
 		minute = abs([[NSDate date] timeIntervalSinceDate:startTime] / 60);
@@ -352,11 +351,11 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 		if (isReservedProgram == YES)
 		{
 			NSString *calFromat = [NSString stringWithFormat:ReserveUserTimeFormat, minute];
-			startString = [startTime descriptionWithCalendarFormat:calFromat timeZone:NULL locale:localeDict];
+			startString = [startTime descriptionWithCalendarFormat:calFromat timeZone:nil locale:localeDict];
 		}
 		else
 		{
-			startString = [startTime descriptionWithCalendarFormat:StartUserTimeFormat timeZone:NULL locale:localeDict];
+			startString = [startTime descriptionWithCalendarFormat:StartUserTimeFormat timeZone:nil locale:localeDict];
 		}
 	}
 	else
@@ -364,11 +363,11 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 		if (isReservedProgram == YES)
 		{
 			NSString *calFromat = [NSString stringWithFormat:ReserveOfficialTimeFormat, minute];
-			startString = [startTime descriptionWithCalendarFormat:calFromat timeZone:NULL locale:localeDict];
+			startString = [startTime descriptionWithCalendarFormat:calFromat timeZone:nil locale:localeDict];
 		}
 		else
 		{
-			startString = [startTime descriptionWithCalendarFormat:StartOfficialTimeFormat timeZone:NULL locale:localeDict];
+			startString = [startTime descriptionWithCalendarFormat:StartOfficialTimeFormat timeZone:nil locale:localeDict];
 		}
 	}// end if official or user program
 
@@ -380,15 +379,15 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 	OnigRegexp *titleRegex = [OnigRegexp compile:ProgramTitleRegex];
 	OnigRegexp *imgRegex = [OnigRegexp compile:ThumbImageRegex];
 	OnigRegexp *programRegex = [OnigRegexp compile:ProgramURLRegex];
-	OnigResult *result = NULL;
+	OnigResult *result = nil;
 
 	result = [titleRegex search:embedContent];
-	if (result == NULL)
+	if (result == nil)
 		@throw [NSException exceptionWithName:EmbedParseFailed reason:ProgramTitleCollectFail userInfo:[NSDictionary dictionaryWithObject:embedContent forKey:@"embedContent"]];
 	programTitle = [[NSString alloc] initWithString:[result stringAt:1]];
 
 	result = [imgRegex search:embedContent];
-	if (result == NULL)
+	if (result == nil)
 		@throw [NSException exceptionWithName:EmbedParseFailed reason:ImageURLCollectFail userInfo:[NSDictionary dictionaryWithObject:embedContent forKey:@"embedContent"]];
 	thumbnail = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:[result stringAt:1]]];
 	if ([thumbnail isValid] == YES)
@@ -402,29 +401,29 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 #if __has_feature(objc_arc) == 0
 		[thumbnail release];
 #endif
-		thumbnail = NULL;
+		thumbnail = nil;
 		thumbnailURL = [[NSURL alloc] initWithString:[result stringAt:1]];
 	}
 	
 	result = [programRegex search:embedContent];
-	if (result == NULL)
+	if (result == nil)
 		@throw [NSException exceptionWithName:EmbedParseFailed reason:ProgramURLCollectFail userInfo:[NSDictionary dictionaryWithObject:embedContent forKey:@"embedContent"]];
 	programURL = [[NSString alloc] initWithString:[result stringAt:1]];
 #if __has_feature(objc_arc) == 0
 	[embedContent release];
-	embedContent = NULL;
+	embedContent = nil;
 #endif
 }// end - (void) parseOfficialProgram
 
 - (void) parseProgramInfo:(NSString *)liveNo
 {
 #if __has_feature(objc_arc) == 0
-	if (embedContent != NULL)	[embedContent release];
-	embedContent = NULL;
+	if (embedContent != nil)	[embedContent release];
+	embedContent = nil;
 #endif
 	BOOL success = NO;
 	elementDict = [self elementDict];
-	NSXMLParser *parser = NULL;
+	NSXMLParser *parser = nil;
 #if __has_feature(objc_arc)
 	@autoreleasepool {
 #else
@@ -434,7 +433,7 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 	NSURL *queryURL = [NSURL URLWithString:streamQueryURL];
 	NSData *response = [[NSData alloc] initWithContentsOfURL:queryURL];
 	parser = [[NSXMLParser alloc] initWithData:response];
-	if (parser != NULL)
+	if (parser != nil)
 	{
 		[parser setDelegate:self];
 		@try {
@@ -451,7 +450,7 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 	[arp drain];
 #endif
 	if (success != YES)
-		@throw [NSException exceptionWithName:StreamInforFetchFaild reason:UserProgXMLParseFail userInfo:NULL];
+		@throw [NSException exceptionWithName:StreamInforFetchFaild reason:UserProgXMLParseFail userInfo:nil];
 }// end - (BOOL) parseProgramInfo:(NSString *)urlString
 
 - (BOOL) isEqual:(id)object
@@ -524,6 +523,11 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 #pragma mark drawing
 - (void) drawUserProgram
 {
+#if __has_feature(objc_arc)
+	@autoreleasepool {
+#else
+	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
+#endif
 	NSColor *titleColor = [NSColor colorWithCalibratedRed:ProgramTitleColorRed green:ProgramTitleColorGreen blue:ProgramTitleColorBlue alpha:alpha];
 	NSColor *descColor = [NSColor colorWithCalibratedRed:ProgramDescColorRed green:ProgramDescColorGreen blue:ProgramDescColorBlue alpha:alpha];
 	NSColor *commnunityColor = [NSColor colorWithCalibratedRed:CommunityNameColorRed green:CommunityNameColorGreen blue:CommunityNameColorBlue alpha:alpha];
@@ -549,7 +553,7 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 	[timeMask closePath];
 
 	stringAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-		 [NSFont fontWithName:@"HiraKakuPro-W6" size:11], NSFontAttributeName,
+		 [NSFont fontWithName:fontNameOfProgramTitle size:11], NSFontAttributeName,
 		 commnunityColor, NSForegroundColorAttributeName,
 		 [NSNumber numberWithInteger:2], NSLigatureAttributeName,
 		 [NSNumber numberWithFloat:titleKernValue], NSKernAttributeName, nil];
@@ -567,27 +571,37 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 	[programTitle drawAtPoint:NSMakePoint(progTitleOffsetX, progTitleOffsetY) withAttributes:stringAttributes];
 		// draw program description
 	[stringAttributes setValue:descColor forKey:NSForegroundColorAttributeName];
-	[stringAttributes setValue:[NSFont fontWithName:@"HiraMaruPro-W4" size:10] forKey:NSFontAttributeName];
+	[stringAttributes setValue:[NSFont fontWithName:fontNameOfDescription size:10] forKey:NSFontAttributeName];
 	[stringAttributes setValue:[NSNumber numberWithFloat:descKernValue] forKey:NSKernAttributeName];
 	[programDescription drawInRect:NSMakeRect(progDescOffsetX, progDescOffsetY, progDescWidth, progDescHeight) withAttributes:stringAttributes];
 		// draw community name
-	[stringAttributes setValue:[NSFont fontWithName:@"HiraKakuPro-W6" size:11] forKey:NSFontAttributeName];
+	[stringAttributes setValue:[NSFont fontWithName:fontNameOfCommunity size:11] forKey:NSFontAttributeName];
 	[stringAttributes setValue:commnunityColor forKey:NSForegroundColorAttributeName];
 	[stringAttributes setValue:[NSNumber numberWithFloat:titleComuKernValue] forKey:NSKernAttributeName];
 	[communityName drawAtPoint:NSMakePoint(communityOffsetX, communityOffsetY) withAttributes:stringAttributes];
 		// draw primary account
-	[stringAttributes setValue:[NSFont fontWithName:@"Futura-Medium" size:11] forKey:NSFontAttributeName];
+	[stringAttributes setValue:[NSFont fontWithName:fontNameOfPrimaryAccount size:11] forKey:NSFontAttributeName];
 	[stringAttributes setValue:accountColor forKey:NSForegroundColorAttributeName];
 	[primaryAccount drawInRect:NSMakeRect(accountOffsetX, accountOffsetY, accountWitdth, accountHeight) withAttributes:stringAttributes];
 		// draw remain time
-	[stringAttributes setValue:[NSFont fontWithName:@"CourierNewPS-BoldMT" size:12] forKey:NSFontAttributeName];
+	[stringAttributes setValue:[NSFont fontWithName:fontNameOfElapsedTime size:12] forKey:NSFontAttributeName];
 	[stringAttributes setValue:timeColor forKey:NSForegroundColorAttributeName];
 	[startTimeString drawAtPoint:NSMakePoint(userTimeOffsetX, userTimeOffsetY) withAttributes:stringAttributes];
 	[menuImage unlockFocus];
+#if __has_feature(objc_arc)
+	}
+#else
+	[arp drain];
+#endif
 }// end - (void) drawUserProgram
 
 - (void) drawOfficialProgram
 {
+#if __has_feature(objc_arc)
+	@autoreleasepool {
+#else
+	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
+#endif
 	NSColor *titleColor = [NSColor colorWithCalibratedRed:ProgramTitleColorRed green:ProgramTitleColorGreen blue:ProgramTitleColorBlue alpha:alpha];
 	NSColor *accountColor = [NSColor colorWithCalibratedRed:AccountColorRed green:AccountColorGreen blue:AccountColorBlue alpha:alpha];
 	NSColor *timeColor = [NSColor colorWithCalibratedRed:TimeColorRed green:TimeColorGreen blue:TimeColorBlue alpha:alpha];
@@ -612,7 +626,7 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 	[timeMask closePath];
 
 	stringAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-		[NSFont fontWithName:@"HiraKakuPro-W6" size:10], NSFontAttributeName,
+		[NSFont fontWithName:fontNameOfProgramTitle size:10], NSFontAttributeName,
 		titleColor, NSForegroundColorAttributeName,
 		[NSNumber numberWithInteger:2], NSLigatureAttributeName,
 		[NSNumber numberWithFloat:-0.5], NSKernAttributeName, nil];
@@ -628,14 +642,19 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 		// draw title / description
 	[programTitle drawInRect:NSMakeRect(officialDescX, officialDescY, officialDescW, officialDescH) withAttributes:stringAttributes];
 		// draw official announce
-	[stringAttributes setValue:[NSFont fontWithName:@"Futura-Medium" size:11] forKey:NSFontAttributeName];
+	[stringAttributes setValue:[NSFont fontWithName:fontNameOfPrimaryAccount size:11] forKey:NSFontAttributeName];
 	[stringAttributes setValue:accountColor forKey:NSForegroundColorAttributeName];
 	[primaryAccount drawInRect:NSMakeRect(accountOffsetX, accountOffsetY, accountWitdth, accountHeight) withAttributes:stringAttributes];
 		// draw remain
-	[stringAttributes setValue:[NSFont fontWithName:@"CourierNewPS-BoldMT" size:12] forKey:NSFontAttributeName];
+	[stringAttributes setValue:[NSFont fontWithName:fontNameOfElapsedTime size:12] forKey:NSFontAttributeName];
 	[stringAttributes setValue:timeColor forKey:NSForegroundColorAttributeName];
 	[startTimeString drawAtPoint:NSMakePoint(officialTimeOffsetX, officialTimeOffsetY) withAttributes:stringAttributes];
 	[menuImage unlockFocus];
+#if __has_feature(objc_arc)
+	}
+#else
+	[arp drain];
+#endif
 }// end - (void) drawOfficialProgram
 
 #pragma mark -
@@ -667,16 +686,21 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 #if __has_feature(objc_arc) == 0
 			[thumbnailURL release];
 #endif
-			thumbnailURL = NULL;
+			thumbnailURL = nil;
 		}
 		else
 		{
 #if __has_feature(objc_arc) == 0
 			[thumbnail release];
 #endif
-			thumbnail = NULL;
+			thumbnail = nil;
 		}// end if fetched thumbnail is valid
 	}// end if fetch thumbnail
+#if __has_feature(objc_arc)
+	@autoreleasepool {
+#else
+	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
+#endif
 	if ((isReservedProgram == YES) && ((elapsedMinute + elapsedHour) == 0))
 	{
 		if (isOfficial == YES)
@@ -688,7 +712,7 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 			[path moveToPoint:NSMakePoint(officialTimeOffsetX, (timeStringHeight / 2))];
 			[path lineToPoint:NSMakePoint(officialBoundsW, (timeStringHeight / 2))];
 			[path setLineWidth:timeStringHeight];
-			NSString *string = [startTime descriptionWithCalendarFormat:StartOfficialTimeFormat timeZone:NULL locale:localeDict];
+			NSString *string = [startTime descriptionWithCalendarFormat:StartOfficialTimeFormat timeZone:nil locale:localeDict];
 			[menuImage lockFocus];
 			if ((iconWasValid == NO) && (iconIsValid == YES))
 			{
@@ -708,7 +732,7 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 			[path moveToPoint:NSMakePoint(userTimeOffsetX, (timeStringHeight / 2))];
 			[path lineToPoint:NSMakePoint(programBoundsW, (timeStringHeight / 2))];
 			[path setLineWidth:timeStringHeight];
-			NSString *string = [startTime descriptionWithCalendarFormat:StartUserTimeFormat timeZone:NULL locale:localeDict];
+			NSString *string = [startTime descriptionWithCalendarFormat:StartUserTimeFormat timeZone:nil locale:localeDict];
 			[menuImage lockFocus];
 			if ((iconWasValid == NO) && (iconIsValid == YES))
 			{
@@ -721,25 +745,31 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 			[menuImage unlockFocus];
 		}
 		lastMintue = elapsedMinute;
-		return;
-	}// end if just start reserved program
-
-	NSString *elapesdTime = NULL;
-	elapesdTime = [NSString stringWithFormat:ElapsedTimeFormat, elapsedHour, elapsedMinute];
-	lastMintue = elapsedMinute;
-	[menuImage lockFocus];
-	if ((iconWasValid == NO) && (iconIsValid == YES))
-	{
-		[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
-		iconWasValid = YES;
-	}// end if redraw icon
-	[[NSColor whiteColor] set];
-	[timeMask fill];
-	if (isOfficial == YES)
-		[elapesdTime drawAtPoint:NSMakePoint(officialElapsedOffsetX, officialTimeOffsetY) withAttributes:stringAttributes];
+	}
 	else
-		[elapesdTime drawAtPoint:NSMakePoint(userElapsedOffsetX, userTimeOffsetY) withAttributes:stringAttributes];
-	[menuImage unlockFocus];
+	{
+		NSString *elapesdTime = nil;
+		elapesdTime = [NSString stringWithFormat:ElapsedTimeFormat, elapsedHour, elapsedMinute];
+		lastMintue = elapsedMinute;
+		[menuImage lockFocus];
+		if ((iconWasValid == NO) && (iconIsValid == YES))
+		{
+			[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
+			iconWasValid = YES;
+		}// end if redraw icon
+		[[NSColor whiteColor] set];
+		[timeMask fill];
+		if (isOfficial == YES)
+			[elapesdTime drawAtPoint:NSMakePoint(officialElapsedOffsetX, officialTimeOffsetY) withAttributes:stringAttributes];
+		else
+			[elapesdTime drawAtPoint:NSMakePoint(userElapsedOffsetX, userTimeOffsetY) withAttributes:stringAttributes];
+		[menuImage unlockFocus];
+	}// end if just start reserved program
+#if __has_feature(objc_arc)
+	}
+#else
+	[arp drain];
+#endif
 	[center postNotification:[NSNotification notificationWithName:NLNotificationTimeUpdated object:self]];
 }// end - (void) updateRemain
 
@@ -747,7 +777,6 @@ NSLog(@"state : %@", [checkOnair stringAt:1]);
 {
 	if ([self isBroadCasting] == NO)
 	{	// program is done stop each timer and post notification
-NSLog(@"%@ Program done", programNumber);
 		broadCasting = NO;
 		[self stopElapsedTimer];
 		[self stopProgramStatusTimer];
@@ -759,19 +788,13 @@ NSLog(@"%@ Program done", programNumber);
 {
 	NSString *urlStr = [NSString stringWithFormat:STREMEMBEDQUERY, programNumber];
 	NSURL *url = [NSURL URLWithString:urlStr];
-	NSError *err;
+	NSError *err = nil;
 	NSString *embed = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&err];
-	if ((err != NULL) || ([embed length] == 0))
+	if ((err != nil) || ([embed length] == 0))
 		return YES;
 
 	OnigRegexp *liveStateRegex = [OnigRegexp compile:ProgStateRegex];
 	OnigResult *result = [liveStateRegex search:embed];
-	if (result == NULL)
-	{
-		NSLog(@"Rexgex        : %@",liveStateRegex);
-		NSLog(@"embed content : \n%@", embed);
-	}
-//
 	if (([[result stringAt:1] isEqualToString:DONESTATE] == YES) ||
 		([[result stringAt:1] isEqualToString:DONETSSTATE] == YES))
 		return NO;
@@ -785,14 +808,14 @@ NSLog(@"%@ Program done", programNumber);
 {		// check timer is running
 	if ([programStatusTimer isValid] == YES)
 		[programStatusTimer invalidate];
-	programStatusTimer = NULL;
+	programStatusTimer = nil;
 }// end - (void) stopProgramStatusTimer
 
 - (void) stopElapsedTimer
 {		// check timer is running
 	if ([elapseTimer isValid] == YES)
 		[elapseTimer invalidate];
-	elapseTimer = NULL;
+	elapseTimer = nil;
 	
 }// end - (void) stopElapsedTimer
 
@@ -802,7 +825,7 @@ NSLog(@"%@ Program done", programNumber);
 		[programStatusTimer invalidate];
 
 		// setup timer object
-	programStatusTimer = [NSTimer scheduledTimerWithTimeInterval:checkActivityCycle target:self selector:@selector(checkBroadcasting:) userInfo:NULL repeats:YES];
+	programStatusTimer = [NSTimer scheduledTimerWithTimeInterval:checkActivityCycle target:self selector:@selector(checkBroadcasting:) userInfo:nil repeats:YES];
 }// end - (void) resetProgramStatusTimer
 
 - (void) resetElapsedTimer
@@ -811,7 +834,7 @@ NSLog(@"%@ Program done", programNumber);
 		[elapseTimer invalidate];
 
 		// setup timer object
-	elapseTimer = [NSTimer scheduledTimerWithTimeInterval:elapseCheckCycle target:self selector:@selector(updateElapse:) userInfo:NULL repeats:YES];
+	elapseTimer = [NSTimer scheduledTimerWithTimeInterval:elapseCheckCycle target:self selector:@selector(updateElapse:) userInfo:nil repeats:YES];
 }// end - (void) resetElapsedTimer
 
 #pragma mark -
@@ -864,8 +887,8 @@ NSLog(@"%@ Program done", programNumber);
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-	NSError *err = NULL;
-	NSData *thumbData = NULL;
+	NSError *err = nil;
+	NSData *thumbData = nil;
 	switch (currentElement) {
 		case indexRequestID:
 			programURL = [[NSString alloc] initWithString:[NSString stringWithFormat:PROGRAMURLFORMAT, dataString]];
@@ -877,7 +900,7 @@ NSLog(@"%@ Program done", programNumber);
 			programDescription = [[NSString alloc] initWithString:dataString];
 			break;
 		case indexComuName:
-			if (communityName == NULL)
+			if (communityName == nil)
 				communityName = [[NSString alloc] initWithString:dataString];
 			break;
 		case indexComuID:
@@ -897,7 +920,7 @@ NSLog(@"%@ Program done", programNumber);
 #if __has_feature(objc_arc) == 0
 				[thumbnail release];
 #endif
-				thumbnail = NULL;
+				thumbnail = nil;
 				thumbnailURL = [[NSURL alloc] initWithString:dataString];
 
 			}
@@ -971,7 +994,7 @@ NSLog(@"%@ Program done", programNumber);
 /*
 - (NSData *)parser:(NSXMLParser *)parser resolveExternalEntityName:(NSString *)entityName systemID:(NSString *)systemID
 {
-	return NULL;
+	return nil;
 }// end - (NSData *)parser:(NSXMLParser *)parser resolveExternalEntityName:(NSString *)entityName systemID:(NSString *)systemID
 */
 @end

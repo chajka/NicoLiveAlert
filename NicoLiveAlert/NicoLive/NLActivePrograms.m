@@ -25,24 +25,24 @@ NSNumber *yes;
 	if (self)
 	{
 		yes = [[NSNumber alloc] initWithBool:YES];
-		sbItem = NULL;
-		users = NULL;
+		sbItem = nil;
+		users = nil;
 		programs = [[NSMutableArray alloc] init];
 		liveNumbers = [[NSMutableDictionary alloc] init];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeEndedProgram:) name:NLNotificationPorgramEnd object:NULL];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeEndedProgram:) name:NLNotificationPorgramEnd object:nil];
 	}// end if
 	return self;
 }// end - (id) init
 
 - (void) dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationPorgramEnd object:NULL];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationPorgramEnd object:nil];
 #if __has_feature(objc_arc) == 0
-	if (sbItem != NULL)			[sbItem release];
-	if (users != NULL)			[users release];
-	if (yes != NULL)			[yes release];
-	if (programs != NULL)		[programs release];
-	if (liveNumbers != NULL)	[liveNumbers release];
+	if (sbItem != nil)			[sbItem release];
+	if (users != nil)			[users release];
+	if (yes != nil)			[yes release];
+	if (programs != nil)		[programs release];
+	if (liveNumbers != nil)	[liveNumbers release];
 
     [super dealloc];
 #endif
@@ -63,11 +63,11 @@ NSNumber *yes;
 	// end if program is my broadcast
 		
 	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo withDate:date forAccount:account owner:owner isMine:isMyBroadcast];
-	if (program == NULL)
+	if (program == nil)
 		return;
 
 	NSMenuItem *item = [program programMenu];
-	if (item == NULL)
+	if (item == nil)
 	{
 #if __has_feature(objc_arc) == 0
 		[program release];
@@ -101,11 +101,11 @@ NSNumber *yes;
 		[liveNumbers setValue:yes forKey:liveNo];
 
 	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo  withDate:date];
-	if (program == NULL)
+	if (program == nil)
 		return;
 
 	NSMenuItem *item = [program programMenu];
-	if (item == NULL)
+	if (item == nil)
 	{
 #if __has_feature(objc_arc) == 0
 		[program release];

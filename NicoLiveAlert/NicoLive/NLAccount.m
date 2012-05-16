@@ -40,17 +40,17 @@ NSNumber		*notAutoOpen;
 	{		// initialize user information member variables
 		mailaddr = [account copy];
 		password = [pass copy];
-		nickname = NULL;
-		userid = NULL;
-		channels = NULL;
+		nickname = nil;
+		userid = nil;
+		channels = nil;
 			// initialize connection internal variables
-		ticket = NULL;
+		ticket = nil;
 			// initialize internal variable
 		elements = [self generateElementDict]; 
 #if __has_feature(objc_arc) == 0
 		[elements retain];
 #endif
-		stringBuffer = NULL;
+		stringBuffer = nil;
 		currentElement = 0;
 		notAutoOpen = [NSNumber numberWithBool:NO];
 		if ([self getLoginTicket] != YES)
@@ -58,14 +58,14 @@ NSNumber		*notAutoOpen;
 #if __has_feature(objc_arc) == 0
 			[self dealloc];
 #endif
-			return NULL;
+			return nil;
 		}// end if getAccountInfo is failed
 		if ([self getAccountInfo] != YES)
 		{
 #if __has_feature(objc_arc) == 0
 			[self dealloc];
 #endif
-			return NULL;
+			return nil;
 		}// end if get Account info was failed
 			// cleanup initialize only variables
 		[self cleanupInternalVariables];
@@ -78,16 +78,16 @@ NSNumber		*notAutoOpen;
 {
 #if __has_feature(objc_arc) == 0
 		// cleanup user information variables.
-	if (mailaddr != NULL)		[mailaddr release];
-	if (password != NULL)		[password release];
-	if (nickname != NULL)		[nickname release];
-	if (userid != NULL)			[userid release];
+	if (mailaddr != nil)		[mailaddr release];
+	if (password != nil)		[password release];
+	if (nickname != nil)		[nickname release];
+	if (userid != nil)			[userid release];
 		// cleanup connection information variables.
-	if (ticket != NULL)			[ticket release];
-	if (channels != NULL)		[channels release];
-	if (stringBuffer != NULL)	[stringBuffer release];
+	if (ticket != nil)			[ticket release];
+	if (channels != nil)		[channels release];
+	if (stringBuffer != nil)	[stringBuffer release];
 		// cleanup menu item
-	if (accountMenu != NULL)	[accountMenu release];
+	if (accountMenu != nil)	[accountMenu release];
 
 	[super dealloc];
 #endif
@@ -112,33 +112,33 @@ NSNumber		*notAutoOpen;
 	BOOL success = NO;
 
 		// save last values
-	NSString			*savedNickname =	nickname;	nickname = NULL;
-	NSNumber			*savedUserid =		userid;		userid = NULL;
-	NSString			*savedTicket =		ticket;		ticket = NULL;
-	NSMutableDictionary *savedChannels =	channels;	channels = NULL;
+	NSString			*savedNickname =	nickname;	nickname = nil;
+	NSNumber			*savedUserid =		userid;		userid = nil;
+	NSString			*savedTicket =		ticket;		ticket = nil;
+	NSMutableDictionary *savedChannels =	channels;	channels = nil;
 	success = [self getLoginTicket];
 
 	if (success == YES)
 	{		// cleanup saved values
 #if __has_feature(objc_arc) == 0
-		if (savedNickname != NULL)	[savedNickname release];
-		if (savedUserid != NULL)	[savedUserid release];
-		if (savedTicket != NULL)	[savedTicket release];
-		if (savedChannels != NULL)	[savedChannels release];
+		if (savedNickname != nil)	[savedNickname release];
+		if (savedUserid != nil)	[savedUserid release];
+		if (savedTicket != nil)	[savedTicket release];
+		if (savedChannels != nil)	[savedChannels release];
 #endif
-		savedNickname = NULL;
-		savedUserid = NULL;
-		savedTicket = NULL;
-		savedChannels = NULL;
+		savedNickname = nil;
+		savedUserid = nil;
+		savedTicket = nil;
+		savedChannels = nil;
 	}
 	else
 	{		// restore saved values
 			// cleanup garbage
 #if __has_feature(objc_arc) == 0
-		if (nickname != NULL)	[nickname release];
-		if (userid != NULL)		[userid release];
-		if (ticket != NULL)		[ticket release];
-		if (channels != NULL)	[channels release];
+		if (nickname != nil)	[nickname release];
+		if (userid != nil)		[userid release];
+		if (ticket != nil)		[ticket release];
+		if (channels != nil)	[channels release];
 #endif
 		nickname = savedNickname;
 		userid = savedUserid;
@@ -169,24 +169,24 @@ NSNumber		*notAutoOpen;
 - (void) cleanupInternalVariables
 {		// clanup login ticket
 #if __has_feature(objc_arc) == 0
-	if (ticket != NULL)
+	if (ticket != nil)
 	{
 		[ticket autorelease];
-		ticket = NULL;
+		ticket = nil;
 	}// end cleanup ticket
 	
 		// clanup elements
-	if (elements != NULL)
+	if (elements != nil)
 	{		// cleanup elements
 		[elements release];
-		elements = NULL;
+		elements = nil;
 	}// end cleanup elements
 	
 		// cleanup stringBuffer
-	if (stringBuffer != NULL)
+	if (stringBuffer != nil)
 	{
 		[stringBuffer release];
-		stringBuffer = NULL;
+		stringBuffer = nil;
 	}// end cleanup stringBuffer
 #endif
 }// end - (void) cleanupInternalVariables
@@ -205,16 +205,16 @@ NSNumber		*notAutoOpen;
 	NSURL *loginURL = [NSURL URLWithString:loginURLStr];
 	NSDictionary *accountDict = [NSDictionary dictionaryWithObjectsAndKeys:mailaddr, LOGINQUERYMAIL, password, LOGINQUERYPASS, nil];
 	HTTPConnection *loginServer = [[HTTPConnection alloc] initWithURL:loginURL withParams:accountDict];
-	NSError *err = NULL;
+	NSError *err = nil;
 	NSData *response = [loginServer dataByPost:&err];
 #if __has_feature(objc_arc) == 0
 	[loginServer release];
-	loginServer = NULL;
+	loginServer = nil;
 #endif
 	if ([err code] == noErr)
 	{		// start parse for get ticket.
 		NSXMLParser *parser = [[NSXMLParser alloc] initWithData:response];
-		if (parser != NULL)
+		if (parser != nil)
 		{
 			[parser setDelegate:(id)self];
 			@try {
@@ -225,7 +225,7 @@ NSNumber		*notAutoOpen;
 			}// end parse get ticket
 #if __has_feature(objc_arc) == 0
 			[parser release];
-			parser = NULL;
+			parser = nil;
 #endif
 		} // end if not parser allocated.
 	}// end if login success
@@ -245,19 +245,19 @@ NSNumber		*notAutoOpen;
 #else
 	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 #endif
-	NSXMLParser *parser = NULL;
+	NSXMLParser *parser = nil;
 		// fetch userdata
-	NSURLResponse *resp = NULL;
+	NSURLResponse *resp = nil;
 	NSString *userInfoQueryString = [NSString stringWithFormat:ALERTQUERY, ticket];
 	NSURL *userInfoQuery = [NSURL URLWithString:userInfoQueryString];
 	NSData *response = [HTTPConnection HTTPData:userInfoQuery response:&resp];
-	if (response != NULL)
+	if (response != nil)
 	{	// start parse for get user's information from getalertstatus.
 		parser = [[NSXMLParser alloc] initWithData:response];
 #if __has_feature(objc_arc) == 0
 		[parser autorelease];
 #endif
-		if (parser != NULL)
+		if (parser != nil)
 		{
 			[parser setDelegate:(id)self];
 			@try {
@@ -305,10 +305,10 @@ NSNumber		*notAutoOpen;
 	if (currentElement != 0)
 	{
 #if __has_feature(objc_arc) == 0
-		if (stringBuffer != NULL)
+		if (stringBuffer != nil)
 		{
 			[stringBuffer autorelease];
-			stringBuffer = NULL;
+			stringBuffer = nil;
 		}// end if release old string buffer
 #endif
 		stringBuffer = [[NSMutableString alloc] init];
@@ -318,7 +318,7 @@ NSNumber		*notAutoOpen;
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-	NSString *channel = NULL;
+	NSString *channel = nil;
 	switch ([[elements valueForKey:elementName] integerValue])
 	{
 		case indexTicket:
@@ -339,10 +339,10 @@ NSNumber		*notAutoOpen;
 	}// end switch
 
 #if __has_feature(objc_arc) == 0
-	if (stringBuffer != NULL)
+	if (stringBuffer != nil)
 	{
 		[stringBuffer autorelease];
-		stringBuffer = NULL;
+		stringBuffer = nil;
 	}// end if
 #endif
 }// end - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -410,6 +410,6 @@ NSNumber		*notAutoOpen;
 
 - (NSData *)parser:(NSXMLParser *)parser resolveExternalEntityName:(NSString *)entityName systemID:(NSString *)systemID
 {
-	return NULL;
+	return nil;
 }// end - (NSData *)parser:(NSXMLParser *)parser resolveExternalEntityName:(NSString *)entityName systemID:(NSString *)systemID
 @end

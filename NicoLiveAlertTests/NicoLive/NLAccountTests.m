@@ -28,7 +28,7 @@
 
 - (void) test_01_allocationFail
 {
-	NLAccount *user = NULL;
+	NLAccount *user = nil;
 	STAssertNil(user, @"stack variable initialize failed");
 	user = [[NLAccount alloc] initWithAccount:@"dummyAccount@gmail.com" andPassword:@"dummyPassword"];
 	STAssertNil(user, @"dummy account but object allocated");
@@ -36,10 +36,10 @@
 
 - (void) test_02_allocation
 {
-	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:PATH forAuthType:kSecAuthenticationTypeAny inKeychain:NULL];
+	NSArray *users = [KCSInternetUser usersOfAccountsForServer:SERVER path:PATH forAuthType:kSecAuthenticationTypeAny inKeychain:nil];
 	STAssertNotNil(users, @"fetch user failed");
 
-	NLAccount *account = NULL;
+	NLAccount *account = nil;
 	for (KCSInternetUser *user in users)
 	{
 			// check internet keychain (again)
@@ -51,14 +51,14 @@
 		account = [[NLAccount alloc] initWithAccount:userid andPassword:password];
 		STAssertNotNil(account, @"NLAccount initialize Fail");
 			// property check
-		STAssertNotNil([account mailaddr], @"property mail addr is NULL");
-		STAssertNotNil([account password], @"property password is NULL");
-		STAssertNotNil([account username], @"property username is NULL");
-		STAssertNotNil([account userid], @"property useridis NULL");
-		STAssertNotNil([account channels], @"property channels is NULL");
-		STAssertNotNil([account userid], @"property password is NULL");
+		STAssertNotNil([account mailaddr], @"property mail addr is nil");
+		STAssertNotNil([account password], @"property password is nil");
+		STAssertNotNil([account username], @"property username is nil");
+		STAssertNotNil([account userid], @"property useridis nil");
+		STAssertNotNil([account channels], @"property channels is nil");
+		STAssertNotNil([account userid], @"property password is nil");
 	}// end for
-	account = NULL;
+	account = nil;
 }// end - (void) test_01_allocation
 
 @end

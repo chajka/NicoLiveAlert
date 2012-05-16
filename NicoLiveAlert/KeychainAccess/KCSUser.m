@@ -44,13 +44,13 @@ CFMutableDictionaryRef	query;
 #pragma mark class method
 + (SecKeychainRef) newkeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error
 {
-	SecKeychainRef newKey = NULL;
-	NSString *path = NULL;
+	SecKeychainRef newKey = nil;
+	NSString *path = nil;
 	UInt32 passLength;
-	const char *passwordString = NULL;
+	const char *passwordString = nil;
 
 	path = [keychainPath stringByExpandingTildeInPath];
-	if (password != NULL)
+	if (password != nil)
 	{
 		passwordString = [password UTF8String];
 		passLength = (UInt32)[password length];
@@ -60,9 +60,9 @@ CFMutableDictionaryRef	query;
 		prompt = YES;
 	}
 	if (prompt)
-		*error = SecKeychainCreate([path UTF8String], 0, (void *)NULL, TRUE, NULL, &newKey);
+		*error = SecKeychainCreate([path UTF8String], 0, (void *)nil, TRUE, nil, &newKey);
 	else
-		*error = SecKeychainCreate([path UTF8String], passLength, passwordString, FALSE, NULL, &newKey);
+		*error = SecKeychainCreate([path UTF8String], passLength, passwordString, FALSE, nil, &newKey);
 
 	return newKey;
 }// end - (SeckeychainRef) newkeychain:(NSString *)keychainPath withPassword:(NSString *)password orPrompt:(BOOL)prompt error:(OSStatus *)error
@@ -85,12 +85,12 @@ CFMutableDictionaryRef	query;
 	self = [super init];
 	if (self)
 	{
-		account = NULL;
-		password = NULL;
-		keychainName = NULL;
-		keychainKind = NULL;
-		keychain = NULL;
-		keychainItem = NULL;
+		account = nil;
+		password = nil;
+		keychainName = nil;
+		keychainKind = nil;
+		keychain = nil;
+		keychainItem = nil;
 		syncronized = NO;
 		paramFlags = resultAllClear;
 		status = 1;
@@ -100,13 +100,13 @@ CFMutableDictionaryRef	query;
 
 - (void) dealloc
 {
-	if (keychain != NULL)		CFRelease(keychain);
-	if (keychainItem != NULL)	CFRelease(keychainItem);
+	if (keychain != nil)		CFRelease(keychain);
+	if (keychainItem != nil)	CFRelease(keychainItem);
 #if __has_feature(objc_arc) == 0
 	// relase account
-    if (account != NULL)		[account release];
+    if (account != nil)		[account release];
 	// relase password
-	if (password != NULL)		[password release];
+	if (password != nil)		[password release];
 	[super dealloc];
 #endif
 }// end - (void) dealloc
@@ -114,8 +114,8 @@ CFMutableDictionaryRef	query;
 #ifdef __OBJC_GC__
 - (void) finalize
 {
-	if (keychain != NULL)		CFRelease(keychain);
-	if (keychainItem != NULL)	CFRelease(keychainItem);
+	if (keychain != nil)		CFRelease(keychain);
+	if (keychainItem != nil)	CFRelease(keychainItem);
 	[super finalize];
 }// end - (void) finalize
 #endif
@@ -131,7 +131,7 @@ CFMutableDictionaryRef	query;
 {
 	syncronized = NO;
 	account = [account_ copy];
-	if ((account != NULL) && ([account length] != 0))
+	if ((account != nil) && ([account length] != 0))
 		paramFlags |= flagBitAccount;
 }// end - (void) setAccount:(NSString *)account_
 
@@ -170,10 +170,10 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	self = [super init];
 	if (self)
 	{
-		keychain = NULL;
-		serverName = NULL;
-		serverPath = NULL;
-		securityDomain = NULL;
+		keychain = nil;
+		serverName = nil;
+		serverPath = nil;
+		securityDomain = nil;
 		protocol = kSecProtocolTypeAny;
 		paramFlags |= flagBitInetProtocol;
 		authType = kSecAuthenticationTypeAny;
@@ -191,9 +191,9 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	{
 		[super setAccount:account_];
 		password = password_;
-		keychain = NULL;
-		serverName = NULL;
-		securityDomain = NULL;
+		keychain = nil;
+		serverName = nil;
+		securityDomain = nil;
 		port = 0;
 		paramFlags |= flagBitInetPort;
 		protocol = kSecProtocolTypeAny;
@@ -210,17 +210,17 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	if (self)
 	{
 		account = [[URI user] copy];
-		if ((account != NULL) && ([account length] != 0))
+		if ((account != nil) && ([account length] != 0))
 			paramFlags |= flagBitAccount;
 		serverName = [[URI host] copy];
-		if ((serverName != NULL) && ([serverName length] != 0))
+		if ((serverName != nil) && ([serverName length] != 0))
 			paramFlags |= flagInetServerName;
 		serverPath = [[URI path] copy];
-		if (serverPath == NULL)
+		if (serverPath == nil)
 			serverPath = [@"" copy];
 		paramFlags |= flagBitInetServerPath;
 		securityDomain = [[URI host] copy];
-		if ((securityDomain != NULL) && ([securityDomain length] != 0))
+		if ((securityDomain != nil) && ([securityDomain length] != 0))
 			paramFlags |= flagBitInetSecurityDomain;
 		if ([[URI scheme] isEqualToString:@""] == NO)
 		{
@@ -248,17 +248,17 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	if (self)
 	{
 		account = [[URI user] copy];
-		if ((account != NULL) && ([account length] != 0))
+		if ((account != nil) && ([account length] != 0))
 			paramFlags |= flagBitAccount;
 		serverName = [[URI host] copy];
-		if ((serverName != NULL) && ([serverName length] != 0))
+		if ((serverName != nil) && ([serverName length] != 0))
 			paramFlags |= flagInetServerName;
 		serverPath = [[URI path] copy];
-		if (serverPath == NULL)
+		if (serverPath == nil)
 			serverPath = [@"" copy];
 		paramFlags |= flagBitInetServerPath;
 		securityDomain = [[URI host] copy];
-		if ((securityDomain != NULL) && ([securityDomain length] != 0))
+		if ((securityDomain != nil) && ([securityDomain length] != 0))
 			paramFlags |= flagBitInetSecurityDomain;
 		if ([[URI scheme] isEqualToString:@""] == NO)
 		{
@@ -284,23 +284,23 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 - (id) initWithDictionary:(NSDictionary *)user inKeychain:(SecKeychainRef)keyChain
 {
 	if ([user count] == 0)
-		return NULL;
+		return nil;
 	self = [super init];
 	if (self)
 	{
 		keychain = keyChain;
 		account = [[user objectForKey:kSecAttrAccount] copy];
-		if ((account != NULL) && ([account length] != 0))
+		if ((account != nil) && ([account length] != 0))
 			paramFlags |= flagBitAccount;
 		keychainName = [[user objectForKey:kSecAttrLabel] copy];
 		keychainKind = [[user objectForKey:kSecAttrDescription] copy];
 		serverName = [[user objectForKey:kSecAttrServer] copy];
 		serverPath = [[user objectForKey:kSecAttrPath] copy];
-		if (serverPath == NULL)
+		if (serverPath == nil)
 			serverPath = [@"" copy];
 		paramFlags |= flagBitInetServerPath;
 		securityDomain = [[user objectForKey:kSecAttrSecurityDomain] copy];
-		if ((securityDomain != NULL) && ([securityDomain length] == 0))
+		if ((securityDomain != nil) && ([securityDomain length] == 0))
 			paramFlags |= flagBitInetSecurityDomain;
 		protocol = [[user objectForKey:kSecAttrProtocol] integerValue];
 		paramFlags |= flagBitInetProtocol;
@@ -310,8 +310,8 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		paramFlags |= flagBitInetPort;
 
 		UInt32 passwordLength = 0;
-		const char *passwordString = NULL;
-		status = SecKeychainFindInternetPassword(NULL, [serverName length], (const char *)[serverName UTF8String], 0, NULL, [account length], (const char *)[account UTF8String], [serverPath length], (const char *)[serverPath UTF8String], port, protocol, authType, &passwordLength, (void **)&passwordString, &keychainItem);
+		const char *passwordString = nil;
+		status = SecKeychainFindInternetPassword(nil, [serverName length], (const char *)[serverName UTF8String], 0, nil, [account length], (const char *)[account UTF8String], [serverPath length], (const char *)[serverPath UTF8String], port, protocol, authType, &passwordLength, (void **)&passwordString, &keychainItem);
 		if (status != noErr)
 		{
 #if __has_feature(objc_arc) == 0
@@ -320,7 +320,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 			[securityDomain release];
 			[super dealloc];
 #endif
-			return NULL;
+			return nil;
 		}// end if status is error
 		
 		NSString *passwd = [[NSString alloc] initWithBytes:(const void *)passwordString length:passwordLength encoding:NSUTF8StringEncoding];
@@ -330,7 +330,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 #endif
 		syncronized = TRUE;
 		
-		SecKeychainItemFreeContent(NULL, (void *)passwordString);
+		SecKeychainItemFreeContent(nil, (void *)passwordString);
 	}// end if self
 	return self;
 }// end - (id) initWithDictionary:(NSDictionary *)user inKeychain:(SecKeychainRef)keyChain
@@ -339,8 +339,8 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 #if MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_5
 - (id) initWithItemRef:(SecKeychainItemRef)item andKeychain:(SecKeychainRef)keyChain
 {
-	if (item == NULL)
-		return NULL;
+	if (item == nil)
+		return nil;
 	self = [super init];
 	if (self)
 	{		// set keychain
@@ -354,14 +354,14 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		info.count = 1;
 		info.tag = &tag;
 		info.format = &format;
-		SecKeychainAttributeList *attrList = NULL;
+		SecKeychainAttributeList *attrList = nil;
 		UInt32 length = 0;
-		void *data = NULL;
+		void *data = nil;
 
 				// get account, password and keychainItem
 		tag = kSecAccountItemAttr;
 		format = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
-		status = SecKeychainItemCopyAttributesAndData(item, &info, NULL, &attrList, &length, &data);
+		status = SecKeychainItemCopyAttributesAndData(item, &info, nil, &attrList, &length, &data);
 		if (status == noErr)	// check fetch data is success?
 		{		// get account
 			account = [[[[NSString alloc] initWithBytes:attrList->attr->data length:attrList->attr->length encoding:NSUTF8StringEncoding] autorelease] copy];
@@ -373,135 +373,135 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		}
 		else
 		{
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 			[super dealloc];
-			return NULL;
+			return nil;
 		}// end if fetch data success
 
 				// get server name
 		tag = kSecServerItemAttr;
 		format = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
-		status = SecKeychainItemCopyAttributesAndData(item, &info, NULL, &attrList, 0, NULL);
+		status = SecKeychainItemCopyAttributesAndData(item, &info, nil, &attrList, 0, nil);
 		if (status == noErr)	// check fetch data is success?
 		{
 			serverName = [[[[NSString alloc] initWithBytes:attrList->attr->data length:attrList->attr->length encoding:NSUTF8StringEncoding] autorelease] copy];
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 			paramFlags |= flagBitInetServerName;
 		}
 		else
 		{
-			serverName = NULL;
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			serverName = nil;
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}// end if set server name 
 
 				// get server path
 		tag = kSecPathItemAttr;
 		format = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
-		status = SecKeychainItemCopyAttributesAndData(item, &info, NULL, &attrList, 0, NULL);
+		status = SecKeychainItemCopyAttributesAndData(item, &info, nil, &attrList, 0, nil);
 		if (status == noErr)	// check fetch data is success?
 		{
 			serverPath = [[[[NSString alloc] initWithBytes:attrList->attr->data length:attrList->attr->length encoding:NSUTF8StringEncoding] autorelease] copy];
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 			paramFlags |= flagBitInetServerPath;
 		}
 		else
 		{
-			serverPath = NULL;
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			serverPath = nil;
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}// end if set server path
 
 			// get security domain
 		tag = kSecSecurityDomainItemAttr;
 		format = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
-		status = SecKeychainItemCopyAttributesAndData(item, &info, NULL, &attrList, 0, NULL);
+		status = SecKeychainItemCopyAttributesAndData(item, &info, nil, &attrList, 0, nil);
 		if (status == noErr)	// check fetch data is success?
 		{
 			securityDomain = [[[[NSString alloc] initWithBytes:attrList->attr->data length:attrList->attr->length encoding:NSUTF8StringEncoding] autorelease] copy];
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 			paramFlags |= flagBitInetSecurityDomain;
 		}
 		else
 		{
-			securityDomain = NULL;
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			securityDomain = nil;
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}// end if set security domain
 
 			// get protocol
 		tag = kSecProtocolItemAttr;
 		format = CSSM_DB_ATTRIBUTE_FORMAT_UINT32;
-		status = SecKeychainItemCopyAttributesAndData(item, &info, NULL, &attrList, 0, NULL);
+		status = SecKeychainItemCopyAttributesAndData(item, &info, nil, &attrList, 0, nil);
 		if (status == noErr)	// check fetch data is success?
 		{
 			protocol = *(SecProtocolType *)(attrList->attr->data);
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}
 		else
 		{
 			protocol = kSecProtocolTypeAny;
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}// end if set protocol
 		paramFlags |= flagBitInetProtocol;
 		
 				// get prot
 		tag = kSecPortItemAttr;
 		format = CSSM_DB_ATTRIBUTE_FORMAT_UINT32;
-		status = SecKeychainItemCopyAttributesAndData(item, &info, NULL, &attrList, 0, NULL);
+		status = SecKeychainItemCopyAttributesAndData(item, &info, nil, &attrList, 0, nil);
 		if (status == noErr)	// check fetch data is success?
 		{
 			port = *(SecAuthenticationType *)(attrList->attr->data);
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}
 		else
 		{
 			port = 0;
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}// end set authentication type
 		paramFlags |= flagBitInetPort;
 
 				// get authentication type
 		tag = kSecProtocolItemAttr;
 		format = CSSM_DB_ATTRIBUTE_FORMAT_UINT32;
-		status = SecKeychainItemCopyAttributesAndData(item, &info, NULL, &attrList, 0, NULL);
+		status = SecKeychainItemCopyAttributesAndData(item, &info, nil, &attrList, 0, nil);
 		if (status == noErr)	// check fetch data is success?
 		{
 			authType = *(SecAuthenticationType *)(attrList->attr->data);
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 			paramFlags |= flagBitInetAuthType;
 		}
 		else
 		{
 			authType = kSecAuthenticationTypeAny;
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}// end set authentication type
 
 				// get keychain name
 		tag = kSecLabelItemAttr;
 		format = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
-		status = SecKeychainItemCopyAttributesAndData(item, &info, NULL, &attrList, 0, NULL);
+		status = SecKeychainItemCopyAttributesAndData(item, &info, nil, &attrList, 0, nil);
 		if (status == noErr)	// check fetch data is success?
 		{
 			keychainName = [[[[NSString alloc] initWithBytes:attrList->attr->data length:attrList->attr->length encoding:NSUTF8StringEncoding] autorelease] copy];
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}
 		else
 		{
-			keychainName = NULL;
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			keychainName = nil;
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}// end set keychain name
 
 				// get keychain kind
 		tag = kSecDescriptionItemAttr;
 		format = CSSM_DB_ATTRIBUTE_FORMAT_STRING;
-		status = SecKeychainItemCopyAttributesAndData(item, &info, NULL, &attrList, 0, NULL);
+		status = SecKeychainItemCopyAttributesAndData(item, &info, nil, &attrList, 0, nil);
 		if (status == noErr)	// check fetch data is success?
 		{
 			keychainKind = [[[[NSString alloc] initWithBytes:attrList->attr->data length:attrList->attr->length encoding:NSUTF8StringEncoding] autorelease] copy];
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}
 		else
 		{
-			keychainKind = NULL;
-			SecKeychainItemFreeAttributesAndData(attrList, NULL);
+			keychainKind = nil;
+			SecKeychainItemFreeAttributesAndData(attrList, nil);
 		}// end set keychain name
 	}// end if self
 	return self;
@@ -558,12 +558,12 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 {
 	syncronized = NO;
 #if __has_feature(objc_arc) == 0
-	if (serverName != NULL)
+	if (serverName != nil)
 		[serverName autorelease];
 #endif
 	serverName = [serverName_ copy];
 		// set/clear server name flag
-	if (serverName != NULL)	// set server name flag
+	if (serverName != nil)	// set server name flag
 		paramFlags |= flagInetServerName;
 	else	// clear server name flag
 		paramFlags &= ~flagInetServerName;
@@ -585,7 +585,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 {
 	syncronized = NO;
 #if __has_feature(objc_arc) == 0
-	if (serverPath != NULL)
+	if (serverPath != nil)
 		[serverPath autorelease];
 #endif
 	serverPath = [serverPath_ copy];
@@ -607,12 +607,12 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 {
 	syncronized = NO;
 #if __has_feature(objc_arc) == 0
-	if (securityDomain != NULL)
+	if (securityDomain != nil)
 		[securityDomain autorelease];
 #endif
 	securityDomain = [securityDomain_ copy];
 		// set/clear security domain flag
-	if (securityDomain != NULL)	// set security domain flag
+	if (securityDomain != nil)	// set security domain flag
 		paramFlags |= flagBitInetSecurityDomain;
 	else	// clear security domain flag
 		paramFlags &= ~flagBitInetSecurityDomain;
@@ -700,7 +700,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	const char *strServerPath = [serverPath UTF8String];
 	UInt32		lenServerPath = (UInt32)[serverPath	length];
 	// returned password data
-	const char *strPassword = NULL;
+	const char *strPassword = nil;
 	UInt32 lenPassword;
 	
 	// fetch password from keychain
@@ -711,7 +711,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	{
 		NSData *data = [[NSData alloc] initWithBytes:strPassword length:lenPassword];
 		password = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		SecKeychainItemFreeContent(NULL, (void *)strPassword);
+		SecKeychainItemFreeContent(nil, (void *)strPassword);
 #if __has_feature(objc_arc) == 0
 		[data release];
 		[[password autorelease] retain];
@@ -729,7 +729,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		return NO;
 
 		// check password is existing
-	if ((password == NULL) || ([password length] == 0))
+	if ((password == nil) || ([password length] == 0))
 		return NO;
 
 		// make cstring & length data
@@ -738,9 +738,9 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	UInt32		lenAccountName = (UInt32)[account length];
 	const char *strServerName = [serverName UTF8String];
 	UInt32		lenServerName = (UInt32)[serverName length];
-	const char *strSecurityDomain = NULL;
+	const char *strSecurityDomain = nil;
 	UInt32		lenSecurityDomain = 0;
-	if (securityDomain != NULL)
+	if (securityDomain != nil)
 	{
 		strSecurityDomain = [securityDomain UTF8String];
 		lenSecurityDomain = (UInt32)[securityDomain length];
@@ -759,7 +759,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		return NO;
 
 		// add keychain name if exists
-	if ((keychainName != NULL) || ([keychainName length] != 0))
+	if ((keychainName != nil) || ([keychainName length] != 0))
 	{		// create attribute
 		SecKeychainAttribute attribute;
 		SecKeychainAttributeList attrs;
@@ -770,11 +770,11 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		attrs.attr = &attribute;
 		
 			// write to keychain
-		status = SecKeychainItemModifyContent(keychainItem, &attrs, 0, NULL);
+		status = SecKeychainItemModifyContent(keychainItem, &attrs, 0, nil);
 	}// end if keychain name is exists
 
 		// add keychain kind if exists
-	if ((keychainKind != NULL) || ([keychainKind length] != 0))
+	if ((keychainKind != nil) || ([keychainKind length] != 0))
 	{		// create attribute
 		SecKeychainAttribute attribute;
 		SecKeychainAttributeList attrs;
@@ -785,7 +785,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		attrs.attr = &attribute;
 		
 			// write to keychain
-		status = SecKeychainItemModifyContent(keychainItem, &attrs, 0, NULL);
+		status = SecKeychainItemModifyContent(keychainItem, &attrs, 0, nil);
 	}// end if keychain kind is exists
 
 		// check result and return
@@ -797,14 +797,14 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 
 - (OSStatus) removeFromkeychain
 {
-	if (keychainItem == NULL)
+	if (keychainItem == nil)
 		return errSecItemNotFound;
 
 	status = SecKeychainItemDelete(keychainItem);
 	if (status == noErr)
 	{
 		CFRelease(keychainItem);
-		keychainItem = NULL;
+		keychainItem = nil;
 	}// end if success
 
 	return status;
@@ -813,12 +813,12 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 - (OSStatus) changePasswordTo:(NSString *)newPassword
 {
 	OSStatus error = errSecItemNotFound;
-	if (keychainItem == NULL)
+	if (keychainItem == nil)
 		return error;
 
 		// write to keychain
 	const char *passwordString = [newPassword UTF8String];
-	status = SecKeychainItemModifyAttributesAndData(keychainItem, NULL, (UInt32)strlen(passwordString), (void *)passwordString);
+	status = SecKeychainItemModifyAttributesAndData(keychainItem, nil, (UInt32)strlen(passwordString), (void *)passwordString);
 	if (status == noErr)
 		syncronized = TRUE;
 
@@ -836,17 +836,17 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	
     // get search results
 	CFIndex items = 0;
-    CFArrayRef search = NULL;
+    CFArrayRef search = nil;
     status = SecItemCopyMatching(query, (CFTypeRef*)&search);
 	CFRelease(query);
-	if ((search == NULL) || ((status != noErr) && ((items = CFArrayGetCount(search)) != 0)))
-		return NULL;
+	if ((search == nil) || ((status != noErr) && ((items = CFArrayGetCount(search)) != 0)))
+		return nil;
 	
 	KCSInternetUser *user;
 	for (NSDictionary *item in (__bridge NSArray *)search)
 	{
 		user = [[KCSInternetUser alloc] initWithDictionary:item inKeychain:keychain];
-		if (user != NULL)
+		if (user != nil)
 			[users addObject:user];
 	}// end for
 	CFRelease(search);
@@ -863,7 +863,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	attr[0].data = (void *)cStringServerName;
 	
 	SecKeychainAttributeList attrList = { .count = 1, .attr = attr };
-	SecKeychainSearchRef search = NULL;
+	SecKeychainSearchRef search = nil;
 	
 	status = SecKeychainSearchCreateFromAttributes(keychain, kSecInternetPasswordItemClass, &attrList, &search);
 	if (status != noErr)
@@ -872,18 +872,18 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 	// iterate user accounts
 	while (true)
 	{
-		SecKeychainItemRef item = NULL;
+		SecKeychainItemRef item = nil;
 		status = SecKeychainSearchCopyNext(search, &item);
 		if (status != noErr)
 			break;
 		KCSInternetUser *user = [[[KCSInternetUser alloc] initWithItemRef:item andKeychain:keychain] autorelease];
-		if (item != NULL)
+		if (item != nil)
 			[users addObject:user];
 	}// end while (true)
 	CFRelease(search);
 #endif
 	if ([users count] == 0)
-		users = NULL;
+		users = nil;
 
 	return users;
 }// end NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticationType type)

@@ -201,6 +201,8 @@
 	if ([ary count] != 0)
 		[aryLauncherItems addObjects:ary];
 
+		// auto open state
+	enableAutoOpen = ([menuItemAutoOpen state] == NSOnState) ? YES : NO;
 		// collaboration flags
 	dontOpenWhenImBroadcast = ([chkboxDonotAutoOpenAtBroadcasting state] == NSOnState) ? YES : NO;
 	kickFMELauncher = ([chkboxRelationWithFMELauncher state] == NSOnState) ? YES : NO;
@@ -320,15 +322,19 @@
 {
 	NSNotificationCenter *myMac = [[NSWorkspace sharedWorkspace] notificationCenter];
 	if (broadCasting == YES)
-	{		// check need kick FMELauncher
-			// check need kick charleston
+	{		// check need kick charleston
+		if (kickCharlestonAtAutoOpen == YES)
+			;
+			// check need kick FMELauncher
+		if (kickFMELauncher == YES)
+			;
 		NSDictionary *info = 
 			[NSDictionary dictionaryWithObjectsAndKeys:
 				[note object], keyNLNotificationLiveNumber,
 				[NSNumber numberWithBool:YES], keyNLNotificationIsMyLive, nil];
 		if ((kickCharlestonAtAutoOpen == YES) || (kickFMELauncher == YES))
 		{
-			[myMac postNotification:[NSNotification notificationWithName:NLNotificationLiveStart object:info]];
+			[myMac postNotification:[NSNotification notificationWithName:NLNotificationMyLiveStart object:info]];
 			notificationPosted = YES;
 		}// end if
 			// check never want auto open when I'm broadcasting
@@ -349,6 +355,7 @@
 	}// end if
 
 	[self openLiveProgram:[note object]];
+	notificationPosted = NO;
 }// end - (void) doAutoOpen:(NSNotification *)note
 
 - (void) rowSelected:(NSNotification *)note
@@ -393,19 +400,9 @@
 	// menu item actions
 - (IBAction)menuSelectAutoOpen:(id)sender
 {
-	NSCellStateValue state = [sender state];
-	if (state == NSOnState)
-	{
-		enableAutoOpen = NO;
-		[sender setState:enableAutoOpen];
-		[programSieves setEnableAutoOpen:enableAutoOpen];
-	}
-	else
-	{
-		enableAutoOpen = YES;
-		[sender setState:enableAutoOpen];
-		[programSieves setEnableAutoOpen:enableAutoOpen];
-	}
+	enableAutoOpen = ([sender state] == NSOnState) ? YES : NO;
+	[sender setState:enableAutoOpen];
+	[programSieves setEnableAutoOpen:enableAutoOpen];
 }// end - (IBAction) menuSelectAutoOpen:(id)sender
 
 - (IBAction)launchApplicaions:(id)sender
@@ -573,22 +570,19 @@
 	NSString *account = [comboLoginID stringValue];
 	NSString *password = [secureFieldPassword stringValue];
 	OSStatus status;
-	status = [nicoliveAccounts addUser:account withPassword:password];
+	NLAccount *user = [nicoliveAccounts addUser:account withPassword:password status:&status];
 	if (status == noErr)
-		for (NLAccount *user in [nicoliveAccounts users])
-		{
-			if ([[user mailaddr] isEqualToString:account] == YES)
-			{
-				NSMutableDictionary *entry = [NSMutableDictionary dictionary];
-				[entry setValue:[NSNumber numberWithBool:YES] forKey:keyAccountWatchEnabled];
-				[entry setValue:[user userid] forKey:keyAccountUserID];
-				[entry setValue:[user nickname] forKey:keyAccountNickname];
-				[entry setValue:[user mailaddr] forKey:keyAccountMailAddr];
-				[aryAccountItems addObject:entry];
-
-				break;
-			}// end if user is now added
-		}// end foreach user
+	{		// feedback to account table
+		NSMutableDictionary *entry = [NSMutableDictionary dictionary];
+		[entry setValue:[NSNumber numberWithBool:YES] forKey:keyAccountWatchEnabled];
+		[entry setValue:[user userid] forKey:keyAccountUserID];
+		[entry setValue:[user nickname] forKey:keyAccountNickname];
+		[entry setValue:[user mailaddr] forKey:keyAccountMailAddr];
+		[aryAccountItems addObject:entry];
+	}
+	else
+	{		// error : show error sheet
+	}// end if create account success
 }// end - (IBAction) addAccount:(id)sender
 
 - (IBAction) removeAccount:(id)sender
@@ -672,6 +666,25 @@
 			break;
 	}// end switch by text field
 }// end - (void) controlTextDidChange:(NSNotification *)aNotification
+
+#pragma mark Other application collaboration
+- (void) startFMLE:(NSString *)live
+{
+	NSDistantObject *fmle = [NSConnection rootProxyForConnectionWithRegisteredName:FMELauncher host:@""];
+	[fmle startFMLE:live];
+}// end - (void) startFMLE:(NSString *)live
+
+- (void) stopFMLE
+{
+	NSDistantObject *fmle = [NSConnection rootProxyForConnectionWithRegisteredName:FMELauncher host:@""];
+	[fmle stopFMLE];
+}// end - (void) stopFMLE
+
+- (void) joinToLive:(NSString *)live
+{
+	NSDistantObject *charleston = [NSConnection rootProxyForConnectionWithRegisteredName:Charleston host:@""];
+	[charleston joinToLive:live];
+}// - (void) joinToLive:(NSString *)live
 
 #pragma mark -
 #pragma mark GrowlApplicationBridge delegate

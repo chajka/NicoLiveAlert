@@ -347,9 +347,15 @@ enum AppCollaboCheckBoxes {
 
 #define keyNLNotificationLiveNumber	@"keyNLNotificationLiveNumber"
 #define keyNLNotificationIsMyLive	@"keyNLNotificationIsMyLive"
+#define NLNotificationMyLiveStart	@"NLNotificationMyLiveStart"
 #define NLNotificationLiveStart		@"NLNotificationLiveStart"
 
 #define LauncItemList				@"LauncItemList"
+
+#pragma mark -
+#pragma application collaboration
+#define Charleston					@"Charleston"
+#define FMELauncher					@"FMELauncher"
 
 #pragma mark -
 #pragma mark Growling

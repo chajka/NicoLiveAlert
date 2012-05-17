@@ -160,6 +160,8 @@
 		1D93A190153856DA00328D5C /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A151153856DA00328D5C /* st.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D93A191153856DA00328D5C /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A151153856DA00328D5C /* st.c */; };
 		1D93A192153856DA00328D5C /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A151153856DA00328D5C /* st.c */; };
+		1D93C4DA1565541B0030BA80 /* NicoLiveAlert+Collaboration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93C4D91565541B0030BA80 /* NicoLiveAlert+Collaboration.m */; };
+		1D93C4DB1565541B0030BA80 /* NicoLiveAlert+Collaboration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93C4D91565541B0030BA80 /* NicoLiveAlert+Collaboration.m */; };
 		1D99938C1525D25D00786114 /* NLOffBadge.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D9993881525D25D00786114 /* NLOffBadge.png */; };
 		1D99938D1525D25D00786114 /* NLOffBadge.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D9993881525D25D00786114 /* NLOffBadge.png */; };
 		1D99938E1525D25D00786114 /* NLOffState.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D9993891525D25D00786114 /* NLOffState.png */; };
@@ -332,6 +334,8 @@
 		1D93A150153856DA00328D5C /* regversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regversion.c; sourceTree = "<group>"; };
 		1D93A151153856DA00328D5C /* st.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = st.c; sourceTree = "<group>"; };
 		1D93A152153856DA00328D5C /* st.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = st.h; sourceTree = "<group>"; };
+		1D93C4D81565541B0030BA80 /* NicoLiveAlert+Collaboration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NicoLiveAlert+Collaboration.h"; sourceTree = "<group>"; };
+		1D93C4D91565541B0030BA80 /* NicoLiveAlert+Collaboration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NicoLiveAlert+Collaboration.m"; sourceTree = "<group>"; };
 		1D9993881525D25D00786114 /* NLOffBadge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NLOffBadge.png; path = Images/NLOffBadge.png; sourceTree = "<group>"; };
 		1D9993891525D25D00786114 /* NLOffState.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NLOffState.png; path = Images/NLOffState.png; sourceTree = "<group>"; };
 		1D99938A1525D25D00786114 /* NLMixedState.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NLMixedState.png; path = Images/NLMixedState.png; sourceTree = "<group>"; };
@@ -428,6 +432,8 @@
 				1D1CE2DA150C77BB001E7E39 /* MainMenu.xib */,
 				1D36A5EE1546202500516CDF /* NicoLivePrefManager.h */,
 				1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */,
+				1D93C4D81565541B0030BA80 /* NicoLiveAlert+Collaboration.h */,
+				1D93C4D91565541B0030BA80 /* NicoLiveAlert+Collaboration.m */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -971,6 +977,7 @@
 				1D36A60E15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
 				1DDE3970154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
 				1D922484155B8DA200775B7A /* NLAccountInfo.m in Sources */,
+				1D93C4DA1565541B0030BA80 /* NicoLiveAlert+Collaboration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1055,6 +1062,7 @@
 				1D36A60F15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
 				1DDE3971154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
 				1D922485155B8DA200775B7A /* NLAccountInfo.m in Sources */,
+				1D93C4DB1565541B0030BA80 /* NicoLiveAlert+Collaboration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

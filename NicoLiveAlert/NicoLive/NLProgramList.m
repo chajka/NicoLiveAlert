@@ -296,8 +296,6 @@ __strong OnigRegexp			*startTimeRegex;
 		NSNumber *needOpen = [watchList valueForKey:prog];
 		if (needOpen != nil)
 		{		// found in watchlist or memberd communities program
-NSLog(@"Enable AutoOpen : %c", enableAutoOpen ? 'Y' : 'N');
-NSLog(@"autoOpen : %@", needOpen);
 			if (isOfficial == YES)
 				[activePrograms addOfficialProgram:live withDate:date];
 			else

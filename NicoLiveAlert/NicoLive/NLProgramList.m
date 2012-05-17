@@ -441,21 +441,6 @@ __strong OnigRegexp			*startTimeRegex;
 		[self checkProgram:[NSString stringWithFormat:liveNoAppendFormat,[result objectAtIndex:OffsetProgramInfoInArray]] withDate:broadcastDate];
 	}// end if <chat></chat>
 
-/*
-	OnigResult *chatResult = [progInfoRegex search:msg];
-	if (chatResult != nil)
-	{
-		OnigResult *dateResult = [startTimeRegex search:msg];
-		NSDate *broadcastDate = [NSDate dateWithTimeIntervalSince1970:[[dateResult stringAt:1] longLongValue]];
-		[self checkProgram:[NSString stringWithFormat:liveNoAppendFormat,[chatResult stringAt:1]] withDate:broadcastDate];
-	}
-*/
-/*
-#if __has_feature(objc_arc) == 0
-	[msg release];
-#endif
-*/	
-
 #if __has_feature(objc_arc)
 	programListDataBuffer = nil;
 	msg = nil;

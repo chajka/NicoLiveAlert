@@ -10,6 +10,7 @@
 #import "NicoLiveAlertDefinitions.h"
 #import "OnigRegexp.h"
 #import "NSAttributedStringAdditions.h"
+#import "NicoLiveAlert+Collaboration.h"
 
 @interface NicoLiveAlert ()
 - (BOOL) checkFirstLaunch;
@@ -322,18 +323,18 @@
 {
 	NSNotificationCenter *myMac = [[NSWorkspace sharedWorkspace] notificationCenter];
 	if (broadCasting == YES)
-	{		// check need kick charleston
-		if (kickCharlestonAtAutoOpen == YES)
-			;
-			// check need kick FMELauncher
-		if (kickFMELauncher == YES)
-			;
-		NSDictionary *info = 
-			[NSDictionary dictionaryWithObjectsAndKeys:
+	{
+		if ((kickCharlestonAtAutoOpen == YES) || (kickFMELauncher == YES))
+		{		// check need kick charleston
+			if (kickCharlestonAtAutoOpen == YES)
+				[self joinToLive:[note object]];
+				// check need kick FMELauncher
+			if (kickFMELauncher == YES)
+				[self startFMLE:[note object]];
+
+			NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
 				[note object], keyNLNotificationLiveNumber,
 				[NSNumber numberWithBool:YES], keyNLNotificationIsMyLive, nil];
-		if ((kickCharlestonAtAutoOpen == YES) || (kickFMELauncher == YES))
-		{
 			[myMac postNotification:[NSNotification notificationWithName:NLNotificationMyLiveStart object:info]];
 			notificationPosted = YES;
 		}// end if
@@ -347,10 +348,9 @@
 		(dontOpenWhenImBroadcast == NO) && 
 		(kickCharlestonAtAutoOpen == YES))
 	{
-		NSDictionary *info = 
-			[NSDictionary dictionaryWithObjectsAndKeys:
-				[note object], keyNLNotificationLiveNumber,
-				[NSNumber numberWithBool:NO], keyNLNotificationIsMyLive, nil];
+		NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
+			[note object], keyNLNotificationLiveNumber,
+			[NSNumber numberWithBool:NO], keyNLNotificationIsMyLive, nil];
 		[myMac postNotification:[NSNotification notificationWithName:NLNotificationLiveStart object:info]];
 	}// end if
 
@@ -666,25 +666,6 @@
 			break;
 	}// end switch by text field
 }// end - (void) controlTextDidChange:(NSNotification *)aNotification
-
-#pragma mark Other application collaboration
-- (void) startFMLE:(NSString *)live
-{
-	NSDistantObject *fmle = [NSConnection rootProxyForConnectionWithRegisteredName:FMELauncher host:@""];
-	[fmle startFMLE:live];
-}// end - (void) startFMLE:(NSString *)live
-
-- (void) stopFMLE
-{
-	NSDistantObject *fmle = [NSConnection rootProxyForConnectionWithRegisteredName:FMELauncher host:@""];
-	[fmle stopFMLE];
-}// end - (void) stopFMLE
-
-- (void) joinToLive:(NSString *)live
-{
-	NSDistantObject *charleston = [NSConnection rootProxyForConnectionWithRegisteredName:Charleston host:@""];
-	[charleston joinToLive:live];
-}// - (void) joinToLive:(NSString *)live
 
 #pragma mark -
 #pragma mark GrowlApplicationBridge delegate

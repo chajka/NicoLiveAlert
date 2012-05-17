@@ -278,19 +278,26 @@ __strong OnigRegexp			*startTimeRegex;
 	{
 			// process official
 		if (isOfficial == YES)
+		{
 			isOfficial = NO;
+			return;
+		}// endif
 
 			// check official channel
-		if ((watchChannel == YES) && ([prog isEqualToString:liveOfficialString] == YES))
+		if ([prog isEqualToString:liveOfficialString] == YES)
 		{
 			isOfficial = YES;
-			[activePrograms addOfficialProgram:live withDate:date];
+			if (watchChannel == YES)
+				[activePrograms addOfficialProgram:live withDate:date];
+			continue;
 		}// end if program is official channel
 		
 			// check watchlist
 		NSNumber *needOpen = [watchList valueForKey:prog];
 		if (needOpen != nil)
 		{		// found in watchlist or memberd communities program
+NSLog(@"Enable AutoOpen : %c", enableAutoOpen ? 'Y' : 'N');
+NSLog(@"autoOpen : %@", needOpen);
 			if (isOfficial == YES)
 				[activePrograms addOfficialProgram:live withDate:date];
 			else
@@ -304,14 +311,10 @@ __strong OnigRegexp			*startTimeRegex;
 			// end if found in watch list
 
 				// check auto open of this program
-			if (enableAutoOpen == YES)
-			{
-				BOOL autoOpen = [needOpen boolValue];
-				if (autoOpen == YES)
-				{	// open program
-					NSString *liveURL = [NSString stringWithFormat:URLFormatLive, live];
-					[center postNotificationName:NLNotificationAutoOpen object:liveURL];
-				}// end if program is auto open
+			if ((enableAutoOpen == YES) && ([needOpen boolValue] == YES))
+			{		// open program
+				NSString *liveURL = [NSString stringWithFormat:URLFormatLive, live];
+				[center postNotificationName:NLNotificationAutoOpen object:liveURL];
 			}// end if need check auto opend program
 
 			break;

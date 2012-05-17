@@ -165,13 +165,18 @@ NSNumber *inactive;
 	{
 		error = noErr;
 		[users addObject:user];
+			// create account menuItem
+		if (usersMenu == nil)
+			usersMenu = [[NSMenu alloc] initWithTitle:@""];
+		[usersMenu addItem:[user accountMenu]];
+		
+		[self updateCurrentWatchlist];
 		[self updateUserSateMenu];
 	}
 	else
 	{
 		error = [keychainOfUser status];
 	}// end if add to keychain success or not
-
 #if __has_feature(objc_arc) == 0
 	[user autorelease];
 	[keychainOfUser autorelease];
@@ -179,6 +184,54 @@ NSNumber *inactive;
 
 	return error;
 }// end - (OSStatus) addUser:(NSString *)useraccount andPassword:(NSString *)userpassword
+
+- (NLAccount *) addUser:(NSString *)useraccount withPassword:(NSString *)userpassword status:(OSStatus *)result
+{
+	*result = 1;
+		// create NLAccount instance
+	NLAccount *user = [[NLAccount alloc] initWithAccount:useraccount andPassword:userpassword];
+	if (user == nil)
+		return nil;
+	// end if user was not logined.
+	
+		// store account
+	[accounts setValue:user forKey:[user nickname]];
+	[usersState setValue:inactive forKey:[user nickname]];
+		// update current watch list
+	[self updateCurrentWatchlist];
+	
+		// add to keychain this user
+	KCSInternetUser *keychainOfUser =
+	[[KCSInternetUser alloc] initWithAccount:useraccount andPassword:userpassword];
+	[keychainOfUser setServerName:NICOLOGINSERVER];
+	[keychainOfUser setServerPath:NICOLOGINPATH];
+	[keychainOfUser setAuthType:kSecAuthenticationTypeHTMLForm];
+	[keychainOfUser setProtocol:kSecProtocolTypeHTTPS];
+	[keychainOfUser setKeychainName:[NSString stringWithFormat:NICOKEYCHAINNAMEFORMAT,NICOLOGINSERVER, useraccount]];
+	[keychainOfUser setKeychainKind:NICOKEYCHAINLABEL];
+	if ([keychainOfUser addTokeychain] == YES)
+	{
+		*result = noErr;
+		[users addObject:user];
+			// create account menuItem
+		if (usersMenu == nil)
+			usersMenu = [[NSMenu alloc] initWithTitle:@""];
+		[usersMenu addItem:[user accountMenu]];
+		
+		[self updateCurrentWatchlist];
+		[self updateUserSateMenu];
+	}
+	else
+	{
+		*result = [keychainOfUser status];
+	}// end if add to keychain success or not
+#if __has_feature(objc_arc) == 0
+	[user autorelease];
+	[keychainOfUser autorelease];
+#endif
+	
+	return user;
+}// end - (NLAccount *) addUser:(NSString *)useraccount withPassword:(NSString *)userpassword status:(OSStatus *)result
 
 - (BOOL) updateUserAccountInforms
 {
@@ -224,6 +277,35 @@ NSNumber *inactive;
 	else
 		return [NSArray arrayWithArray:activeUsers];
 }// end - (NSArray *) activeUsers
+
+- (NSArray *) accountIDs
+{
+	NSMutableArray *ary = [NSMutableArray array];
+	for (NLAccount *user in users)
+		[ary addObject:[user userid]];
+	 // end foreach account
+
+	if ([ary count] != 0)
+		return [NSArray arrayWithArray:ary];
+	else
+		return nil;
+}// end - (NSArray *) accountIDs
+
+- (NLAccount *) accountByNickname:(NSString *)nickname
+{
+	return [accounts valueForKey:nickname];
+}// end - (NLAccount *) accountForNickname:(NSString *)nickname
+
+- (NLAccount *) accountByAccount:(NSString *)account
+{
+	for (NLAccount *user in users)
+		if ([[user mailaddr] isEqualToString:account])
+			return user;
+		// end if match mailaddress
+	// end foreach users
+
+	return nil;
+}// end - (NLAccount *) accountByAccount:(NSString *)account
 
 #pragma mark -
 #pragma mark menu management

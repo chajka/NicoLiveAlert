@@ -63,6 +63,7 @@
 	Or 1 is failed to login nicovideo.
  */
 - (OSStatus) addUser:(NSString *)useraccount withPassword:(NSString *)userpassword;
+- (NLAccount *) addUser:(NSString *)useraccount withPassword:(NSString *)userpassword status:(OSStatus *)result;
 
 /*!
 */
@@ -82,6 +83,22 @@
 	@result NSArray contains user's name by NSString.
 */
 - (NSArray *) activeUsers;
+
+/*!
+	@method activeUsers
+	@abstract return array of active user's username
+	@result NSArray contains user's name by NSString.
+*/
+- (NSArray *) accountIDs;
+
+/*!
+	@method activeUsers
+	@abstract return array of active user's username
+	@result NSArray contains user's name by NSString.
+*/
+- (NLAccount *) accountByNickname:(NSString *)nickname;
+
+- (NLAccount *) accountByAccount:(NSString *)account;
 
 #pragma mark -
 #pragma mark menu management

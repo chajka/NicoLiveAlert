@@ -38,6 +38,7 @@
 @end
 
 @implementation NLProgram
+@synthesize menuImage;
 @synthesize programMenu;
 @synthesize programNumber;
 @synthesize communityID;
@@ -670,9 +671,11 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 - (void) createMenuItem
 {
 	programMenu = [[NSMenuItem alloc] initWithTitle:@"" action:@selector(openProgram:) keyEquivalent:@""];
+	NSDictionary *rep = [NSDictionary dictionaryWithObjectsAndKeys:
+						 self, keyProgram, programURL, keyLiveNumber, nil];
 	[programMenu setImage:menuImage];
 	[programMenu setEnabled:YES];
-	[programMenu setRepresentedObject:programURL];
+	[programMenu setRepresentedObject:rep];
 }// - (void) createMenuItem
 
 #pragma mark-
@@ -858,7 +861,7 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 #ifdef GROWL_NOTIFICATION_ICON_DATA
 	[dict setValue:thumbnail forKey:GROWL_NOTIFICATION_ICON_DATA];
 #else
-	[dict setValue:thumbnail forKey:GROWL_NOTIFICATION_ICON];
+	[dict setValue:[thumbnail TIFFRepresentation] forKey:GROWL_NOTIFICATION_ICON];
 #endif
 	[dict setValue:priority forKey:GROWL_NOTIFICATION_PRIORITY];
 	[dict setValue:isStickey forKey:GROWL_NOTIFICATION_STICKY];

@@ -226,7 +226,7 @@
 	NSURL *url = [NSURL URLWithString:URLString];
 	[[NSWorkspace sharedWorkspace] openURL:url];
 	notificationPosted = NO;
-}// end - (void) openProgram:(NSString *)URLString
+}// end - (void) openLiveProgram:(NSString *)URLString
 
 - (void) hookNotifications
 {
@@ -423,17 +423,18 @@
 {
 /* #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7 */
 		// check need kick charlestion
+	NSString *program = [[sender representedObject] valueForKey:keyLiveNumber];
 	if (kickCharlestonOpenByMe == YES)
 	{
 		NSNotificationCenter *myMac = [[NSWorkspace sharedWorkspace] notificationCenter];
 		NSDictionary *info = 
 			[NSDictionary dictionaryWithObjectsAndKeys:
-				[sender representedObject], keyNLNotificationLiveNumber,
+				program, keyNLNotificationLiveNumber,
 				[NSNumber numberWithBool:NO], keyNLNotificationIsMyLive, nil];
 		[myMac postNotification:[NSNotification notificationWithName:NLNotificationLiveStart object:info]];
 	}
 		// open by NSWorkspace
-	[self openLiveProgram:[sender representedObject]];
+	[self openLiveProgram:program];
 /*
 #else
 		// open by XPC
@@ -452,7 +453,7 @@
 - (IBAction) showAboutPanel:(id)sender
 {
 	NSDictionary *dict = nil;
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 	dict = [NSDictionary dictionaryWithObject:AppnameLion forKey:keyAppName];
 #else
 	dict = [NSDictionary dictionaryWithObject:AppNameLepard forKey:keyAppName];

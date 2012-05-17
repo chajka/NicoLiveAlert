@@ -2067,7 +2067,7 @@
 															</object>
 															<object class="NSButton" id="321174368">
 																<reference key="NSNextResponder" ref="790802430"/>
-																<int key="NSvFlags">268</int>
+																<int key="NSvFlags">-2147483380</int>
 																<string key="NSFrame">{{168, 8}, {66, 19}}</string>
 																<reference key="NSSuperview" ref="790802430"/>
 																<reference key="NSNextKeyView" ref="175045918"/>
@@ -2673,7 +2673,7 @@
 																				<int key="NSvFlags">256</int>
 																				<string key="NSFrameSize">{301, 171}</string>
 																				<reference key="NSSuperview" ref="1026498646"/>
-																				<reference key="NSNextKeyView" ref="883228463"/>
+																				<reference key="NSNextKeyView" ref="91824063"/>
 																				<string key="NSReuseIdentifierKey">_NS:13</string>
 																				<bool key="NSEnabled">YES</bool>
 																				<object class="NSTableHeaderView" key="NSHeaderView" id="880958358">
@@ -2791,7 +2791,6 @@
 																		<int key="NSvFlags">-2147483392</int>
 																		<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 																		<reference key="NSSuperview" ref="964194742"/>
-																		<reference key="NSNextKeyView"/>
 																		<string key="NSReuseIdentifierKey">_NS:60</string>
 																		<int key="NSsFlags">1</int>
 																		<reference key="NSTarget" ref="964194742"/>
@@ -2816,14 +2815,13 @@
 																</array>
 																<string key="NSFrame">{{6, 6}, {303, 189}}</string>
 																<reference key="NSSuperview" ref="947367071"/>
-																<reference key="NSNextKeyView" ref="91824063"/>
+																<reference key="NSNextKeyView" ref="1026498646"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<int key="NSsFlags">133682</int>
 																<reference key="NSVScroller" ref="883228463"/>
 																<reference key="NSHScroller" ref="285552429"/>
 																<reference key="NSContentView" ref="1026498646"/>
 																<reference key="NSHeaderClipView" ref="91824063"/>
-																<reference key="NSCornerView" ref="1065054274"/>
 																<bytes key="NSScrollAmts">QSAAAEEgAABBiAAAQYgAAA</bytes>
 															</object>
 														</array>
@@ -6518,6 +6516,170 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">NicoLiveAlert</string>
 					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="aryAccountItems">NLArrayControllerDragAndDrop</string>
+						<string key="aryLauncherItems">NLArrayControllerDragAndDrop</string>
+						<string key="aryManualWatchlist">NLArrayControllerDragAndDrop</string>
+						<string key="btnAddAccount">NSButton</string>
+						<string key="btnAddWatchListItem">NSButton</string>
+						<string key="btnRemoveAccount">NSButton</string>
+						<string key="btnRemoveWatchListItem">NSButton</string>
+						<string key="btnUpdateAccountInfo">NSButton</string>
+						<string key="chkboxAutoOpen">NSButton</string>
+						<string key="chkboxDonotAutoOpenAtBroadcasting">NSButton</string>
+						<string key="chkboxRelationAutoOpenAndCharleston">NSButton</string>
+						<string key="chkboxRelationChooseFromMenuAndCharleston">NSButton</string>
+						<string key="chkboxRelationWithCharlestonMyBroadcast">NSButton</string>
+						<string key="chkboxRelationWithFMELauncher">NSButton</string>
+						<string key="chkboxWatchOfficialChannel">NSButton</string>
+						<string key="chkboxWatchOfficialProgram">NSButton</string>
+						<string key="comboLoginID">NSComboBox</string>
+						<string key="manuLauncApplications">NSMenuItem</string>
+						<string key="menuAccounts">NSMenuItem</string>
+						<string key="menuItemAutoOpen">NSMenuItem</string>
+						<string key="menuItemOfficalPrograms">NSMenuItem</string>
+						<string key="menuItemPrograms">NSMenuItem</string>
+						<string key="menuStatusbar">NSMenu</string>
+						<string key="preferencePanel">NSPanel</string>
+						<string key="secureFieldPassword">NSSecureTextField</string>
+						<string key="tblAccountList">IOMTableViewDragAndDrop</string>
+						<string key="tblManualWatchList">IOMTableViewDragAndDrop</string>
+						<string key="tblTinyLauncher">IOMTableViewDragAndDrop</string>
+						<string key="userDefaults">NSUserDefaultsController</string>
+						<string key="viewNoAccountNotify">NSView</string>
+						<string key="watchItemComment">NSTextField</string>
+						<string key="watchItemName">NSTextField</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="aryAccountItems">
+							<string key="name">aryAccountItems</string>
+							<string key="candidateClassName">NLArrayControllerDragAndDrop</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="aryLauncherItems">
+							<string key="name">aryLauncherItems</string>
+							<string key="candidateClassName">NLArrayControllerDragAndDrop</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="aryManualWatchlist">
+							<string key="name">aryManualWatchlist</string>
+							<string key="candidateClassName">NLArrayControllerDragAndDrop</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnAddAccount">
+							<string key="name">btnAddAccount</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnAddWatchListItem">
+							<string key="name">btnAddWatchListItem</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnRemoveAccount">
+							<string key="name">btnRemoveAccount</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnRemoveWatchListItem">
+							<string key="name">btnRemoveWatchListItem</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnUpdateAccountInfo">
+							<string key="name">btnUpdateAccountInfo</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="chkboxAutoOpen">
+							<string key="name">chkboxAutoOpen</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="chkboxDonotAutoOpenAtBroadcasting">
+							<string key="name">chkboxDonotAutoOpenAtBroadcasting</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="chkboxRelationAutoOpenAndCharleston">
+							<string key="name">chkboxRelationAutoOpenAndCharleston</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="chkboxRelationChooseFromMenuAndCharleston">
+							<string key="name">chkboxRelationChooseFromMenuAndCharleston</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="chkboxRelationWithCharlestonMyBroadcast">
+							<string key="name">chkboxRelationWithCharlestonMyBroadcast</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="chkboxRelationWithFMELauncher">
+							<string key="name">chkboxRelationWithFMELauncher</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="chkboxWatchOfficialChannel">
+							<string key="name">chkboxWatchOfficialChannel</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="chkboxWatchOfficialProgram">
+							<string key="name">chkboxWatchOfficialProgram</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="comboLoginID">
+							<string key="name">comboLoginID</string>
+							<string key="candidateClassName">NSComboBox</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="manuLauncApplications">
+							<string key="name">manuLauncApplications</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="menuAccounts">
+							<string key="name">menuAccounts</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="menuItemAutoOpen">
+							<string key="name">menuItemAutoOpen</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="menuItemOfficalPrograms">
+							<string key="name">menuItemOfficalPrograms</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="menuItemPrograms">
+							<string key="name">menuItemPrograms</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="menuStatusbar">
+							<string key="name">menuStatusbar</string>
+							<string key="candidateClassName">NSMenu</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="preferencePanel">
+							<string key="name">preferencePanel</string>
+							<string key="candidateClassName">NSPanel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="secureFieldPassword">
+							<string key="name">secureFieldPassword</string>
+							<string key="candidateClassName">NSSecureTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tblAccountList">
+							<string key="name">tblAccountList</string>
+							<string key="candidateClassName">IOMTableViewDragAndDrop</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tblManualWatchList">
+							<string key="name">tblManualWatchList</string>
+							<string key="candidateClassName">IOMTableViewDragAndDrop</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tblTinyLauncher">
+							<string key="name">tblTinyLauncher</string>
+							<string key="candidateClassName">IOMTableViewDragAndDrop</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="userDefaults">
+							<string key="name">userDefaults</string>
+							<string key="candidateClassName">NSUserDefaultsController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewNoAccountNotify">
+							<string key="name">viewNoAccountNotify</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="watchItemComment">
+							<string key="name">watchItemComment</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="watchItemName">
+							<string key="name">watchItemName</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/NicoLiveAlert.h</string>

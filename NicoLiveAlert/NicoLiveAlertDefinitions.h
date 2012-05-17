@@ -265,6 +265,9 @@ enum elementStreamInfoIndex {
 	indexThumbnail,
 };
 
+	// container object definition
+#define keyProgram					@"program"
+#define keyLiveNumber				@"liveNumber"
 	// notification constant
 #define NLNotificationTimeUpdated	@"NLNotificationTimeUpdated"
 #define NLNotificationPorgramEnd	@"NLNotificationPorgramEnd"

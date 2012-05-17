@@ -356,8 +356,13 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	{
 		if (progMenu == item)
 		{
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 			[item setState:NSMixedState];
 			[item setState:NSOffState];
+#else
+			[item setImage:nil];
+			[item setImage:[[[item representedObject] valueForKey:keyProgram] menuImage]];
+#endif
 		}// end if
 	}// end foreach menuItem
 	

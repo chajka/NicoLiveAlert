@@ -45,6 +45,7 @@
 	BOOL					isMyProgram;
 	BOOL					broadCasting;
 }
+@property (readonly) NSImage			*menuImage;
 @property (readonly) NSMenuItem			*programMenu;
 @property (readonly) NSString			*programNumber;
 @property (readonly) NSString			*communityID;

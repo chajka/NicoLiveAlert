@@ -111,7 +111,7 @@ CFMutableDictionaryRef	query;
 #endif
 }// end - (void) dealloc
 
-#ifdef __OBJC_GC__
+#if __OBJC_GC__
 - (void) finalize
 {
 	if (keychain != nil)		CFRelease(keychain);

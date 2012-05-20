@@ -67,7 +67,7 @@
 #endif
 }// end - (void) dealloc
 
-#ifdef __OBJC_GC__
+#if __OBJC_GC__
 - (void) finalize
 {
 	if ((iStream != nil) || (oStream != nil))

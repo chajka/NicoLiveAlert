@@ -108,7 +108,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 #endif
 }// end - (void) dealloc
 
-#ifdef __OBJC_GC__
+#if __OBJC_GC__
 - (void) finalize
 {
 	NSNotificationCenter *this = [NSNotificationCenter defaultCenter];

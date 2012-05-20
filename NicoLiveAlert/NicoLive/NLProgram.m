@@ -51,76 +51,76 @@ NSInteger currentElement;
 NSDictionary *elementDict;
 NSString *embedContent;
 
-const CGFloat originX = 0.0;
-const CGFloat originY = 0.0;
-const CGFloat thumbnailSize = 50.0;
-const CGFloat titleImageWidth = 280.0;
-const CGFloat exteriorLineWidth = 1.0;
-const CGFloat titleKernValue = 0.0;
-const CGFloat descKernValue = 0.0;
-const CGFloat titleComuKernValue = 0.0;
-const CGFloat timeStringWidth = 110.0;
-const CGFloat timeStringHeight = 14.0;
-const CGFloat elapesedStringWidth = 39;
-const CGFloat elapesedStringHeight = timeStringHeight;
+static const CGFloat originX = 0.0;
+static const CGFloat originY = 0.0;
+static const CGFloat thumbnailSize = 50.0;
+static const CGFloat titleImageWidth = 280.0;
+static const CGFloat exteriorLineWidth = 1.0;
+static const CGFloat titleKernValue = 0.0;
+static const CGFloat descKernValue = 0.0;
+static const CGFloat titleComuKernValue = 0.0;
+static const CGFloat timeStringWidth = 110.0;
+static const CGFloat timeStringHeight = 14.0;
+static const CGFloat elapesedStringWidth = 39;
+static const CGFloat elapesedStringHeight = timeStringHeight;
 
 #pragma mark user program constant
-const CGFloat programBoundsW = 293.0;
-const CGFloat programBoundsH = 64.0;
-const CGFloat accountOffsetX = 52.0;
-const CGFloat accountOffsetY = 0.0;
-const CGFloat accountWitdth = 120.0;
-const CGFloat accountHeight = 18.0;
-const CGFloat communityOffsetX = 52.0;
-const CGFloat communityOffsetY = 12.0;
-const CGFloat progTitleOffsetX = 0.0;
-const CGFloat progTitleOffsetY = 51.0;
-const CGFloat progDescOffsetX = 52.0;
-const CGFloat progDescOffsetY = 24.0;
-const CGFloat progDescWidth = (programBoundsW - thumbnailSize);
-const CGFloat progDescHeight = 28.0;
-const CGFloat userTimeOffsetX = (programBoundsW - timeStringWidth);
-const CGFloat userTimeOffsetY = 0.0;
-const CGFloat userElapsedOffsetX = (programBoundsW - elapesedStringWidth);
+static const CGFloat programBoundsW = 293.0;
+static const CGFloat programBoundsH = 64.0;
+static const CGFloat accountOffsetX = 52.0;
+static const CGFloat accountOffsetY = 0.0;
+static const CGFloat accountWitdth = 120.0;
+static const CGFloat accountHeight = 18.0;
+static const CGFloat communityOffsetX = 52.0;
+static const CGFloat communityOffsetY = 12.0;
+static const CGFloat progTitleOffsetX = 0.0;
+static const CGFloat progTitleOffsetY = 51.0;
+static const CGFloat progDescOffsetX = 52.0;
+static const CGFloat progDescOffsetY = 24.0;
+static const CGFloat progDescWidth = (programBoundsW - thumbnailSize);
+static const CGFloat progDescHeight = 28.0;
+static const CGFloat userTimeOffsetX = (programBoundsW - timeStringWidth);
+static const CGFloat userTimeOffsetY = 0.0;
+static const CGFloat userElapsedOffsetX = (programBoundsW - elapesedStringWidth);
 
 #pragma mark official program constant
-const CGFloat officialBoundsW = 293.0;
-const CGFloat officialBoundsH = 50.0;
-const CGFloat officialDescX = 52.0;
-const CGFloat officialDescY = 24.0;
-const CGFloat officialDescW = (officialBoundsW - thumbnailSize);
-const CGFloat officialDescH = (officialBoundsH - officialDescY);
-const CGFloat officialTimeOffsetX = (officialBoundsW - timeStringWidth);
-const CGFloat officialTimeOffsetY = 0.0;
-const CGFloat officialElapsedOffsetX = (officialBoundsW - elapesedStringWidth);
+static const CGFloat officialBoundsW = 293.0;
+static const CGFloat officialBoundsH = 50.0;
+static const CGFloat officialDescX = 52.0;
+static const CGFloat officialDescY = 24.0;
+static const CGFloat officialDescW = (officialBoundsW - thumbnailSize);
+static const CGFloat officialDescH = (officialBoundsH - officialDescY);
+static const CGFloat officialTimeOffsetX = (officialBoundsW - timeStringWidth);
+static const CGFloat officialTimeOffsetY = 0.0;
+static const CGFloat officialElapsedOffsetX = (officialBoundsW - elapesedStringWidth);
 
 #pragma mark color constant
-const CGFloat alpha = 1.0;
-const CGFloat fract = 1.0;
+static const CGFloat alpha = 1.0;
+static const CGFloat fract = 1.0;
 	// program title color
-const CGFloat ProgramTitleColorRed = (0.0 / 255);
-const CGFloat ProgramTitleColorGreen = (0.0 / 255);
-const CGFloat ProgramTitleColorBlue = (255.0 / 255);
+static const CGFloat ProgramTitleColorRed = (0.0 / 255);
+static const CGFloat ProgramTitleColorGreen = (0.0 / 255);
+static const CGFloat ProgramTitleColorBlue = (255.0 / 255);
 	// program description color
-const CGFloat ProgramDescColorRed = (64.0 / 255);
-const CGFloat ProgramDescColorGreen = (64.0 / 255);
-const CGFloat ProgramDescColorBlue = (64.0 / 255);
+static const CGFloat ProgramDescColorRed = (64.0 / 255);
+static const CGFloat ProgramDescColorGreen = (64.0 / 255);
+static const CGFloat ProgramDescColorBlue = (64.0 / 255);
 	// commnunity name color
-const CGFloat CommunityNameColorRed = (204.0 / 255);
-const CGFloat CommunityNameColorGreen = (102.0 / 255);
-const CGFloat CommunityNameColorBlue = (255.0 / 255);
+static const CGFloat CommunityNameColorRed = (204.0 / 255);
+static const CGFloat CommunityNameColorGreen = (102.0 / 255);
+static const CGFloat CommunityNameColorBlue = (255.0 / 255);
 	// account color
-const CGFloat AccountColorRed = (0.0 / 255);
-const CGFloat AccountColorGreen = (128.0 / 255);
-const CGFloat AccountColorBlue = (128.0 / 255);
+static const CGFloat AccountColorRed = (0.0 / 255);
+static const CGFloat AccountColorGreen = (128.0 / 255);
+static const CGFloat AccountColorBlue = (128.0 / 255);
 	// remain time color
-const CGFloat TimeColorRed = (128.0 / 255);
-const CGFloat TimeColorGreen = (0.0 / 255);
-const CGFloat TimeColorBlue = (64.0 / 255);
+static const CGFloat TimeColorRed = (128.0 / 255);
+static const CGFloat TimeColorGreen = (0.0 / 255);
+static const CGFloat TimeColorBlue = (64.0 / 255);
 
 #pragma timer constant
-const NSTimeInterval checkActivityCycle = (60.0 * 3);
-const NSTimeInterval elapseCheckCycle = (10.0);
+static const NSTimeInterval checkActivityCycle = (60.0 * 3);
+static const NSTimeInterval elapseCheckCycle = (10.0);
 
 #pragma mark construct / destruct
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner isMine:(BOOL)mine
@@ -852,6 +852,9 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 #pragma mark Growling
 - (void) growlProgramNotify:(NSString *)notificationName
 {
+	NSDictionary *clickContext = [NSDictionary dictionaryWithObjectsAndKeys:
+		programURL, keyProgram, programNumber, keyLiveNumber,
+		[NSNumber numberWithBool:isOfficial], keyisOfficial, nil];
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
 	NSNumber *priority = [NSNumber numberWithInt:0];
 	NSNumber *isStickey = [NSNumber numberWithBool:NO];
@@ -865,7 +868,7 @@ const NSTimeInterval elapseCheckCycle = (10.0);
 #endif
 	[dict setValue:priority forKey:GROWL_NOTIFICATION_PRIORITY];
 	[dict setValue:isStickey forKey:GROWL_NOTIFICATION_STICKY];
-	[dict setValue:programURL forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
+	[dict setValue:clickContext forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
 	
 	[GrowlApplicationBridge notifyWithDictionary:dict];
 }// end - (void) growlProgramNotify:(NSString *)notificationName

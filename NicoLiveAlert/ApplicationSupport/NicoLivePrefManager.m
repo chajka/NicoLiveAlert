@@ -33,12 +33,21 @@
 
 - (void) dealloc
 {
+	[myDefaults synchronize];
 #if __has_feature(objc_arc) == 0
 	[myDefaults release];
 
 	[super dealloc];
 #endif
 }
+
+#if __OBJC_GC__
+- (void) finalize
+{
+	[myDefaults synchronize];
+	[super finalize];
+}
+#endif
 
 - (void) registerDefaults
 {

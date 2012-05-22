@@ -7,6 +7,7 @@
 //
 
 #import "NLUsers.h"
+#import "NicoLiveAlertCollaboration.h"
 
 @interface NLUsers ()
 - (NSMutableDictionary *) makeAccounts:(NSArray *)activeUsers;
@@ -43,14 +44,14 @@ NSNumber *inactive;
 		[self updateCurrentWatchlist];
 		usersMenu = nil;
 		[self creteUserStateMenu];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeProgramFromWatchList:) name:NLNotificationFoundLiveNo object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeProgramFromWatchList:) name:NLNotificationFoundProgram object:nil];
 	}
 	return self;
 }// end - (id) initWithActiveUsers:(NSArray *)users andManualWatchList:(NSDictionary *)manualWatchList
 
 - (void) dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationFoundLiveNo object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationFoundProgram object:nil];
 #if __has_feature(objc_arc) == 0
 	if (active != nil)				[active release];
 	if (inactive != nil)			[inactive release];
@@ -117,7 +118,7 @@ NSNumber *inactive;
 
 - (void) removeProgramFromWatchList:(NSNotification *)aNotification
 {
-	NSString *liveNo = [aNotification object];
+	NSString *liveNo = [[aNotification userInfo] valueForKey:LiveNumber];
 	[originalWatchList removeObjectForKey:liveNo];
 	[self updateCurrentWatchlist];
 }// end - (void) removeProgramFromWatchList:(NSNotification *)aNotification

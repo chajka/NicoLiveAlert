@@ -9,6 +9,7 @@
 #import "NLProgram.h"
 #import "HTTPConnection.h"
 #import "Growl/Growl.h"
+#import "NicoLiveAlertCollaboration.h"
 
 @interface NLProgram ()
 	// construction support methods
@@ -17,6 +18,8 @@
 - (NSDictionary *) elementDict;
 - (void) checkStartTime:(NSDate *)date forLive:(NSString *)liveNo;
 - (NSString *) makeStartString;
+- (NSDictionary *)createNotificationDict:(NSString *)liveNo kind:(NSNumber *)kind;
+- (void) postPorgramStartNotification:(NSNumber *)autoOpen;
 - (void) parseOfficialProgram;
 - (void) parseProgramInfo:(NSString *)liveNo;
 	// activity control method
@@ -123,7 +126,8 @@ static const NSTimeInterval checkActivityCycle = (60.0 * 3);
 static const NSTimeInterval elapseCheckCycle = (10.0);
 
 #pragma mark construct / destruct
-- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner isMine:(BOOL)mine
+	// constructor for user program
+- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isMine:(BOOL)mine isChannel:(BOOL) isChannel
 {
 	self = [super init];
 	if (self)
@@ -151,6 +155,8 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		broadcastOwner = [owner copy];
 		[elapseTimer fire];
 		[programStatusTimer fire];
+		info = [self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isChannel ? -1 : 0)]];
+		[self postPorgramStartNotification:autoOpen];
 		@try {
 			if ([startTime isEqualToDate:date] == YES)
 				[self growlProgramNotify:GrowlNotifyStartUserProgram];
@@ -162,9 +168,10 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		}
 	}// end if
 	return self;
-}// end - (id) initWithProgram:(NSString *)liveNo forAccount:(NLAccount *)account
+}// end - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isMine:(BOOL)mine isChannel:(BOOL) isChanne
 
-- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date
+	// constructor for official or channel program
+- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official
 {
 	self = [super init];
 	if (self)
@@ -189,6 +196,8 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		[self setupEachMember:liveNo];
 		[elapseTimer fire];
 		[programStatusTimer fire];
+		info = [self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isOfficial ? 1 : -1)]];
+		[self postPorgramStartNotification:autoOpen];
 		if ([startTime isEqualToDate:date] == YES)
 			[self growlProgramNotify:GrowlNotifyStartOfficialProgram];
 		else
@@ -378,6 +387,21 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 
 	return startString;
 }// end - (NSString *) makeStartString
+
+- (NSDictionary *)createNotificationDict:(NSString *)liveNo kind:(NSNumber *)kind
+{
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	[dict setValue:[NSURL URLWithString:[NSString stringWithFormat:PROGRAMURLFORMAT, liveNo]] forKey:ProgramURL];
+	[dict setValue:liveNo forKey:LiveNumber];
+	[dict setValue:kind forKey:BroadCastKind];
+
+	return [NSDictionary dictionaryWithDictionary:dict];
+}// end - (NSMutableDictionary *)createNotificationDict(NSString *)liveNo kind:(NSNumber *)kind
+
+- (void) postPorgramStartNotification:(NSNumber *)autoOpen
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:NLNotificationFoundProgram object:autoOpen userInfo:info];
+}// end - (void) postPorgramStartNotification:(NSMutableDictionary *)info autoOpen:(NSNumber *)autoOpen
 
 - (void) parseOfficialProgram
 {
@@ -852,9 +876,6 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 #pragma mark Growling
 - (void) growlProgramNotify:(NSString *)notificationName
 {
-	NSDictionary *clickContext = [NSDictionary dictionaryWithObjectsAndKeys:
-		programURL, keyProgram, programNumber, keyLiveNumber,
-		[NSNumber numberWithBool:isOfficial], keyisOfficial, nil];
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
 	NSNumber *priority = [NSNumber numberWithInt:0];
 	NSNumber *isStickey = [NSNumber numberWithBool:NO];
@@ -868,7 +889,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 #endif
 	[dict setValue:priority forKey:GROWL_NOTIFICATION_PRIORITY];
 	[dict setValue:isStickey forKey:GROWL_NOTIFICATION_STICKY];
-	[dict setValue:clickContext forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
+	[dict setValue:info forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
 	
 	[GrowlApplicationBridge notifyWithDictionary:dict];
 }// end - (void) growlProgramNotify:(NSString *)notificationName

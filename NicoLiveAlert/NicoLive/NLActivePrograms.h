@@ -22,8 +22,8 @@
 @property (retain, readwrite) NLStatusbar	*sbItem;
 @property (retain, readwrite) NLUsers		*users;
 
-- (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:owner;
-- (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date;
+- (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isChannel:(BOOL) isChannel;
+- (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official;
 	//
 - (void) suspend;
 - (void) resume;

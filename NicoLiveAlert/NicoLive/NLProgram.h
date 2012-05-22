@@ -38,6 +38,7 @@
 	NSTimer					*programStatusTimer;
 	NSTimer					*elapseTimer;
 	NSNotificationCenter	*center;
+	NSDictionary			*info;
 	BOOL					iconWasValid;
 	BOOL					iconIsValid;
 	BOOL					isReservedProgram;
@@ -53,8 +54,8 @@
 @property (readonly) BOOL				broadCasting;
 @property (readonly) BOOL				isOfficial;
 
-- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date;
-- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner isMine:(BOOL)mine;
+- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isMine:(BOOL)mine isChannel:(BOOL) isChannel;
+- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official;
 - (BOOL) isEqual:(id)object;
 - (BOOL) isSame:(NLProgram *)program;
 - (void) terminate;

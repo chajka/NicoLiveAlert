@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SocketConnection.h"
+#import "NicoLiveAlertCollaboration.h"
 #import "HTTPConnection.h"
 #import "NicoLiveAlertDefinitions.h"
 #import "NLMessageServerInfo.h"

@@ -256,69 +256,30 @@ __strong OnigRegexp			*startTimeRegex;
 		// check official program
 	if ((watchOfficial == YES) && ([program count] == 2))
 	{
-		[activePrograms addOfficialProgram:live withDate:date];
-
-			// check in watchlist
-		NSNumber *isInWatchList = [watchList valueForKey:live];
-		if (isInWatchList != nil)
-		{		// item is in watchlist
-			[center postNotification:[NSNotification notificationWithName:NLNotificationFoundLiveNo object:live]];
-			if ([isInWatchList boolValue] == YES)
-			{
-				NSString *liveURL = [NSString stringWithFormat:URLFormatLive, live];
-				[center postNotificationName:NLNotificationAutoOpen object:liveURL];
-			}// end if need auto open
-		}// end if program is entry in watchlist
-
+		[activePrograms addOfficialProgram:live withDate:date autoOpen:[NSNumber numberWithBool:NO] isOfficial:YES];
 		return;
 	}// end if program is official program
 
 		// iterate program info
 	for (NSString *prog in program)
-	{
-			// process official
-		if (isOfficial == YES)
-		{
-			isOfficial = NO;
-			return;
-		}// endif
-
-			// check official channel
+	{			// check official channel
 		if ([prog isEqualToString:liveOfficialString] == YES)
 		{
-			isOfficial = YES;
 			if (watchChannel == YES)
-				[activePrograms addOfficialProgram:live withDate:date];
-			continue;
+				[activePrograms addOfficialProgram:live withDate:date autoOpen:[NSNumber numberWithBool:NO] isOfficial:NO];
+			return;
 		}// end if program is official channel
 		
 			// check watchlist
 		NSNumber *needOpen = [watchList valueForKey:prog];
 		if (needOpen != nil)
 		{		// found in watchlist or memberd communities program
-			if (isOfficial == YES)
-				[activePrograms addOfficialProgram:live withDate:date];
-			else
-				[activePrograms addUserProgram:live withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner]];
-			// end if Official program or User program
-			
-				// check mutch is program number
-			OnigResult *isPorgram = [programRegex search:prog];
-			if (isPorgram != nil)
-				[center postNotification:[NSNotification notificationWithName:NLNotificationFoundLiveNo object:prog]];
-			// end if found in watch list
+			BOOL isChannel = ([[[program objectAtIndex:offsetCommuCh] substringWithRange:NSMakeRange(0, 2)]isEqualToString:kindChannel]) ? YES : NO;
 
-				// check auto open of this program
-			if ((enableAutoOpen == YES) && ([needOpen boolValue] == YES))
-			{		// open program
-				NSString *liveURL = [NSString stringWithFormat:URLFormatLive, live];
-				[center postNotificationName:NLNotificationAutoOpen object:liveURL];
-			}// end if need check auto opend program
-
-			break;
+			[activePrograms addUserProgram:live withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner] autoOpen:needOpen isChannel:isChannel];
+			return;
 		}// end if program found
 	}// end foreach program information items
-
 }// end - (void) checkProgram:(NSString *)progInfo
 
 #pragma mark -

@@ -49,7 +49,7 @@ NSNumber *yes;
 }// end - (void) dealloc
 
 #pragma mark -
-- (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:owner
+- (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isChannel:(BOOL) isChannel
 {
 	if ([[liveNumbers valueForKey:liveNo] isEqualTo:yes])
 		return;
@@ -62,7 +62,7 @@ NSNumber *yes;
 		isMyBroadcast = YES;
 	// end if program is my broadcast
 		
-	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo withDate:date forAccount:account owner:owner isMine:isMyBroadcast];
+	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo withDate:date forAccount:account owner:owner autoOpen:autoOpen isMine:isMyBroadcast isChannel:isChannel];
 	if (program == nil)
 		return;
 
@@ -91,16 +91,16 @@ NSNumber *yes;
 		// decrease retain count for remove means relase
 	[program release];
 #endif
-}// end - (void) addUserProgram:(NSString *)liveNo community:(NSString *)community owner:owner
+}// end - (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen
 
-- (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date
+- (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official
 {
 	if ([[liveNumbers valueForKey:liveNo] isEqualTo:yes])
 		return;
 	else
 		[liveNumbers setValue:yes forKey:liveNo];
 
-	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo  withDate:date];
+	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo  withDate:date autoOpen:autoOpen isOfficial:official];
 	if (program == nil)
 		return;
 
@@ -120,7 +120,7 @@ NSNumber *yes;
 		// decrease retain count for remove means relase
 	[program release];
 #endif
-}// end - (void) addOfficialProgram:(NSString *)liveNo
+}// end - (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official
 
 - (void) suspend
 {

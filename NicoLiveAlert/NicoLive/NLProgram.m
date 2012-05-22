@@ -48,6 +48,7 @@
 @synthesize broadcastOwner;
 @synthesize isOfficial;
 @synthesize broadCasting;
+@synthesize info;
 
 NSMutableString *dataString;
 NSInteger currentElement;
@@ -153,10 +154,10 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 			primaryAccount = [OriginalWatchList copy];
 		[self setupEachMember:liveNo];
 		broadcastOwner = [owner copy];
-		[elapseTimer fire];
-		[programStatusTimer fire];
 		info = [self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isChannel ? -1 : 0)]];
 		[self postPorgramStartNotification:autoOpen];
+		[elapseTimer fire];
+		[programStatusTimer fire];
 		@try {
 			if ([startTime isEqualToDate:date] == YES)
 				[self growlProgramNotify:GrowlNotifyStartUserProgram];
@@ -194,10 +195,10 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		}
 		primaryAccount = [[NSString alloc] initWithString:OfficialTitleString];
 		[self setupEachMember:liveNo];
-		[elapseTimer fire];
-		[programStatusTimer fire];
 		info = [self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isOfficial ? 1 : -1)]];
 		[self postPorgramStartNotification:autoOpen];
+		[elapseTimer fire];
+		[programStatusTimer fire];
 		if ([startTime isEqualToDate:date] == YES)
 			[self growlProgramNotify:GrowlNotifyStartOfficialProgram];
 		else

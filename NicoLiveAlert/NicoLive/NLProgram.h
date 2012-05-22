@@ -53,6 +53,7 @@
 @property (readonly) NSString			*broadcastOwner;
 @property (readonly) BOOL				broadCasting;
 @property (readonly) BOOL				isOfficial;
+@property (readonly) NSDictionary		*info;
 
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isMine:(BOOL)mine isChannel:(BOOL) isChannel;
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official;

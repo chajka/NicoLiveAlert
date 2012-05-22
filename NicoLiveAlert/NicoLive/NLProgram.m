@@ -211,10 +211,10 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 - (void) dealloc
 {
 	if (isMyProgram == YES)
-		[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:NLNotificationMyBroadcastEnd object:self]];
+		[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:NLNotificationMyBroadcastEnd object:info]];
 
 #if __has_feature(objc_arc) == 0
-	if (programMenu != nil)		[programMenu release];
+	if (programMenu != nil)			[programMenu release];
 	if (menuImage != nil)			[menuImage release];
 	if (background != nil)			[background release];
 	if (timeMask != nil)			[timeMask release];
@@ -225,11 +225,12 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	if (programDescription != nil)	[programDescription release];
 	if (communityName != nil)		[communityName release];
 	if (primaryAccount != nil)		[primaryAccount release];
-	if (communityID != nil)		[communityID release];
+	if (communityID != nil)			[communityID release];
 	if (broadcastOwner != nil)		[broadcastOwner release];
 	if (startTime != nil)			[startTime release];
-	if (startTimeString != nil)	[startTimeString release];
+	if (startTimeString != nil)		[startTimeString release];
 	if (programURL != nil)			[programURL release];
+	if (info != nil)				[info release];
 
 	if (embedContent != nil)		[embedContent release];
 
@@ -266,6 +267,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	isReservedProgram = NO;
 	isOfficial = NO;
 	broadCasting = NO;
+	info = Nil;
 
 	dataString = nil;
 	currentElement = 0;
@@ -525,7 +527,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	broadCasting = NO;
 	[self stopElapsedTimer];
 	[self stopProgramStatusTimer];
-	[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
+	[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:info]];
 }// end - (void) terminate
 
 - (void) suspend
@@ -546,7 +548,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	{
 		[self stopElapsedTimer];
 		[self stopProgramStatusTimer];
-		[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
+		[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:info]];
 		status = NO;
 	}
 

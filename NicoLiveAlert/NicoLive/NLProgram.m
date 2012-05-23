@@ -398,7 +398,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	[dict setValue:liveNo forKey:LiveNumber];
 	[dict setValue:kind forKey:BroadCastKind];
 
-	return [NSDictionary dictionaryWithDictionary:dict];
+	return [[NSDictionary alloc] initWithDictionary:dict];
 }// end - (NSMutableDictionary *)createNotificationDict(NSString *)liveNo kind:(NSNumber *)kind
 
 - (void) postPorgramStartNotification:(NSNumber *)autoOpen
@@ -527,7 +527,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	broadCasting = NO;
 	[self stopElapsedTimer];
 	[self stopProgramStatusTimer];
-	[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:info]];
+	[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
 }// end - (void) terminate
 
 - (void) suspend
@@ -548,7 +548,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	{
 		[self stopElapsedTimer];
 		[self stopProgramStatusTimer];
-		[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:info]];
+		[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
 		status = NO;
 	}
 
@@ -884,7 +884,8 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	NSNumber *isStickey = [NSNumber numberWithBool:NO];
 	[dict setValue:notificationName forKey:GROWL_NOTIFICATION_NAME];
 	[dict setValue:programTitle forKey:GROWL_NOTIFICATION_TITLE];
-	[dict setValue:programDescription forKey:GROWL_NOTIFICATION_DESCRIPTION];
+	if (programDescription != nil)
+		[dict setValue:programDescription forKey:GROWL_NOTIFICATION_DESCRIPTION];
 #ifdef GROWL_NOTIFICATION_ICON_DATA
 	[dict setValue:thumbnail forKey:GROWL_NOTIFICATION_ICON_DATA];
 #else

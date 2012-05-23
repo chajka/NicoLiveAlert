@@ -275,8 +275,10 @@ __strong OnigRegexp			*startTimeRegex;
 		if (needOpen != nil)
 		{		// found in watchlist or memberd communities program
 			BOOL isChannel = ([[[program objectAtIndex:offsetCommuCh] substringWithRange:NSMakeRange(0, 2)]isEqualToString:kindChannel]) ? YES : NO;
-
-			[activePrograms addUserProgram:live withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner] autoOpen:needOpen isChannel:isChannel];
+			if (isChannel == YES)
+				[activePrograms addOfficialProgram:live withDate:date autoOpen:[NSNumber numberWithBool:NO] isOfficial:NO];
+			else
+				[activePrograms addUserProgram:live withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner] autoOpen:needOpen isChannel:isChannel];
 			return;
 		}// end if program found
 	}// end foreach program information items

@@ -2475,7 +2475,7 @@
 															<object class="NSButton" id="1042847882">
 																<reference key="NSNextResponder" ref="1009011367"/>
 																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{22, 92}, {235, 18}}</string>
+																<string key="NSFrame">{{16, 52}, {235, 18}}</string>
 																<reference key="NSSuperview" ref="1009011367"/>
 																<reference key="NSNextKeyView" ref="253192181"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -2501,7 +2501,7 @@
 															<object class="NSButton" id="253192181">
 																<reference key="NSNextResponder" ref="1009011367"/>
 																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{22, 72}, {235, 18}}</string>
+																<string key="NSFrame">{{16, 32}, {235, 18}}</string>
 																<reference key="NSSuperview" ref="1009011367"/>
 																<reference key="NSNextKeyView" ref="535448704"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -2527,9 +2527,9 @@
 															<object class="NSButton" id="535448704">
 																<reference key="NSNextResponder" ref="1009011367"/>
 																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{22, 52}, {235, 18}}</string>
+																<string key="NSFrame">{{16, 12}, {235, 18}}</string>
 																<reference key="NSSuperview" ref="1009011367"/>
-																<reference key="NSNextKeyView" ref="833055688"/>
+																<reference key="NSNextKeyView" ref="576044959"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<int key="NSTag">1103</int>
 																<bool key="NSEnabled">YES</bool>
@@ -2553,9 +2553,9 @@
 															<object class="NSButton" id="833055688">
 																<reference key="NSNextResponder" ref="1009011367"/>
 																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{22, 32}, {261, 18}}</string>
+																<string key="NSFrame">{{16, 72}, {261, 18}}</string>
 																<reference key="NSSuperview" ref="1009011367"/>
-																<reference key="NSNextKeyView" ref="869161129"/>
+																<reference key="NSNextKeyView" ref="1042847882"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<int key="NSTag">1104</int>
 																<bool key="NSEnabled">YES</bool>
@@ -2579,9 +2579,9 @@
 															<object class="NSButton" id="869161129">
 																<reference key="NSNextResponder" ref="1009011367"/>
 																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{22, 12}, {287, 18}}</string>
+																<string key="NSFrame">{{16, 92}, {287, 18}}</string>
 																<reference key="NSSuperview" ref="1009011367"/>
-																<reference key="NSNextKeyView" ref="576044959"/>
+																<reference key="NSNextKeyView" ref="833055688"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<int key="NSTag">1105</int>
 																<bool key="NSEnabled">YES</bool>
@@ -2605,7 +2605,7 @@
 														</array>
 														<string key="NSFrame">{{1, 1}, {330, 118}}</string>
 														<reference key="NSSuperview" ref="251191014"/>
-														<reference key="NSNextKeyView" ref="1042847882"/>
+														<reference key="NSNextKeyView" ref="869161129"/>
 														<string key="NSReuseIdentifierKey">_NS:11</string>
 													</object>
 												</array>
@@ -2652,7 +2652,7 @@
 																				<int key="NSvFlags">256</int>
 																				<string key="NSFrameSize">{301, 171}</string>
 																				<reference key="NSSuperview" ref="1026498646"/>
-																				<reference key="NSNextKeyView" ref="91824063"/>
+																				<reference key="NSNextKeyView" ref="883228463"/>
 																				<string key="NSReuseIdentifierKey">_NS:13</string>
 																				<bool key="NSEnabled">YES</bool>
 																				<object class="NSTableHeaderView" key="NSHeaderView" id="880958358">
@@ -2770,6 +2770,7 @@
 																		<int key="NSvFlags">-2147483392</int>
 																		<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 																		<reference key="NSSuperview" ref="964194742"/>
+																		<reference key="NSNextKeyView"/>
 																		<string key="NSReuseIdentifierKey">_NS:60</string>
 																		<int key="NSsFlags">1</int>
 																		<reference key="NSTarget" ref="964194742"/>
@@ -2794,13 +2795,14 @@
 																</array>
 																<string key="NSFrame">{{6, 6}, {303, 189}}</string>
 																<reference key="NSSuperview" ref="947367071"/>
-																<reference key="NSNextKeyView" ref="1026498646"/>
+																<reference key="NSNextKeyView" ref="91824063"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<int key="NSsFlags">133682</int>
 																<reference key="NSVScroller" ref="883228463"/>
 																<reference key="NSHScroller" ref="285552429"/>
 																<reference key="NSContentView" ref="1026498646"/>
 																<reference key="NSHeaderClipView" ref="91824063"/>
+																<reference key="NSCornerView" ref="1065054274"/>
 																<bytes key="NSScrollAmts">QSAAAEEgAABBiAAAQYgAAA</bytes>
 															</object>
 														</array>
@@ -2853,7 +2855,6 @@
 					</array>
 					<string key="NSFrameSize">{357, 407}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSNextKeyView" ref="783973622"/>
 					<string key="NSReuseIdentifierKey">_NS:21</string>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
@@ -5604,6 +5605,7 @@
 							<reference ref="509718018"/>
 						</array>
 						<reference key="parent" ref="450454686"/>
+						<string key="objectName">Remove Button</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">818</int>
@@ -5612,6 +5614,7 @@
 							<reference ref="548656810"/>
 						</array>
 						<reference key="parent" ref="450454686"/>
+						<string key="objectName">Add Button</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">819</int>
@@ -5870,9 +5873,9 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="869161129"/>
 							<reference ref="833055688"/>
-							<reference ref="535448704"/>
-							<reference ref="253192181"/>
 							<reference ref="1042847882"/>
+							<reference ref="253192181"/>
+							<reference ref="535448704"/>
 						</array>
 						<reference key="parent" ref="147203099"/>
 					</object>

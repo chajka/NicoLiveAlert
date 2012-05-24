@@ -186,7 +186,7 @@ enum elementLiteralIndex {
 #pragma mark definitions for class NLProgramList
 
 #define NLNotificationAutoOpen			@"NLNotificationAutoOpen"
-#define NLNotificationFoundLiveNo		@"NLNotificationFoundLiveNo"
+#define NLNotificationFoundProgram		@"NLNotificationFoundProgram"
 #define NLNotificationConnectionLost	@"NLNotificationConnectionLost"
 #define NLNotificationConnectionRised	@"NLNotificationConnectionRised"
 #define NLNotificationStreamOpen		@"NLNotificationStreamOpen"
@@ -266,8 +266,9 @@ enum elementStreamInfoIndex {
 };
 
 	// container object definition
-#define keyProgram					@"program"
-#define keyLiveNumber				@"liveNumber"
+#define keyProgram					@"Program"
+#define keyLiveNumber				@"LiveNumber"
+#define keyisOfficial				@"isOfficial"
 	// notification constant
 #define NLNotificationTimeUpdated	@"NLNotificationTimeUpdated"
 #define NLNotificationPorgramEnd	@"NLNotificationPorgramEnd"
@@ -288,6 +289,7 @@ enum elementStreamInfoIndex {
 
 #define NLNotificationMyBroadcastStart	@"NLNotificationMyBroadcastStart"
 #define NLNotificationMyBroadcastEnd	@"NLNotificationMyBroadcastEnd"
+#define NLNotificationBroadcastOpen		@"NLNotificationBroadcastOpen"
 
 #pragma mark -
 #pragma mark GUI
@@ -353,9 +355,12 @@ enum AppCollaboCheckBoxes {
 #define LauncItemList				@"LauncItemList"
 
 #pragma mark -
-#pragma application collaboration
-#define Charleston					@"Charleston"
-#define FMELauncher					@"FMELauncher"
+#pragma mark Application Collaboration
+#pragma mark classic
+#define ServerCharleston			@"Charleston"
+#define ServerFMELauncher			@"FMELauncher"
+#pragma mark XPC 
+#define CollaboratorXPCName			"tv.from.chajka.Collaborator"
 
 #pragma mark -
 #pragma mark Growling

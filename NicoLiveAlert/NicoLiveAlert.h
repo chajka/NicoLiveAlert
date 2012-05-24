@@ -87,10 +87,15 @@
 		// my status
 	BOOL											broadCasting;
 	BOOL											notificationPosted;
+#if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
+		// xpc variable definition
+	NSString										*statusMessage;
+	xpc_connection_t								_collaborationServiceConnection;
+#endif
 
 }
 @property (retain, readonly)	NSMenu				*menuStatusbar;
-@property (assign,readwrite)	NSPanel				*prefencePanel;
+@property (readonly)			NSPanel				*preferencePanel;
 @property (readonly)			NicoLivePrefManager	*prefs;
 @property (assign, readwrite)	BOOL				broadCasting;
 @property (assign, readwrite)	BOOL				dontOpenWhenImBroadcast;
@@ -98,7 +103,9 @@
 @property (assign, readwrite)	BOOL				kickCharlestonOnMyBroadcast;
 @property (assign, readwrite)	BOOL				kickCharlestonAtAutoOpen;
 @property (assign, readwrite)	BOOL				kickCharlestonOpenByMe;
-
+#if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
+@property (copy) NSString *statusMessage;
+#endif
 		// IBAction’s prototypes
 - (IBAction)menuSelectAutoOpen:(id)sender;
 - (IBAction)launchApplicaions:(id)sender;

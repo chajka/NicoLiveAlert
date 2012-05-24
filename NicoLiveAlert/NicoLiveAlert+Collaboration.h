@@ -9,6 +9,8 @@
 #import "NicoLiveAlert.h"
 
 @interface NicoLiveAlert (Collaboration)
+- (void) connectToProgram:(NSDictionary *)program;
+- (void) disconnectFromProgram:(NSDictionary *)program;
 - (void) startFMLE:(NSString *)live;
 - (void) stopFMLE;
 - (void) joinToLive:(NSString *)live;

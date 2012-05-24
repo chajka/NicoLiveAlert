@@ -8,9 +8,15 @@
 
 #import "NicoLiveAlert.h"
 #import "NicoLiveAlertDefinitions.h"
+#import "NicoLiveAlertCollaboration.h"
 #import "OnigRegexp.h"
 #import "NSAttributedStringAdditions.h"
+#import "NLProgram.h"
+#if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
+#import "NicoLiveAlert+XPC.h"
+#else
 #import "NicoLiveAlert+Collaboration.h"
+#endif
 
 @interface NicoLiveAlert ()
 - (BOOL) checkFirstLaunch;
@@ -19,21 +25,22 @@
 - (void) setupMonitor;
 - (void) loadPreferences;
 - (void) savePreferences;
-- (void) openLiveProgram:(NSString *)URLString;
+- (void) openLiveProgram:(NSDictionary *)liveInfo autoOpen:(BOOL)autoOpen;
 - (void) hookNotifications;
 - (void) removeNotifications;
 - (void) listenHalt:(NSNotification *)note;
 - (void) listenRestart:(NSNotification *)note;
+- (void) foundLive:(NSNotification *)note;
 - (void) removeProgramNoFromTable:(NSNotification *)note;
 - (void) startMyProgram:(NSNotification *)note;
 - (void) endMyProgram:(NSNotification *)note;
-- (void) doAutoOpen:(NSNotification *)note;
 - (void) rowSelected:(NSNotification *)note;
+- (NSAttributedString *) makeLinkedWatchItem:(NSString *)item;
 @end
 
 @implementation NicoLiveAlert
 @synthesize menuStatusbar;
-@synthesize prefencePanel;
+@synthesize preferencePanel;
 @synthesize prefs;
 @synthesize broadCasting;
 @synthesize dontOpenWhenImBroadcast;
@@ -41,6 +48,9 @@
 @synthesize kickCharlestonOnMyBroadcast;
 @synthesize kickCharlestonAtAutoOpen;
 @synthesize kickCharlestonOpenByMe;
+#if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
+@synthesize statusMessage;
+#endif
 
 #pragma mark -
 #pragma mark override / delegate
@@ -73,6 +83,9 @@
 		// start monitor
 	[self setupMonitor];
 	[programSieves kick];
+#if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
+	[self setupCollaboreationService];
+#endif
 }// end - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 
 - (void) applicationWillTerminate:(NSNotification *)notification
@@ -224,12 +237,34 @@
 	[prefs saveLauncherList:[aryLauncherItems arrangedObjects]];
 }// end - (void) savePreferences
 
-- (void) openLiveProgram:(NSString *)URLString
+
+	// call from Growl click context and open by menuItem
+- (void) openLiveProgram:(NSDictionary *)liveInfo autoOpen:(BOOL)autoOpen
 {
-	NSURL *url = [NSURL URLWithString:URLString];
-	[[NSWorkspace sharedWorkspace] openURL:url];
-	notificationPosted = NO;
-}// end - (void) openLiveProgram:(NSString *)URLString
+	NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:liveInfo];	
+	if ((kickCharlestonOpenByMe == YES) || (autoOpen == YES))
+		[info setValue:[NSNumber numberWithBool:YES] forKey:CommentViewer];
+	else
+		[info setValue:[NSNumber numberWithBool:NO] forKey:CommentViewer];
+	//end if need open comment viewer or not
+	if (broadCasting == YES)
+		[info setValue:[NSNumber numberWithBool:YES] forKey:BroadcastStreamer];
+	else
+		[info setValue:[NSNumber numberWithBool:NO] forKey:BroadcastStreamer];
+	// end if need streamer isn’t set
+
+	if ((broadCasting == YES) && (dontOpenWhenImBroadcast == YES))
+	{
+		[info setValue:[NSNumber numberWithBool:NO] forKey:CommentViewer];
+		[info setValue:[NSNumber numberWithBool:NO] forKey:BroadcastStreamer];
+	}
+	else
+	{
+		NSURL *url = [liveInfo valueForKey:ProgramURL];
+		[[NSWorkspace sharedWorkspace] openURL:url];
+	}// end if
+	[self connectToProgram:[NSDictionary dictionaryWithDictionary:info]];
+}// end - (void) openLiveProgram:(NSDictionary *)liveInfo
 
 - (void) hookNotifications
 {
@@ -246,12 +281,10 @@
 			// hook to connection reactive notification
 	[this addObserver:self selector:@selector(listenRestart:) name:NLNotificationConnectionRised object:nil];
 		// open by program number hook
-	[this addObserver:self selector:@selector(removeProgramNoFromTable:) name:NLNotificationFoundLiveNo object:nil];
+	[this addObserver:self selector:@selector(foundLive:) name:NLNotificationFoundProgram object:nil];
 		// broadcast kind notification
 	[this addObserver:self selector:@selector(startMyProgram:) name:NLNotificationMyBroadcastStart object:nil];
-	[this addObserver:self selector:@selector(endMyProgram:) name:NLNotificationMyBroadcastStart object:nil];
-		// AutoOpen Notification hook
-	[this addObserver:self selector:@selector(doAutoOpen:) name:NLNotificationAutoOpen object:nil];
+	[this addObserver:self selector:@selector(endMyProgram:) name:NLNotificationMyBroadcastEnd object:nil];
 		// Tableview Notification hook
 	[this addObserver:self selector:@selector(rowSelected:) name:NLNotificationSelectRow object:nil];
 }// end - (void) hookNotifications
@@ -271,12 +304,10 @@
 			// remove Connection Rised notification
 	[this removeObserver:self name:NLNotificationConnectionRised object:nil];
 		// remove open by program number hook
-	[this removeObserver:self name:NLNotificationFoundLiveNo object:nil];
+	[this removeObserver:self name:NLNotificationFoundProgram object:nil];
 		// broadcast kind notification
 	[this removeObserver:self name:NLNotificationMyBroadcastStart object:nil];
 	[this removeObserver:self name:NLNotificationMyBroadcastEnd object:nil];
-		// AutoOpen Notification
-	[this removeObserver:self name:NLNotificationAutoOpen object:nil];
 		// TableView Notification
 	[this removeObserver:self name:NLNotificationSelectRow object:nil];
 }// end - (void) hookNotifications
@@ -296,6 +327,16 @@
 		[programSieves kick];
 }// end - (void) listenRestart:(NSNotification *)note
 
+- (void) foundLive:(NSNotification *)note
+{
+	if ([[note object] boolValue] == YES)
+		[self openLiveProgram:[note userInfo] autoOpen:YES];
+
+	NSString *liveNumber = [[note userInfo] valueForKey:LiveNumber];
+	if ([[aryManualWatchlist arrangedObjects] containsObject:liveNumber])
+		[self removeFromWatchList:liveNumber];
+}// end - (void) foundLive:(NSNotification *)note
+
 - (void) removeProgramNoFromTable:(NSNotification *)note
 {
 	NSString *liveNo = [note object];
@@ -314,52 +355,15 @@
 - (void) endMyProgram:(NSNotification *)note
 {
 	broadCasting = NO;
+	NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:[note object]];
+	[info setValue:[NSNumber numberWithBool:NO] forKey:CommentViewer];
+	[info setValue:[NSNumber numberWithBool:NO] forKey:BroadcastStreamer];
+	[self disconnectFromProgram:[NSDictionary dictionaryWithDictionary:info]];
 }// end - (void) endMyProgram:(NSNotification *)note
-
-	// TODO: implement check need kick FMELauncher
-	// TODO: implement check need kick charleston at my program
-	// TODO: implement check need kick charleston at default
-- (void) doAutoOpen:(NSNotification *)note
-{
-	NSNotificationCenter *myMac = [[NSWorkspace sharedWorkspace] notificationCenter];
-	if (broadCasting == YES)
-	{
-		if ((kickCharlestonAtAutoOpen == YES) || (kickFMELauncher == YES))
-		{		// check need kick charleston
-			if (kickCharlestonAtAutoOpen == YES)
-				[self joinToLive:[note object]];
-				// check need kick FMELauncher
-			if (kickFMELauncher == YES)
-				[self startFMLE:[note object]];
-
-			NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
-				[note object], keyNLNotificationLiveNumber,
-				[NSNumber numberWithBool:YES], keyNLNotificationIsMyLive, nil];
-			[myMac postNotification:[NSNotification notificationWithName:NLNotificationMyLiveStart object:info]];
-			notificationPosted = YES;
-		}// end if
-			// check never want auto open when I'm broadcasting
-		if (dontOpenWhenImBroadcast == YES)
-			return;
-	}// end if
-
-		// check need kick charleston
-	if ((notificationPosted == NO) && 
-		(dontOpenWhenImBroadcast == NO) && 
-		(kickCharlestonAtAutoOpen == YES))
-	{
-		NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
-			[note object], keyNLNotificationLiveNumber,
-			[NSNumber numberWithBool:NO], keyNLNotificationIsMyLive, nil];
-		[myMac postNotification:[NSNotification notificationWithName:NLNotificationLiveStart object:info]];
-	}// end if
-
-	[self openLiveProgram:[note object]];
-	notificationPosted = NO;
-}// end - (void) doAutoOpen:(NSNotification *)note
 
 - (void) rowSelected:(NSNotification *)note
 {
+	NSLog(@"%@", note);
 	IOMTableViewDragAndDrop *targetTable = [[note object] objectForKey:KeyTableView];
 	NSInteger selectedRow = [[[note object] objectForKey:keyRow] integerValue];
 
@@ -375,9 +379,9 @@
 
 	if (targetTable == tblManualWatchList)
 		if (selectedRow != -1)
-			[btnRemoveAccount setEnabled:YES];
+			[btnRemoveWatchListItem setEnabled:YES];
 		else
-			[btnRemoveAccount setEnabled:NO];
+			[btnRemoveWatchListItem setEnabled:NO];
 	//end if 
 }// end - (void) rowSelected:(NSNotification *)note
 
@@ -418,25 +422,7 @@
 	// TODO: implement check need kick charlestion
 - (IBAction) openProgram:(id)sender
 {
-/* #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7 */
-		// check need kick charlestion
-	NSString *program = [[sender representedObject] valueForKey:keyLiveNumber];
-	if (kickCharlestonOpenByMe == YES)
-	{
-		NSNotificationCenter *myMac = [[NSWorkspace sharedWorkspace] notificationCenter];
-		NSDictionary *info = 
-			[NSDictionary dictionaryWithObjectsAndKeys:
-				program, keyNLNotificationLiveNumber,
-				[NSNumber numberWithBool:NO], keyNLNotificationIsMyLive, nil];
-		[myMac postNotification:[NSNotification notificationWithName:NLNotificationLiveStart object:info]];
-	}
-		// open by NSWorkspace
-	[self openLiveProgram:program];
-/*
-#else
-		// open by XPC
-#endif
-*/
+	[self openLiveProgram:[[[sender representedObject] valueForKey:keyProgram] info] autoOpen:NO];
 }// end - (IBAction) openProgram:(id)sender
 
 - (IBAction) toggleUserState:(id)sender
@@ -488,36 +474,9 @@
 
 - (IBAction) addToWatchList:(id)sender
 {
-	NSDictionary *watchTargetKindDict = [NSDictionary dictionaryWithObjectsAndKeys:
-		 [NSNumber numberWithInteger:indexWatchCommunity], kindCommunity,
-		 [NSNumber numberWithInteger:indexWatchChannel], kindChannel,
-		 [NSNumber numberWithInteger:indexWatchProgram], kindProgram, nil];
 	NSString *itemName = [watchItemName stringValue];
 	NSString *itemComment = [watchItemComment stringValue];
-	NSAttributedString *watchItem;
-	OnigRegexp *watchKindRegex = [OnigRegexp compile:WatchKindRegex];
-	OnigResult *targetKind = [watchKindRegex search:itemName];
-
-	NSURL *url = nil;
-	switch ([[watchTargetKindDict valueForKey:[targetKind stringAt:1]] integerValue])
-	{
-		case indexWatchCommunity:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatCommunity, itemName]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemName];
-			break;
-		case indexWatchChannel:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatChannel, itemName]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemName];
-			break;
-		case indexWatchProgram:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatLive, itemName]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemName];
-			break;
-		default:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatUser, itemName]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemName];
-			break;
-	}// end switch by watch item kind
+	NSAttributedString *watchItem = [self makeLinkedWatchItem:itemName];
 
 		// add to watchlist
 	BOOL autoOpen = ([chkboxAutoOpen state] == NSOnState) ? YES : NO;
@@ -551,7 +510,7 @@
 	[nicoliveAccounts removeWatchListItem:item];
 
 		// remove from watch list table
-	[[aryManualWatchlist arrangedObjects] removeObjectAtIndex:row];
+	[aryManualWatchlist removeObject:watchItem];
 }// end - (IBAction) deleteFromWatchList:(id)sender
 
 	// login informaion box actions
@@ -633,6 +592,41 @@
 	}// end switch by checkbox's tag
 }// end - (IBAction) appColaboChecked:(id)sender
 
+- (NSAttributedString *) makeLinkedWatchItem:(NSString *)item
+{
+	NSDictionary *watchTargetKindDict = [NSDictionary dictionaryWithObjectsAndKeys:
+					[NSNumber numberWithInteger:indexWatchCommunity], kindCommunity,
+					[NSNumber numberWithInteger:indexWatchChannel], kindChannel,
+					[NSNumber numberWithInteger:indexWatchProgram], kindProgram, nil];
+	
+	OnigRegexp *watchKindRegex = [OnigRegexp compile:WatchKindRegex];
+	OnigResult *targetKind = [watchKindRegex search:item];
+	
+	NSURL *url = nil;
+	NSAttributedString *watchItem;
+	switch ([[watchTargetKindDict valueForKey:[targetKind stringAt:1]] integerValue])
+	{
+		case indexWatchCommunity:
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatCommunity, item]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
+			break;
+		case indexWatchChannel:
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatChannel, item]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
+			break;
+		case indexWatchProgram:
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatLive, item]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
+			break;
+		default:
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatUser, item]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
+			break;
+	}// end switch by watch item kind
+
+	return watchItem;
+}// end - (NSAttributedString *) makeLinkedWatchItem:(NSString *)item
+
 #pragma mark -
 #pragma mark delegate
 #pragma mark NSControl delegate
@@ -671,8 +665,8 @@
 #pragma mark GrowlApplicationBridge delegate
 - (void) growlNotificationWasClicked:(id)clickContext
 {
-	NSString *url = [NSString stringWithString:clickContext];
-	[self openLiveProgram:url];
+	NSDictionary *info = [NSString stringWithString:clickContext];
+	[self openLiveProgram:info autoOpen:NO];
 }// end - (void) growlNotificationWasClicked:(id)clickContext
 
 - (void) growlNotificationTimedOut:(id)clickContext

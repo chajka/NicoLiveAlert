@@ -195,7 +195,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		}
 		primaryAccount = [[NSString alloc] initWithString:OfficialTitleString];
 		[self setupEachMember:liveNo];
-		info = [self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isOfficial ? 1 : -1)]];
+		info = [[NSDictionary alloc] initWithDictionary:[self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isOfficial ? 1 : -1)]]];
 		[self postPorgramStartNotification:autoOpen];
 		[elapseTimer fire];
 		[programStatusTimer fire];
@@ -398,7 +398,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	[dict setValue:liveNo forKey:LiveNumber];
 	[dict setValue:kind forKey:BroadCastKind];
 
-	return [[NSDictionary alloc] initWithDictionary:dict];
+	return [NSDictionary dictionaryWithDictionary:dict];
 }// end - (NSMutableDictionary *)createNotificationDict(NSString *)liveNo kind:(NSNumber *)kind
 
 - (void) postPorgramStartNotification:(NSNumber *)autoOpen

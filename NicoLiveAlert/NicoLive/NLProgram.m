@@ -887,7 +887,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	if (programDescription != nil)
 		[dict setValue:programDescription forKey:GROWL_NOTIFICATION_DESCRIPTION];
 #ifdef GROWL_NOTIFICATION_ICON_DATA
-	[dict setValue:thumbnail forKey:GROWL_NOTIFICATION_ICON_DATA];
+	[dict setValue:[thumbnail TIFFRepresentation] forKey:GROWL_NOTIFICATION_ICON_DATA];
 #else
 	[dict setValue:[thumbnail TIFFRepresentation] forKey:GROWL_NOTIFICATION_ICON];
 #endif

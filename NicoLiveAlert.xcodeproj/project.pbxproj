@@ -203,22 +203,22 @@
 		1DCEEC16156E64A40044B75E /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
 		1DCEEC17156E64A40044B75E /* NLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC5A7B2153320A80077B187 /* NLProgram.m */; };
 		1DCEEC18156E64A40044B75E /* NLActivePrograms.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA0978A15365D4C0083A2E1 /* NLActivePrograms.m */; };
-		1DCEEC19156E64A40044B75E /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC1A156E64A40044B75E /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC1B156E64A40044B75E /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13C153856DA00328D5C /* OnigRegexpUtility.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC1C156E64A40044B75E /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A141153856DA00328D5C /* ascii.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC1D156E64A40044B75E /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A142153856DA00328D5C /* unicode.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC1E156E64A40044B75E /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A143153856DA00328D5C /* utf16_le.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC1F156E64A40044B75E /* regcomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A145153856DA00328D5C /* regcomp.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC20156E64A40044B75E /* regenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A146153856DA00328D5C /* regenc.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC21156E64A40044B75E /* regerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A148153856DA00328D5C /* regerror.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC22156E64A40044B75E /* regexec.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A149153856DA00328D5C /* regexec.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC23156E64A40044B75E /* regext.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14A153856DA00328D5C /* regext.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC24156E64A40044B75E /* regparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14C153856DA00328D5C /* regparse.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC25156E64A40044B75E /* regsyntax.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14E153856DA00328D5C /* regsyntax.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC26156E64A40044B75E /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14F153856DA00328D5C /* regtrav.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC27156E64A40044B75E /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A150153856DA00328D5C /* regversion.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1DCEEC28156E64A40044B75E /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A151153856DA00328D5C /* st.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1DCEEC19156E64A40044B75E /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
+		1DCEEC1A156E64A40044B75E /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; };
+		1DCEEC1B156E64A40044B75E /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13C153856DA00328D5C /* OnigRegexpUtility.m */; };
+		1DCEEC1C156E64A40044B75E /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A141153856DA00328D5C /* ascii.c */; };
+		1DCEEC1D156E64A40044B75E /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A142153856DA00328D5C /* unicode.c */; };
+		1DCEEC1E156E64A40044B75E /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A143153856DA00328D5C /* utf16_le.c */; };
+		1DCEEC1F156E64A40044B75E /* regcomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A145153856DA00328D5C /* regcomp.c */; };
+		1DCEEC20156E64A40044B75E /* regenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A146153856DA00328D5C /* regenc.c */; };
+		1DCEEC21156E64A40044B75E /* regerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A148153856DA00328D5C /* regerror.c */; };
+		1DCEEC22156E64A40044B75E /* regexec.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A149153856DA00328D5C /* regexec.c */; };
+		1DCEEC23156E64A40044B75E /* regext.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14A153856DA00328D5C /* regext.c */; };
+		1DCEEC24156E64A40044B75E /* regparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14C153856DA00328D5C /* regparse.c */; };
+		1DCEEC25156E64A40044B75E /* regsyntax.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14E153856DA00328D5C /* regsyntax.c */; };
+		1DCEEC26156E64A40044B75E /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A14F153856DA00328D5C /* regtrav.c */; };
+		1DCEEC27156E64A40044B75E /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A150153856DA00328D5C /* regversion.c */; };
+		1DCEEC28156E64A40044B75E /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A151153856DA00328D5C /* st.c */; };
 		1DCEEC29156E64A40044B75E /* LinkTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */; };
 		1DCEEC2A156E64A40044B75E /* NSAttributedStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5DE1545760E00516CDF /* NSAttributedStringAdditions.m */; };
 		1DCEEC2B156E64A40044B75E /* NicoLivePrefManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */; };
@@ -1754,7 +1754,10 @@
 		1DCEEC48156E64A40044B75E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = (
+					ppc,
+					x86_64,
+				);
 				CLANG_ENABLE_OBJC_ARC = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

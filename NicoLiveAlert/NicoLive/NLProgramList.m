@@ -274,11 +274,15 @@ __strong OnigRegexp			*startTimeRegex;
 		NSNumber *needOpen = [watchList valueForKey:prog];
 		if (needOpen != nil)
 		{		// found in watchlist or memberd communities program
-			BOOL isChannel = ([[[program objectAtIndex:offsetCommuCh] substringWithRange:NSMakeRange(0, 2)]isEqualToString:kindChannel]) ? YES : NO;
-			if (isChannel == YES)
-				[activePrograms addOfficialProgram:live withDate:date autoOpen:[NSNumber numberWithBool:NO] isOfficial:NO];
+			NSString *prefix = [[program objectAtIndex:offsetCommuCh] substringWithRange:rangePrefix];
+			NSInteger kind = ([prefix isEqualToString:kindChannel] ? bradcastKindChannel :
+							  (([prefix isEqualToString:kindOfficial] ? bradcastKindOfficial : bradcastKindUser)));
+			if (kind == bradcastKindChannel)
+				[activePrograms addOfficialProgram:live withDate:date autoOpen:needOpen isOfficial:NO];
+			else if (kind == bradcastKindOfficial)
+				[activePrograms addOfficialProgram:live withDate:date autoOpen:needOpen isOfficial:YES];
 			else
-				[activePrograms addUserProgram:live withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner] autoOpen:needOpen isChannel:isChannel];
+				[activePrograms addUserProgram:live withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner] autoOpen:needOpen isChannel:NO];
 			return;
 		}// end if program found
 	}// end foreach program information items

@@ -139,7 +139,10 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		iconIsValid = NO;
 		@try {
 			[self checkStartTime:date forLive:liveNo];
-			[self parseProgramInfo:liveNo];
+			if (isChannel == YES)
+				[self parseOfficialProgram];
+			else
+				[self parseProgramInfo:liveNo];
 		}
 		@catch (NSException *exception) {
 			NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
@@ -195,7 +198,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		}
 		primaryAccount = [[NSString alloc] initWithString:OfficialTitleString];
 		[self setupEachMember:liveNo];
-		info = [[NSDictionary alloc] initWithDictionary:[self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isOfficial ? 1 : -1)]]];
+		info = [self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isOfficial ? 1 : -1)]];
 		[self postPorgramStartNotification:autoOpen];
 		[elapseTimer fire];
 		[programStatusTimer fire];
@@ -267,7 +270,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	isReservedProgram = NO;
 	isOfficial = NO;
 	broadCasting = NO;
-	info = Nil;
+	info = nil;
 
 	dataString = nil;
 	currentElement = 0;
@@ -882,6 +885,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
 	NSNumber *priority = [NSNumber numberWithInt:0];
 	NSNumber *isStickey = [NSNumber numberWithBool:NO];
+	NSData *context = [NSArchiver archivedDataWithRootObject:info];
 	[dict setValue:notificationName forKey:GROWL_NOTIFICATION_NAME];
 	[dict setValue:programTitle forKey:GROWL_NOTIFICATION_TITLE];
 	if (programDescription != nil)
@@ -893,8 +897,8 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 #endif
 	[dict setValue:priority forKey:GROWL_NOTIFICATION_PRIORITY];
 	[dict setValue:isStickey forKey:GROWL_NOTIFICATION_STICKY];
-	[dict setValue:info forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
-	
+	[dict setValue:context forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
+
 	[GrowlApplicationBridge notifyWithDictionary:dict];
 }// end - (void) growlProgramNotify:(NSString *)notificationName
 

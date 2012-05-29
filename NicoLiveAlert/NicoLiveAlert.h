@@ -33,6 +33,7 @@
 	__strong IBOutlet NSMenuItem				*manuLauncApplications;
 
 		// Preference Panel items
+	__strong IBOutlet NSTabView					*tabviewPreferences;
 			// manual wath list items
 	__strong IBOutlet IOMTableViewDragAndDrop	*tblManualWatchList;
 	__strong IBOutlet NSTextField				*watchItemName;

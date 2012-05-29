@@ -391,5 +391,43 @@
 	
 	return YES;
 }// end - (BOOL) launchTableWriteRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
+#else
+- (id) init
+{
+	self = [super init];
+	if (self)
+	{
+		
+	}
+	return self;
+}// end if
+
+- (void) dealloc
+{
+	[super dealloc];
+}
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
+- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    if ([cell isKindOfClass:[LinkTextFieldCell class]]) {
+        LinkTextFieldCell *linkCell = (LinkTextFieldCell *)cell;
+			// Setup the work to be done when a link is clicked
+        linkCell.linkClickedHandler = ^(NSURL *url, id sender) {
+            [[NSWorkspace sharedWorkspace] openURL:url];
+        };
+    }// endif
+}// end - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+#endif
+
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
+{
+	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+						  aTableView, KeyTableView, 
+						  [NSNumber numberWithInteger:rowIndex], keyRow, nil];
+	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:NLNotificationSelectRow object:dict]];
+	return YES;
+}// end - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
+
 #endif
 @end

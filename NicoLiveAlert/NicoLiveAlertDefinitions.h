@@ -86,8 +86,10 @@ enum statusBarMenuItems {
 #define WatchKindRegex		@"^(co|ch|lv)\\d+"
 
 	//
+#define rangePrefix			NSMakeRange(0, 2)
 #define kindCommunity		@"co"
 #define kindChannel			@"ch"
+#define kindOfficial		@"of"
 #define kindProgram			@"lv"
 
 enum WatchTargetKind {
@@ -113,6 +115,7 @@ enum WatchTargetKind {
 #define keyCopyright		@"Copyright"
 #define keyAppVersion		@"ApplicationVersion"
 #define AppNameLepard		@"NicoLiveAlert (Leopard)"
+#define AppNameSnowLeopard	@"NicoLiveAlert (Snow Leopard)"
 #define AppnameLion			@"NicoLiveAlert (Lion)"
 
 #pragma mark -
@@ -361,6 +364,10 @@ enum AppCollaboCheckBoxes {
 #define ServerFMELauncher			@"FMELauncher"
 #pragma mark XPC 
 #define CollaboratorXPCName			"tv.from.chajka.Collaborator"
+#define XPCNotificationName			@"XPCNotificationName"
+#define TypeProgramStart			@"TypeProgramStart"
+#define TypeProgramEnd				@"TypeProgramEnd"
+#define Information					@"Information"
 
 #pragma mark -
 #pragma mark Growling

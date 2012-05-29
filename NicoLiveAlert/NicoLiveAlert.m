@@ -20,6 +20,7 @@
 
 @interface NicoLiveAlert ()
 - (BOOL) checkFirstLaunch;
+- (void) disableAtLeopardItems;
 - (void) setupAccounts;
 - (void) setupTables;
 - (void) setupMonitor;
@@ -74,6 +75,10 @@
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {		// restore preference
 	[self loadPreferences];
+#if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_5
+		// remove Leopard unusable items
+	[self disableAtLeopardItems];
+#endif
 		// setup for account
 	[self setupAccounts];
 		// setup drag & dorp table in preference panel
@@ -105,6 +110,14 @@
 }// end - (void) applicationWillTerminate:(NSNotification *)notification
 
 #pragma mark -
+- (void) disableAtLeopardItems
+{		// remove application collaboration tab
+	NSInteger lastTab = [tabviewPreferences numberOfTabViewItems] - 1;
+	NSTabViewItem *collabo = [tabviewPreferences tabViewItemAtIndex:lastTab];
+	[tabviewPreferences removeTabViewItem:collabo];
+		// hide application collabolation menu
+	[[menuStatusbar itemWithTag:tagLaunchApplications] setHidden:YES];
+}
 
 - (void) setupAccounts
 {

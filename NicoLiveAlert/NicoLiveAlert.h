@@ -58,6 +58,8 @@
 	__strong IBOutlet NSButton		*chkboxRelationWithCharlestonMyBroadcast;
 	__strong IBOutlet NSButton		*chkboxRelationAutoOpenAndCharleston;
 	__strong IBOutlet NSButton		*chkboxRelationChooseFromMenuAndCharleston;
+	__strong IBOutlet NSButton		*btnAddApplication;
+	__strong IBOutlet NSButton		*btnRemoveApplication;
 
 			// tiny launcher item
 	__strong IBOutlet IOMTableViewDragAndDrop		*tblTinyLauncher;
@@ -85,7 +87,7 @@
 	BOOL											kickCharlestonAtAutoOpen;
 	BOOL											kickCharlestonOpenByMe;
 		// my status
-	BOOL											broadCasting;
+	BOOL											broadcasting;
 	BOOL											notificationPosted;
 #if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
 		// xpc variable definition
@@ -97,7 +99,7 @@
 @property (retain, readonly)	NSMenu				*menuStatusbar;
 @property (readonly)			NSPanel				*preferencePanel;
 @property (readonly)			NicoLivePrefManager	*prefs;
-@property (assign, readwrite)	BOOL				broadCasting;
+@property (assign, readwrite)	BOOL				broadcasting;
 @property (assign, readwrite)	BOOL				dontOpenWhenImBroadcast;
 @property (assign, readwrite)	BOOL				kickFMELauncher;
 @property (assign, readwrite)	BOOL				kickCharlestonOnMyBroadcast;

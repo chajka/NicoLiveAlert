@@ -7,6 +7,9 @@
 //
 
 #import "NicoLiveAlert+XPC.h"
+#import "NicoLiveAlertDefinitions.h"
+#import "NSObject+XPCHelpers.h"
+
 
 @implementation NicoLiveAlert (XPC)
 
@@ -62,14 +65,39 @@
 
 - (void) connectToProgram:(NSDictionary *)program
 {
+	if (_collaborationServiceConnection == NULL)
+		return;
+	
     xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
     assert(message != NULL);
+	xpc_dictionary_set_string(message, 
+		[XPCNotificationName UTF8String], [TypeProgramStart UTF8String]);
+
+	xpc_object_t collaboInfo = [(NSObject *)program newXPCObject];
+	xpc_dictionary_set_value(message, [Information UTF8String], collaboInfo);
+	xpc_release(collaboInfo);
+
+	xpc_connection_send_message(_collaborationServiceConnection, message);
+	xpc_release(message);
+	
 }// end - (void) connectToProgram:(NSDictionary *)program
 
 - (void) disconnectFromProgram:(NSDictionary *)program
 {
+	if (_collaborationServiceConnection == NULL)
+		return;
+
     xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
     assert(message != NULL);
+	xpc_dictionary_set_string(message, 
+							  [XPCNotificationName UTF8String], [TypeProgramEnd UTF8String]);
+	
+	xpc_object_t collaboInfo = [(NSObject *)program newXPCObject];
+	xpc_dictionary_set_value(message, [Information UTF8String], collaboInfo);
+	xpc_release(collaboInfo);
+	
+	xpc_connection_send_message(_collaborationServiceConnection, message);
+	xpc_release(message);
 }// - (void) disconnectFromProgram:(NSDictionary *)program
 
 - (void) setupCollaboreationService

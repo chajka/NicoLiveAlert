@@ -42,7 +42,7 @@
 @synthesize menuStatusbar;
 @synthesize preferencePanel;
 @synthesize prefs;
-@synthesize broadCasting;
+@synthesize broadcasting;
 @synthesize dontOpenWhenImBroadcast;
 @synthesize kickFMELauncher;
 @synthesize kickCharlestonOnMyBroadcast;
@@ -61,7 +61,7 @@
 #if __has_feature(objc_arc) == 0
 	[statusBar retain];
 #endif
-	broadCasting = NO;
+	broadcasting = NO;
 }// end - (void) awakeFromNib
 
 - (void) applicationWillFinishLaunching:(NSNotification *)aNotification
@@ -247,13 +247,13 @@
 	else
 		[info setValue:[NSNumber numberWithBool:NO] forKey:CommentViewer];
 	//end if need open comment viewer or not
-	if (broadCasting == YES)
+	if (broadcasting == YES)
 		[info setValue:[NSNumber numberWithBool:YES] forKey:BroadcastStreamer];
 	else
 		[info setValue:[NSNumber numberWithBool:NO] forKey:BroadcastStreamer];
 	// end if need streamer isn’t set
 
-	if ((broadCasting == YES) && (dontOpenWhenImBroadcast == YES))
+	if ((broadcasting == YES) && (dontOpenWhenImBroadcast == YES))
 	{
 		[info setValue:[NSNumber numberWithBool:NO] forKey:CommentViewer];
 		[info setValue:[NSNumber numberWithBool:NO] forKey:BroadcastStreamer];
@@ -333,7 +333,7 @@
 		[self openLiveProgram:[note userInfo] autoOpen:YES];
 
 	NSString *liveNumber = [[note userInfo] valueForKey:LiveNumber];
-	if ([[aryManualWatchlist arrangedObjects] containsObject:liveNumber])
+	if ([[nicoliveAccounts watchlist] valueForKey:liveNumber] != nil)
 		[self removeFromWatchList:liveNumber];
 }// end - (void) foundLive:(NSNotification *)note
 
@@ -349,12 +349,12 @@
 
 - (void) startMyProgram:(NSNotification *)note
 {
-	broadCasting = YES;
+	broadcasting = YES;
 }// end - (void) startMyProgram:(NSNotification *)note
 
 - (void) endMyProgram:(NSNotification *)note
 {
-	broadCasting = NO;
+	broadcasting = NO;
 	NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:[note object]];
 	[info setValue:[NSNumber numberWithBool:NO] forKey:CommentViewer];
 	[info setValue:[NSNumber numberWithBool:NO] forKey:BroadcastStreamer];
@@ -363,26 +363,32 @@
 
 - (void) rowSelected:(NSNotification *)note
 {
-	NSLog(@"%@", note);
 	IOMTableViewDragAndDrop *targetTable = [[note object] objectForKey:KeyTableView];
 	NSInteger selectedRow = [[[note object] objectForKey:keyRow] integerValue];
-
-	if (targetTable == tblTinyLauncher)
-		return;
-
-	if (targetTable == tblAccountList)
-		if (selectedRow != -1)
-			[btnRemoveAccount setEnabled:YES];
-		else
-			[btnRemoveAccount setEnabled:NO];
-	//end if 
 
 	if (targetTable == tblManualWatchList)
 		if (selectedRow != -1)
 			[btnRemoveWatchListItem setEnabled:YES];
 		else
 			[btnRemoveWatchListItem setEnabled:NO];
-	//end if 
+		// end if row is selected
+	// end if selected table is Manual WatchList
+
+	if (targetTable == tblAccountList)
+		if (selectedRow != -1)
+			[btnRemoveAccount setEnabled:YES];
+		else
+			[btnRemoveAccount setEnabled:NO];
+		// end if row is selected
+	// end if selected table is Account list
+
+	if (targetTable == tblTinyLauncher)
+		if (selectedRow != -1)
+			[btnRemoveApplication setEnabled:YES];
+		else
+			[btnRemoveApplication setEnabled:NO];
+		// end if row is selected
+	// end if selected table is tiny launcher
 }// end - (void) rowSelected:(NSNotification *)note
 
 - (BOOL) checkFirstLaunch
@@ -436,8 +442,10 @@
 - (IBAction) showAboutPanel:(id)sender
 {
 	NSDictionary *dict = nil;
-#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
+#if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_5
 	dict = [NSDictionary dictionaryWithObject:AppnameLion forKey:keyAppName];
+#elif MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_6
+	dict = [NSDictionary dictionaryWithObject:AppNameSnowLeopard forKey:keyAppName];
 #else
 	dict = [NSDictionary dictionaryWithObject:AppNameLepard forKey:keyAppName];
 #endif
@@ -494,23 +502,43 @@
 	[chkboxAutoOpen setState:NSOffState];
 	[chkboxAutoOpen setEnabled:NO];
 	[btnAddWatchListItem setEnabled:NO];
+	[btnRemoveWatchListItem setEnabled:NO];
 }// end - (IBAction) addToWatchList:(id)sender
 
 - (IBAction) removeFromWatchList:(id)sender
 {
-	NSInteger row = [tblManualWatchList selectedRow];
-	if (row == -1)
-		return;
+	if (([[sender className] isEqualToString:@"NSString"] == YES) &&
+		([[(NSString *)sender substringWithRange:rangePrefix] isEqualToString:kindProgram]))
+	{
+			// remove from watch list
+		[nicoliveAccounts removeWatchListItem:sender];
+			// remove from watch list table
+		[aryManualWatchlist removeObject:sender];
+		for (NSDictionary *item in [[aryManualWatchlist arrangedObjects] reverseObjectEnumerator])
+			if ([[item valueForKey:keyWatchItem] isEqualToString:sender] == YES)
+			{
+				[aryManualWatchlist removeObject:item];
+				return;
+			}// end if
+		// end foreach watchlist item
+	}
+	else
+	{
+		NSInteger row = [tblManualWatchList selectedRow];
+		if (row == -1)
+			return;
 
-		// get removed item
-	NSDictionary *watchItem = [[aryManualWatchlist arrangedObjects] objectAtIndex:row];
-	NSString *item = [[watchItem valueForKey:keyWatchItem] string];
+			// get removed item
+		NSDictionary *watchItem = [[aryManualWatchlist arrangedObjects] objectAtIndex:row];
+		NSString *item = [[watchItem valueForKey:keyWatchItem] string];
 
-		// remove from watch list
-	[nicoliveAccounts removeWatchListItem:item];
+			// remove from watch list
+		[nicoliveAccounts removeWatchListItem:item];
 
-		// remove from watch list table
-	[aryManualWatchlist removeObject:watchItem];
+			// remove from watch list table
+		[aryManualWatchlist removeObject:watchItem];
+		[btnRemoveWatchListItem setEnabled:NO];
+	}
 }// end - (IBAction) deleteFromWatchList:(id)sender
 
 	// login informaion box actions
@@ -569,6 +597,16 @@
 }// end - (IBAction) updateAccountInfo:(id)sender
 
 	// application collaboration actions
+- (IBAction) addApplication:(id)sender
+{
+	
+}// end - (IBAction) addApplication:(id)sender
+
+- (IBAction) removeApplication:(id)sender
+{
+	
+}// end - (IBAction) removeApplication:(id)sender
+
 - (IBAction) appColaboChecked:(id)sender
 {
 	switch ([sender tag]) {
@@ -599,12 +637,10 @@
 					[NSNumber numberWithInteger:indexWatchChannel], kindChannel,
 					[NSNumber numberWithInteger:indexWatchProgram], kindProgram, nil];
 	
-	OnigRegexp *watchKindRegex = [OnigRegexp compile:WatchKindRegex];
-	OnigResult *targetKind = [watchKindRegex search:item];
-	
 	NSURL *url = nil;
+	NSString *itemKind = [item substringWithRange:rangePrefix];
 	NSAttributedString *watchItem;
-	switch ([[watchTargetKindDict valueForKey:[targetKind stringAt:1]] integerValue])
+	switch ([[watchTargetKindDict valueForKey:itemKind] integerValue])
 	{
 		case indexWatchCommunity:
 			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatCommunity, item]];
@@ -665,7 +701,7 @@
 #pragma mark GrowlApplicationBridge delegate
 - (void) growlNotificationWasClicked:(id)clickContext
 {
-	NSDictionary *info = [NSString stringWithString:clickContext];
+	NSDictionary *info = [NSUnarchiver unarchiveObjectWithData:(NSData *)clickContext];
 	[self openLiveProgram:info autoOpen:NO];
 }// end - (void) growlNotificationWasClicked:(id)clickContext
 

@@ -6,8 +6,70 @@
 //  Copyright (c) 2012 iom. All rights reserved.
 //
 
-#include <xpc/xpc.h>
-#include <Foundation/Foundation.h>
+#import <xpc/xpc.h>
+#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
+#import "NicoLiveAlertDefinitions.h"
+#import "NicoLiveAlertCollaboration.h"
+#import "NSObject+XPCHelpers.h"
+
+@interface NSDistantObject ()
+- (void) startFMLE:(NSString *)live;
+- (void) stopFMLE;
+- (void) joinToLive:(NSString *)live;
+@end
+
+@interface NicoLiveAlertCollaboration : NSObject {
+}
+- (void) connectToProgram:(NSDictionary *)program;
+- (void) disconnectFromProgram:(NSDictionary *)program;
+- (void) startFMLE:(NSString *)live;
+- (void) stopFMLE;
+- (void) joinToLive:(NSString *)live;
+@end
+
+@implementation NicoLiveAlertCollaboration
+
+- (void) connectToProgram:(NSDictionary *)program
+{
+	NSString *liveno = [program valueForKey:LiveNumber];
+	BOOL toCommentViewr = [[program valueForKey:CommentViewer] boolValue];
+	BOOL toStreamer = [[program valueForKey:BroadcastStreamer] boolValue];
+	if (toCommentViewr == YES)
+		[self joinToLive:liveno];
+		// endif
+	if (toStreamer == YES)
+		[self startFMLE:liveno];
+	
+	[[[NSWorkspace sharedWorkspace] notificationCenter] postNotification:[NSNotification notificationWithName:NLABroadcastStartNotification object:program]];
+}// end - (void) connectToProgram:(NSAttributedString *)program
+
+- (void) disconnectFromProgram:(NSDictionary *)program
+{
+	[self stopFMLE];
+	[[[NSWorkspace sharedWorkspace] notificationCenter] postNotification:[NSNotification notificationWithName:NLABroadcastEndNotification object:program]];
+}// end - (void) disconnectFromProgram:(NSString *)program
+
+- (void) startFMLE:(NSString *)live
+{
+	NSDistantObject *fmle = [NSConnection rootProxyForConnectionWithRegisteredName:ServerFMELauncher host:NULL];
+	[fmle startFMLE:live];
+}// end - (void) startFMLE:(NSString *)live
+
+- (void) stopFMLE
+{
+	NSDistantObject *fmle = [NSConnection rootProxyForConnectionWithRegisteredName:ServerFMELauncher host:NULL];
+	[fmle stopFMLE];
+}// end - (void) stopFMLE
+
+- (void) joinToLive:(NSString *)live
+{
+	NSDistantObject *charleston = [NSConnection rootProxyForConnectionWithRegisteredName:ServerCharleston host:NULL];
+	[charleston joinToLive:live];
+}// - (void) joinToLive:(NSString *)live
+@end
+
+static NicoLiveAlertCollaboration* collaborator = nil;
 
 static void Collaborator_peer_event_handler(xpc_connection_t peer, xpc_object_t event) 
 {
@@ -25,6 +87,16 @@ static void Collaborator_peer_event_handler(xpc_connection_t peer, xpc_object_t 
 	} else {
 		assert(type == XPC_TYPE_DICTIONARY);
 		// Handle the message.
+		NSDictionary *progInfo = [NSObject xpcObjectToNSObject:event];
+		NSString *message = [progInfo valueForKey:XPCNotificationName];
+		NSDictionary *info = [progInfo valueForKey:Information];
+		if (info == NULL)
+			return;
+		if ([message isEqualToString:TypeProgramStart] == YES)
+			[collaborator connectToProgram:info];
+		else if ([message isEqualToString:TypeProgramEnd] == YES)
+			[collaborator disconnectFromProgram:info];
+		// end if
 	}
 }
 
@@ -44,6 +116,7 @@ static void Collaborator_event_handler(xpc_connection_t peer)
 
 int main(int argc, const char *argv[])
 {
+	collaborator = [[NicoLiveAlertCollaboration alloc] init];
 	xpc_main(Collaborator_event_handler);
 	return 0;
 }

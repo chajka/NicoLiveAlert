@@ -326,7 +326,7 @@ NSArray *keyChainUsersOfServer(NSString *server, NSString *path, SecAuthenticati
 		NSString *passwd = [[NSString alloc] initWithBytes:(const void *)passwordString length:passwordLength encoding:NSUTF8StringEncoding];
 		password = [passwd copy];
 #if __has_feature(objc_arc) == 0
-		[passwd autorelase];
+		[passwd autorelease];
 #endif
 		syncronized = TRUE;
 		

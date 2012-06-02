@@ -70,6 +70,21 @@
 		1D38708C1562543F003807B1 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D38708A1562543F003807B1 /* Growl.framework */; };
 		1D5558171529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D5558181529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
+		1D5E8C961579DB2900AB268B /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C921579DB2900AB268B /* SocketConnection.m */; };
+		1D5E8C971579DB2900AB268B /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C921579DB2900AB268B /* SocketConnection.m */; };
+		1D5E8C981579DB2900AB268B /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C921579DB2900AB268B /* SocketConnection.m */; };
+		1D5E8C991579DB2900AB268B /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C921579DB2900AB268B /* SocketConnection.m */; };
+		1D5E8C9A1579DB2900AB268B /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C921579DB2900AB268B /* SocketConnection.m */; };
+		1D5E8C9B1579DB2900AB268B /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C941579DB2900AB268B /* HTTPConnection.m */; };
+		1D5E8C9C1579DB2900AB268B /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C941579DB2900AB268B /* HTTPConnection.m */; };
+		1D5E8C9D1579DB2900AB268B /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C941579DB2900AB268B /* HTTPConnection.m */; };
+		1D5E8C9E1579DB2900AB268B /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C941579DB2900AB268B /* HTTPConnection.m */; };
+		1D5E8C9F1579DB2900AB268B /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C941579DB2900AB268B /* HTTPConnection.m */; };
+		1D5E8CA21579DB4B00AB268B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8CA01579DB4B00AB268B /* KCSUser.m */; };
+		1D5E8CA31579DB4B00AB268B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8CA01579DB4B00AB268B /* KCSUser.m */; };
+		1D5E8CA41579DB4B00AB268B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8CA01579DB4B00AB268B /* KCSUser.m */; };
+		1D5E8CA51579DB4B00AB268B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8CA01579DB4B00AB268B /* KCSUser.m */; };
+		1D5E8CA61579DB4B00AB268B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8CA01579DB4B00AB268B /* KCSUser.m */; };
 		1D640E431574418C007A76A6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */; };
 		1D6500C5150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
 		1D6500C6150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
@@ -384,6 +399,12 @@
 		1D5A2CA9154E5ACE00E74922 /* NicoLiveAlert.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = NicoLiveAlert.entitlements; sourceTree = "<group>"; };
 		1D5E8C7C1579C16200AB268B /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		1D5E8C7E1579C18800AB268B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1D5E8C921579DB2900AB268B /* SocketConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnection.m; path = NetworkBits/SocketConnection.m; sourceTree = "<group>"; };
+		1D5E8C931579DB2900AB268B /* SocketConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnection.h; path = NetworkBits/SocketConnection.h; sourceTree = "<group>"; };
+		1D5E8C941579DB2900AB268B /* HTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPConnection.m; path = NetworkBits/HTTPConnection.m; sourceTree = "<group>"; };
+		1D5E8C951579DB2900AB268B /* HTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTTPConnection.h; path = NetworkBits/HTTPConnection.h; sourceTree = "<group>"; };
+		1D5E8CA01579DB4B00AB268B /* KCSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUser.m; path = KeyChainService/KCSUser.m; sourceTree = "<group>"; };
+		1D5E8CA11579DB4B00AB268B /* KCSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUser.h; path = KeyChainService/KCSUser.h; sourceTree = "<group>"; };
 		1D6500C3150CB351002F5A8B /* KCSUserTsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUserTsts.h; path = Keychain/KCSUserTsts.h; sourceTree = "<group>"; };
 		1D6500C4150CB351002F5A8B /* KCSUserTsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUserTsts.m; path = Keychain/KCSUserTsts.m; sourceTree = "<group>"; };
 		1D6500C9150CBE98002F5A8B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -603,6 +624,8 @@
 				1DAAB8F6151B4ADF00D0D2B3 /* NicoLive */,
 				1D555846152AC02400221516 /* GUI */,
 				1D36A5CB1545750A00516CDF /* Categories&Enhance */,
+				1D5E8C911579DAFE00AB268B /* Keychain */,
+				1D5E8C901579DAEE00AB268B /* Network */,
 				1DAFFC1D1535A6C7005004C6 /* External */,
 				1D1CE2CC150C77BA001E7E39 /* Supporting Files */,
 				1DF062B5151AE2660025C5DE /* Images */,
@@ -712,6 +735,26 @@
 				1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */,
 			);
 			name = GUI;
+			sourceTree = "<group>";
+		};
+		1D5E8C901579DAEE00AB268B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				1D5E8C921579DB2900AB268B /* SocketConnection.m */,
+				1D5E8C931579DB2900AB268B /* SocketConnection.h */,
+				1D5E8C941579DB2900AB268B /* HTTPConnection.m */,
+				1D5E8C951579DB2900AB268B /* HTTPConnection.h */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		1D5E8C911579DAFE00AB268B /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				1D5E8CA01579DB4B00AB268B /* KCSUser.m */,
+				1D5E8CA11579DB4B00AB268B /* KCSUser.h */,
+			);
+			name = Keychain;
 			sourceTree = "<group>";
 		};
 		1D6500C2150CB2FF002F5A8B /* Keychain */ = {
@@ -1177,6 +1220,9 @@
 				1DDE3970154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
 				1D922484155B8DA200775B7A /* NLAccountInfo.m in Sources */,
 				1DEB6D0B1569142400782195 /* NSObject+XPCHelpers.m in Sources */,
+				1D5E8C961579DB2900AB268B /* SocketConnection.m in Sources */,
+				1D5E8C9B1579DB2900AB268B /* HTTPConnection.m in Sources */,
+				1D5E8CA21579DB4B00AB268B /* KCSUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1220,6 +1266,9 @@
 				1D922486155B8DA200775B7A /* NLAccountInfo.m in Sources */,
 				1D7082A915687293008683F5 /* NicoLiveAlert+XPC.m in Sources */,
 				1DEB6D0D1569142400782195 /* NSObject+XPCHelpers.m in Sources */,
+				1D5E8C991579DB2900AB268B /* SocketConnection.m in Sources */,
+				1D5E8C9E1579DB2900AB268B /* HTTPConnection.m in Sources */,
+				1D5E8CA51579DB4B00AB268B /* KCSUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1258,6 +1307,9 @@
 				1D36A60F15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
 				1DDE3971154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
 				1D922485155B8DA200775B7A /* NLAccountInfo.m in Sources */,
+				1D5E8C971579DB2900AB268B /* SocketConnection.m in Sources */,
+				1D5E8C9C1579DB2900AB268B /* HTTPConnection.m in Sources */,
+				1D5E8CA31579DB4B00AB268B /* KCSUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1299,6 +1351,9 @@
 				1D36A61115478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */,
 				1DDE3973154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */,
 				1D922487155B8DA200775B7A /* NLAccountInfo.m in Sources */,
+				1D5E8C9A1579DB2900AB268B /* SocketConnection.m in Sources */,
+				1D5E8C9F1579DB2900AB268B /* HTTPConnection.m in Sources */,
+				1D5E8CA61579DB4B00AB268B /* KCSUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1346,6 +1401,9 @@
 				1DCEEC2C156E64A40044B75E /* IOMTableViewDragAndDrop.m in Sources */,
 				1DCEEC2D156E64A40044B75E /* NLArrayControllerDragAndDrop.m in Sources */,
 				1DCEEC2E156E64A40044B75E /* NLAccountInfo.m in Sources */,
+				1D5E8C981579DB2900AB268B /* SocketConnection.m in Sources */,
+				1D5E8C9D1579DB2900AB268B /* HTTPConnection.m in Sources */,
+				1D5E8CA41579DB4B00AB268B /* KCSUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

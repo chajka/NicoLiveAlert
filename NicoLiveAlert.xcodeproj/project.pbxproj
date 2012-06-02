@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D07EB8E151C5C1E00CEF855 /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D07EB8D151C5C1E00CEF855 /* HTTPConnection.m */; };
-		1D07EB8F151C5C1E00CEF855 /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D07EB8D151C5C1E00CEF855 /* HTTPConnection.m */; };
-		1D07EB90151C5C1E00CEF855 /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D07EB8D151C5C1E00CEF855 /* HTTPConnection.m */; };
-		1D07EB91151C5C1E00CEF855 /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D07EB8D151C5C1E00CEF855 /* HTTPConnection.m */; };
 		1D141CF3151D8DAA00CEB686 /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
 		1D141CF4151D8DAA00CEB686 /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
 		1D141CF5151D8DAA00CEB686 /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
@@ -75,12 +71,8 @@
 		1D5558171529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D5558181529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D640E431574418C007A76A6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */; };
-		1D6500BE150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
-		1D6500BF150CB0DE002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D6500C5150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
 		1D6500C6150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
-		1D6500C7150CB63A002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
-		1D6500C8150CB63E002F5A8B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1D6500CA150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		1D6500CB150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		1D6500CC150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
@@ -195,15 +187,12 @@
 		1DCEEC0E156E64A40044B75E /* NicoLiveAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1CE2D8150C77BA001E7E39 /* NicoLiveAlert.m */; };
 		1DCEEC0F156E64A40044B75E /* NicoLiveAlert+Collaboration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93C4D91565541B0030BA80 /* NicoLiveAlert+Collaboration.m */; };
 		1DCEEC10156E64A40044B75E /* NLAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAB8F9151B4BA500D0D2B3 /* NLAccount.m */; };
-		1DCEEC11156E64A40044B75E /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D07EB8D151C5C1E00CEF855 /* HTTPConnection.m */; };
 		1DCEEC12156E64A40044B75E /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
 		1DCEEC13156E64A40044B75E /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DCEEC14156E64A40044B75E /* NLMessageServerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A211526B9ED00DAC3EB /* NLMessageServerInfo.m */; };
-		1DCEEC15156E64A40044B75E /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
 		1DCEEC16156E64A40044B75E /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
 		1DCEEC17156E64A40044B75E /* NLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC5A7B2153320A80077B187 /* NLProgram.m */; };
 		1DCEEC18156E64A40044B75E /* NLActivePrograms.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA0978A15365D4C0083A2E1 /* NLActivePrograms.m */; };
-		1DCEEC19156E64A40044B75E /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500BD150CB0DE002F5A8B /* KCSUser.m */; };
 		1DCEEC1A156E64A40044B75E /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13A153856DA00328D5C /* OnigRegexp.m */; };
 		1DCEEC1B156E64A40044B75E /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A13C153856DA00328D5C /* OnigRegexpUtility.m */; };
 		1DCEEC1C156E64A40044B75E /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D93A141153856DA00328D5C /* ascii.c */; };
@@ -257,10 +246,6 @@
 		1DD73A251526B9ED00DAC3EB /* NLMessageServerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A211526B9ED00DAC3EB /* NLMessageServerInfo.m */; };
 		1DD73A481527214E00DAC3EB /* NLMessageServerInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A471527214E00DAC3EB /* NLMessageServerInfoTests.m */; };
 		1DD73A491527214E00DAC3EB /* NLMessageServerInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A471527214E00DAC3EB /* NLMessageServerInfoTests.m */; };
-		1DD73A4C15272ECD00DAC3EB /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
-		1DD73A4D15272ECD00DAC3EB /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
-		1DD73A4E15272ECD00DAC3EB /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
-		1DD73A4F15272ECD00DAC3EB /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */; };
 		1DDE3970154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */; };
 		1DDE3971154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */; };
 		1DDE3972154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */; };
@@ -354,8 +339,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D07EB8C151C5C1E00CEF855 /* HTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = HTTPConnection.h; path = Network/HTTPConnection.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		1D07EB8D151C5C1E00CEF855 /* HTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = HTTPConnection.m; path = Network/HTTPConnection.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1D141CF1151D8DAA00CEB686 /* NLStatusbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLStatusbar.h; path = NicoLive/NLStatusbar.h; sourceTree = "<group>"; };
 		1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLStatusbar.m; path = NicoLive/NLStatusbar.m; sourceTree = "<group>"; };
 		1D141CFD151DAA1300CEB686 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -399,8 +382,8 @@
 		1D5558151529392000221516 /* SocketConnectionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnectionTests.h; path = Network/SocketConnectionTests.h; sourceTree = "<group>"; };
 		1D5558161529392000221516 /* SocketConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnectionTests.m; path = Network/SocketConnectionTests.m; sourceTree = "<group>"; };
 		1D5A2CA9154E5ACE00E74922 /* NicoLiveAlert.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = NicoLiveAlert.entitlements; sourceTree = "<group>"; };
-		1D6500BC150CB0DE002F5A8B /* KCSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUser.h; path = KeychainAccess/KCSUser.h; sourceTree = "<group>"; };
-		1D6500BD150CB0DE002F5A8B /* KCSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUser.m; path = KeychainAccess/KCSUser.m; sourceTree = "<group>"; };
+		1D5E8C7C1579C16200AB268B /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		1D5E8C7E1579C18800AB268B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1D6500C3150CB351002F5A8B /* KCSUserTsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUserTsts.h; path = Keychain/KCSUserTsts.h; sourceTree = "<group>"; };
 		1D6500C4150CB351002F5A8B /* KCSUserTsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUserTsts.m; path = Keychain/KCSUserTsts.m; sourceTree = "<group>"; };
 		1D6500C9150CBE98002F5A8B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -462,8 +445,6 @@
 		1DD73A211526B9ED00DAC3EB /* NLMessageServerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLMessageServerInfo.m; path = NicoLive/NLMessageServerInfo.m; sourceTree = "<group>"; };
 		1DD73A461527214E00DAC3EB /* NLMessageServerInfoTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLMessageServerInfoTests.h; path = NicoLive/NLMessageServerInfoTests.h; sourceTree = "<group>"; };
 		1DD73A471527214E00DAC3EB /* NLMessageServerInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLMessageServerInfoTests.m; path = NicoLive/NLMessageServerInfoTests.m; sourceTree = "<group>"; };
-		1DD73A4A15272ECD00DAC3EB /* SocketConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnection.h; path = Network/SocketConnection.h; sourceTree = "<group>"; };
-		1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SocketConnection.m; path = Network/SocketConnection.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1DDE396E154801150089D0D4 /* NLArrayControllerDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLArrayControllerDragAndDrop.h; path = GUI/NLArrayControllerDragAndDrop.h; sourceTree = "<group>"; };
 		1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLArrayControllerDragAndDrop.m; path = GUI/NLArrayControllerDragAndDrop.m; sourceTree = "<group>"; };
 		1DE87D80151EFFBB006C6EDC /* NLUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLUsers.h; path = NicoLive/NLUsers.h; sourceTree = "<group>"; };
@@ -546,17 +527,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1D07EB89151C5B6E00CEF855 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				1D07EB8C151C5C1E00CEF855 /* HTTPConnection.h */,
-				1D07EB8D151C5C1E00CEF855 /* HTTPConnection.m */,
-				1DD73A4A15272ECD00DAC3EB /* SocketConnection.h */,
-				1DD73A4B15272ECD00DAC3EB /* SocketConnection.m */,
-			);
-			name = Network;
-			sourceTree = "<group>";
-		};
 		1D07EB8B151C5B7F00CEF855 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -578,6 +548,8 @@
 		1D1CE2B6150C77BA001E7E39 = {
 			isa = PBXGroup;
 			children = (
+				1D5E8C7E1579C18800AB268B /* SystemConfiguration.framework */,
+				1D5E8C7C1579C16200AB268B /* CoreServices.framework */,
 				1D5A2CA9154E5ACE00E74922 /* NicoLiveAlert.entitlements */,
 				1D1CE2CB150C77BA001E7E39 /* NicoLiveAlert */,
 				1D70827415675FEA008683F5 /* Collaborator */,
@@ -631,8 +603,6 @@
 				1DAAB8F6151B4ADF00D0D2B3 /* NicoLive */,
 				1D555846152AC02400221516 /* GUI */,
 				1D36A5CB1545750A00516CDF /* Categories&Enhance */,
-				1D6500BA150CB07E002F5A8B /* Keychain */,
-				1D07EB89151C5B6E00CEF855 /* Network */,
 				1DAFFC1D1535A6C7005004C6 /* External */,
 				1D1CE2CC150C77BA001E7E39 /* Supporting Files */,
 				1DF062B5151AE2660025C5DE /* Images */,
@@ -742,15 +712,6 @@
 				1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */,
 			);
 			name = GUI;
-			sourceTree = "<group>";
-		};
-		1D6500BA150CB07E002F5A8B /* Keychain */ = {
-			isa = PBXGroup;
-			children = (
-				1D6500BC150CB0DE002F5A8B /* KCSUser.h */,
-				1D6500BD150CB0DE002F5A8B /* KCSUser.m */,
-			);
-			name = Keychain;
 			sourceTree = "<group>";
 		};
 		1D6500C2150CB2FF002F5A8B /* Keychain */ = {
@@ -891,8 +852,8 @@
 				1D1CE2BE150C77BA001E7E39 /* Frameworks */,
 				1D1CE2BF150C77BA001E7E39 /* Resources */,
 				1D36A5C6154573B600516CDF /* Copy Frameworks */,
-				1D5A2D0E154F75FF00E74922 /* ShellScript */,
 				1D7082A415686C52008683F5 /* Copy XPC Service */,
+				1D5A2D0E154F75FF00E74922 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1165,7 +1126,7 @@
 		};
 		1D5A2D0E154F75FF00E74922 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -1175,6 +1136,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "GEM_HOME=~/.gem\nGEM_PATH=~/.gem:/Library/Ruby/Gems/1.8:/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/\ncp -r \"$SRCROOT/NicoLiveAlert/scripts/com.company.application.GNTPClientService.xpc\" \"$TARGET_BUILD_DIR\"\nXPC_START=\"$BUILT_PRODUCTS_DIR\"\nXPC_SCRIPT=\"$SRCROOT/NicoLiveAlert/scripts/xpc-rename-move.rb\"\nruby \"$XPC_SCRIPT\" \"$XPC_START\" \"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME\" \"$CODE_SIGN_IDENTITY\"";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1186,13 +1148,10 @@
 				1D1CE2D2150C77BA001E7E39 /* main.m in Sources */,
 				1D1CE2D9150C77BA001E7E39 /* NicoLiveAlert.m in Sources */,
 				1D7082A815687293008683F5 /* NicoLiveAlert+XPC.m in Sources */,
-				1D6500BE150CB0DE002F5A8B /* KCSUser.m in Sources */,
 				1DAAB8FA151B4BA500D0D2B3 /* NLAccount.m in Sources */,
-				1D07EB8E151C5C1E00CEF855 /* HTTPConnection.m in Sources */,
 				1D141CF3151D8DAA00CEB686 /* NLStatusbar.m in Sources */,
 				1DE87D82151EFFBB006C6EDC /* NLUsers.m in Sources */,
 				1DD73A221526B9ED00DAC3EB /* NLMessageServerInfo.m in Sources */,
-				1DD73A4C15272ECD00DAC3EB /* SocketConnection.m in Sources */,
 				1D72B119152B5CB400F7944C /* NLProgramList.m in Sources */,
 				1DC5A7B3153320A80077B187 /* NLProgram.m in Sources */,
 				1DA0978B15365D4D0083A2E1 /* NLActivePrograms.m in Sources */,
@@ -1226,17 +1185,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D1CE2F0150C77BB001E7E39 /* NicoLiveAlertTests.m in Sources */,
-				1D6500C8150CB63E002F5A8B /* KCSUser.m in Sources */,
 				1D6500C5150CB351002F5A8B /* KCSUserTsts.m in Sources */,
 				1D1D3EFF151316C1001F571F /* KCSInternetUserTests.m in Sources */,
 				1DAAB8FC151B4BA500D0D2B3 /* NLAccount.m in Sources */,
-				1D07EB90151C5C1E00CEF855 /* HTTPConnection.m in Sources */,
 				1D141CF5151D8DAA00CEB686 /* NLStatusbar.m in Sources */,
 				1DE87D84151EFFBB006C6EDC /* NLUsers.m in Sources */,
 				1D2AD092151F693A001496E6 /* NLAccountTests.m in Sources */,
 				1DD73A241526B9ED00DAC3EB /* NLMessageServerInfo.m in Sources */,
 				1DD73A481527214E00DAC3EB /* NLMessageServerInfoTests.m in Sources */,
-				1DD73A4E15272ECD00DAC3EB /* SocketConnection.m in Sources */,
 				1D5558171529392000221516 /* SocketConnectionTests.m in Sources */,
 				1D72B11B152B5CB400F7944C /* NLProgramList.m in Sources */,
 				1DC5A7B5153320A80077B187 /* NLProgram.m in Sources */,
@@ -1275,15 +1231,12 @@
 				1D1CE32B150C79B0001E7E39 /* NicoLiveAlert.m in Sources */,
 				1D93C4DB1565541B0030BA80 /* NicoLiveAlert+Collaboration.m in Sources */,
 				1DAAB8FB151B4BA500D0D2B3 /* NLAccount.m in Sources */,
-				1D07EB8F151C5C1E00CEF855 /* HTTPConnection.m in Sources */,
 				1D141CF4151D8DAA00CEB686 /* NLStatusbar.m in Sources */,
 				1DE87D83151EFFBB006C6EDC /* NLUsers.m in Sources */,
 				1DD73A231526B9ED00DAC3EB /* NLMessageServerInfo.m in Sources */,
-				1DD73A4D15272ECD00DAC3EB /* SocketConnection.m in Sources */,
 				1D72B11A152B5CB400F7944C /* NLProgramList.m in Sources */,
 				1DC5A7B4153320A80077B187 /* NLProgram.m in Sources */,
 				1DA0978C15365D4D0083A2E1 /* NLActivePrograms.m in Sources */,
-				1D6500BF150CB0DE002F5A8B /* KCSUser.m in Sources */,
 				1D93A154153856DA00328D5C /* OnigRegexp.m in Sources */,
 				1D93A158153856DA00328D5C /* OnigRegexpUtility.m in Sources */,
 				1D93A160153856DA00328D5C /* ascii.c in Sources */,
@@ -1313,17 +1266,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D1CE32D150C79DA001E7E39 /* NicoLiveAlertTests.m in Sources */,
-				1D6500C7150CB63A002F5A8B /* KCSUser.m in Sources */,
 				1D6500C6150CB351002F5A8B /* KCSUserTsts.m in Sources */,
 				1D1D3F00151316C1001F571F /* KCSInternetUserTests.m in Sources */,
 				1DAAB8FD151B4BA500D0D2B3 /* NLAccount.m in Sources */,
-				1D07EB91151C5C1E00CEF855 /* HTTPConnection.m in Sources */,
 				1D141CF6151D8DAA00CEB686 /* NLStatusbar.m in Sources */,
 				1DE87D85151EFFBB006C6EDC /* NLUsers.m in Sources */,
 				1D2AD093151F693A001496E6 /* NLAccountTests.m in Sources */,
 				1DD73A251526B9ED00DAC3EB /* NLMessageServerInfo.m in Sources */,
 				1DD73A491527214E00DAC3EB /* NLMessageServerInfoTests.m in Sources */,
-				1DD73A4F15272ECD00DAC3EB /* SocketConnection.m in Sources */,
 				1D5558181529392000221516 /* SocketConnectionTests.m in Sources */,
 				1D72B11C152B5CB400F7944C /* NLProgramList.m in Sources */,
 				1DC5A7B6153320A80077B187 /* NLProgram.m in Sources */,
@@ -1369,15 +1319,12 @@
 				1DCEEC0E156E64A40044B75E /* NicoLiveAlert.m in Sources */,
 				1DCEEC0F156E64A40044B75E /* NicoLiveAlert+Collaboration.m in Sources */,
 				1DCEEC10156E64A40044B75E /* NLAccount.m in Sources */,
-				1DCEEC11156E64A40044B75E /* HTTPConnection.m in Sources */,
 				1DCEEC12156E64A40044B75E /* NLStatusbar.m in Sources */,
 				1DCEEC13156E64A40044B75E /* NLUsers.m in Sources */,
 				1DCEEC14156E64A40044B75E /* NLMessageServerInfo.m in Sources */,
-				1DCEEC15156E64A40044B75E /* SocketConnection.m in Sources */,
 				1DCEEC16156E64A40044B75E /* NLProgramList.m in Sources */,
 				1DCEEC17156E64A40044B75E /* NLProgram.m in Sources */,
 				1DCEEC18156E64A40044B75E /* NLActivePrograms.m in Sources */,
-				1DCEEC19156E64A40044B75E /* KCSUser.m in Sources */,
 				1DCEEC1A156E64A40044B75E /* OnigRegexp.m in Sources */,
 				1DCEEC1B156E64A40044B75E /* OnigRegexpUtility.m in Sources */,
 				1DCEEC1C156E64A40044B75E /* ascii.c in Sources */,
@@ -1534,6 +1481,7 @@
 		1D1CE2F4150C77BB001E7E39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = NicoLiveAlert.entitlements;
 				CODE_SIGN_IDENTITY = "Чайка";

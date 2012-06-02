@@ -22,7 +22,7 @@
 */
 #define NICOVIDEOURI		@"https://secure.nicovideo.jp"
 #define NICOLOGINSERVER		@"secure.nicovideo.jp"
-#define NICOLOGINPATH		@""
+#define NICOLOGINPATH		@"/secure/login_form"
 #define NICOLOGINURL		@"https://secure.nicovideo.jp/secure/login"
 #define NICOLOGINPARAM		@"?site=nicolive_antenna"
 #define LOGINQUERYMAIL		@"mail"

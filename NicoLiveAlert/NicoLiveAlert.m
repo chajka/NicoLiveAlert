@@ -456,11 +456,11 @@
 {
 	NSDictionary *dict = nil;
 #if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_5
-	dict = [NSDictionary dictionaryWithObject:AppnameLion forKey:keyAppName];
+	dict = [NSDictionary dictionaryWithObject:AppNameLepard forKey:keyAppName];
 #elif MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_6
 	dict = [NSDictionary dictionaryWithObject:AppNameSnowLeopard forKey:keyAppName];
 #else
-	dict = [NSDictionary dictionaryWithObject:AppNameLepard forKey:keyAppName];
+	dict = [NSDictionary dictionaryWithObject:AppnameLion forKey:keyAppName];
 #endif
 	[NSApp orderFrontStandardAboutPanelWithOptions:dict];
 }// end - (IBAction) showAboutPanel:(id)sender

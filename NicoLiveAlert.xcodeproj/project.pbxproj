@@ -397,8 +397,6 @@
 		1D5558151529392000221516 /* SocketConnectionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnectionTests.h; path = Network/SocketConnectionTests.h; sourceTree = "<group>"; };
 		1D5558161529392000221516 /* SocketConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnectionTests.m; path = Network/SocketConnectionTests.m; sourceTree = "<group>"; };
 		1D5A2CA9154E5ACE00E74922 /* NicoLiveAlert.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = NicoLiveAlert.entitlements; sourceTree = "<group>"; };
-		1D5E8C7C1579C16200AB268B /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
-		1D5E8C7E1579C18800AB268B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1D5E8C921579DB2900AB268B /* SocketConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnection.m; path = NetworkBits/SocketConnection.m; sourceTree = "<group>"; };
 		1D5E8C931579DB2900AB268B /* SocketConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnection.h; path = NetworkBits/SocketConnection.h; sourceTree = "<group>"; };
 		1D5E8C941579DB2900AB268B /* HTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPConnection.m; path = NetworkBits/HTTPConnection.m; sourceTree = "<group>"; };
@@ -569,8 +567,6 @@
 		1D1CE2B6150C77BA001E7E39 = {
 			isa = PBXGroup;
 			children = (
-				1D5E8C7E1579C18800AB268B /* SystemConfiguration.framework */,
-				1D5E8C7C1579C16200AB268B /* CoreServices.framework */,
 				1D5A2CA9154E5ACE00E74922 /* NicoLiveAlert.entitlements */,
 				1D1CE2CB150C77BA001E7E39 /* NicoLiveAlert */,
 				1D70827415675FEA008683F5 /* Collaborator */,

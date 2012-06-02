@@ -1,0 +1,6 @@
+[submodule "NicoLiveAlert/KeyChainService"]
+	path = NicoLiveAlert/KeyChainService
+	url = git@github.com:chajka/KyechainService.git
+[submodule "NicoLiveAlert/NetworkBits"]
+	path = NicoLiveAlert/NetworkBits
+	url = git@github.com:chajka/NetworkBits.git

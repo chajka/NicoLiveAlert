@@ -325,10 +325,10 @@ enum TextfieldTags {
 
 enum AppCollaboCheckBoxes {
 	tagDoNotAutoOpenInMyBroadcast = 1101,
-	tagKickFMELauncher,
-	tagKickCharlestonOnMyBroadcast,
-	tagKickCharlestonAtAutoOpen,
-	tagKickCharlestonByOpenFromMe
+	tagKickStreamer,
+	tagKickCommentViewerOnMyBroadcast,
+	tagKickCommentViewerAtAutoOpen,
+	tagKickCommentViewerByOpenFromMe
 };
 
 #pragma mark watchlist item keys
@@ -344,10 +344,10 @@ enum AppCollaboCheckBoxes {
 #pragma mark application collaboration keys
 
 #define DoNotAutoOpenInMyBroadcast	@"DoNotAutoOpenInMyBroadcast"
-#define KickFMELauncher				@"KickFMELauncher"
-#define KickCharlestonOnMyBroadcast	@"KickCharlestonOnMyBroadcast"
-#define KickCharlestonAtAutoOpen	@"KickCharlestonAtAutoOpen"
-#define KickCharlestonByOpenFromMe	@"KickCharlestonByOpenFromMe"
+#define KickStreamer				@"KickStreamer"
+#define KickCommentViewerOnMyBroadcast	@"KickCommentViewerOnMyBroadcast"
+#define KickCommentViewerAtAutoOpen	@"KickCommentViewerAtAutoOpen"
+#define KickCommentViewerByOpenFromMe	@"KickCommentViewerByOpenFromMe"
 #define TinyLauncerApplicatoins		@"TinyLauncerApplicatoins"
 
 #define keyNLNotificationLiveNumber	@"keyNLNotificationLiveNumber"

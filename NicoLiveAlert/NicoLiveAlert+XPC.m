@@ -90,7 +90,7 @@
     xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
     assert(message != NULL);
 	xpc_dictionary_set_string(message, 
-							  [XPCNotificationName UTF8String], [TypeProgramEnd UTF8String]);
+		[XPCNotificationName UTF8String], [TypeProgramEnd UTF8String]);
 	
 	xpc_object_t collaboInfo = [(NSObject *)program newXPCObject];
 	xpc_dictionary_set_value(message, [Information UTF8String], collaboInfo);

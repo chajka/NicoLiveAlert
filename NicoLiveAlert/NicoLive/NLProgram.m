@@ -530,6 +530,8 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	broadCasting = NO;
 	[self stopElapsedTimer];
 	[self stopProgramStatusTimer];
+	if (isMyProgram == YES)
+		[center postNotification:[NSNotification notificationWithName:NLNotificationMyBroadcastEnd object:info]];
 	[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
 }// end - (void) terminate
 
@@ -551,6 +553,8 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	{
 		[self stopElapsedTimer];
 		[self stopProgramStatusTimer];
+		if (isMyProgram == YES)
+			[center postNotification:[NSNotification notificationWithName:NLNotificationMyBroadcastEnd object:info]];
 		[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
 		status = NO;
 	}
@@ -821,6 +825,8 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		broadCasting = NO;
 		[self stopElapsedTimer];
 		[self stopProgramStatusTimer];
+		if (isMyProgram == YES)
+			[center postNotification:[NSNotification notificationWithName:NLNotificationMyBroadcastEnd object:info]];
 		[center postNotification:[NSNotification notificationWithName:NLNotificationPorgramEnd object:self]];
 	}
 }// end - (void) checkBroadcasting

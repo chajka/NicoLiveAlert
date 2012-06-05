@@ -83,13 +83,13 @@
 	BOOL											watchOfficialChannel;
 		// application collaboration flags
 	BOOL											dontOpenWhenImBroadcast;
-	BOOL											kickFMELauncher;
-	BOOL											kickCharlestonOnMyBroadcast;
-	BOOL											kickCharlestonAtAutoOpen;
-	BOOL											kickCharlestonOpenByMe;
+	BOOL											kickStreamer;
+	BOOL											kickCommentViewerOnMyBroadcast;
+	BOOL											kickCommentViewerAtAutoOpen;
+	BOOL											kickCommentViewerOpenByMe;
 		// my status
 	BOOL											broadcasting;
-	BOOL											notificationPosted;
+	NSString										*myLiveNumber;
 #if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
 		// xpc variable definition
 	NSString										*statusMessage;
@@ -102,10 +102,10 @@
 @property (readonly)			NicoLivePrefManager	*prefs;
 @property (assign, readwrite)	BOOL				broadcasting;
 @property (assign, readwrite)	BOOL				dontOpenWhenImBroadcast;
-@property (assign, readwrite)	BOOL				kickFMELauncher;
-@property (assign, readwrite)	BOOL				kickCharlestonOnMyBroadcast;
-@property (assign, readwrite)	BOOL				kickCharlestonAtAutoOpen;
-@property (assign, readwrite)	BOOL				kickCharlestonOpenByMe;
+@property (assign, readwrite)	BOOL				kickStreamer;
+@property (assign, readwrite)	BOOL				kickCommentViewerOnMyBroadcast;
+@property (assign, readwrite)	BOOL				kickCommentViewerAtAutoOpen;
+@property (assign, readwrite)	BOOL				kickCommentViewerOpenByMe;
 #if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
 @property (copy) NSString *statusMessage;
 #endif

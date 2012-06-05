@@ -58,10 +58,10 @@ NSNumber *yes;
 
 	NLAccount *account = [users primaryAccountForCommunity:community];
 	BOOL isMyBroadcast = NO;
-	if ([owner isEqualToString:[account nickname]] == YES)
+	if ([owner isEqualToString:[[account userid] stringValue]] == YES)
 		isMyBroadcast = YES;
 	// end if program is my broadcast
-		
+	
 	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo withDate:date forAccount:account owner:owner autoOpen:autoOpen isMine:isMyBroadcast isChannel:isChannel];
 	if (program == nil)
 		return;
@@ -159,5 +159,6 @@ NSNumber *yes;
 
 	[liveNumbers removeObjectForKey:[prog programNumber]];
 	[programs removeObject:prog];
+	prog = nil;
 }// end - (void) removeEndedProgram:(NSNotification *)notification
 @end

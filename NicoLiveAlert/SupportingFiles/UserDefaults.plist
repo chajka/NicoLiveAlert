@@ -37,13 +37,13 @@
 	</array>
 	<key>DoNotAutoOpenInMyBroadcast</key>
 	<true/>
-	<key>KickCharlestonAtAutoOpen</key>
+	<key>KickCommentViewerAtAutoOpen</key>
 	<false/>
-	<key>KickCharlestonByOpenFromMe</key>
+	<key>KickCommentViewerByOpenFromMe</key>
 	<false/>
-	<key>KickCharlestonOnMyBroadcast</key>
+	<key>KickCommentViewerOnMyBroadcast</key>
 	<false/>
-	<key>KickFMELauncher</key>
+	<key>KickStreamer</key>
 	<false/>
 </dict>
 </plist>

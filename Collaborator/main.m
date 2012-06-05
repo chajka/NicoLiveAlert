@@ -46,7 +46,10 @@
 
 - (void) disconnectFromProgram:(NSDictionary *)program
 {
-	[self stopFMLE];
+	BOOL toStreamer = [[program valueForKey:BroadcastStreamer] boolValue];
+	if (toStreamer == YES)
+		[self stopFMLE];
+
 	[[[NSWorkspace sharedWorkspace] notificationCenter] postNotification:[NSNotification notificationWithName:NLABroadcastEndNotification object:program]];
 }// end - (void) disconnectFromProgram:(NSString *)program
 

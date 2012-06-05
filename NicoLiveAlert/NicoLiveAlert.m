@@ -45,10 +45,10 @@
 @synthesize prefs;
 @synthesize broadcasting;
 @synthesize dontOpenWhenImBroadcast;
-@synthesize kickFMELauncher;
-@synthesize kickCharlestonOnMyBroadcast;
-@synthesize kickCharlestonAtAutoOpen;
-@synthesize kickCharlestonOpenByMe;
+@synthesize kickStreamer;
+@synthesize kickCommentViewerOnMyBroadcast;
+@synthesize kickCommentViewerAtAutoOpen;
+@synthesize kickCommentViewerOpenByMe;
 #if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
 @synthesize statusMessage;
 #endif
@@ -63,13 +63,13 @@
 	[statusBar retain];
 #endif
 	broadcasting = NO;
+	myLiveNumber = nil;
 }// end - (void) awakeFromNib
 
 - (void) applicationWillFinishLaunching:(NSNotification *)aNotification
 {
 	[GrowlApplicationBridge setGrowlDelegate:self];
 	prefs = [[NicoLivePrefManager alloc] initWithDefaults:userDefaults];
-	notificationPosted = NO;
 }// end 
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -232,10 +232,10 @@
 	enableAutoOpen = ([menuItemAutoOpen state] == NSOnState) ? YES : NO;
 		// collaboration flags
 	dontOpenWhenImBroadcast = ([chkboxDonotAutoOpenAtBroadcasting state] == NSOnState) ? YES : NO;
-	kickFMELauncher = ([chkboxRelationWithFMELauncher state] == NSOnState) ? YES : NO;
-	kickCharlestonOnMyBroadcast = ([chkboxRelationWithCharlestonMyBroadcast state] == NSOnState) ? YES : NO;
-	kickCharlestonAtAutoOpen = ([chkboxRelationAutoOpenAndCharleston state] == NSOnState) ? YES : NO;
-	kickCharlestonOpenByMe = ([chkboxRelationChooseFromMenuAndCharleston state] == NSOnState) ? YES : NO;
+	kickStreamer = ([chkboxRelationWithFMELauncher state] == NSOnState) ? YES : NO;
+	kickCommentViewerOnMyBroadcast = ([chkboxRelationWithCharlestonMyBroadcast state] == NSOnState) ? YES : NO;
+	kickCommentViewerAtAutoOpen = ([chkboxRelationAutoOpenAndCharleston state] == NSOnState) ? YES : NO;
+	kickCommentViewerOpenByMe = ([chkboxRelationChooseFromMenuAndCharleston state] == NSOnState) ? YES : NO;
 }// end - (void) loadPreferences
 
 - (void) savePreferences
@@ -254,28 +254,48 @@
 	// call from Growl click context and open by menuItem
 - (void) openLiveProgram:(NSDictionary *)liveInfo autoOpen:(BOOL)autoOpen
 {
+	NSNumber *enable = [NSNumber numberWithBool:YES];
+	NSNumber *disable = [NSNumber numberWithBool:NO];
 	NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:liveInfo];	
-	if ((kickCharlestonOpenByMe == YES) || (autoOpen == YES))
-		[info setValue:[NSNumber numberWithBool:YES] forKey:CommentViewer];
-	else
-		[info setValue:[NSNumber numberWithBool:NO] forKey:CommentViewer];
-	//end if need open comment viewer or not
-	if (broadcasting == YES)
-		[info setValue:[NSNumber numberWithBool:YES] forKey:BroadcastStreamer];
-	else
-		[info setValue:[NSNumber numberWithBool:NO] forKey:BroadcastStreamer];
-	// end if need streamer isn’t set
 
-	if ((broadcasting == YES) && (dontOpenWhenImBroadcast == YES))
+	if (autoOpen == YES)
+		if (kickCommentViewerAtAutoOpen == YES)
+			[info setValue:enable forKey:CommentViewer];
+		else
+			[info setValue:disable forKey:CommentViewer];
+	// end if autoOpen
+
+	if (broadcasting == YES)
 	{
-		[info setValue:[NSNumber numberWithBool:NO] forKey:CommentViewer];
-		[info setValue:[NSNumber numberWithBool:NO] forKey:BroadcastStreamer];
+		if (kickStreamer == YES)
+			[info setValue:enable forKey:BroadcastStreamer];
+		else
+			[info setValue:disable forKey:BroadcastStreamer];
+		// end if need streaming
+
+		if (kickCommentViewerOnMyBroadcast == YES)
+			[info setValue:enable forKey:CommentViewer];
+		else
+			[info setValue:disable forKey:CommentViewer];
+		// end if need open comment viewer
 	}
 	else
+	{
+		if (kickCommentViewerOpenByMe == YES)
+			[info setValue:enable forKey:CommentViewer];
+		else
+			[info setValue:disable forKey:CommentViewer];
+		// end if open by CommentViewer
+		[info setValue:disable forKey:BroadcastStreamer];
+	}
+	// end if need streamer isn’t set
+
+	if ((broadcasting == NO) || (dontOpenWhenImBroadcast == NO))
 	{
 		NSURL *url = [liveInfo valueForKey:ProgramURL];
 		[[NSWorkspace sharedWorkspace] openURL:url];
 	}// end if
+
 	[self connectToProgram:[NSDictionary dictionaryWithDictionary:info]];
 }// end - (void) openLiveProgram:(NSDictionary *)liveInfo
 
@@ -342,10 +362,14 @@
 
 - (void) foundLive:(NSNotification *)note
 {
-	if ([[note object] boolValue] == YES)
-		[self openLiveProgram:[note userInfo] autoOpen:YES];
-
+	BOOL isAautoOpen = [[note object] boolValue];
 	NSString *liveNumber = [[note userInfo] valueForKey:LiveNumber];
+	BOOL myBroadcast = broadcasting & [liveNumber isEqualToString:myLiveNumber];
+	BOOL autoOpen = (isAautoOpen & enableAutoOpen) & 
+					!(myBroadcast & dontOpenWhenImBroadcast);
+	if ((autoOpen == YES) || (myBroadcast == YES))
+		[self openLiveProgram:[note userInfo] autoOpen:autoOpen];		
+
 	if ([[nicoliveAccounts watchlist] valueForKey:liveNumber] != nil)
 		[self removeFromWatchList:liveNumber];
 }// end - (void) foundLive:(NSNotification *)note
@@ -363,15 +387,20 @@
 - (void) startMyProgram:(NSNotification *)note
 {
 	broadcasting = YES;
+	myLiveNumber = [[NSString alloc] initWithString:[[note object] programNumber]];
 }// end - (void) startMyProgram:(NSNotification *)note
 
 - (void) endMyProgram:(NSNotification *)note
 {
-	broadcasting = NO;
 	NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:[note object]];
 	[info setValue:[NSNumber numberWithBool:NO] forKey:CommentViewer];
-	[info setValue:[NSNumber numberWithBool:NO] forKey:BroadcastStreamer];
+	[info setValue:[NSNumber numberWithBool:YES] forKey:BroadcastStreamer];
 	[self disconnectFromProgram:[NSDictionary dictionaryWithDictionary:info]];
+#if __has_feature(objc_arc) == 0
+	[myLiveNumber release];
+#endif
+	myLiveNumber = nil;
+	broadcasting = NO;
 }// end - (void) endMyProgram:(NSNotification *)note
 
 - (void) rowSelected:(NSNotification *)note
@@ -626,17 +655,17 @@
 		case tagDoNotAutoOpenInMyBroadcast:
 			dontOpenWhenImBroadcast = ([chkboxDonotAutoOpenAtBroadcasting state] == NSOnState) ? YES : NO;
 			break;
-		case tagKickFMELauncher:
-			kickFMELauncher = ([chkboxRelationWithFMELauncher state] == NSOnState) ? YES : NO;
+		case tagKickStreamer:
+			kickStreamer = ([chkboxRelationWithFMELauncher state] == NSOnState) ? YES : NO;
 			break;
-		case tagKickCharlestonOnMyBroadcast:
-			kickCharlestonOnMyBroadcast = ([chkboxRelationWithCharlestonMyBroadcast state] == NSOnState) ? YES : NO;
+		case tagKickCommentViewerOnMyBroadcast:
+			kickCommentViewerOnMyBroadcast = ([chkboxRelationWithCharlestonMyBroadcast state] == NSOnState) ? YES : NO;
 			break;
-		case tagKickCharlestonAtAutoOpen:
-			kickCharlestonAtAutoOpen = ([chkboxRelationAutoOpenAndCharleston state] == NSOnState) ? YES : NO;
+		case tagKickCommentViewerAtAutoOpen:
+			kickCommentViewerAtAutoOpen = ([chkboxRelationAutoOpenAndCharleston state] == NSOnState) ? YES : NO;
 			break;
-		case tagKickCharlestonByOpenFromMe:
-			kickCharlestonOpenByMe = ([chkboxRelationChooseFromMenuAndCharleston state] == NSOnState) ? YES : NO;
+		case tagKickCommentViewerByOpenFromMe:
+			kickCommentViewerOpenByMe = ([chkboxRelationChooseFromMenuAndCharleston state] == NSOnState) ? YES : NO;
 			break;
 		default:
 			break;

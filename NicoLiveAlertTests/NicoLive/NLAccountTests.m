@@ -53,7 +53,7 @@
 			// property check
 		STAssertNotNil([account mailaddr], @"property mail addr is nil");
 		STAssertNotNil([account password], @"property password is nil");
-		STAssertNotNil([account username], @"property username is nil");
+		STAssertNotNil([account nickname], @"property username is nil");
 		STAssertNotNil([account userid], @"property useridis nil");
 		STAssertNotNil([account channels], @"property channels is nil");
 		STAssertNotNil([account userid], @"property password is nil");

@@ -256,7 +256,9 @@ __strong OnigRegexp			*startTimeRegex;
 		// check official program
 	if ((watchOfficial == YES) && ([program count] == 2))
 	{
-		[activePrograms addOfficialProgram:live withDate:date autoOpen:[NSNumber numberWithBool:NO] isOfficial:YES];
+		BOOL autoOpenFlag = [[watchList valueForKey:live] boolValue];
+		NSNumber *autoOpen = [NSNumber numberWithBool:autoOpenFlag];
+		[activePrograms addOfficialProgram:live withDate:date autoOpen:autoOpen isOfficial:YES];
 		return;
 	}// end if program is official program
 

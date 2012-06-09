@@ -549,22 +549,7 @@
 
 - (IBAction) removeFromWatchList:(id)sender
 {
-	if (([[sender className] isEqualToString:@"NSString"] == YES) &&
-		([[(NSString *)sender substringWithRange:rangePrefix] isEqualToString:kindProgram]))
-	{
-			// remove from watch list
-		[nicoliveAccounts removeWatchListItem:sender];
-			// remove from watch list table
-		[aryManualWatchlist removeObject:sender];
-		for (NSDictionary *item in [[aryManualWatchlist arrangedObjects] reverseObjectEnumerator])
-			if ([[item valueForKey:keyWatchItem] isEqualToString:sender] == YES)
-			{
-				[aryManualWatchlist removeObject:item];
-				return;
-			}// end if
-		// end foreach watchlist item
-	}
-	else
+	if (sender == btnRemoveWatchListItem)
 	{
 		NSInteger row = [tblManualWatchList selectedRow];
 		if (row == -1)
@@ -580,6 +565,20 @@
 			// remove from watch list table
 		[aryManualWatchlist removeObject:watchItem];
 		[btnRemoveWatchListItem setEnabled:NO];
+	}
+	else
+	{
+		NSString *liveNumber = [NSString stringWithString:(NSString *)sender];
+			// remove from watch list
+		[nicoliveAccounts removeWatchListItem:liveNumber];
+			// remove from watch list table
+		for (NSDictionary *item in [[aryManualWatchlist arrangedObjects] reverseObjectEnumerator])
+			if ([[[item valueForKey:keyWatchItem] string] isEqualToString:liveNumber] == YES)
+			{
+				[aryManualWatchlist removeObject:item];
+				return;
+			}// end if
+		// end foreach watchlist item
 	}
 }// end - (IBAction) deleteFromWatchList:(id)sender
 
@@ -680,25 +679,29 @@
 					[NSNumber numberWithInteger:indexWatchProgram], kindProgram, nil];
 	
 	NSURL *url = nil;
-	NSString *itemKind = [item substringWithRange:rangePrefix];
+	NSString *itemString = nil;
+	OnigRegexp *stripper = [OnigRegexp compile:WatchKindRegex];
+	OnigResult *stripped = [stripper search:item];
+	itemString = [NSString stringWithString:[stripped stringAt:1]];
+	NSString *itemKind = [itemString substringWithRange:rangePrefix];
 	NSAttributedString *watchItem;
 	switch ([[watchTargetKindDict valueForKey:itemKind] integerValue])
 	{
 		case indexWatchCommunity:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatCommunity, item]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatCommunity, itemString]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemString];
 			break;
 		case indexWatchChannel:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatChannel, item]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatChannel, itemString]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemString];
 			break;
 		case indexWatchProgram:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatLive, item]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatLive, itemString]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemString];
 			break;
 		default:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatUser, item]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatUser, itemString]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemString];
 			break;
 	}// end switch by watch item kind
 

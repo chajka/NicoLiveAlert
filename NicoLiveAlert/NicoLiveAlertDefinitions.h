@@ -83,7 +83,7 @@ enum statusBarMenuItems {
 #define TITLEOFFICIALSOMEPROG	NSLocalizedString(@"TitleOfficialSomePrograms", @"")
 
 	// regular expression definition
-#define WatchKindRegex		@"^(co|ch|lv)\\d+"
+#define WatchKindRegex		@"^((co|ch|lv)\\d+)"
 
 	//
 #define rangePrefix			NSMakeRange(0, 2)
@@ -363,7 +363,7 @@ enum AppCollaboCheckBoxes {
 #define ServerCharleston			@"Charleston"
 #define ServerFMELauncher			@"FMELauncher"
 #pragma mark XPC 
-#define CollaboratorXPCName			"tv.from.chajka.Collaborator"
+#define CollaboratorXPCName			"tv.from.chajka.NicoLiveAlert.Collaborator"
 #define XPCNotificationName			@"XPCNotificationName"
 #define TypeProgramStart			@"TypeProgramStart"
 #define TypeProgramEnd				@"TypeProgramEnd"

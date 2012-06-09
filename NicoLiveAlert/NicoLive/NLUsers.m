@@ -12,7 +12,6 @@
 @interface NLUsers ()
 - (NSMutableDictionary *) makeAccounts:(NSArray *)activeUsers;
 - (NSMutableDictionary *) makeManualWatchList:(NSDictionary *)list;
-- (void) removeProgramFromWatchList:(NSNotification *)aNotification;
 - (void) updateCurrentWatchlist;
 - (void) creteUserStateMenu;
 - (void) calcUserState;
@@ -44,14 +43,12 @@ NSNumber *inactive;
 		[self updateCurrentWatchlist];
 		usersMenu = nil;
 		[self creteUserStateMenu];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeProgramFromWatchList:) name:NLNotificationFoundProgram object:nil];
 	}
 	return self;
 }// end - (id) initWithActiveUsers:(NSArray *)users andManualWatchList:(NSDictionary *)manualWatchList
 
 - (void) dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationFoundProgram object:nil];
 #if __has_feature(objc_arc) == 0
 	if (active != nil)				[active release];
 	if (inactive != nil)			[inactive release];
@@ -101,6 +98,9 @@ NSNumber *inactive;
 
 - (NSMutableDictionary *) makeManualWatchList:(NSDictionary *)list
 {
+	if ([list count] == 0)
+		return [NSMutableDictionary dictionary];
+
 	NSMutableDictionary	*watchList = [NSMutableDictionary dictionary];
 	for (NSString *item in [list allKeys])
 	{
@@ -110,18 +110,8 @@ NSNumber *inactive;
 			[watchList setValue:inactive forKey:item];
 	}// end foreach
 
-	if ([list count] != 0)
-		return [NSMutableDictionary dictionaryWithDictionary:watchList];
-	else
-		return [NSMutableDictionary dictionary];
+	return [NSMutableDictionary dictionaryWithDictionary:watchList];
 }// end - (NSMutableDictionary *) makeManualWatchList:(NSDictionary *)list
-
-- (void) removeProgramFromWatchList:(NSNotification *)aNotification
-{
-	NSString *liveNo = [[aNotification userInfo] valueForKey:LiveNumber];
-	[originalWatchList removeObjectForKey:liveNo];
-	[self updateCurrentWatchlist];
-}// end - (void) removeProgramFromWatchList:(NSNotification *)aNotification
 
 - (void) updateCurrentWatchlist
 {

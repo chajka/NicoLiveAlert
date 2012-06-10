@@ -71,6 +71,9 @@
 		1D36A61115478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
 		1D5558171529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D5558181529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
+		1D5847CA1584224000235184 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5847C91584224000235184 /* Foundation.framework */; };
+		1D5847D01584224000235184 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D5847CE1584224000235184 /* InfoPlist.strings */; };
+		1D5847D31584224000235184 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5847D21584224000235184 /* main.m */; };
 		1D5E8C961579DB2900AB268B /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C921579DB2900AB268B /* SocketConnection.m */; };
 		1D5E8C971579DB2900AB268B /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C921579DB2900AB268B /* SocketConnection.m */; };
 		1D5E8C981579DB2900AB268B /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C921579DB2900AB268B /* SocketConnection.m */; };
@@ -382,6 +385,12 @@
 		1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IOMTableViewDragAndDrop.m; path = CocoaEnhance/IOMTableViewDragAndDrop.m; sourceTree = "<group>"; };
 		1D5558151529392000221516 /* SocketConnectionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnectionTests.h; path = Network/SocketConnectionTests.h; sourceTree = "<group>"; };
 		1D5558161529392000221516 /* SocketConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnectionTests.m; path = Network/SocketConnectionTests.m; sourceTree = "<group>"; };
+		1D5847C81584224000235184 /* tv.from.chajka.NicoLiveAlert.Importer.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tv.from.chajka.NicoLiveAlert.Importer.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D5847C91584224000235184 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D5847CD1584224000235184 /* NicoLiveAlert.Importer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NicoLiveAlert.Importer-Info.plist"; sourceTree = "<group>"; };
+		1D5847CF1584224000235184 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1D5847D11584224000235184 /* NicoLiveAlert.Importer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NicoLiveAlert.Importer-Prefix.pch"; sourceTree = "<group>"; };
+		1D5847D21584224000235184 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1D5A2CA9154E5ACE00E74922 /* NicoLiveAlert.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = NicoLiveAlert.entitlements; sourceTree = "<group>"; };
 		1D5E8C921579DB2900AB268B /* SocketConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnection.m; path = NetworkBits/SocketConnection.m; sourceTree = "<group>"; };
 		1D5E8C931579DB2900AB268B /* SocketConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnection.h; path = NetworkBits/SocketConnection.h; sourceTree = "<group>"; };
@@ -509,6 +518,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1D5847C51584224000235184 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D5847CA1584224000235184 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1D70826E15675FEA008683F5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -555,6 +572,7 @@
 				1D5A2CA9154E5ACE00E74922 /* NicoLiveAlert.entitlements */,
 				1D1CE2CB150C77BA001E7E39 /* NicoLiveAlert */,
 				1D70827415675FEA008683F5 /* Collaborator */,
+				1D5847CB1584224000235184 /* NicoLiveAlert.Importer */,
 				1D1CE2E8150C77BB001E7E39 /* NicoLiveAlertTests */,
 				1D1CE2C4150C77BA001E7E39 /* Frameworks */,
 				1D1CE2C2150C77BA001E7E39 /* Products */,
@@ -570,6 +588,7 @@
 				1D1CE317150C7849001E7E39 /* NicoLiveAlertTests Leopard.octest */,
 				1D70827115675FEA008683F5 /* tv.from.chajka.NicoLiveAlert.Collaborator.xpc */,
 				1DCEEC49156E64A40044B75E /* NicoLiveAlert Mini.app */,
+				1D5847C81584224000235184 /* tv.from.chajka.NicoLiveAlert.Importer.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -581,6 +600,7 @@
 				1D141CFD151DAA1300CEB686 /* QuartzCore.framework */,
 				1D6500C9150CBE98002F5A8B /* Security.framework */,
 				1D4E35C015457231000EAE03 /* Growl */,
+				1D5847C91584224000235184 /* Foundation.framework */,
 				1D1CE2C7150C77BA001E7E39 /* Other Frameworks */,
 				1D1CE2E3150C77BB001E7E39 /* SenTestingKit.framework */,
 			);
@@ -716,6 +736,25 @@
 				1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */,
 			);
 			name = GUI;
+			sourceTree = "<group>";
+		};
+		1D5847CB1584224000235184 /* NicoLiveAlert.Importer */ = {
+			isa = PBXGroup;
+			children = (
+				1D5847D21584224000235184 /* main.m */,
+				1D5847CC1584224000235184 /* Supporting Files */,
+			);
+			path = NicoLiveAlert.Importer;
+			sourceTree = "<group>";
+		};
+		1D5847CC1584224000235184 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1D5847CD1584224000235184 /* NicoLiveAlert.Importer-Info.plist */,
+				1D5847CE1584224000235184 /* InfoPlist.strings */,
+				1D5847D11584224000235184 /* NicoLiveAlert.Importer-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		1D5E8C901579DAEE00AB268B /* Network */ = {
@@ -945,6 +984,23 @@
 			productReference = 1D1CE317150C7849001E7E39 /* NicoLiveAlertTests Leopard.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
+		1D5847C71584224000235184 /* NicoLiveAlert.Importer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D5847D61584224000235184 /* Build configuration list for PBXNativeTarget "NicoLiveAlert.Importer" */;
+			buildPhases = (
+				1D5847C41584224000235184 /* Sources */,
+				1D5847C51584224000235184 /* Frameworks */,
+				1D5847C61584224000235184 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NicoLiveAlert.Importer;
+			productName = NicoLiveAlert.Importer;
+			productReference = 1D5847C81584224000235184 /* tv.from.chajka.NicoLiveAlert.Importer.xpc */;
+			productType = "com.apple.product-type.bundle";
+		};
 		1D70827015675FEA008683F5 /* NicoLiveAlert.Collaborator */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D70827F15675FEA008683F5 /* Build configuration list for PBXNativeTarget "NicoLiveAlert.Collaborator" */;
@@ -1006,8 +1062,9 @@
 				1D1CE2FC150C7849001E7E39 /* NicoLiveAlert SnowLeopard */,
 				1DCEEC0B156E64A40044B75E /* NicoLiveAlert Mini */,
 				1D70827015675FEA008683F5 /* NicoLiveAlert.Collaborator */,
-				1D1CE2E1150C77BB001E7E39 /* NicoLiveAlertTests Lion */,
+				1D5847C71584224000235184 /* NicoLiveAlert.Importer */,
 				1D1CE316150C7849001E7E39 /* NicoLiveAlertTests Leopard */,
+				1D1CE2E1150C77BB001E7E39 /* NicoLiveAlertTests Lion */,
 			);
 		};
 /* End PBXProject section */
@@ -1084,6 +1141,14 @@
 				1D1E5236151B0B9900BDD43D /* Localizable.strings in Resources */,
 				1D1E523C151B0BA900BDD43D /* Localizable.strings in Resources */,
 				1D93A15E153856DA00328D5C /* COPYING in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D5847C61584224000235184 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D5847D01584224000235184 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1326,6 +1391,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1D5847C41584224000235184 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D5847D31584224000235184 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1D70826D15675FEA008683F5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1437,6 +1510,14 @@
 			);
 			name = Localizable.strings;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		1D5847CE1584224000235184 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1D5847CF1584224000235184 /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		1D70827715675FEA008683F5 /* InfoPlist.strings */ = {
@@ -1682,6 +1763,30 @@
 			};
 			name = Release;
 		};
+		1D5847D41584224000235184 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NicoLiveAlert.Importer/NicoLiveAlert.Importer-Prefix.pch";
+				INFOPLIST_FILE = "NicoLiveAlert.Importer/NicoLiveAlert.Importer-Info.plist";
+				MACH_O_TYPE = mh_execute;
+				PRODUCT_NAME = "tv.from.chajka.$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xpc;
+			};
+			name = Debug;
+		};
+		1D5847D51584224000235184 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NicoLiveAlert.Importer/NicoLiveAlert.Importer-Prefix.pch";
+				INFOPLIST_FILE = "NicoLiveAlert.Importer/NicoLiveAlert.Importer-Info.plist";
+				MACH_O_TYPE = mh_execute;
+				PRODUCT_NAME = "tv.from.chajka.$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xpc;
+			};
+			name = Release;
+		};
 		1D70827D15675FEA008683F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1801,6 +1906,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		1D5847D61584224000235184 /* Build configuration list for PBXNativeTarget "NicoLiveAlert.Importer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D5847D41584224000235184 /* Debug */,
+				1D5847D51584224000235184 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		1D70827F15675FEA008683F5 /* Build configuration list for PBXNativeTarget "NicoLiveAlert.Collaborator" */ = {
 			isa = XCConfigurationList;

@@ -65,7 +65,7 @@
 
 - (void) connectToProgram:(NSDictionary *)program
 {
-	if (_collaborationServiceConnection == NULL)
+	if (_collaborationServiceConnection == nil)
 		return;
 	
     xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
@@ -100,6 +100,23 @@
 	xpc_release(message);
 }// - (void) disconnectFromProgram:(NSDictionary *)program
 
+- (void) copyOldPref:(NSString *)src to:(NSString *)dest
+{
+	if (_prefImportServiceConnection == nil)
+		return;
+
+    xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
+    assert(message != NULL);
+	xpc_dictionary_set_string(message, 
+		[XPCNotificationName UTF8String], [TypePreference UTF8String]);
+	xpc_dictionary_set_string(message, [PrefSource UTF8String], 
+							  [src UTF8String]);
+	xpc_dictionary_set_string(message, [PrefDest UTF8String], 
+							  [dest UTF8String]);
+
+	xpc_connection_send_message(_prefImportServiceConnection, message);
+}// end - (NSArray *) importOldPref
+
 - (void) setupCollaboreationService
 {
 	self->_collaborationServiceConnection = [self _connectionForServiceNamed:CollaboratorXPCName
@@ -107,4 +124,12 @@
 				self->_collaborationServiceConnection = NULL;
 			}];
 }// end - (void) setupCollaboreationService
+
+- (void) setupImportService
+{
+	self->_prefImportServiceConnection = [self _connectionForServiceNamed:ImporterXPCName
+			connectionInvalidHandler:^{
+				self->_prefImportServiceConnection = NULL;
+	}];
+}// end - (void) setupImportService
 @end

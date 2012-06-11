@@ -46,6 +46,9 @@
 #define keyAutoOpen			@"AutoOpen"
 #define keyWatchItem		@"WatchItem"
 #define keyNote				@"Note"
+#define ImporterAutoOpen	@"autoOpen"
+#define ImporertWatchItem	@"community"
+#define ImporterNote		@"comment"
 
 #pragma mark -
 #pragma mark definitions for class NicoLiveAlert
@@ -104,8 +107,14 @@ enum WatchTargetKind {
 #define URLFormatUser		@"http://www.nicovideo.jp/user/%@"
 
 	// string riteral definition
+#define IMPORTWATCHLISTKEY	@"WatchList"
+#define IMPORTTAGETPATH		@"~/Library/Preferences/jp.iom.NicoLiveAlert.plist"
+#define oldPrefURL			@"file://~/Library/Preferences/jp.iom.NicoLiveAlert.plist"
+#define oldPrefPath			@"~/Library/Preferences/jp.iom.NicoLiveAlert.plist"
 #define PARTIALPATHFORMAT	@"~/Library/Preferences/%@"
+#define PARTIALPATHLION		@"~/Library/Preferences/tv.from.chajka.NicoLiveAlert/Data/Library/Preferences/%@"
 #define KEYBUNDLEIDENTIFY	@"CFBundleIdentifier"
+#define PREFPATHEXT			@"plist"
 
 	// About panel custmizing keys
 #define keyCredits			@"Credits"
@@ -368,6 +377,12 @@ enum AppCollaboCheckBoxes {
 #define TypeProgramStart			@"TypeProgramStart"
 #define TypeProgramEnd				@"TypeProgramEnd"
 #define Information					@"Information"
+#define ImporterXPCName				"tv.from.chajka.NicoLiveAlert.Importer"
+#define ImporterQueueName			"tv.from.cjajka.NicoLiveAlert.Importer.queue"
+#define TypePreference				@"TypePreference"
+#define PrefSource					@"source"
+#define PrefDest					@"dest"
+#define PreferenceData				@"PreferenceData"
 
 #pragma mark -
 #pragma mark Growling

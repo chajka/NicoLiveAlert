@@ -37,6 +37,8 @@
 - (void) endMyProgram:(NSNotification *)note;
 - (void) rowSelected:(NSNotification *)note;
 - (NSAttributedString *) makeLinkedWatchItem:(NSString *)item;
+- (void) loadOldStylePreference;
+- (void) addOldWatchList:(NSArray *)items;
 @end
 
 @implementation NicoLiveAlert
@@ -52,6 +54,7 @@
 #if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
 @synthesize statusMessage;
 #endif
+NSMutableDictionary *watchitems = nil;
 
 #pragma mark -
 #pragma mark override / delegate
@@ -130,15 +133,8 @@
 			[activeAccounts addObject:userid];
 	}// end foreach watchList items
 
-		// make watch list dictionary
-	NSMutableDictionary *watchList = [NSMutableDictionary dictionary];
-	for (NSDictionary *watchItem in [aryManualWatchlist arrangedObjects])
-		[watchList setValue:[watchItem valueForKey:keyAutoOpen]
-							forKey:[[watchItem valueForKey:keyWatchItem] string]];
-	// end foreach watch item
-
 	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:activeAccounts
-										 andManualWatchList:watchList];
+										 andManualWatchList:watchitems];
 	[statusBar setUserState:[nicoliveAccounts userState]];
 	[comboLoginID setUsesDataSource:YES];
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
@@ -211,22 +207,62 @@
 
 - (void) loadPreferences
 {
-	NSArray *ary = nil;
+	NSMutableArray *watch = [NSMutableArray array];;
+	[watch addObjectsFromArray:[prefs loadManualWatchList]];
 		// watch list
-	ary = [prefs loadManualWatchList];
-	if ([ary count] != 0)
-		[aryManualWatchlist	addObjects:ary];
-	enableAutoOpen = [prefs loadAutoOpenMenuState];
-	[menuItemAutoOpen setState:enableAutoOpen];
-	watchOfficialProgram = [prefs loadWatchOfficialProgramState];
-	[chkboxWatchOfficialProgram setState:watchOfficialProgram];
-	watchOfficialChannel = [prefs loadWatchOfficialChannelState];
-	[chkboxWatchOfficialChannel setState:watchOfficialChannel];
+	if ([self checkFirstLaunch] == YES)
+	{
+		NSString *destPath = [IMPORTTAGETPATH stringByExpandingTildeInPath];
+#if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
+		[self setupImportService];
+		[self copyOldPref:IMPORTTAGETPATH to:destPath];
+		NSThread *prefThread = [[NSThread alloc] initWithTarget:self selector:@selector(loadOldStylePreference) object:nil];
+		[prefThread start];
+#else
+		NSDictionary *oldpref = [NSDictionary dictionaryWithContentsOfFile:destPath];
+		if (oldpref != NULL)
+		{
+			NSData *watchlistData = [oldpref valueForKey:IMPORTWATCHLISTKEY];
+			NSArray *oldWatchlist = [NSUnarchiver unarchiveObjectWithData:watchlistData];
+			for (NSDictionary *watchItem in oldWatchlist)
+			{
+				NSDictionary *converted = [NSMutableDictionary dictionary];
+				[converted setValue:[watchItem valueForKey:ImporterAutoOpen] forKey:keyAutoOpen];
+				[converted setValue:[watchItem valueForKey:ImporertWatchItem] forKey:keyWatchItem];
+				[converted setValue:[watchItem valueForKey:ImporterNote] forKey:keyNote];
+				[watch addObject:converted];
+			}// end foreach oldwatchlist items
+		}// end if 
+#endif
+	}// end if first launch
+
+	if ([watch count] != 0)
+	{
+		watchitems = [NSMutableDictionary dictionary];
+		for (NSDictionary *item in watch)
+		{
+			NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+			NSNumber *autoOpen = [item valueForKey:keyAutoOpen];
+			NSString *watchitem = [item valueForKey:keyWatchItem];
+			[dic setValue:autoOpen forKey:keyAutoOpen];
+#if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_5
+			[dic setValue:watchitem forKey:keyWatchItem];
+#else
+			[dic setValue:[self makeLinkedWatchItem:watchitem] forKey:keyWatchItem];
+#endif
+			[dic setValue:[item valueForKey:keyNote] forKey:keyNote];
+			[aryManualWatchlist addObject:dic];
+			[watchitems setValue:autoOpen forKey:watchitem];
+		}// end foreach item
+	}// end if
+
+	watchOfficialProgram = ([chkboxWatchOfficialProgram state] == NSOnState) ? YES : NO;
+	watchOfficialChannel = ([chkboxWatchOfficialChannel state] == NSOnState) ? YES : NO;
 
 		// launcher items
-	ary = [prefs loadLauncherDict];
-	if ([ary count] != 0)
-		[aryLauncherItems addObjects:ary];
+	NSArray *launchItems = [prefs loadLauncherDict];
+	if ([launchItems count] != 0)
+		[aryLauncherItems addObjects:launchItems];
 
 		// auto open state
 	enableAutoOpen = ([menuItemAutoOpen state] == NSOnState) ? YES : NO;
@@ -241,9 +277,6 @@
 - (void) savePreferences
 {		// watch list
 	[prefs saveManualWatchList:[aryManualWatchlist arrangedObjects]];
-	[prefs saveAutoOpenMenuState:enableAutoOpen];
-	[prefs saveWatchOfficialProgramState:watchOfficialProgram];
-	[prefs saveWatchOfficialChannelState:watchOfficialChannel];
 		// account list
 	[prefs saveAccountsList:[aryAccountItems arrangedObjects]];
 		// launcher items
@@ -438,12 +471,12 @@
 	NSBundle *mb = [NSBundle mainBundle];
 	NSDictionary *infoDict = [mb infoDictionary];
 	NSString *prefPath = [NSString stringWithFormat:PARTIALPATHFORMAT, [infoDict objectForKey:KEYBUNDLEIDENTIFY]];
-	NSString *fullPath = [prefPath stringByExpandingTildeInPath];
-
+	NSString *fullPath = [[prefPath stringByExpandingTildeInPath] stringByAppendingPathExtension:PREFPATHEXT];
+	
 	NSFileManager *fm = [NSFileManager defaultManager];
 	BOOL isThere = [fm fileExistsAtPath:fullPath];
 	
-	return isThere;
+	return !isThere;
 }// end - (BOOL) checkFirstLaunch
 
 #pragma mark -
@@ -467,7 +500,6 @@
 	}// end for
 }// end - (IBAction) launchApplicaions:(id)sender
 
-	// TODO: implement check need kick charlestion
 - (IBAction) openProgram:(id)sender
 {
 	[self openLiveProgram:[[[sender representedObject] valueForKey:keyProgram] info] autoOpen:NO];
@@ -679,34 +711,100 @@
 					[NSNumber numberWithInteger:indexWatchProgram], kindProgram, nil];
 	
 	NSURL *url = nil;
-	NSString *itemString = nil;
-	OnigRegexp *stripper = [OnigRegexp compile:WatchKindRegex];
-	OnigResult *stripped = [stripper search:item];
-	itemString = [NSString stringWithString:[stripped stringAt:1]];
-	NSString *itemKind = [itemString substringWithRange:rangePrefix];
+	NSString *itemKind = [item substringWithRange:rangePrefix];
 	NSAttributedString *watchItem;
 	switch ([[watchTargetKindDict valueForKey:itemKind] integerValue])
 	{
 		case indexWatchCommunity:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatCommunity, itemString]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemString];
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatCommunity, item]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
 			break;
 		case indexWatchChannel:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatChannel, itemString]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemString];
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatChannel, item]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
 			break;
 		case indexWatchProgram:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatLive, itemString]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemString];
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatLive, item]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
 			break;
 		default:
-			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatUser, itemString]];
-			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:itemString];
+			url = [NSURL URLWithString:[NSString stringWithFormat:URLFormatUser, item]];
+			watchItem = [NSAttributedString attributedStringWithLinkToURL:url title:item];
 			break;
 	}// end switch by watch item kind
 
 	return watchItem;
 }// end - (NSAttributedString *) makeLinkedWatchItem:(NSString *)item
+
+- (void) loadOldStylePreference
+{
+#if __has_feature(objc_arc)
+	@autoreleasepool {
+#else
+	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
+#endif
+		NSFileManager *fm = [NSFileManager defaultManager];
+		NSString *oldpreference = [IMPORTTAGETPATH stringByExpandingTildeInPath];
+		NSInteger limitCount = 10;
+		while (([fm fileExistsAtPath:oldpreference] != YES) || (limitCount-- != 0))
+			[NSThread sleepForTimeInterval:0.5f];
+		// end while file copied
+
+		NSMutableArray *watch = [NSMutableArray array];
+		if ([fm fileExistsAtPath:oldpreference] == YES)
+		{
+			NSDictionary *oldpref = [NSDictionary dictionaryWithContentsOfFile:oldpreference];
+			if (oldpref != NULL)
+			{
+				NSData *watchlistData = [oldpref valueForKey:IMPORTWATCHLISTKEY];
+				NSArray *oldWatchlist = [NSUnarchiver unarchiveObjectWithData:watchlistData];
+				for (NSDictionary *watchItem in oldWatchlist)
+				{
+					NSDictionary *converted = [NSMutableDictionary dictionary];
+					[converted setValue:[watchItem valueForKey:ImporterAutoOpen] forKey:keyAutoOpen];
+					[converted setValue:[watchItem valueForKey:ImporertWatchItem] forKey:keyWatchItem];
+					[converted setValue:[watchItem valueForKey:ImporterNote] forKey:keyNote];
+					[watch addObject:converted];
+				}// end foreach oldwatchlist items
+			
+				NSError *err = nil;
+				[fm removeItemAtPath:oldpreference error:&err];
+				[self performSelectorOnMainThread:@selector(addOldWatchList:) withObject:watch waitUntilDone:NO];
+			}
+		}// end if
+#if __has_feature(objc_arc)
+	}
+#else
+	[arp drain];
+#endif
+}// end - (void) loadOldStylePreference
+
+- (void) addOldWatchList:(NSArray *)items
+{
+#if __has_feature(objc_arc)
+	@autoreleasepool {
+#else
+	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
+#endif
+	NSMutableDictionary *watchlist = [NSMutableDictionary dictionary];
+	for (NSDictionary *item in items)
+	{
+		NSDictionary *tableItem = [NSMutableDictionary dictionary];
+		NSNumber *autoOpen = [item valueForKey:keyAutoOpen];
+		NSString *watchItem = [item valueForKey:keyWatchItem];
+		[tableItem setValue:autoOpen forKey:keyAutoOpen];
+		[tableItem setValue:[self makeLinkedWatchItem:watchItem] forKey:keyWatchItem];
+		[tableItem setValue:[item valueForKey:keyNote] forKey:keyNote];
+		[aryManualWatchlist addObject:tableItem];
+		[watchlist setValue:autoOpen forKey:watchItem];
+	}
+	[nicoliveAccounts addWatchListItems:watchlist];
+#if __has_feature(objc_arc)
+	}
+#else
+	[arp drain];
+#endif
+}// end - (void) addOldWatchList:(NSArray *)items
 
 #pragma mark -
 #pragma mark delegate

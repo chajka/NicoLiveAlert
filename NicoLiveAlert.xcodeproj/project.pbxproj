@@ -74,6 +74,9 @@
 		1D5847CA1584224000235184 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5847C91584224000235184 /* Foundation.framework */; };
 		1D5847D01584224000235184 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D5847CE1584224000235184 /* InfoPlist.strings */; };
 		1D5847D31584224000235184 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5847D21584224000235184 /* main.m */; };
+		1D5847E61584280A00235184 /* NSObject+XPCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEB6D0A1569142400782195 /* NSObject+XPCHelpers.m */; };
+		1D5847E915846A1A00235184 /* tv.from.chajka.NicoLiveAlert.Importer.xpc in Copy XPC Service */ = {isa = PBXBuildFile; fileRef = 1D5847C81584224000235184 /* tv.from.chajka.NicoLiveAlert.Importer.xpc */; };
+		1D5847EA15846DF300235184 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */; };
 		1D5E8C961579DB2900AB268B /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C921579DB2900AB268B /* SocketConnection.m */; };
 		1D5E8C971579DB2900AB268B /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C921579DB2900AB268B /* SocketConnection.m */; };
 		1D5E8C981579DB2900AB268B /* SocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8C921579DB2900AB268B /* SocketConnection.m */; };
@@ -286,6 +289,13 @@
 			remoteGlobalIDString = 1D1CE2C0150C77BA001E7E39;
 			remoteInfo = "NicoLiveAlert Lion";
 		};
+		1D5847E7158469F500235184 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D1CE2B8150C77BA001E7E39 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D5847C71584224000235184;
+			remoteInfo = NicoLiveAlert.Importer;
+		};
 		1D70829B15686AD6008683F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1D1CE2B8150C77BA001E7E39 /* Project object */;
@@ -324,6 +334,7 @@
 			dstPath = Contents/XPCServices;
 			dstSubfolderSpec = 1;
 			files = (
+				1D5847E915846A1A00235184 /* tv.from.chajka.NicoLiveAlert.Importer.xpc in Copy XPC Service */,
 				1D7082A515686C8B008683F5 /* tv.from.chajka.NicoLiveAlert.Collaborator.xpc in Copy XPC Service */,
 			);
 			name = "Copy XPC Service";
@@ -522,6 +533,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D5847EA15846DF300235184 /* Cocoa.framework in Frameworks */,
 				1D5847CA1584224000235184 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -922,6 +934,7 @@
 			);
 			dependencies = (
 				1D70829C15686AD6008683F5 /* PBXTargetDependency */,
+				1D5847E8158469F500235184 /* PBXTargetDependency */,
 			);
 			name = "NicoLiveAlert Lion";
 			productName = NicoLiveAlert;
@@ -1396,6 +1409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D5847D31584224000235184 /* main.m in Sources */,
+				1D5847E61584280A00235184 /* NSObject+XPCHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1461,6 +1475,11 @@
 			isa = PBXTargetDependency;
 			target = 1D1CE2C0150C77BA001E7E39 /* NicoLiveAlert Lion */;
 			targetProxy = 1D1DF5EA157B6F6E00E2318B /* PBXContainerItemProxy */;
+		};
+		1D5847E8158469F500235184 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D5847C71584224000235184 /* NicoLiveAlert.Importer */;
+			targetProxy = 1D5847E7158469F500235184 /* PBXContainerItemProxy */;
 		};
 		1D70829C15686AD6008683F5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1766,6 +1785,7 @@
 		1D5847D41584224000235184 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert.Importer/NicoLiveAlert.Importer-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert.Importer/NicoLiveAlert.Importer-Info.plist";
@@ -1778,6 +1798,7 @@
 		1D5847D51584224000235184 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert.Importer/NicoLiveAlert.Importer-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert.Importer/NicoLiveAlert.Importer-Info.plist";

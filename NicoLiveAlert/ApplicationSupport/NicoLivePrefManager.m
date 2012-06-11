@@ -64,24 +64,12 @@
 	// watchlist tab
 - (NSArray *) loadManualWatchList
 {
-	NSArray *array = [myDefaults objectForKey:WathListTable];
-	if ([array count] == 0)
-		return nil;
+	NSMutableArray *watchlist = [NSMutableArray arrayWithArray:[myDefaults objectForKey:WathListTable]];
 
-	NSMutableArray *ary = [NSMutableArray array];
-	for (NSDictionary *dict in array)
-	{
-		id watchItem = [NSUnarchiver unarchiveObjectWithData:[dict objectForKey:keyWatchItem]];
-		NSMutableDictionary *watchDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:[dict valueForKey:keyAutoOpen], keyAutoOpen,
-			watchItem, keyWatchItem,
-			[dict valueForKey:keyNote], keyNote, nil];
-		[ary addObject:watchDict];
-	}// end if
-
-	if ([ary count] != 0)
-		return ary;
+	if ([watchlist count] == 0)
+		return NULL;
 	else
-		return nil;
+		return [NSArray arrayWithArray:watchlist];
 }// end - (NSArray *) loadManualWatchList
 
 - (void) saveManualWatchList:(NSArray *)watchlist
@@ -89,11 +77,15 @@
 	NSMutableArray *array = [NSMutableArray array];
 	for (NSDictionary *dict in watchlist)
 	{
-		NSData *watch = [NSArchiver archivedDataWithRootObject:[dict valueForKey:keyWatchItem]];
-		NSDictionary *item = [NSDictionary dictionaryWithObjectsAndKeys:
-			  [dict valueForKey:keyAutoOpen], keyAutoOpen,
-			  watch, keyWatchItem,
-			  [dict valueForKey:keyNote], keyNote, nil];
+#if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_5
+		NSString *watchItem = [dict valueForKey:keyWatchItem];
+#else
+		NSString *watchItem = [[dict valueForKey:keyWatchItem] string];
+#endif
+		NSMutableDictionary *item = [NSMutableDictionary dictionary];
+		[item setValue:[dict valueForKey:keyAutoOpen] forKey:keyAutoOpen];
+		[item setValue:watchItem forKey:keyWatchItem];
+		[item setValue:[dict valueForKey:keyNote] forKey:keyNote];
 		[array addObject:item];
 	}
 	if ([array count] != 0)

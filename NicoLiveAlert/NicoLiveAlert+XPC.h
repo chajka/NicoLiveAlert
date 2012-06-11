@@ -11,5 +11,7 @@
 @interface NicoLiveAlert (XPC)
 - (void) connectToProgram:(NSDictionary *)program;
 - (void) disconnectFromProgram:(NSDictionary *)program;
+- (void) copyOldPref:(NSString *)src to:(NSString *)dest;
 - (void) setupCollaboreationService;
+- (void) setupImportService;
 @end

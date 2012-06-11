@@ -90,10 +90,12 @@
 		// my status
 	BOOL											broadcasting;
 	NSString										*myLiveNumber;
+	NSArray											*oldWatchlists;
 #if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
 		// xpc variable definition
 	NSString										*statusMessage;
 	xpc_connection_t								_collaborationServiceConnection;
+	xpc_connection_t								_prefImportServiceConnection;
 #endif
 
 }

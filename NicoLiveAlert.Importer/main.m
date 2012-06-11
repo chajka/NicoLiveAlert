@@ -7,7 +7,10 @@
 //
 
 #include <xpc/xpc.h>
-#include <Foundation/Foundation.h>
+#import	<Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
+#import "NicoLiveAlertDefinitions.h"
+#import "NSObject+XPCHelpers.h"
 
 static void NicoLiveAlert_Importer_peer_event_handler(xpc_connection_t peer, xpc_object_t event) 
 {
@@ -25,6 +28,13 @@ static void NicoLiveAlert_Importer_peer_event_handler(xpc_connection_t peer, xpc
 	} else {
 		assert(type == XPC_TYPE_DICTIONARY);
 		// Handle the message.
+		NSMutableDictionary *progInfo = [NSObject xpcObjectToNSObject:event];
+		NSString *srcPath = [[progInfo valueForKey:PrefSource] stringByExpandingTildeInPath];
+		NSString *destPath = [progInfo valueForKey:PrefDest];
+		NSFileManager *fm = [NSFileManager defaultManager];
+		NSError *err = nil;
+		if ([fm fileExistsAtPath:srcPath] == YES)
+			[fm copyItemAtPath:srcPath toPath:destPath error:&err];
 	}
 }
 

@@ -110,7 +110,7 @@ NSNumber *inactive;
 			[watchList setValue:inactive forKey:item];
 	}// end foreach
 
-	return [NSMutableDictionary dictionaryWithDictionary:watchList];
+	return watchList;
 }// end - (NSMutableDictionary *) makeManualWatchList:(NSDictionary *)list
 
 - (void) updateCurrentWatchlist

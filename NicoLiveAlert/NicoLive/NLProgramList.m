@@ -60,6 +60,7 @@ __strong OnigRegexp			*startTimeRegex;
 		watchChannel = NO;
 		officialState = NO;
 		connected = NO;
+		streamIsOpen = NO;
 		programRegex = [OnigRegexp compile:ProgramNoRegex];
 		maintRegex = [OnigRegexp compile:MaintRegex];
 		checkstatus = [OnigRegexp compile:RiseConnectRegex];
@@ -148,7 +149,7 @@ __strong OnigRegexp			*startTimeRegex;
 		[serverInfo release];
 #endif
 		serverInfo = nil;
-		[center postNotificationName:NLNotificationConnectionLost object:nil];
+		[center postNotificationName:NLNotificationConnectionLost object:NLNotificationStartListen];
 		return;
 	}
 	// end if cannot correct server information.
@@ -202,7 +203,8 @@ __strong OnigRegexp			*startTimeRegex;
 	[programListSocket release];
 #endif
 	programListSocket = nil;
-	connected = NO;	
+	connected = NO;
+	streamIsOpen = NO;
 
 		// stop & reset keepAliveMonitor
 	[self stopKeepAliveMonitor];
@@ -234,12 +236,7 @@ __strong OnigRegexp			*startTimeRegex;
 	[connectionRiseMonitor fire];
 	
 #if __has_feature(objc_arc) == 0
-	if (programListSocket != nil)
-		[programListSocket release];
-		// end if not connection
-	if (serverInfo != nil)
-		[serverInfo release];
-		// end if for serverInfo reallocate
+	if (serverInfo != nil)			[serverInfo release];
 #endif
 	serverInfo = nil;
 	connected = NO;
@@ -440,7 +437,8 @@ __strong OnigRegexp			*startTimeRegex;
 	connected = NO;
 	sendrequest = NO;
 	checkRiseInterval = ConnectionReactiveCheckInterval;
-	[center postNotificationName:NLNotificationConnectionLost object:nil];
+	if ([programListSocket isInputStream:stream] == YES)
+		[center postNotificationName:NLNotificationConnectionLost object:NLNotificationStreamError];
 }// end - (void) streamEventErrorOccurred:(NSStream *)stream
 
 #pragma mark StreamEventDelegate (optional)
@@ -454,7 +452,11 @@ __strong OnigRegexp			*startTimeRegex;
 #endif
 		lastTime = [[NSDate alloc] init];
 		connected = YES;
-		[center postNotificationName:NLNotificationConnectionRised object:NLNotificationStreamOpen];
+		if (streamIsOpen == NO)
+		{
+			streamIsOpen = YES;
+			[center postNotificationName:NLNotificationConnectionRised object:NLNotificationStreamOpen];
+		}
 	}
 }// end - (void) streamEventOpenCompleted:(NSStream *)stream
 
@@ -464,7 +466,7 @@ __strong OnigRegexp			*startTimeRegex;
 	{
 		connected = NO;
 		sendrequest = NO;
-		[center postNotificationName:NLNotificationConnectionLost object:nil];
+		[center postNotificationName:NLNotificationConnectionLost object:NLNotificationStreamEnd];
 	}// end if
 }// end - (void) streamEventEndEncountered:(NSStream *)stream
 

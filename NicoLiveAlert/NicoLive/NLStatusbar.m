@@ -351,20 +351,15 @@ static CGFloat disconnectedColorAlpha = 0.70;
 		menuItems = [[[statusbarMenu itemWithTag:tagOfficial] submenu] itemArray];
 	else
 		menuItems = [[[statusbarMenu itemWithTag:tagPorgrams] submenu] itemArray];
+	// end if program is official
 	
 	for (NSMenuItem *item in menuItems)
-	{
 		if (progMenu == item)
 		{
-#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
-			[item setState:NSMixedState];
-			[item setState:NSOffState];
-#else
 			[item setImage:nil];
 			[item setImage:[[[item representedObject] valueForKey:keyProgram] menuImage]];
-#endif
 		}// end if
-	}// end foreach menuItem
+	// end foreach menuItem
 	
 	[self updateToolTip];
 }// end - (void) updateMenuItem:(NSNotification *)notification
@@ -373,6 +368,10 @@ static CGFloat disconnectedColorAlpha = 0.70;
 #pragma mark connection status management
 - (void) connectionRised:(NSNotification *)aNotification
 {
+	if (connected == YES)
+		return;
+	// end if recieve rise but already conected
+	
 	connected = YES;
 	[self makeStatusbarIcon];
 }// end - (void) connectionRised
@@ -396,8 +395,6 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	[[statusbarMenu itemWithTag:tagOfficial] setHidden:!watchOfficial];
 }
 
-
-
 #pragma mark accessor
 - (void) addToUserMenu:(NSMenuItem *)item
 {
@@ -414,7 +411,8 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	else if (userProgramCount == 1)
 	{
 		[[statusbarMenu itemWithTag:tagPorgrams] setTitle:TITLEUSERSOMEPROG];		
-	}
+	}// end if user program count
+
 	[[[statusbarMenu itemWithTag:tagPorgrams] submenu] insertItem:item atIndex:0];
 	[self incleaseProgCount];
 	if (++userProgramCount > 0)

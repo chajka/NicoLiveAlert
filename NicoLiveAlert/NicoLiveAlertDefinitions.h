@@ -202,7 +202,10 @@ enum elementLiteralIndex {
 #define NLNotificationConnectionLost	@"NLNotificationConnectionLost"
 #define NLNotificationConnectionRised	@"NLNotificationConnectionRised"
 #define NLNotificationStreamOpen		@"NLNotificationStreamOpen"
+#define NLNotificationStreamError		@"NLNotificationStreamError"
+#define NLNotificationStreamEnd			@"NLNotificationStreamEnd"
 #define NLNotificationServerResponce	@"NLNotificationServerResponce"
+#define NLNotificationStartListen		@"NLNotificationStartListen"
 
 #define NLChannelFormat					@"ch%@"
 #define dataSeparator					@","

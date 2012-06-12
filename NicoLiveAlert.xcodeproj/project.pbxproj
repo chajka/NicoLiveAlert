@@ -583,7 +583,7 @@
 			children = (
 				1D5A2CA9154E5ACE00E74922 /* NicoLiveAlert.entitlements */,
 				1D1CE2CB150C77BA001E7E39 /* NicoLiveAlert */,
-				1D70827415675FEA008683F5 /* Collaborator */,
+				1D70827415675FEA008683F5 /* NicoLiveAlert.Collaborator */,
 				1D5847CB1584224000235184 /* NicoLiveAlert.Importer */,
 				1D1CE2E8150C77BB001E7E39 /* NicoLiveAlertTests */,
 				1D1CE2C4150C77BA001E7E39 /* Frameworks */,
@@ -633,6 +633,7 @@
 			children = (
 				1D07EB8B151C5B7F00CEF855 /* Application */,
 				1DAAB8F6151B4ADF00D0D2B3 /* NicoLive */,
+				1DBF294215877DC300AC4AD7 /* RSS */,
 				1D555846152AC02400221516 /* GUI */,
 				1D36A5CB1545750A00516CDF /* Categories&Enhance */,
 				1D5E8C911579DAFE00AB268B /* Keychain */,
@@ -800,7 +801,7 @@
 			name = Keychain;
 			sourceTree = "<group>";
 		};
-		1D70827415675FEA008683F5 /* Collaborator */ = {
+		1D70827415675FEA008683F5 /* NicoLiveAlert.Collaborator */ = {
 			isa = PBXGroup;
 			children = (
 				1DEB6D091569142400782195 /* NSObject+XPCHelpers.h */,
@@ -808,6 +809,7 @@
 				1D70827B15675FEA008683F5 /* main.m */,
 				1D70827515675FEA008683F5 /* Supporting Files */,
 			);
+			name = NicoLiveAlert.Collaborator;
 			path = Collaborator;
 			sourceTree = "<group>";
 		};
@@ -898,6 +900,13 @@
 				1D93A138153856DA00328D5C /* CocoaOniguruma */,
 			);
 			name = External;
+			sourceTree = "<group>";
+		};
+		1DBF294215877DC300AC4AD7 /* RSS */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = RSS;
 			sourceTree = "<group>";
 		};
 		1DF062B5151AE2660025C5DE /* Images */ = {
@@ -1720,7 +1729,7 @@
 		1D1CE327150C7849001E7E39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1935,6 +1944,7 @@
 				1D5847D51584224000235184 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1D70827F15675FEA008683F5 /* Build configuration list for PBXNativeTarget "NicoLiveAlert.Collaborator" */ = {
 			isa = XCConfigurationList;

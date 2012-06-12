@@ -34,6 +34,7 @@
 	BOOL				waitingConnection;
 	BOOL				connected;
 	BOOL				enableAutoOpen;
+	BOOL				streamIsOpen;
 }
 @property (retain, readwrite)	NSMutableDictionary	*watchList;
 @property (retain, readwrite)	NLActivePrograms	*activePrograms;

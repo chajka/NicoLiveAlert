@@ -157,7 +157,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 			primaryAccount = [OriginalWatchList copy];
 		[self setupEachMember:liveNo];
 		broadcastOwner = [owner copy];
-		info = [self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isChannel ? -1 : 0)]];
+		info = [[NSDictionary alloc] initWithDictionary:[self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isChannel ? bradcastKindChannel : bradcastKindUser)]]];
 		[self postPorgramStartNotification:autoOpen];
 		[elapseTimer fire];
 		[programStatusTimer fire];
@@ -198,7 +198,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		}
 		primaryAccount = [[NSString alloc] initWithString:OfficialTitleString];
 		[self setupEachMember:liveNo];
-		info = [self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isOfficial ? 1 : -1)]];
+		info = [[NSDictionary alloc] initWithDictionary:[self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isOfficial ? bradcastKindOfficial : bradcastKindChannel)]]];
 		[self postPorgramStartNotification:autoOpen];
 		[elapseTimer fire];
 		[programStatusTimer fire];

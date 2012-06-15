@@ -201,11 +201,13 @@ enum elementLiteralIndex {
 #define NLNotificationFoundProgram		@"NLNotificationFoundProgram"
 #define NLNotificationConnectionLost	@"NLNotificationConnectionLost"
 #define NLNotificationConnectionRised	@"NLNotificationConnectionRised"
+#define NLNotificationProginfoStall		@"NLNotificationProginfoStall"
 #define NLNotificationStreamOpen		@"NLNotificationStreamOpen"
 #define NLNotificationStreamError		@"NLNotificationStreamError"
 #define NLNotificationStreamEnd			@"NLNotificationStreamEnd"
 #define NLNotificationServerResponce	@"NLNotificationServerResponce"
 #define NLNotificationStartListen		@"NLNotificationStartListen"
+#define NLNotificationSieveProgram		@"NLNotificationSieveProgram"
 
 #define NLChannelFormat					@"ch%@"
 #define dataSeparator					@","
@@ -398,7 +400,6 @@ enum AppCollaboCheckBoxes {
 #define GrowlNotifyStartUserProgram		@"Start User Program"
 #define	GrowlNotifyFoundListedProgram	@"Found in Manual Watch List"
 #define GrowlNotifyStartListedProgram	@"Start in Manual watch List"
-#define GrowlNotifyStartOfficialProgram	@"Start Official Program"
 
 #pragma mark -
 #pragma mark debugging

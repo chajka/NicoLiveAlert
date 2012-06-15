@@ -7,6 +7,7 @@
 //
 
 #import "NLProgramList.h"
+#import "Growl/Growl.h"
 
 @interface NLProgramList ()
 - (void) startListen:(NSNotification *)note;
@@ -19,6 +20,9 @@
 - (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date;
 - (void) checkConnectionActive:(NSTimer *)theTimer;
 - (void) checkConnectionRised:(NSTimer *)theTimer;
+- (void) connectionRised:(NSString *)reason;
+- (void) connectionLost:(NSString *)reason;
+- (void) growlProgramNotify:(NSString *)notificationName;
 @end
 
 @implementation NLProgramList
@@ -149,7 +153,7 @@ __strong OnigRegexp			*startTimeRegex;
 		[serverInfo release];
 #endif
 		serverInfo = nil;
-		[center postNotificationName:NLNotificationConnectionLost object:NLNotificationStartListen];
+		[self connectionRised:NLNotificationStartListen];
 		return;
 	}
 	// end if cannot correct server information.
@@ -163,8 +167,7 @@ __strong OnigRegexp			*startTimeRegex;
 	}// end if connect to program server success
 
 #if __has_feature(objc_arc) == 0
-	if (lastTime != nil)
-		[lastTime release];
+	if (lastTime != nil)		[lastTime release];
 #endif
 	lastTime = [[NSDate alloc] init];
 
@@ -188,8 +191,7 @@ __strong OnigRegexp			*startTimeRegex;
 		[keepAliveMonitor fire];
 	}// end if connect to program server success
 #if __has_feature(objc_arc) == 0
-	if (lastTime != nil)
-		[lastTime release];
+	if (lastTime != nil)		[lastTime release];
 #endif
 	lastTime = [[NSDate alloc] init];
 	
@@ -335,8 +337,8 @@ __strong OnigRegexp			*startTimeRegex;
 #pragma mark periodial action methods
 - (void) checkConnectionActive:(NSTimer *)theTimer
 {
-	NSTimeInterval diff = [lastTime timeIntervalSinceNow];
-	if ((connected == NO) || (diff > -ServerTimeOut))
+	NSTimeInterval diff = fabs([lastTime timeIntervalSinceNow]);
+	if ((connected == NO) || (diff < ServerTimeOut))
 		return;
 	// end if check connection is alive
 	
@@ -346,7 +348,7 @@ __strong OnigRegexp			*startTimeRegex;
 		checkRiseInterval = MaintainfromReactiveInterval;
 
 		// start wait a connection regain
-	[self waitListen:nil];
+	[self connectionLost:NLNotificationProginfoStall];
 }// end - (void) checkConnectionActive
 
 - (void) checkConnectionRised:(NSTimer *)theTimer
@@ -363,8 +365,43 @@ __strong OnigRegexp			*startTimeRegex;
 
 	sendrequest = NO;
 	[self stopConnectionRiseMonitor];
-	[center postNotificationName:NLNotificationConnectionRised object:NLNotificationServerResponce];
+	[self connectionRised:NLNotificationServerResponce];
 }// end - (void) checkConnectionRised
+
+#pragma mark -
+#pragma mark Notify
+- (void) connectionRised:(NSString *)reason
+{
+	[center postNotificationName:NLNotificationConnectionRised object:reason];
+	[self growlProgramNotify:GrowlNotifyStartMonitoring];
+}// end - (void) connectionRised:(NSString *)reason
+
+- (void) connectionLost:(NSString *)reason
+{
+	[center postNotificationName:NLNotificationConnectionRised object:reason];
+	[self growlProgramNotify:GrowlNotifyDisconnected];
+}// end - (void) connectionLost:(NSString *)reason
+
+#pragma mark Growling
+- (void) growlProgramNotify:(NSString *)notificationName
+{
+	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
+	NSNumber *priority = [NSNumber numberWithInt:0];
+	NSNumber *isStickey = [NSNumber numberWithBool:NO];
+	[dict setValue:notificationName forKey:GROWL_NOTIFICATION_NAME];
+	[dict setValue:notificationName forKey:GROWL_NOTIFICATION_TITLE];
+/*
+#ifdef GROWL_NOTIFICATION_ICON_DATA
+	[dict setValue:[thumbnail TIFFRepresentation] forKey:GROWL_NOTIFICATION_ICON_DATA];
+#else
+	[dict setValue:[thumbnail TIFFRepresentation] forKey:GROWL_NOTIFICATION_ICON];
+#endif
+*/
+	[dict setValue:priority forKey:GROWL_NOTIFICATION_PRIORITY];
+	[dict setValue:isStickey forKey:GROWL_NOTIFICATION_STICKY];
+	
+	[GrowlApplicationBridge notifyWithDictionary:dict];
+}// end - (void) growlProgramNotify:(NSString *)notificationName
 
 #pragma mark -
 #pragma mark StreamEventDelegate
@@ -387,10 +424,9 @@ __strong OnigRegexp			*startTimeRegex;
 		return;
 
 #if __has_feature(objc_arc) == 0
-	if (lastTime != nil)
-		[lastTime release];
-	lastTime = [[NSDate alloc] init];
+	if (lastTime != nil)		[lastTime release];
 #endif
+	lastTime = [[NSDate alloc] init];
 	
 #if __has_feature(objc_arc)
 	@autoreleasepool {
@@ -438,7 +474,7 @@ __strong OnigRegexp			*startTimeRegex;
 	sendrequest = NO;
 	checkRiseInterval = ConnectionReactiveCheckInterval;
 	if ([programListSocket isInputStream:stream] == YES)
-		[center postNotificationName:NLNotificationConnectionLost object:NLNotificationStreamError];
+		[self connectionLost:NLNotificationStreamError];
 }// end - (void) streamEventErrorOccurred:(NSStream *)stream
 
 #pragma mark StreamEventDelegate (optional)
@@ -447,15 +483,14 @@ __strong OnigRegexp			*startTimeRegex;
 	if ((connected == NO) && ([programListSocket isInputStream:stream]))
 	{
 #if __has_feature(objc_arc) == 0
-		if (lastTime != nil)
-			[lastTime release];
+		if (lastTime != nil)		[lastTime release];
 #endif
 		lastTime = [[NSDate alloc] init];
 		connected = YES;
 		if (streamIsOpen == NO)
 		{
 			streamIsOpen = YES;
-			[center postNotificationName:NLNotificationConnectionRised object:NLNotificationStreamOpen];
+			[self connectionRised:NLNotificationStreamOpen];
 		}
 	}
 }// end - (void) streamEventOpenCompleted:(NSStream *)stream
@@ -466,7 +501,7 @@ __strong OnigRegexp			*startTimeRegex;
 	{
 		connected = NO;
 		sendrequest = NO;
-		[center postNotificationName:NLNotificationConnectionLost object:NLNotificationStreamEnd];
+		[self connectionLost:NLNotificationStreamEnd];
 	}// end if
 }// end - (void) streamEventEndEncountered:(NSStream *)stream
 

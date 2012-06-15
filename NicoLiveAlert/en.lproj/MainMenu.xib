@@ -1550,9 +1550,14 @@
 																						</object>
 																						<bool key="NSIsEditable">YES</bool>
 																						<reference key="NSTableView" ref="975064964"/>
+																						<object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
+																							<string key="NSKey">key</string>
+																							<bool key="NSAscending">YES</bool>
+																							<string key="NSSelector">compare:</string>
+																						</object>
 																					</object>
 																					<object class="NSTableColumn" id="175144826">
-																						<double key="NSWidth">102</double>
+																						<double key="NSWidth">82</double>
 																						<double key="NSMinWidth">40</double>
 																						<double key="NSMaxWidth">1000</double>
 																						<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -1595,7 +1600,7 @@
 																						<reference key="NSTableView" ref="975064964"/>
 																					</object>
 																					<object class="NSTableColumn" id="787928594">
-																						<double key="NSWidth">171</double>
+																						<double key="NSWidth">191</double>
 																						<double key="NSMinWidth">10</double>
 																						<double key="NSMaxWidth">3.4028234663852886e+38</double>
 																						<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -1646,7 +1651,7 @@
 																					</object>
 																				</object>
 																				<double key="NSRowHeight">15</double>
-																				<int key="NSTvFlags">-2101313536</int>
+																				<int key="NSTvFlags">46170112</int>
 																				<reference key="NSDelegate"/>
 																				<reference key="NSDataSource"/>
 																				<int key="NSColumnAutoresizingStyle">1</int>
@@ -2672,7 +2677,7 @@
 																				<int key="NSvFlags">256</int>
 																				<string key="NSFrameSize">{301, 153}</string>
 																				<reference key="NSSuperview" ref="1026498646"/>
-																				<reference key="NSNextKeyView" ref="883228463"/>
+																				<reference key="NSNextKeyView" ref="91824063"/>
 																				<string key="NSReuseIdentifierKey">_NS:13</string>
 																				<bool key="NSEnabled">YES</bool>
 																				<object class="NSTableHeaderView" key="NSHeaderView" id="880958358">
@@ -2815,14 +2820,13 @@
 																</array>
 																<string key="NSFrame">{{6, 23}, {303, 171}}</string>
 																<reference key="NSSuperview" ref="947367071"/>
-																<reference key="NSNextKeyView" ref="91824063"/>
+																<reference key="NSNextKeyView" ref="1026498646"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<int key="NSsFlags">133682</int>
 																<reference key="NSVScroller" ref="883228463"/>
 																<reference key="NSHScroller" ref="285552429"/>
 																<reference key="NSContentView" ref="1026498646"/>
 																<reference key="NSHeaderClipView" ref="91824063"/>
-																<reference key="NSCornerView" ref="1065054274"/>
 																<bytes key="NSScrollAmts">QSAAAEEgAABBiAAAQYgAAA</bytes>
 															</object>
 															<object class="NSButton" id="402663679">
@@ -5967,8 +5971,8 @@
 						<int key="objectID">828</int>
 						<reference key="object" ref="975064964"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="175144826"/>
 							<reference ref="475442885"/>
+							<reference ref="175144826"/>
 							<reference ref="787928594"/>
 						</array>
 						<reference key="parent" ref="201373143"/>

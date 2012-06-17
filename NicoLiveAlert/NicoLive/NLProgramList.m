@@ -386,7 +386,7 @@ __strong OnigRegexp			*startTimeRegex;
 
 - (void) connectionLost:(NSString *)reason
 {
-	[center postNotificationName:NLNotificationConnectionRised object:reason];
+	[center postNotificationName:NLNotificationConnectionLost object:reason];
 	[self growlProgramNotify:GrowlLostTitle notify:GrowlNotifyDisconnected reason:reason];
 }// end - (void) connectionLost:(NSString *)reason
 

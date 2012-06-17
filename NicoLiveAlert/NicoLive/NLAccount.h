@@ -33,6 +33,6 @@
 	
 #pragma mark construct
 - (id) initWithAccount:(NSString *)account andPassword:(NSString *)pass;
-
+- (id) initOfflineAccount:(NSString *)account andPassword:(NSString *)pass isNickname:(NSString *)nick;
 - (BOOL) updateAccountInfo;
 @end

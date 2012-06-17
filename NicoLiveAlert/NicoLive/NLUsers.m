@@ -10,11 +10,12 @@
 #import "NicoLiveAlertCollaboration.h"
 
 @interface NLUsers ()
-- (NSMutableDictionary *) makeAccounts:(NSArray *)activeUsers;
+- (NSMutableDictionary *) makeAccounts:(NSDictionary *)usersInfo;
 - (NSMutableDictionary *) makeManualWatchList:(NSDictionary *)list;
 - (void) updateCurrentWatchlist;
 - (void) creteUserStateMenu;
 - (void) calcUserState;
+- (void) refreshAccounts:(NSNotification *)note;
 @end
 
 @implementation NLUsers
@@ -28,7 +29,7 @@ NSNumber *active;
 NSNumber *inactive;
 
 #pragma mark constructor / destructor
-- (id) initWithActiveUsers:(NSArray *)activeUsers andManualWatchList:(NSMutableDictionary *)manualWatchList
+- (id) initWithActiveUsers:(NSDictionary *)activeUsers andManualWatchList:(NSMutableDictionary *)manualWatchList
 {
 	self = [super init];
 	if (self)
@@ -70,7 +71,7 @@ NSNumber *inactive;
 }// end - (void) dealloc
 
 #pragma mark constructor support
-- (NSMutableDictionary *) makeAccounts:(NSArray *)activeUsers
+- (NSMutableDictionary *) makeAccounts:(NSDictionary *)usersInfo
 {
 	NSArray *usesArray = [KCSInternetUser usersOfAccountsForServer:NICOLOGINSERVER path:NICOLOGINPATH forAuthType:kSecAuthenticationTypeAny inKeychain:systemDefaultKeychain];
 	if ((usesArray == nil) || ([usesArray count] == 0))
@@ -80,18 +81,38 @@ NSNumber *inactive;
 	NLAccount *account;
 	for (KCSInternetUser *user in usesArray)
 	{
-		account = [[NLAccount alloc] initWithAccount:[user account] andPassword:[user password]];
-#if __has_feature(objc_arc) == 0
-		[account autorelease];
-#endif
+		NSString *mailaddr = [user account];
+		NSString *password = [user password];
+		NSString *nick = nil;
+		account = [[NLAccount alloc] initWithAccount:mailaddr andPassword:password];
+		if (account == nil)
+		{
+			NSDictionary *userInfo = [usersInfo valueForKey:mailaddr];
+			if (userInfo != nil)
+			{
+				nick = [userInfo valueForKey:keyAccountNickname];
+				account = [[NLAccount alloc] initOfflineAccount:mailaddr andPassword:password isNickname:nick];
+			}// end if saved account
+			online = NO;
+		}
+		else
+		{
+			nick = [account nickname];
+			online = YES;
+		}
 		[usersDict setValue:account forKey:[account nickname]];
-		if ([activeUsers containsObject:[account userid]] == YES)
+		if ([[[usersInfo valueForKey:mailaddr] valueForKey:keyAccountWatchEnabled] boolValue] == YES)
 			[usersState setValue:active forKey:[account nickname]];
 		else
 			[usersState setValue:inactive forKey:[account nickname]];
 		// end if is set userState
+#if __has_feature(objc_arc) == 0
+		[account autorelease];
+#endif
 		[users addObject:account];
 	}// end for
+	if (online != YES)
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAccounts:) name:NLNotificationConnectionRised object:nil];
 
 	return usersDict;
 }// end - (NSDictionary *) makeAccounts
@@ -242,7 +263,7 @@ NSNumber *inactive;
 {
 	for (NSString *username in [usersState allKeys])
 	{
-		if ([[usersState valueForKey:username] isEqual:active])
+		if ([[usersState valueForKey:username] isEqualToValue:active])
 		{
 			NLAccount *account = [accounts valueForKey:username];
 			if ([[account channels] valueForKey:community] != nil)
@@ -298,6 +319,19 @@ NSNumber *inactive;
 	return nil;
 }// end - (NLAccount *) accountByAccount:(NSString *)account
 
+- (void) refreshAccounts:(NSNotification *)note
+{
+	if ((online == YES) || ([[note object] isEqualToString:NLNotificationServerResponce] == NO))
+		return;
+
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationConnectionRised object:nil];
+	for (NLAccount *account in [accounts allValues])
+		[account updateAccountInfo];
+	// end foreach account
+	online = YES;
+	[self updateUserSateMenu];
+}
+
 #pragma mark -
 #pragma mark menu management
 - (void) creteUserStateMenu
@@ -308,7 +342,7 @@ NSNumber *inactive;
 	for (NLAccount *user in users)
 	{
 		userItem = [user accountMenu];
-		if ([[usersState valueForKey:[user nickname]] isEqual:active] == YES)
+		if ([[usersState valueForKey:[user nickname]] isEqualToValue:active] == YES)
 			[userItem setState:NSOnState];
 		else
 			[userItem setState:NSOffState];
@@ -325,7 +359,7 @@ NSNumber *inactive;
 	for (NLAccount *user in users)
 	{
 		userItem = [user accountMenu];
-		if ([[usersState valueForKey:[user nickname]] isEqual:active] == YES)
+		if ([[usersState valueForKey:[user nickname]] isEqualToValue:active] == YES)
 			[userItem setState:NSOnState];
 		else
 			[userItem setState:NSOffState];

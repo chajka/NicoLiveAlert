@@ -208,6 +208,8 @@ enum elementLiteralIndex {
 #define NLNotificationServerResponce	@"NLNotificationServerResponce"
 #define NLNotificationStartListen		@"NLNotificationStartListen"
 #define NLNotificationSieveProgram		@"NLNotificationSieveProgram"
+#define GrowlRiseTitle					@"Start Monitoring"
+#define GrowlLostTitle					@"Connection Lost"
 
 #define NLChannelFormat					@"ch%@"
 #define dataSeparator					@","

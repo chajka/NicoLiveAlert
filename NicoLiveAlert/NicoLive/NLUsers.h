@@ -33,6 +33,7 @@
 	NSMutableDictionary	*watchlist;
 	NSMenu				*usersMenu;
 	NSInteger			userState;
+	BOOL				online;
 }
 @property (readonly) NSMutableArray			*users;
 @property (readonly) NSMutableDictionary	*originalWatchList;
@@ -48,7 +49,7 @@
 	@param manually added watchlist with autoOpen flag.
 	@result active and deactive user management object
 */
-- (id) initWithActiveUsers:(NSArray *)activeUsers andManualWatchList:(NSDictionary *)manualWatchList;
+- (id) initWithActiveUsers:(NSDictionary *)activeUsers andManualWatchList:(NSDictionary *)manualWatchList;
 
 #pragma mark -
 #pragma mark user management

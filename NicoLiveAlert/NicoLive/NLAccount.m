@@ -74,6 +74,23 @@ NSNumber		*notAutoOpen;
 	return self;
 }// end - (id) initWithAccount:(NSString *)account andPassword:(NSString *)pass
 
+- (id) initOfflineAccount:(NSString *)account andPassword:(NSString *)pass isNickname:(NSString *)nick
+{
+	self = [super init];
+	if (self)
+	{
+		mailaddr = [account copy];
+		password = [pass copy];
+		nickname = [nick copy];
+		userid = nil;
+		channels = nil;
+		ticket = nil;
+		channels = nil;
+		[self makeMenuItem];
+	}// end if self 
+	return self;
+}
+
 - (void) dealloc
 {
 #if __has_feature(objc_arc) == 0
@@ -117,6 +134,8 @@ NSNumber		*notAutoOpen;
 	NSString			*savedTicket =		ticket;		ticket = nil;
 	NSMutableDictionary *savedChannels =	channels;	channels = nil;
 	success = [self getLoginTicket];
+	if (success == YES)
+		success = [self getAccountInfo];
 
 	if (success == YES)
 	{		// cleanup saved values

@@ -125,15 +125,8 @@ NSMutableDictionary *watchitems = nil;
 - (void) setupAccounts
 {
 		// make active accounts
-	NSMutableArray *activeAccounts = [NSMutableArray array];
 	NSDictionary *savedAccounts = [prefs loadAccounts];
-	for (NSNumber *userid in [savedAccounts allKeys])
-	{
-		if ([[savedAccounts objectForKey:userid] boolValue] == YES)
-			[activeAccounts addObject:userid];
-	}// end foreach watchList items
-
-	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:activeAccounts
+	nicoliveAccounts = [[NLUsers alloc] initWithActiveUsers:savedAccounts
 										 andManualWatchList:watchitems];
 	[statusBar setUserState:[nicoliveAccounts userState]];
 	[comboLoginID setUsesDataSource:YES];

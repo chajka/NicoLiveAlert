@@ -22,7 +22,7 @@
 - (void) checkConnectionRised:(NSTimer *)theTimer;
 - (void) connectionRised:(NSString *)reason;
 - (void) connectionLost:(NSString *)reason;
-- (void) growlProgramNotify:(NSString *)notificationName;
+- (void) growlProgramNotify:(NSString *)kind notify:(NSString *)notificationName reason:(NSString *)reason;
 @end
 
 @implementation NLProgramList
@@ -145,6 +145,9 @@ __strong OnigRegexp			*startTimeRegex;
 
 - (void) startListen:(NSNotification *)note
 {
+	if (connected == YES)
+		return;
+
 	[self stopConnectionRiseMonitor];
 	serverInfo = [[NLMessageServerInfo alloc] init];
 	if ((serverInfo == nil) || (serverInfo.maintenance == YES))
@@ -153,7 +156,9 @@ __strong OnigRegexp			*startTimeRegex;
 		[serverInfo release];
 #endif
 		serverInfo = nil;
-		[self connectionRised:NLNotificationStartListen];
+		[self resetConnectionRiseMonitor];
+		[connectionRiseMonitor fire];
+		connected = NO;
 		return;
 	}
 	// end if cannot correct server information.
@@ -164,6 +169,8 @@ __strong OnigRegexp			*startTimeRegex;
 	{
 		[self resetKeepAliveMonitor];
 		[keepAliveMonitor fire];
+		if (connected == NO)
+			[self connectionRised:NLNotificationStartListen];
 	}// end if connect to program server success
 
 #if __has_feature(objc_arc) == 0
@@ -372,24 +379,26 @@ __strong OnigRegexp			*startTimeRegex;
 #pragma mark Notify
 - (void) connectionRised:(NSString *)reason
 {
+	connected = YES;
 	[center postNotificationName:NLNotificationConnectionRised object:reason];
-	[self growlProgramNotify:GrowlNotifyStartMonitoring];
+	[self growlProgramNotify:GrowlRiseTitle notify:GrowlNotifyStartMonitoring reason:reason];
 }// end - (void) connectionRised:(NSString *)reason
 
 - (void) connectionLost:(NSString *)reason
 {
 	[center postNotificationName:NLNotificationConnectionRised object:reason];
-	[self growlProgramNotify:GrowlNotifyDisconnected];
+	[self growlProgramNotify:GrowlLostTitle notify:GrowlNotifyDisconnected reason:reason];
 }// end - (void) connectionLost:(NSString *)reason
 
 #pragma mark Growling
-- (void) growlProgramNotify:(NSString *)notificationName
+- (void) growlProgramNotify:(NSString *)kind notify:(NSString *)notificationName reason:(NSString *)reason
 {
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
 	NSNumber *priority = [NSNumber numberWithInt:0];
 	NSNumber *isStickey = [NSNumber numberWithBool:NO];
+	[dict setValue:kind forKey:GROWL_NOTIFICATION_TITLE];
 	[dict setValue:notificationName forKey:GROWL_NOTIFICATION_NAME];
-	[dict setValue:notificationName forKey:GROWL_NOTIFICATION_TITLE];
+	[dict setValue:notificationName forKey:GROWL_NOTIFICATION_DESCRIPTION];
 /*
 #ifdef GROWL_NOTIFICATION_ICON_DATA
 	[dict setValue:[thumbnail TIFFRepresentation] forKey:GROWL_NOTIFICATION_ICON_DATA];

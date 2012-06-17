@@ -1629,7 +1629,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
-				LLVM_LTO = YES;
+				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = NicoLiveAlert;
@@ -1653,7 +1653,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
-				LLVM_LTO = YES;
+				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = NicoLiveAlert;

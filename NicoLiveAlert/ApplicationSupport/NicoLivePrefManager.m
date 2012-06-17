@@ -131,15 +131,15 @@
 
 	NSMutableDictionary *tmpAccounts = [NSMutableDictionary dictionary];
 	NSArray *savedAccounts = [myDefaults objectForKey:AccountsList];
+	if ([savedAccounts count] == 0)
+		return nil;
+	
 	for (NSDictionary *accountData in savedAccounts)
-		[tmpAccounts setValue:[accountData valueForKey:keyAccountWatchEnabled]
-					   forKey:[accountData valueForKey:keyAccountUserID]];
+		[tmpAccounts setValue:accountData
+					   forKey:[accountData valueForKey:keyAccountMailAddr]];
 	// end foreach saved accounts	
 
-	if ([tmpAccounts count] != 0)
-		return [NSDictionary dictionaryWithDictionary:tmpAccounts];
-	else
-		return nil;
+	return [NSDictionary dictionaryWithDictionary:tmpAccounts];
 }// end - (NSDictionary *)loadAccounts
 
 - (void) saveAccountsList:(NSArray *)accountsList

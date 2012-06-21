@@ -784,8 +784,8 @@
 		1D5E8C911579DAFE00AB268B /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
-				1D5E8CA01579DB4B00AB268B /* KCSUser.m */,
 				1D5E8CA11579DB4B00AB268B /* KCSUser.h */,
+				1D5E8CA01579DB4B00AB268B /* KCSUser.m */,
 			);
 			name = Keychain;
 			sourceTree = "<group>";
@@ -1707,6 +1707,7 @@
 		1D1CE326150C7849001E7E39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1729,7 +1730,7 @@
 		1D1CE327150C7849001E7E39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1844,6 +1845,7 @@
 		1DCEEC47156E64A40044B75E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1868,6 +1870,7 @@
 			buildSettings = {
 				ARCHS = (
 					ppc,
+					i386,
 					x86_64,
 				);
 				CLANG_ENABLE_OBJC_ARC = NO;

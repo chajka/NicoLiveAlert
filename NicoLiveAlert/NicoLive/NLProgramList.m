@@ -445,12 +445,32 @@ __strong OnigRegexp			*startTimeRegex;
 		// store last data recieve time;
 		// databyte is terminator
 	NSString *msg = [[NSString alloc] initWithData:programListDataBuffer encoding:NSUTF8StringEncoding];
-	NSArray *result = [msg componentsSeparatedByCharactersInSet:chatSeparator];
-	if ([result count] == CountRegalChatContent)
-	{
-		NSDate *broadcastDate = [NSDate dateWithTimeIntervalSince1970:[[result objectAtIndex:OffsetDateInArray] longLongValue]];
-		[self checkProgram:[NSString stringWithFormat:liveNoAppendFormat,[result objectAtIndex:OffsetProgramInfoInArray]] withDate:broadcastDate];
-	}// end if <chat></chat>
+	int tokenNumber = 0;
+	const char *sep = [ChatContentCharset UTF8String];
+	char *phrase, *brkb;
+	NSTimeInterval unixtime;
+	NSDate *broadcastDate = nil;
+	NSString *liveInfo = nil;
+	char *live;
+	for (phrase = strtok_r((char *)[msg UTF8String], sep, &brkb);
+		 phrase;
+		 phrase = strtok_r(NULL, sep, &brkb))
+	{	
+		switch (++tokenNumber) {
+			case TokenUnixTime:
+				unixtime = atof(phrase);
+				break;
+			case TokenProgramInfo:
+				asprintf(&live, "lv%s", phrase);
+				liveInfo = [NSString stringWithCString:live encoding:NSUTF8StringEncoding];
+				free(live);
+				broadcastDate = [NSDate dateWithTimeIntervalSince1970:unixtime];
+				[self checkProgram:liveInfo withDate:broadcastDate];
+				break;
+			default:
+				break;
+		}// end switch by token
+	}// end foreach token
 
 #if __has_feature(objc_arc)
 	programListDataBuffer = nil;

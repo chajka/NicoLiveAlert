@@ -224,6 +224,9 @@ enum elementLiteralIndex {
 #define CountRegalChatContent			(26)
 #define OffsetDateInArray				(12)
 #define OffsetProgramInfoInArray		(22)
+#define TokenBufferSize					(2048)
+#define TokenUnixTime					(7)
+#define TokenProgramInfo				(12)
 #define MaintRegex			@"<code>maintenance</code>"
 #define RiseConnectRegex	@"<getalertstatus status=\"ok\" time=\"\\d+\">"
 #define ProgramListRegex	@"<chat.*>(.*)</chat>"

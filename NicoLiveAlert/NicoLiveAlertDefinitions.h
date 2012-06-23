@@ -123,7 +123,7 @@ enum WatchTargetKind {
 #define keyVersion			@"Version"
 #define keyCopyright		@"Copyright"
 #define keyAppVersion		@"ApplicationVersion"
-#define AppNameLepard		@"NicoLiveAlert (Leopard)"
+#define AppNameLepard		@"NicoLiveAlert Mini"
 #define AppNameSnowLeopard	@"NicoLiveAlert (Snow Leopard)"
 #define AppnameLion			@"NicoLiveAlert (Lion)"
 

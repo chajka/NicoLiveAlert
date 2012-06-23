@@ -63,6 +63,7 @@
 	__strong IBOutlet NSButton		*btnRemoveApplication;
 
 			// tiny launcher item
+	__strong IBOutlet NSBox							*boxTinyLauncher;
 	__strong IBOutlet IOMTableViewDragAndDrop		*tblTinyLauncher;
 
 			// array controller items

@@ -100,7 +100,7 @@ NSNumber *inactive;
 			nick = [account nickname];
 			online = YES;
 		}
-		[usersDict setValue:account forKey:[account nickname]];
+		[usersDict setValue:account forKey:nick];
 		if ([[[usersInfo valueForKey:mailaddr] valueForKey:keyAccountWatchEnabled] boolValue] == YES)
 			[usersState setValue:active forKey:[account nickname]];
 		else

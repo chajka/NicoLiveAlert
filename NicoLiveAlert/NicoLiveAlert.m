@@ -115,9 +115,12 @@ NSMutableDictionary *watchitems = nil;
 #pragma mark -
 - (void) disableAtLeopardItems
 {		// remove application collaboration tab
+/*
 	NSInteger lastTab = [tabviewPreferences numberOfTabViewItems] - 1;
 	NSTabViewItem *collabo = [tabviewPreferences tabViewItemAtIndex:lastTab];
 	[tabviewPreferences removeTabViewItem:collabo];
+*/
+	[boxTinyLauncher setHidden:YES];
 		// hide application collabolation menu
 	[[menuStatusbar itemWithTag:tagLaunchApplications] setHidden:YES];
 }
@@ -331,9 +334,9 @@ NSMutableDictionary *watchitems = nil;
 	NSNotificationCenter *this = [NSNotificationCenter defaultCenter];
 		// sleep and wakeup notification hooks
 			// hook to sleep notification
-	[myMac addObserver:self selector: @selector(listenHalt:) name: NSWorkspaceWillSleepNotification object: nil];
+	[myMac addObserver:self selector: @selector(listenHalt:) name: NSWorkspaceWillSleepNotification object:nil];
 			// hook to wakeup notification
-	[myMac addObserver:self selector: @selector(listenRestart:) name: NSWorkspaceDidWakeNotification object: nil];
+	[myMac addObserver:self selector: @selector(listenRestart:) name: NSWorkspaceDidWakeNotification object:nil];
 		// Connection Notification hooks
 			// hook to connection lost notification
 	[this addObserver:self selector:@selector(listenHalt:) name:NLNotificationConnectionLost object:nil];
@@ -580,9 +583,13 @@ NSMutableDictionary *watchitems = nil;
 		if (row == -1)
 			return;
 
-			// get removed item
+			// get remove item
 		NSDictionary *watchItem = [[aryManualWatchlist arrangedObjects] objectAtIndex:row];
+#if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_5
+		NSString *item = [watchItem valueForKey:keyWatchItem];
+#else
 		NSString *item = [[watchItem valueForKey:keyWatchItem] string];
+#endif
 
 			// remove from watch list
 		[nicoliveAccounts removeWatchListItem:item];

@@ -9,6 +9,7 @@
 #ifndef NicoLiveAlertCollaboration_h
 #define NicoLiveAlertCollaboration_h
 
+#define NLAApplicationName				@"NicoLiveAlert"
 #define NLABroadcastStartNotification	@"NLABroadcastStart"
 #define NLABroadcastEndNotification		@"NLABroadcastEnd"
 

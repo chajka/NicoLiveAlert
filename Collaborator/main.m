@@ -32,6 +32,8 @@
 
 - (void) connectToProgram:(NSDictionary *)program
 {
+	[[NSDistributedNotificationCenter defaultCenter] postNotificationName:NLABroadcastStartNotification object:NLAApplicationName userInfo:program];
+
 	NSString *liveno = [program valueForKey:LiveNumber];
 	BOOL toCommentViewr = [[program valueForKey:CommentViewer] boolValue];
 	BOOL toStreamer = [[program valueForKey:BroadcastStreamer] boolValue];
@@ -39,18 +41,17 @@
 		[self joinToLive:liveno];
 		// endif
 	if (toStreamer == YES)
-		[self startFMLE:liveno];
-	
-	[[[NSWorkspace sharedWorkspace] notificationCenter] postNotification:[NSNotification notificationWithName:NLABroadcastStartNotification object:program]];
+		[self startFMLE:liveno];	
 }// end - (void) connectToProgram:(NSAttributedString *)program
 
 - (void) disconnectFromProgram:(NSDictionary *)program
 {
+	[[NSDistributedNotificationCenter defaultCenter] postNotificationName:NLABroadcastEndNotification object:NLAApplicationName userInfo:program];
+
 	BOOL toStreamer = [[program valueForKey:BroadcastStreamer] boolValue];
 	if (toStreamer == YES)
 		[self stopFMLE];
 
-	[[[NSWorkspace sharedWorkspace] notificationCenter] postNotification:[NSNotification notificationWithName:NLABroadcastEndNotification object:program]];
 }// end - (void) disconnectFromProgram:(NSString *)program
 
 - (void) startFMLE:(NSString *)live

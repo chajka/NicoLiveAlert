@@ -19,6 +19,8 @@
 #pragma mark Other application collaboration
 - (void) connectToProgram:(NSDictionary *)program
 {
+	[[NSDistributedNotificationCenter defaultCenter] postNotificationName:NLABroadcastStartNotification object:NLAApplicationName userInfo:program];
+
 	NSString *liveno = [program valueForKey:LiveNumber];
 	BOOL toCommentViewr = [[program valueForKey:CommentViewer] boolValue];
 	BOOL toStreamer = [[program valueForKey:BroadcastStreamer] boolValue];
@@ -28,13 +30,12 @@
 	if (toStreamer == YES)
 		[self startFMLE:liveno];
 
-	[[[NSWorkspace sharedWorkspace] notificationCenter] postNotification:[NSNotification notificationWithName:NLABroadcastStartNotification object:program]];
 }// end - (void) connectToProgram:(NSAttributedString *)program
 
 - (void) disconnectFromProgram:(NSDictionary *)program
 {
+	[[NSDistributedNotificationCenter defaultCenter] postNotificationName:NLABroadcastEndNotification object:NLAApplicationName userInfo:program];
 	[self stopFMLE];
-	[[[NSWorkspace sharedWorkspace] notificationCenter] postNotification:[NSNotification notificationWithName:NLABroadcastEndNotification object:program]];
 }// end - (void) disconnectFromProgram:(NSString *)program
 
 #pragma mark application collaboration by classic interface

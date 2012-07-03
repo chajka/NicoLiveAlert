@@ -1918,7 +1918,7 @@
 																<string key="NSFrame">{{163, 12}, {152, 18}}</string>
 																<reference key="NSSuperview" ref="1009605214"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="783973622"/>
+																<reference key="NSNextKeyView"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSButtonCell" key="NSCell" id="892723509">
@@ -2497,6 +2497,58 @@
 														<reference key="NSNextResponder" ref="251191014"/>
 														<int key="NSvFlags">274</int>
 														<array class="NSMutableArray" key="NSSubviews">
+															<object class="NSButton" id="869161129">
+																<reference key="NSNextResponder" ref="1009011367"/>
+																<int key="NSvFlags">268</int>
+																<string key="NSFrame">{{16, 92}, {287, 18}}</string>
+																<reference key="NSSuperview" ref="1009011367"/>
+																<reference key="NSNextKeyView" ref="833055688"/>
+																<string key="NSReuseIdentifierKey">_NS:9</string>
+																<int key="NSTag">1105</int>
+																<bool key="NSEnabled">YES</bool>
+																<object class="NSButtonCell" key="NSCell" id="507705379">
+																	<int key="NSCellFlags">67239424</int>
+																	<int key="NSCellFlags2">0</int>
+																	<string key="NSContents">開いた放送をコメントビュワーで開く</string>
+																	<reference key="NSSupport" ref="377444064"/>
+																	<string key="NSCellIdentifier">_NS:9</string>
+																	<reference key="NSControlView" ref="869161129"/>
+																	<int key="NSButtonFlags">1211912703</int>
+																	<int key="NSButtonFlags2">2</int>
+																	<reference key="NSNormalImage" ref="144611540"/>
+																	<reference key="NSAlternateImage" ref="537109622"/>
+																	<string key="NSAlternateContents"/>
+																	<string key="NSKeyEquivalent"/>
+																	<int key="NSPeriodicDelay">200</int>
+																	<int key="NSPeriodicInterval">25</int>
+																</object>
+															</object>
+															<object class="NSButton" id="833055688">
+																<reference key="NSNextResponder" ref="1009011367"/>
+																<int key="NSvFlags">268</int>
+																<string key="NSFrame">{{16, 72}, {298, 18}}</string>
+																<reference key="NSSuperview" ref="1009011367"/>
+																<reference key="NSNextKeyView" ref="1042847882"/>
+																<string key="NSReuseIdentifierKey">_NS:9</string>
+																<int key="NSTag">1104</int>
+																<bool key="NSEnabled">YES</bool>
+																<object class="NSButtonCell" key="NSCell" id="465740467">
+																	<int key="NSCellFlags">67239424</int>
+																	<int key="NSCellFlags2">0</int>
+																	<string key="NSContents">AutoOpenした放送をコメントビュワーで開く</string>
+																	<reference key="NSSupport" ref="377444064"/>
+																	<string key="NSCellIdentifier">_NS:9</string>
+																	<reference key="NSControlView" ref="833055688"/>
+																	<int key="NSButtonFlags">1211912703</int>
+																	<int key="NSButtonFlags2">2</int>
+																	<reference key="NSNormalImage" ref="144611540"/>
+																	<reference key="NSAlternateImage" ref="537109622"/>
+																	<string key="NSAlternateContents"/>
+																	<string key="NSKeyEquivalent"/>
+																	<int key="NSPeriodicDelay">200</int>
+																	<int key="NSPeriodicInterval">25</int>
+																</object>
+															</object>
 															<object class="NSButton" id="1042847882">
 																<reference key="NSNextResponder" ref="1009011367"/>
 																<int key="NSvFlags">268</int>
@@ -2526,7 +2578,7 @@
 															<object class="NSButton" id="253192181">
 																<reference key="NSNextResponder" ref="1009011367"/>
 																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{16, 32}, {235, 18}}</string>
+																<string key="NSFrame">{{16, 32}, {287, 18}}</string>
 																<reference key="NSSuperview" ref="1009011367"/>
 																<reference key="NSNextKeyView" ref="535448704"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -2535,7 +2587,7 @@
 																<object class="NSButtonCell" key="NSCell" id="1027405636">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">0</int>
-																	<string key="NSContents">FMELauncherと連携する</string>
+																	<string key="NSContents">高画質配信自動化ツールと連携する</string>
 																	<reference key="NSSupport" ref="377444064"/>
 																	<string key="NSCellIdentifier">_NS:9</string>
 																	<reference key="NSControlView" ref="253192181"/>
@@ -2552,7 +2604,7 @@
 															<object class="NSButton" id="535448704">
 																<reference key="NSNextResponder" ref="1009011367"/>
 																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{16, 12}, {235, 18}}</string>
+																<string key="NSFrame">{{16, 12}, {298, 18}}</string>
 																<reference key="NSSuperview" ref="1009011367"/>
 																<reference key="NSNextKeyView" ref="576044959"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -2561,62 +2613,10 @@
 																<object class="NSButtonCell" key="NSCell" id="641429938">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">0</int>
-																	<string key="NSContents">自分の放送時Charlestonと連携する</string>
+																	<string key="NSContents">自分の放送時コメントビュワーと連携する</string>
 																	<reference key="NSSupport" ref="377444064"/>
 																	<string key="NSCellIdentifier">_NS:9</string>
 																	<reference key="NSControlView" ref="535448704"/>
-																	<int key="NSButtonFlags">1211912703</int>
-																	<int key="NSButtonFlags2">2</int>
-																	<reference key="NSNormalImage" ref="144611540"/>
-																	<reference key="NSAlternateImage" ref="537109622"/>
-																	<string key="NSAlternateContents"/>
-																	<string key="NSKeyEquivalent"/>
-																	<int key="NSPeriodicDelay">200</int>
-																	<int key="NSPeriodicInterval">25</int>
-																</object>
-															</object>
-															<object class="NSButton" id="833055688">
-																<reference key="NSNextResponder" ref="1009011367"/>
-																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{16, 72}, {261, 18}}</string>
-																<reference key="NSSuperview" ref="1009011367"/>
-																<reference key="NSNextKeyView" ref="1042847882"/>
-																<string key="NSReuseIdentifierKey">_NS:9</string>
-																<int key="NSTag">1104</int>
-																<bool key="NSEnabled">YES</bool>
-																<object class="NSButtonCell" key="NSCell" id="465740467">
-																	<int key="NSCellFlags">67239424</int>
-																	<int key="NSCellFlags2">0</int>
-																	<string key="NSContents">AutoOpenした放送をCharlestonで開く</string>
-																	<reference key="NSSupport" ref="377444064"/>
-																	<string key="NSCellIdentifier">_NS:9</string>
-																	<reference key="NSControlView" ref="833055688"/>
-																	<int key="NSButtonFlags">1211912703</int>
-																	<int key="NSButtonFlags2">2</int>
-																	<reference key="NSNormalImage" ref="144611540"/>
-																	<reference key="NSAlternateImage" ref="537109622"/>
-																	<string key="NSAlternateContents"/>
-																	<string key="NSKeyEquivalent"/>
-																	<int key="NSPeriodicDelay">200</int>
-																	<int key="NSPeriodicInterval">25</int>
-																</object>
-															</object>
-															<object class="NSButton" id="869161129">
-																<reference key="NSNextResponder" ref="1009011367"/>
-																<int key="NSvFlags">268</int>
-																<string key="NSFrame">{{16, 92}, {287, 18}}</string>
-																<reference key="NSSuperview" ref="1009011367"/>
-																<reference key="NSNextKeyView" ref="833055688"/>
-																<string key="NSReuseIdentifierKey">_NS:9</string>
-																<int key="NSTag">1105</int>
-																<bool key="NSEnabled">YES</bool>
-																<object class="NSButtonCell" key="NSCell" id="507705379">
-																	<int key="NSCellFlags">67239424</int>
-																	<int key="NSCellFlags2">0</int>
-																	<string key="NSContents">アラートから開いた放送をCharlestonで開く</string>
-																	<reference key="NSSupport" ref="377444064"/>
-																	<string key="NSCellIdentifier">_NS:9</string>
-																	<reference key="NSControlView" ref="869161129"/>
 																	<int key="NSButtonFlags">1211912703</int>
 																	<int key="NSButtonFlags2">2</int>
 																	<reference key="NSNormalImage" ref="144611540"/>
@@ -2677,7 +2677,7 @@
 																				<int key="NSvFlags">256</int>
 																				<string key="NSFrameSize">{301, 153}</string>
 																				<reference key="NSSuperview" ref="1026498646"/>
-																				<reference key="NSNextKeyView" ref="91824063"/>
+																				<reference key="NSNextKeyView" ref="883228463"/>
 																				<string key="NSReuseIdentifierKey">_NS:13</string>
 																				<bool key="NSEnabled">YES</bool>
 																				<object class="NSTableHeaderView" key="NSHeaderView" id="880958358">
@@ -2820,7 +2820,7 @@
 																</array>
 																<string key="NSFrame">{{6, 23}, {303, 171}}</string>
 																<reference key="NSSuperview" ref="947367071"/>
-																<reference key="NSNextKeyView" ref="1026498646"/>
+																<reference key="NSNextKeyView" ref="91824063"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<int key="NSsFlags">133682</int>
 																<reference key="NSVScroller" ref="883228463"/>
@@ -2862,6 +2862,7 @@
 																<int key="NSvFlags">268</int>
 																<string key="NSFrame">{{22, 6}, {16, 16}}</string>
 																<reference key="NSSuperview" ref="947367071"/>
+																<reference key="NSNextKeyView"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSButtonCell" key="NSCell" id="229986893">
@@ -6167,10 +6168,10 @@
 						<int key="objectID">850</int>
 						<reference key="object" ref="251191014"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="869161129"/>
-							<reference ref="833055688"/>
 							<reference ref="1042847882"/>
+							<reference ref="869161129"/>
 							<reference ref="253192181"/>
+							<reference ref="833055688"/>
 							<reference ref="535448704"/>
 						</array>
 						<reference key="parent" ref="147203099"/>

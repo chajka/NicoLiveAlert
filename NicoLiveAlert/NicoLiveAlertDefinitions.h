@@ -34,6 +34,7 @@
 #define STREAMINFOQUERY		@"http://live.nicovideo.jp/api/getstreaminfo/%@"
 #define STREMEMBEDQUERY		@"http://live.nicovideo.jp/embed/%@"
 #define PROGRAMURLFORMAT	@"http://live.nicovideo.jp/watch/%@"
+#define NICKNAMEQUERY		@"http://seiga.nicovideo.jp/api/user/info?id=%@"
 
 #pragma mark -
 #pragma makr defaultKey definition
@@ -242,6 +243,7 @@ enum {
 #pragma mark definitions for class NLProgram
 	// Attribute literal
 #define fontNameOfProgramTitle		@"HiraKakuPro-W6"
+#define fontNameOfProgramOwner		@"HiraKakuPro-W3"
 #define fontNameOfDescription		@"HiraMaruPro-W4"
 #define fontNameOfCommunity			@"HiraKakuPro-W6"
 #define fontNameOfPrimaryAccount	@"Futura-Medium"
@@ -261,6 +263,7 @@ enum {
 #define ProgStartTimeRegex	@"(\\d+:\\d+)</div></?[ap]>"
 #define ProgramURLRegex		@"<a href=\"(http://live.nicovideo.jp/watch/lv\\d+)\""
 #define ProgStateRegex		@"class=\"(before|beforeTS|onair|done|doneTS)\""
+#define NicknameRegex		@"<nickname>(.*)</nickname>"
 
 #define ONAIRSTATE			@"onair"
 #define BEFORESTATE			@"before"
@@ -276,6 +279,7 @@ enum {
 #define elementComuName		@"name"
 #define elementComuID		@"default_community"
 #define elementThumbnail	@"thumbnail"
+#define elementNickname		@"nickname"
 
 enum elementStreamInfoIndex {
 	indexStreaminfo = 1,
@@ -285,6 +289,7 @@ enum elementStreamInfoIndex {
 	indexComuName,
 	indexComuID,
 	indexThumbnail,
+	indexNickname
 };
 
 	// container object definition

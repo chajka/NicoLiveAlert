@@ -22,6 +22,7 @@
 - (void) postPorgramStartNotification:(NSNumber *)autoOpen;
 - (void) parseOfficialProgram;
 - (void) parseProgramInfo:(NSString *)liveNo;
+- (void) parseOwnerNickname:(NSString *)owner;
 	// activity control method
 - (BOOL) isBroadCasting;
 	// drawing methods
@@ -58,10 +59,9 @@ NSString *embedContent;
 static const CGFloat originX = 0.0;
 static const CGFloat originY = 0.0;
 static const CGFloat thumbnailSize = 50.0;
-static const CGFloat titleImageWidth = 280.0;
 static const CGFloat exteriorLineWidth = 1.0;
 static const CGFloat titleKernValue = 0.0;
-static const CGFloat descKernValue = 0.0;
+static const CGFloat kernValue = 0.0;
 static const CGFloat titleComuKernValue = 0.0;
 static const CGFloat timeStringWidth = 110.0;
 static const CGFloat timeStringHeight = 14.0;
@@ -70,7 +70,7 @@ static const CGFloat elapesedStringHeight = timeStringHeight;
 
 #pragma mark user program constant
 static const CGFloat programBoundsW = 293.0;
-static const CGFloat programBoundsH = 64.0;
+static const CGFloat programBoundsH = 77.0;
 static const CGFloat accountOffsetX = 52.0;
 static const CGFloat accountOffsetY = 0.0;
 static const CGFloat accountWitdth = 120.0;
@@ -78,7 +78,9 @@ static const CGFloat accountHeight = 18.0;
 static const CGFloat communityOffsetX = 52.0;
 static const CGFloat communityOffsetY = 12.0;
 static const CGFloat progTitleOffsetX = 0.0;
-static const CGFloat progTitleOffsetY = 51.0;
+static const CGFloat progTitleOffsetY = programBoundsH - 13;
+static const CGFloat progOwnerOffsetX = 12.0;
+static const CGFloat progOwnerOffsetY = programBoundsH - 26;
 static const CGFloat progDescOffsetX = 52.0;
 static const CGFloat progDescOffsetY = 24.0;
 static const CGFloat progDescWidth = (programBoundsW - thumbnailSize);
@@ -105,6 +107,10 @@ static const CGFloat fract = 1.0;
 static const CGFloat ProgramTitleColorRed = (0.0 / 255);
 static const CGFloat ProgramTitleColorGreen = (0.0 / 255);
 static const CGFloat ProgramTitleColorBlue = (255.0 / 255);
+	// program owner color
+static const CGFloat ProgramOwnerColorRed = (128.0 / 255);
+static const CGFloat ProgramOwnerColorGreen = (64.0 / 255);
+static const CGFloat ProgramOwnerColorBlue = (0.0 / 255);
 	// program description color
 static const CGFloat ProgramDescColorRed = (64.0 / 255);
 static const CGFloat ProgramDescColorGreen = (64.0 / 255);
@@ -140,9 +146,15 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		@try {
 			[self checkStartTime:date forLive:liveNo];
 			if (isChannel == YES)
+			{
 				[self parseOfficialProgram];
+			}
 			else
+			{
+				broadcastOwner = [owner copy];
+				[self parseOwnerNickname:broadcastOwner];
 				[self parseProgramInfo:liveNo];
+			}// end if program is channel or user
 		}
 		@catch (NSException *exception) {
 			NSLog(@"Catch %@ : %@\n%@", NSStringFromSelector(_cmd), [self class], exception);
@@ -156,7 +168,6 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		else
 			primaryAccount = [OriginalWatchList copy];
 		[self setupEachMember:liveNo];
-		broadcastOwner = [owner copy];
 		info = [[NSDictionary alloc] initWithDictionary:[self createNotificationDict:liveNo kind:[NSNumber numberWithInteger:(isChannel ? bradcastKindChannel : bradcastKindUser)]]];
 		[self postPorgramStartNotification:autoOpen];
 		[elapseTimer fire];
@@ -230,6 +241,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	if (primaryAccount != nil)		[primaryAccount release];
 	if (communityID != nil)			[communityID release];
 	if (broadcastOwner != nil)		[broadcastOwner release];
+	if (broadcastOwnerName != nil)	[broadcastOwnerName release];
 	if (startTime != nil)			[startTime release];
 	if (startTimeString != nil)		[startTimeString release];
 	if (programURL != nil)			[programURL release];
@@ -258,6 +270,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	primaryAccount = nil;
 	communityID = nil;
 	broadcastOwner = nil;
+	broadcastOwnerName = nil;
 	startTime = nil;
 	startTimeString = nil;
 	lastMintue = 0;
@@ -310,7 +323,8 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		 [NSNumber numberWithInteger:indexDescription], elementDescription,
 		 [NSNumber numberWithInteger:indexComuName], elementComuName,
 		 [NSNumber numberWithInteger:indexComuID], elementComuID,
-		 [NSNumber numberWithInteger:indexThumbnail], elementThumbnail, nil];
+		 [NSNumber numberWithInteger:indexThumbnail], elementThumbnail, 
+		 [NSNumber numberWithInteger:indexNickname], elementNickname, nil];
 
 	return elementDict;
 }// end - (NSDictionary *) elementDict
@@ -457,13 +471,13 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	embedContent = nil;
 #endif
 	BOOL success = NO;
-	elementDict = [self elementDict];
 	NSXMLParser *parser = nil;
 #if __has_feature(objc_arc)
 	@autoreleasepool {
 #else
 	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 #endif
+	elementDict = [self elementDict];
 	NSString *streamQueryURL = [NSString stringWithFormat:STREAMINFOQUERY, liveNo];
 	NSURL *queryURL = [NSURL URLWithString:streamQueryURL];
 	NSData *response = [[NSData alloc] initWithContentsOfURL:queryURL];
@@ -485,12 +499,39 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 #if __has_feature(objc_arc)
 	}
 #else
+	[response release];
 	[parser release];
 	[arp drain];
 #endif
 	if (success != YES)
 		@throw [NSException exceptionWithName:StreamInforFetchFaild reason:UserProgXMLParseFail userInfo:nil];
 }// end - (BOOL) parseProgramInfo:(NSString *)urlString
+
+- (void) parseOwnerNickname:(NSString *)owner
+{
+#if __has_feature(objc_arc)
+	@autoreleasepool {
+#else
+	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
+#endif
+	elementDict = [self elementDict];
+	NSError *err;
+	NSString *nicknameQueryURL = [NSString stringWithFormat:NICKNAMEQUERY, owner];
+	NSURL *queryURL = [NSURL URLWithString:nicknameQueryURL];
+	NSString *nicknameXML = [NSString stringWithContentsOfURL:queryURL encoding:NSUTF8StringEncoding error:&err];
+	OnigRegexp *nicknameRegex = [OnigRegexp compile:NicknameRegex];
+	OnigResult *nicknameResult = [nicknameRegex search:nicknameXML];
+	if (nicknameResult != nil)
+		broadcastOwnerName = [[NSString alloc] initWithString:[nicknameResult stringAt:1]];
+	else
+		broadcastOwnerName = [[NSString alloc] initWithString:owner];
+	// end if
+#if __has_feature(objc_arc)
+	}
+#else
+	[arp drain];
+#endif
+}// end - (void) parseOwnerNickname:(NSString *)owner
 
 - (BOOL) isEqual:(id)object
 {
@@ -572,6 +613,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 #endif
 	NSColor *titleColor = [NSColor colorWithCalibratedRed:ProgramTitleColorRed green:ProgramTitleColorGreen blue:ProgramTitleColorBlue alpha:alpha];
+	NSColor *nickColor = [NSColor colorWithCalibratedRed:ProgramOwnerColorRed green:ProgramOwnerColorGreen blue:ProgramOwnerColorBlue alpha:alpha];
 	NSColor *descColor = [NSColor colorWithCalibratedRed:ProgramDescColorRed green:ProgramDescColorGreen blue:ProgramDescColorBlue alpha:alpha];
 	NSColor *commnunityColor = [NSColor colorWithCalibratedRed:CommunityNameColorRed green:CommunityNameColorGreen blue:CommunityNameColorBlue alpha:alpha];
 	NSColor *accountColor = [NSColor colorWithCalibratedRed:AccountColorRed green:AccountColorGreen blue:AccountColorBlue alpha:alpha];
@@ -612,10 +654,14 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		// draw program title
 	[stringAttributes setValue:titleColor forKey:NSForegroundColorAttributeName];
 	[programTitle drawAtPoint:NSMakePoint(progTitleOffsetX, progTitleOffsetY) withAttributes:stringAttributes];
+		// draw program owner nickname
+	[stringAttributes setValue:nickColor forKey:NSForegroundColorAttributeName];
+	[stringAttributes setValue:[NSNumber numberWithFloat:kernValue] forKey:NSKernAttributeName];
+	[stringAttributes setValue:[NSFont fontWithName:fontNameOfProgramOwner size:12] forKey:NSFontAttributeName];
+	[broadcastOwnerName drawAtPoint:NSMakePoint(progOwnerOffsetX, progOwnerOffsetY) withAttributes:stringAttributes];
 		// draw program description
 	[stringAttributes setValue:descColor forKey:NSForegroundColorAttributeName];
 	[stringAttributes setValue:[NSFont fontWithName:fontNameOfDescription size:10] forKey:NSFontAttributeName];
-	[stringAttributes setValue:[NSNumber numberWithFloat:descKernValue] forKey:NSKernAttributeName];
 	[programDescription drawInRect:NSMakeRect(progDescOffsetX, progDescOffsetY, progDescWidth, progDescHeight) withAttributes:stringAttributes];
 		// draw community name
 	[stringAttributes setValue:[NSFont fontWithName:fontNameOfCommunity size:11] forKey:NSFontAttributeName];
@@ -980,7 +1026,9 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 
 			}
 			break;
-			
+		case indexNickname:
+			broadcastOwnerName = [[NSString alloc] initWithString:dataString];
+			break;
 		default:
 			break;
 	}

@@ -29,6 +29,7 @@
 	NSString				*primaryAccount;
 	NSString				*communityID;
 	NSString				*broadcastOwner;
+	NSString				*broadcastOwnerName;
 	NSDate					*startTime;
 	NSString				*startTimeString;
 	NSInteger				lastMintue;

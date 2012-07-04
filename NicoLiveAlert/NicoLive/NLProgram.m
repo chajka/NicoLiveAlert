@@ -70,7 +70,7 @@ static const CGFloat elapesedStringHeight = timeStringHeight;
 
 #pragma mark user program constant
 static const CGFloat programBoundsW = 293.0;
-static const CGFloat programBoundsH = 77.0;
+static const CGFloat programBoundsH = 75.0;
 static const CGFloat accountOffsetX = 52.0;
 static const CGFloat accountOffsetY = 0.0;
 static const CGFloat accountWitdth = 120.0;
@@ -80,7 +80,7 @@ static const CGFloat communityOffsetY = 12.0;
 static const CGFloat progTitleOffsetX = 0.0;
 static const CGFloat progTitleOffsetY = programBoundsH - 13;
 static const CGFloat progOwnerOffsetX = 12.0;
-static const CGFloat progOwnerOffsetY = programBoundsH - 26;
+static const CGFloat progOwnerOffsetY = programBoundsH - 24;
 static const CGFloat progDescOffsetX = 52.0;
 static const CGFloat progDescOffsetY = 24.0;
 static const CGFloat progDescWidth = (programBoundsW - thumbnailSize);
@@ -657,7 +657,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		// draw program owner nickname
 	[stringAttributes setValue:nickColor forKey:NSForegroundColorAttributeName];
 	[stringAttributes setValue:[NSNumber numberWithFloat:kernValue] forKey:NSKernAttributeName];
-	[stringAttributes setValue:[NSFont fontWithName:fontNameOfProgramOwner size:12] forKey:NSFontAttributeName];
+	[stringAttributes setValue:[NSFont fontWithName:fontNameOfProgramOwner size:10] forKey:NSFontAttributeName];
 	[broadcastOwnerName drawAtPoint:NSMakePoint(progOwnerOffsetX, progOwnerOffsetY) withAttributes:stringAttributes];
 		// draw program description
 	[stringAttributes setValue:descColor forKey:NSForegroundColorAttributeName];

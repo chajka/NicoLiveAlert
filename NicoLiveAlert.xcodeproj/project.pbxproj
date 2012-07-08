@@ -257,6 +257,11 @@
 		1DDE3971154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */; };
 		1DDE3972154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */; };
 		1DDE3973154801150089D0D4 /* NLArrayControllerDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */; };
+		1DE84AA315A96B60009F7DB8 /* CFStreamConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE84AA215A96B60009F7DB8 /* CFStreamConnection.m */; };
+		1DE84AA415A96B60009F7DB8 /* CFStreamConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE84AA215A96B60009F7DB8 /* CFStreamConnection.m */; };
+		1DE84AA515A96B60009F7DB8 /* CFStreamConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE84AA215A96B60009F7DB8 /* CFStreamConnection.m */; };
+		1DE84AA615A96B60009F7DB8 /* CFStreamConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE84AA215A96B60009F7DB8 /* CFStreamConnection.m */; };
+		1DE84AA715A96B60009F7DB8 /* CFStreamConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE84AA215A96B60009F7DB8 /* CFStreamConnection.m */; };
 		1DE87D82151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DE87D83151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
 		1DE87D84151EFFBB006C6EDC /* NLUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE87D81151EFFBB006C6EDC /* NLUsers.m */; };
@@ -472,6 +477,8 @@
 		1DD73A471527214E00DAC3EB /* NLMessageServerInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLMessageServerInfoTests.m; path = NicoLive/NLMessageServerInfoTests.m; sourceTree = "<group>"; };
 		1DDE396E154801150089D0D4 /* NLArrayControllerDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLArrayControllerDragAndDrop.h; path = GUI/NLArrayControllerDragAndDrop.h; sourceTree = "<group>"; };
 		1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLArrayControllerDragAndDrop.m; path = GUI/NLArrayControllerDragAndDrop.m; sourceTree = "<group>"; };
+		1DE84AA115A96B60009F7DB8 /* CFStreamConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFStreamConnection.h; path = NetworkBits/CFStreamConnection.h; sourceTree = "<group>"; };
+		1DE84AA215A96B60009F7DB8 /* CFStreamConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFStreamConnection.m; path = NetworkBits/CFStreamConnection.m; sourceTree = "<group>"; };
 		1DE87D80151EFFBB006C6EDC /* NLUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLUsers.h; path = NicoLive/NLUsers.h; sourceTree = "<group>"; };
 		1DE87D81151EFFBB006C6EDC /* NLUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = NLUsers.m; path = NicoLive/NLUsers.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1DEB6D091569142400782195 /* NSObject+XPCHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+XPCHelpers.h"; sourceTree = "<group>"; };
@@ -773,8 +780,10 @@
 		1D5E8C901579DAEE00AB268B /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				1D5E8C921579DB2900AB268B /* SocketConnection.m */,
+				1DE84AA115A96B60009F7DB8 /* CFStreamConnection.h */,
+				1DE84AA215A96B60009F7DB8 /* CFStreamConnection.m */,
 				1D5E8C931579DB2900AB268B /* SocketConnection.h */,
+				1D5E8C921579DB2900AB268B /* SocketConnection.m */,
 				1D5E8C941579DB2900AB268B /* HTTPConnection.m */,
 				1D5E8C951579DB2900AB268B /* HTTPConnection.h */,
 			);
@@ -1292,6 +1301,7 @@
 				1D5E8C961579DB2900AB268B /* SocketConnection.m in Sources */,
 				1D5E8C9B1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA21579DB4B00AB268B /* KCSUser.m in Sources */,
+				1DE84AA315A96B60009F7DB8 /* CFStreamConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1324,6 +1334,7 @@
 				1D5E8C9E1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA51579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D1DF5E8157B6D9300E2318B /* HTTPConnectionTests.m in Sources */,
+				1DE84AA715A96B60009F7DB8 /* CFStreamConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1365,6 +1376,7 @@
 				1D5E8C971579DB2900AB268B /* SocketConnection.m in Sources */,
 				1D5E8C9C1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA31579DB4B00AB268B /* KCSUser.m in Sources */,
+				1DE84AA415A96B60009F7DB8 /* CFStreamConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1410,6 +1422,7 @@
 				1D5E8C9F1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA61579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D1DF5E9157B6D9300E2318B /* HTTPConnectionTests.m in Sources */,
+				1DE84AA615A96B60009F7DB8 /* CFStreamConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1469,6 +1482,7 @@
 				1D5E8C981579DB2900AB268B /* SocketConnection.m in Sources */,
 				1D5E8C9D1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA41579DB4B00AB268B /* KCSUser.m in Sources */,
+				1DE84AA515A96B60009F7DB8 /* CFStreamConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -80,7 +80,7 @@ static const CGFloat communityOffsetY = 12.0;
 static const CGFloat progTitleOffsetX = 0.0;
 static const CGFloat progTitleOffsetY = programBoundsH - 13;
 static const CGFloat progOwnerOffsetX = 12.0;
-static const CGFloat progOwnerOffsetY = programBoundsH - 24;
+static const CGFloat progOwnerOffsetY = programBoundsH - 25;
 static const CGFloat progDescOffsetX = 52.0;
 static const CGFloat progDescOffsetY = 24.0;
 static const CGFloat progDescWidth = (programBoundsW - thumbnailSize);
@@ -888,7 +888,8 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 
 	OnigRegexp *liveStateRegex = [OnigRegexp compile:ProgStateRegex];
 	OnigResult *result = [liveStateRegex search:embed];
-	if (([[result stringAt:1] isEqualToString:DONESTATE] == YES) ||
+	if ((result == nil) ||
+		([[result stringAt:1] isEqualToString:DONESTATE] == YES) ||
 		([[result stringAt:1] isEqualToString:DONETSSTATE] == YES))
 		return NO;
 	else

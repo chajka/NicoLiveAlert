@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SocketConnection.h"
+	//#import "SocketConnection.h"
+#import "CFSocketConnection.h"
 #import "NicoLiveAlertCollaboration.h"
 #import "HTTPConnection.h"
 #import "NicoLiveAlertDefinitions.h"
@@ -15,8 +16,9 @@
 #import "NLActivePrograms.h"
 #import "OnigRegexp.h"
 
-@interface NLProgramList : NSObject <StreamEventDelegate> {
-	SocketConnection	*programListSocket;
+	//@interface NLProgramList : NSObject <StreamEventDelegate> {
+@interface NLProgramList : NSObject <InputStreamConnectionDelegate, OutputStreamConnectionDelegate> {
+	CFSocketConnection	*programListSocket;
 	NSMutableDictionary	*watchList;
 	NLMessageServerInfo	*serverInfo;
 	NLActivePrograms	*activePrograms;

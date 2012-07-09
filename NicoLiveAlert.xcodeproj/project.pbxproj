@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D0ECB6215AAF905002F1A8D /* CFSocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0ECB6115AAF905002F1A8D /* CFSocketConnection.m */; };
+		1D0ECB6315AAF905002F1A8D /* CFSocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0ECB6115AAF905002F1A8D /* CFSocketConnection.m */; };
+		1D0ECB6415AAF905002F1A8D /* CFSocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0ECB6115AAF905002F1A8D /* CFSocketConnection.m */; };
+		1D0ECB6515AAF905002F1A8D /* CFSocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0ECB6115AAF905002F1A8D /* CFSocketConnection.m */; };
+		1D0ECB6615AAF905002F1A8D /* CFSocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0ECB6115AAF905002F1A8D /* CFSocketConnection.m */; };
 		1D141CF3151D8DAA00CEB686 /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
 		1D141CF4151D8DAA00CEB686 /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
 		1D141CF5151D8DAA00CEB686 /* NLStatusbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */; };
@@ -108,11 +113,6 @@
 		1D72B11A152B5CB400F7944C /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
 		1D72B11B152B5CB400F7944C /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
 		1D72B11C152B5CB400F7944C /* NLProgramList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B118152B5CB400F7944C /* NLProgramList.m */; };
-		1D7745F315A9913A0087E18C /* CFSocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D7745F215A9913A0087E18C /* CFSocketConnection.m */; };
-		1D7745F415A9913A0087E18C /* CFSocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D7745F215A9913A0087E18C /* CFSocketConnection.m */; };
-		1D7745F515A9913A0087E18C /* CFSocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D7745F215A9913A0087E18C /* CFSocketConnection.m */; };
-		1D7745F615A9913A0087E18C /* CFSocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D7745F215A9913A0087E18C /* CFSocketConnection.m */; };
-		1D7745F715A9913A0087E18C /* CFSocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D7745F215A9913A0087E18C /* CFSocketConnection.m */; };
 		1D85D2C21557DCA2005D4AFB /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D85D2C11557DCA2005D4AFB /* UserDefaults.plist */; };
 		1D85D2C31557DCA2005D4AFB /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D85D2C11557DCA2005D4AFB /* UserDefaults.plist */; };
 		1D878105154573610075B151 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D878104154573610075B151 /* Growl.framework */; };
@@ -359,6 +359,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1D0ECB6015AAF905002F1A8D /* CFSocketConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFSocketConnection.h; path = NetworkBits/CFSocketConnection.h; sourceTree = "<group>"; };
+		1D0ECB6115AAF905002F1A8D /* CFSocketConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFSocketConnection.m; path = NetworkBits/CFSocketConnection.m; sourceTree = "<group>"; };
 		1D141CF1151D8DAA00CEB686 /* NLStatusbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLStatusbar.h; path = NicoLive/NLStatusbar.h; sourceTree = "<group>"; };
 		1D141CF2151D8DAA00CEB686 /* NLStatusbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLStatusbar.m; path = NicoLive/NLStatusbar.m; sourceTree = "<group>"; };
 		1D141CFD151DAA1300CEB686 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -426,8 +428,6 @@
 		1D7082A715687293008683F5 /* NicoLiveAlert+XPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NicoLiveAlert+XPC.m"; sourceTree = "<group>"; };
 		1D72B117152B5CB400F7944C /* NLProgramList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLProgramList.h; path = NicoLive/NLProgramList.h; sourceTree = "<group>"; };
 		1D72B118152B5CB400F7944C /* NLProgramList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = NLProgramList.m; path = NicoLive/NLProgramList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		1D7745F115A9913A0087E18C /* CFSocketConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFSocketConnection.h; path = NetworkBits/CFSocketConnection.h; sourceTree = "<group>"; };
-		1D7745F215A9913A0087E18C /* CFSocketConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFSocketConnection.m; path = NetworkBits/CFSocketConnection.m; sourceTree = "<group>"; };
 		1D85D2C11557DCA2005D4AFB /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = UserDefaults.plist; path = SupportingFiles/UserDefaults.plist; sourceTree = "<group>"; };
 		1D878104154573610075B151 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = NicoLiveAlert/Growl/Legacy/Growl.framework; sourceTree = "<group>"; };
 		1D8EDCBA157B1D530081A9C8 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = NicoLiveAlert/Growl/1.3/Growl.framework; sourceTree = "<group>"; };
@@ -780,8 +780,8 @@
 		1D5E8C901579DAEE00AB268B /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				1D7745F115A9913A0087E18C /* CFSocketConnection.h */,
-				1D7745F215A9913A0087E18C /* CFSocketConnection.m */,
+				1D0ECB6015AAF905002F1A8D /* CFSocketConnection.h */,
+				1D0ECB6115AAF905002F1A8D /* CFSocketConnection.m */,
 				1D5E8C931579DB2900AB268B /* SocketConnection.h */,
 				1D5E8C921579DB2900AB268B /* SocketConnection.m */,
 				1D5E8C941579DB2900AB268B /* HTTPConnection.m */,
@@ -1301,7 +1301,7 @@
 				1D5E8C961579DB2900AB268B /* SocketConnection.m in Sources */,
 				1D5E8C9B1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA21579DB4B00AB268B /* KCSUser.m in Sources */,
-				1D7745F315A9913A0087E18C /* CFSocketConnection.m in Sources */,
+				1D0ECB6215AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1334,7 +1334,7 @@
 				1D5E8C9E1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA51579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D1DF5E8157B6D9300E2318B /* HTTPConnectionTests.m in Sources */,
-				1D7745F715A9913A0087E18C /* CFSocketConnection.m in Sources */,
+				1D0ECB6615AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1376,7 +1376,7 @@
 				1D5E8C971579DB2900AB268B /* SocketConnection.m in Sources */,
 				1D5E8C9C1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA31579DB4B00AB268B /* KCSUser.m in Sources */,
-				1D7745F415A9913A0087E18C /* CFSocketConnection.m in Sources */,
+				1D0ECB6315AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1422,7 +1422,7 @@
 				1D5E8C9F1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA61579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D1DF5E9157B6D9300E2318B /* HTTPConnectionTests.m in Sources */,
-				1D7745F615A9913A0087E18C /* CFSocketConnection.m in Sources */,
+				1D0ECB6515AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1482,7 +1482,7 @@
 				1D5E8C981579DB2900AB268B /* SocketConnection.m in Sources */,
 				1D5E8C9D1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA41579DB4B00AB268B /* KCSUser.m in Sources */,
-				1D7745F515A9913A0087E18C /* CFSocketConnection.m in Sources */,
+				1D0ECB6415AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -169,8 +169,9 @@ __strong OnigRegexp			*startTimeRegex;
 		return;
 	}// end if cannot correct server information.
 
-	programListSocket = [[SocketConnection alloc] initWithServer:[serverInfo serveName] andPort:[serverInfo port] direction:SCDirectionBoth];
-	[programListSocket setStreamEventDelegate:self];
+	programListSocket = [[CFSocketConnection alloc] initWithServerName:[serverInfo serveName] andPort:[serverInfo port]];
+	[programListSocket setInputStreamDelegate:self];
+	[programListSocket setOutputStreamDelegate:self];
 	if ([programListSocket connect] == YES)
 	{
 		[self resetKeepAliveMonitor];
@@ -205,8 +206,9 @@ __strong OnigRegexp			*startTimeRegex;
 		return success;
 	}// end if cannot correct server information.
 
-	programListSocket = [[SocketConnection alloc] initWithServer:[serverInfo serveName] andPort:[serverInfo port] direction:SCDirectionBoth];
-	[programListSocket setStreamEventDelegate:self];
+	programListSocket = [[CFSocketConnection alloc] initWithServerName:[serverInfo serveName] andPort:[serverInfo port]];
+	[programListSocket setInputStreamDelegate:self];
+	[programListSocket setOutputStreamDelegate:self];
 	if ([programListSocket connect] == YES)
 	{
 		success = YES;
@@ -420,103 +422,10 @@ NSLog(@"%@", progInfo);
 }// end - (void) growlProgramNotify:(NSString *)notificationName
 
 #pragma mark -
-#pragma mark StreamEventDelegate
-- (void) streamEventHasBytesAvailable:(NSStream *)stream
+#pragma mark InputStreamConnectionDelegate methods
+- (void) iStreamOpenCompleted:(NSInputStream *)iStream
 {
-	NSInputStream *iStream = (NSInputStream *)stream;
-	uint8_t oneByte;
-	NSUInteger actuallyRead = 0;
-	if (programListDataBuffer == nil)
-		programListDataBuffer = [[NSMutableData alloc] init];
-	// end if data buffer is cleard
-
-	actuallyRead = [iStream read:&oneByte maxLength:1U];
-	if (actuallyRead == 1)
-		[programListDataBuffer appendBytes:&oneByte length:1];
-	// end if read
-
-		// check databyte is not terminator
-	if (oneByte != '\0')
-		return;
-
-#if __has_feature(objc_arc) == 0
-	if (lastTime != nil)		[lastTime release];
-#endif
-	lastTime = [[NSDate alloc] init];
-	
-#if __has_feature(objc_arc)
-	@autoreleasepool {
-#else
-	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
-#endif
-		// store last data recieve time;
-		// databyte is terminator
-	NSString *msg = [[NSString alloc] initWithData:programListDataBuffer encoding:NSUTF8StringEncoding];
-	int tokenNumber = 0;
-	const char *sep = [ChatContentCharset UTF8String];
-	char *phrase, *brkb;
-	NSTimeInterval unixtime;
-	NSDate *broadcastDate = nil;
-	NSString *liveInfo = nil;
-	char *live;
-	for (phrase = strtok_r((char *)[msg UTF8String], sep, &brkb);
-		 phrase;
-		 phrase = strtok_r(NULL, sep, &brkb))
-	{	
-		switch (++tokenNumber) {
-			case TokenUnixTime:
-				unixtime = atof(phrase);
-				break;
-			case TokenProgramInfo:
-				asprintf(&live, "lv%s", phrase);
-				liveInfo = [NSString stringWithCString:live encoding:NSUTF8StringEncoding];
-				free(live);
-				broadcastDate = [NSDate dateWithTimeIntervalSince1970:unixtime];
-				[self checkProgram:liveInfo withDate:broadcastDate];
-				break;
-			default:
-				break;
-		}// end switch by token
-	}// end foreach token
-
-#if __has_feature(objc_arc)
-	programListDataBuffer = nil;
-	msg = nil;
-	}
-#else
-	[msg release];						msg = nil;
-	[programListDataBuffer release];	programListDataBuffer = nil;
-	[arp drain];
-#endif
-
-}// end - (void) NSStreamEventHasBytesAvailable:(NSStream *)stream
-
-- (void) streamEventHasSpaceAvailable:(NSStream *)stream
-{
-	if ((sendrequest == NO) && [programListSocket isOutputStream:stream] == YES)
-	{
-		NSInteger byteToWrite = 0;
-		NSString *request = [NSString stringWithFormat:REQUESTFORMAT,[serverInfo thread]];
-		byteToWrite = [(NSOutputStream *)stream write:(uint8_t *)[request UTF8String] maxLength:[request length]];
-		
-		if (byteToWrite == [request length])
-			sendrequest = YES;
-	}
-}// end - (void) streamEventHasSpaceAvailable:(NSStream *)stream
-
-- (void) streamEventErrorOccurred:(NSStream *)stream
-{
-	connected = NO;
-	sendrequest = NO;
-	checkRiseInterval = ConnectionReactiveCheckInterval;
-	if ([programListSocket isInputStream:stream] == YES)
-		[self connectionLost:NLNotificationStreamError];
-}// end - (void) streamEventErrorOccurred:(NSStream *)stream
-
-#pragma mark StreamEventDelegate (optional)
-- (void) streamEventOpenCompleted:(NSStream *)stream
-{
-	if ((connected == NO) && ([programListSocket isInputStream:stream]))
+	if (connected == NO)
 	{
 #if __has_feature(objc_arc) == 0
 		if (lastTime != nil)		[lastTime release];
@@ -529,19 +438,124 @@ NSLog(@"%@", progInfo);
 			[self connectionRised:NLNotificationStreamOpen];
 		}
 	}
-}// end - (void) streamEventOpenCompleted:(NSStream *)stream
+}// end - (void) iStreamOpenCompleted:(NSInputStream *)iStream
 
-- (void) streamEventEndEncountered:(NSStream *)stream
+- (void) iStreamHasBytesAvailable:(NSInputStream *)iStream
 {
-	if ((connected == YES) && ([programListSocket isInputStream:stream]))
+	uint8_t oneByte;
+	NSUInteger actuallyRead = 0;
+	if (programListDataBuffer == nil)
+		programListDataBuffer = [[NSMutableData alloc] init];
+		// end if data buffer is cleard
+	
+	actuallyRead = [iStream read:&oneByte maxLength:1U];
+	if (actuallyRead == 1)
+		[programListDataBuffer appendBytes:&oneByte length:1];
+		// end if read
+
+		// check databyte is not terminator
+	if (oneByte != '\0')
+		return;
+	
+#if __has_feature(objc_arc) == 0
+	if (lastTime != nil)		[lastTime release];
+#endif
+	lastTime = [[NSDate alloc] init];
+	
+#if __has_feature(objc_arc)
+	@autoreleasepool {
+#else
+		NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
+#endif
+			// store last data recieve time;
+			// databyte is terminator
+		NSString *msg = [[NSString alloc] initWithData:programListDataBuffer encoding:NSUTF8StringEncoding];
+		int tokenNumber = 0;
+		const char *sep = [ChatContentCharset UTF8String];
+		char *phrase, *brkb;
+		NSTimeInterval unixtime;
+		NSDate *broadcastDate = nil;
+		NSString *liveInfo = nil;
+		char *live;
+		for (phrase = strtok_r((char *)[msg UTF8String], sep, &brkb);
+			 phrase;
+			 phrase = strtok_r(NULL, sep, &brkb))
+		{	
+			switch (++tokenNumber) {
+				case TokenUnixTime:
+					unixtime = atof(phrase);
+					break;
+				case TokenProgramInfo:
+					asprintf(&live, "lv%s", phrase);
+					liveInfo = [NSString stringWithCString:live encoding:NSUTF8StringEncoding];
+					free(live);
+					broadcastDate = [NSDate dateWithTimeIntervalSince1970:unixtime];
+					[self checkProgram:liveInfo withDate:broadcastDate];
+					break;
+				default:
+					break;
+			}// end switch by token
+		}// end foreach token
+		
+#if __has_feature(objc_arc)
+		programListDataBuffer = nil;
+		msg = nil;
+	}
+#else
+	[msg release];						msg = nil;
+	[programListDataBuffer release];	programListDataBuffer = nil;
+	[arp drain];
+#endif
+}// end - (void) iStreamHasBytesAvailable:(NSInputStream *)iStream
+
+- (void) iStreamEndEncounted:(NSInputStream *)iStream
+{
+	connected = NO;
+	sendrequest = NO;
+	checkRiseInterval = ConnectionReactiveCheckInterval;
+	[self connectionLost:NLNotificationStreamError];
+}// end - (void) iStreamEndEncounted:(NSStream *)iStream
+
+- (void) iStreamErrorOccured:(NSInputStream *)iStream
+{
+	connected = NO;
+	sendrequest = NO;
+	checkRiseInterval = ConnectionReactiveCheckInterval;
+	[self connectionLost:NLNotificationStreamError];
+}// end - (void) iStreamErrorOccured:(NSInputStream *)iStream
+
+#pragma mark OutputStreamConnectionDelegate methods
+- (void) oStreamCanAcceptBytes:(NSOutputStream *)oStream
+{
+	if (sendrequest == NO)
 	{
-		connected = NO;
-		sendrequest = NO;
-		[self connectionLost:NLNotificationStreamEnd];
-	}// end if
-}// end - (void) streamEventEndEncountered:(NSStream *)stream
+		NSInteger byteToWrite = 0;
+		NSString *request = [NSString stringWithFormat:REQUESTFORMAT,[serverInfo thread]];
+		byteToWrite = [oStream write:(uint8_t *)[request UTF8String] maxLength:[request length]];
+		
+		if (byteToWrite == [request length])
+			sendrequest = YES;
+	}
+	else
+	{
+		[programListSocket closeWriteStream];
+	}
+}// end - (void) oStreamCanAcceptBytes:(NSInputStream *)oStream
 
-- (void) streamEventNone:(NSStream *)stream
+- (void) oStreamEndEncounted:(NSOutputStream *)oStream
 {
-}// end - (void) streamEventNone:(NSStream *)stream
+	connected = NO;
+	sendrequest = NO;
+	checkRiseInterval = ConnectionReactiveCheckInterval;
+	[self connectionLost:NLNotificationStreamError];
+}// end - (void) oStreamEndEncounted:(NSStream *)oStream
+
+- (void) oStreamErrorOccured:(NSOutputStream *)oStream
+{
+	connected = NO;
+	sendrequest = NO;
+	checkRiseInterval = ConnectionReactiveCheckInterval;
+	[self connectionLost:NLNotificationStreamError];
+}// end - (void) oStreamErrorOccured:(NSInputStream *)oStream
+
 @end

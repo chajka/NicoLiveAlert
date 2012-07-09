@@ -112,9 +112,11 @@
 #if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
 @property (copy) NSString *statusMessage;
 #endif
-		// IBAction’s prototypes
-- (IBAction)menuSelectAutoOpen:(id)sender;
-- (IBAction)launchApplicaions:(id)sender;
+		// prototypes of IBActions
+- (IBAction) menuSelectAutoOpen:(id)sender;
+- (IBAction) resetConnection:(id)sender;
+- (IBAction) rescanRSS:(id)sender;
+- (IBAction) launchApplicaions:(id)sender;
 - (IBAction) openProgram:(id)sender;
 - (IBAction) toggleUserState:(id)sender;
 - (IBAction) showAboutPanel:(id)sender;

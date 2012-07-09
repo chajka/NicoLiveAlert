@@ -45,5 +45,6 @@
 
 - (void) kick;
 - (void) halt;
+- (void) reset;
 
 @end

@@ -143,13 +143,20 @@ __strong OnigRegexp			*startTimeRegex;
 	[self stopListen:nil];
 }// end - (void) halt
 
+- (void) reset
+{
+	[self stopListen:nil];
+	[self startListen:nil];
+}// end - (void) reset
+
 - (void) startListen:(NSNotification *)note
 {
 	if (connected == YES)
 		return;
 
+	if (serverInfo == nil)
+		serverInfo = [[NLMessageServerInfo alloc] init];
 	[self stopConnectionRiseMonitor];
-	serverInfo = [[NLMessageServerInfo alloc] init];
 	if ((serverInfo == nil) || (serverInfo.maintenance == YES))
 	{
 #if __has_feature(objc_arc) == 0
@@ -160,8 +167,7 @@ __strong OnigRegexp			*startTimeRegex;
 		[connectionRiseMonitor fire];
 		connected = NO;
 		return;
-	}
-	// end if cannot correct server information.
+	}// end if cannot correct server information.
 
 	programListSocket = [[SocketConnection alloc] initWithServer:[serverInfo serveName] andPort:[serverInfo port] direction:SCDirectionBoth];
 	[programListSocket setStreamEventDelegate:self];
@@ -184,6 +190,21 @@ __strong OnigRegexp			*startTimeRegex;
 {
 	BOOL success = NO;
 	
+	if (serverInfo == nil)
+		serverInfo = [[NLMessageServerInfo alloc] init];
+	[self stopConnectionRiseMonitor];
+	if ((serverInfo == nil) || (serverInfo.maintenance == YES))
+	{
+#if __has_feature(objc_arc) == 0
+		[serverInfo release];
+#endif
+		serverInfo = nil;
+		[self resetConnectionRiseMonitor];
+		[connectionRiseMonitor fire];
+		connected = NO;
+		return success;
+	}// end if cannot correct server information.
+
 	programListSocket = [[SocketConnection alloc] initWithServer:[serverInfo serveName] andPort:[serverInfo port] direction:SCDirectionBoth];
 	[programListSocket setStreamEventDelegate:self];
 	if ([programListSocket connect] == YES)
@@ -193,6 +214,8 @@ __strong OnigRegexp			*startTimeRegex;
 		{
 			[connectionRiseMonitor invalidate];
 			connectionRiseMonitor = nil;
+			if (connected == NO)
+				[self connectionRised:NLNotificationStartListen];
 		}
 		[self resetKeepAliveMonitor];
 		[keepAliveMonitor fire];
@@ -209,24 +232,15 @@ __strong OnigRegexp			*startTimeRegex;
 {		//
 	[programListSocket disconnect];
 #if __has_feature(objc_arc) == 0
-	[programListSocket release];
+	if (programListSocket != nil)		[programListSocket release];
+	if (serverInfo != nil)				[serverInfo release];
 #endif
 	programListSocket = nil;
-	connected = NO;
-	streamIsOpen = NO;
-
+	serverInfo = nil;
 		// stop & reset keepAliveMonitor
 	[self stopKeepAliveMonitor];
 
-#if __has_feature(objc_arc) == 0
-	if (programListSocket != nil)
-		[programListSocket release];
-	// end if not connection
-	if (serverInfo != nil)
-		[serverInfo release];
-	// end if for serverInfo reallocate
-#endif
-	serverInfo = nil;
+	streamIsOpen = NO;
 	connected = NO;
 }// end - (void) stopListen
 
@@ -234,20 +248,17 @@ __strong OnigRegexp			*startTimeRegex;
 {		//
 	[programListSocket disconnect];
 #if __has_feature(objc_arc) == 0
-	[programListSocket release];
+	if (programListSocket != nil)	[programListSocket release];
+	if (serverInfo != nil)			[serverInfo release];
 #endif
 	programListSocket = nil;
-	connected = NO;	
+	serverInfo = nil;
 	
 		// stop & reset keepAliveMonitor
 	[self stopKeepAliveMonitor];
 	[self resetConnectionRiseMonitor];
 	[connectionRiseMonitor fire];
 	
-#if __has_feature(objc_arc) == 0
-	if (serverInfo != nil)			[serverInfo release];
-#endif
-	serverInfo = nil;
 	connected = NO;
 }// end - (void) waitListen
 
@@ -257,6 +268,7 @@ __strong OnigRegexp			*startTimeRegex;
 #pragma mark program sieve method
 - (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date
 {
+NSLog(@"%@", progInfo);
 	NSArray *program = [progInfo componentsSeparatedByString:dataSeparator];
 	NSString *live = [program objectAtIndex:offsetLiveNo];
 		// check official program
@@ -301,20 +313,17 @@ __strong OnigRegexp			*startTimeRegex;
 - (void) stopKeepAliveMonitor
 {		// stop & reset keepAliveMonitor
 	if ([keepAliveMonitor isValid] == YES)
-	{
 		[keepAliveMonitor invalidate];
-		keepAliveMonitor = nil;
-	}// end if keepAliveMonitor is running
+	// end if keepAliveMonitor is running
 	keepAliveMonitor = nil;
 }// end - (void) stopKeepAliveMonitor
 
 - (void) resetKeepAliveMonitor
 {		// stop & reset keepAliveMonitor
 	if ([keepAliveMonitor isValid] == YES)
-	{
 		[keepAliveMonitor invalidate];
-		keepAliveMonitor = nil;
-	}// end if keepAliveMonitor is running
+	// end if keepAliveMonitor is running
+	keepAliveMonitor = nil;
 	
 		// re-setup keepAliveMonitor for fire
 	keepAliveMonitor = [NSTimer scheduledTimerWithTimeInterval:ConnectionAliveCheckInterval target:self selector:@selector(checkConnectionActive:) userInfo:nil repeats:YES];
@@ -323,19 +332,17 @@ __strong OnigRegexp			*startTimeRegex;
 - (void) stopConnectionRiseMonitor
 {		// stop & reset connectionRiseMonitor
 	if ([connectionRiseMonitor isValid] == YES)
-	{
 		[connectionRiseMonitor invalidate];
-	}// end if connectionRiseMonitor is running
+	// end if connectionRiseMonitor is running
 	connectionRiseMonitor = nil;
 }// end - (void) stopConnectionRiseMonitor
 
 - (void) resetConnectionRiseMonitor
 {		// stop & reset connectionRiseMonitor
 	if ([connectionRiseMonitor isValid] == YES)
-	{
 		[connectionRiseMonitor invalidate];
-		connectionRiseMonitor = nil;
-	}// end if connectionRiseMonitor is running
+	// end if connectionRiseMonitor is running
+	connectionRiseMonitor = nil;
 	
 		// re-setup connectionRiseMonitor for fire
 	connectionRiseMonitor = [NSTimer scheduledTimerWithTimeInterval:checkRiseInterval target:self selector:@selector(checkConnectionRised:) userInfo:nil repeats:YES];

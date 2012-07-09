@@ -10,6 +10,8 @@
 "TitleAutoOpen" = "チェックした放送を自動で開く";
 "TitlePrograms" = "放送中の番組";
 "TitleAccounts" = "チェック中のアカウント";
+"TitleResetConnection" = "ネットワーク接続のリセット";
+"TitleScanRSS" = "RSSをスキャンし直す";
 "TitleLauncher" = "登録したアプリケーションを起動";
 "TitlePreference" = "環境設定…";
 "TitleAbout" = "NicoLiveAlertについて…";

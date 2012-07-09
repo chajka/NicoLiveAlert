@@ -10,6 +10,8 @@
 "TitleAutoOpen" = "AutoOpen Checked Live";
 "TitlePrograms" = "Programs";
 "TitleAccounts" = "Accounts";
+"TitleResetConnection" = "Reset Connection";
+"TitleScanRSS" = "Scan RSS";
 "TitleLauncher" = "launch Applications";
 "TitlePreference" = "Preference…";
 "TitleAbout" = "About NicoLiveAlert…";

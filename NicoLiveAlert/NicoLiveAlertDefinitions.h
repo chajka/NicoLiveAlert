@@ -63,6 +63,8 @@ enum statusBarMenuItems {
 	tagOfficial,
 	tagSep1 = 1010,
 	tagAccounts,
+	tagResetConnection,
+	tagRescanRSS,
 	tagLaunchApplications,
 	tagPreference,
 	tagSep2 = 1020,
@@ -73,9 +75,13 @@ enum statusBarMenuItems {
 	// Status Bar menu's localized string definition
 #define TITLEAUTOOPEN			NSLocalizedString(@"TitleAutoOpen", @"")
 #define	TITLEPROGRAMS			NSLocalizedString(@"TitlePrograms", @"")
+
 #define	TITLEACCOUNTS			NSLocalizedString(@"TitleAccounts", @"")
+#define TITLERESETCONNECTION	NSLocalizedString(@"TitleResetConnection", @"")
+#define TITLESCANRSS			NSLocalizedString(@"TitleScanRSS", @"")
 #define	TITLELAUNCHER			NSLocalizedString(@"TitleLauncher", @"")
 #define	TITLEPREFERENCE			NSLocalizedString(@"TitlePreference", @"")
+
 #define TITLEABOUT				NSLocalizedString(@"TitleAbout", @"")
 #define	TITLEQUIT				NSLocalizedString(@"TitleQuit", @"")
 	// Status Bar menu's alternative strings definition

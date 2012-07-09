@@ -479,14 +479,24 @@ NSMutableDictionary *watchitems = nil;
 #pragma mark gui backend
 #pragma mark menu interface
 	// menu item actions
-- (IBAction)menuSelectAutoOpen:(id)sender
+- (IBAction) menuSelectAutoOpen:(id)sender
 {
 	enableAutoOpen = ([sender state] == NSOnState) ? YES : NO;
 	[sender setState:enableAutoOpen];
 	[programSieves setEnableAutoOpen:enableAutoOpen];
 }// end - (IBAction) menuSelectAutoOpen:(id)sender
 
-- (IBAction)launchApplicaions:(id)sender
+- (IBAction) resetConnection:(id)sender
+{
+	[programSieves reset];
+		//	[programSieves kick];
+}// end - (IBAction) resetConnection:(id)sender
+
+- (IBAction) rescanRSS:(id)sender
+{
+}// end - (IBAction) rescanRSS:(id)sender
+
+- (IBAction) launchApplicaions:(id)sender
 {
 	NSArray *applicationInfo = [aryLauncherItems arrangedObjects];
 	NSWorkspace *ws = [NSWorkspace sharedWorkspace];

@@ -420,6 +420,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 
 - (void) postPorgramStartNotification:(NSNumber *)autoOpen
 {
+NSLog(@"postPorgramStartNotification : %@", autoOpen);
 	[[NSNotificationCenter defaultCenter] postNotificationName:NLNotificationFoundProgram object:autoOpen userInfo:info];
 }// end - (void) postPorgramStartNotification:(NSMutableDictionary *)info autoOpen:(NSNumber *)autoOpen
 

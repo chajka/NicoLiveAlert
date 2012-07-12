@@ -88,6 +88,9 @@ __strong OnigRegexp			*startTimeRegex;
 	[programListSocket disconnect];
 	if ([keepAliveMonitor isValid])			[keepAliveMonitor invalidate];
 	if ([connectionRiseMonitor isValid])	[connectionRiseMonitor invalidate];
+	center = [NSNotificationCenter defaultCenter];
+	[center removeObserver:self name:NLNotificationConnectionRised object:nil];
+	[center removeObserver:self name:NLNotificationConnectionLost object:nil];
 #if __has_feature(objc_arc) == 0
 	if (watchList != nil)					[watchList release];
 	if (serverInfo != nil)					[serverInfo release];
@@ -244,6 +247,7 @@ __strong OnigRegexp			*startTimeRegex;
 
 	streamIsOpen = NO;
 	connected = NO;
+	sendrequest = NO;
 }// end - (void) stopListen
 
 - (void) waitListen:(NSNotification *)note
@@ -261,7 +265,9 @@ __strong OnigRegexp			*startTimeRegex;
 	[self resetConnectionRiseMonitor];
 	[connectionRiseMonitor fire];
 	
+	streamIsOpen = NO;
 	connected = NO;
+	sendrequest = NO;
 }// end - (void) waitListen
 
 
@@ -270,7 +276,7 @@ __strong OnigRegexp			*startTimeRegex;
 #pragma mark program sieve method
 - (void) checkProgram:(NSString *)progInfo withDate:(NSDate *)date
 {
-NSLog(@"%@", progInfo);
+		//NSLog(@"]%@[", progInfo);
 	NSArray *program = [progInfo componentsSeparatedByString:dataSeparator];
 	NSString *live = [program objectAtIndex:offsetLiveNo];
 		// check official program
@@ -287,15 +293,23 @@ NSLog(@"%@", progInfo);
 	{			// check official channel
 		if ([prog isEqualToString:liveOfficialString] == YES)
 		{
+			BOOL autoOpenFlag = [[watchList valueForKey:live] boolValue];
+			NSNumber *autoOpen = [NSNumber numberWithBool:autoOpenFlag];
 			if (watchChannel == YES)
-				[activePrograms addOfficialProgram:live withDate:date autoOpen:[NSNumber numberWithBool:NO] isOfficial:NO];
+				[activePrograms addOfficialProgram:live withDate:date autoOpen:autoOpen isOfficial:NO];
 			return;
 		}// end if program is official channel
 		
 			// check watchlist
-		NSNumber *needOpen = [watchList valueForKey:prog];
-		if (needOpen != nil)
-		{		// found in watchlist or memberd communities program
+		NSNumber *needNotify = [watchList valueForKey:prog];
+		if (needNotify != nil)
+		{		// calc need open flag
+			BOOL mustOpen = NO;
+			for (NSString *info in program)
+				mustOpen |= [[watchList valueForKey:info] boolValue];
+			// endforeach
+			NSNumber *needOpen = [NSNumber numberWithBool:mustOpen];
+				// found in watchlist or memberd communities program
 			NSString *prefix = [[program objectAtIndex:offsetCommuCh] substringWithRange:rangePrefix];
 			NSInteger kind = ([prefix isEqualToString:kindChannel] ? bradcastKindChannel :
 							  (([prefix isEqualToString:kindOfficial] ? bradcastKindOfficial : bradcastKindUser)));
@@ -465,7 +479,7 @@ NSLog(@"%@", progInfo);
 #if __has_feature(objc_arc)
 	@autoreleasepool {
 #else
-		NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 #endif
 			// store last data recieve time;
 			// databyte is terminator

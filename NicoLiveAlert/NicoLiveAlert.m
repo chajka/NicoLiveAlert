@@ -195,6 +195,7 @@ NSMutableDictionary *watchitems = nil;
 	[programSieves setActivePrograms:activeprograms];
 	[programSieves setWatchOfficial:watchOfficialProgram];
 	[programSieves setWatchChannel:watchOfficialChannel];
+
 #if __has_feature(objc_arc) == 0
 		// activeprograms keep in programSieves
 	[activeprograms release];
@@ -319,7 +320,7 @@ NSMutableDictionary *watchitems = nil;
 	}
 	// end if need streamer isn’t set
 
-	if ((broadcasting == NO) || (dontOpenWhenImBroadcast == NO))
+	if ((broadcasting == NO) || (dontOpenWhenImBroadcast == NO) || (autoOpen == YES))
 	{
 		NSURL *url = [liveInfo valueForKey:ProgramURL];
 		[[NSWorkspace sharedWorkspace] openURL:url];
@@ -391,6 +392,7 @@ NSMutableDictionary *watchitems = nil;
 
 - (void) foundLive:(NSNotification *)note
 {
+NSLog(@"foundLive : %@", note);
 	BOOL isAautoOpen = [[note object] boolValue];
 	NSString *liveNumber = [[note userInfo] valueForKey:LiveNumber];
 	BOOL myBroadcast = broadcasting & [liveNumber isEqualToString:myLiveNumber];
@@ -489,7 +491,6 @@ NSMutableDictionary *watchitems = nil;
 - (IBAction) resetConnection:(id)sender
 {
 	[programSieves reset];
-		//	[programSieves kick];
 }// end - (IBAction) resetConnection:(id)sender
 
 - (IBAction) rescanRSS:(id)sender

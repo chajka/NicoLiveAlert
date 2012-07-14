@@ -641,7 +641,7 @@ NSLog(@"postPorgramStartNotification : %@", autoOpen);
 	stringAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
 		 [NSFont fontWithName:fontNameOfProgramTitle size:11], NSFontAttributeName,
 		 commnunityColor, NSForegroundColorAttributeName,
-		 [NSNumber numberWithInteger:2], NSLigatureAttributeName,
+		 [NSNumber numberWithInteger:1], NSLigatureAttributeName,
 		 [NSNumber numberWithFloat:titleKernValue], NSKernAttributeName, nil];
 
 	menuImage = [[NSImage alloc] initWithSize:NSMakeSize(programBoundsW, programBoundsH)];
@@ -718,7 +718,7 @@ NSLog(@"postPorgramStartNotification : %@", autoOpen);
 	stringAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
 		[NSFont fontWithName:fontNameOfProgramTitle size:10], NSFontAttributeName,
 		titleColor, NSForegroundColorAttributeName,
-		[NSNumber numberWithInteger:2], NSLigatureAttributeName,
+		[NSNumber numberWithInteger:1], NSLigatureAttributeName,
 		[NSNumber numberWithFloat:-0.5], NSKernAttributeName, nil];
 
 	menuImage = [[NSImage alloc] initWithSize:NSMakeSize(officialBoundsW, officialBoundsH)];

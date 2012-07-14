@@ -89,9 +89,9 @@
 		[array addObject:item];
 	}
 	if ([array count] != 0)
-		[myDefaults setObject:array forKey:WathListTable];
+		[myDefaults setObject:array forKey:WatchListTable];
 	else
-		[myDefaults setObject:nil forKey:WathListTable];
+		[myDefaults setObject:nil forKey:WatchListTable];
 }// end - (void) saveManualWatchList
 
 - (BOOL) loadAutoOpenMenuState

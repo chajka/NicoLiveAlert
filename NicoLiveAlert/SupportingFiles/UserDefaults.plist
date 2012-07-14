@@ -8,7 +8,7 @@
 	<true/>
 	<key>CheckOfficialChannel</key>
 	<false/>
-	<key>WathListTable</key>
+	<key>WatchListTable</key>
 	<array>
 		<dict>
 			<key>AutoOpen</key>

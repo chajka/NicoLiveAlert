@@ -363,7 +363,7 @@ enum AppCollaboCheckBoxes {
 
 #pragma mark watchlist item keys
 #define EnableAutoOpen			@"EnableAutoOpen"
-#define WathListTable			@"WathListTable"
+#define WatchListTable			@"WatchListTable"
 #define AccountsList			@"AccountsList"
 #define CheckOfficialProgram	@"CheckOfficialProgram"
 #define CheckOfficialChannel	@"CheckOfficialChannel"

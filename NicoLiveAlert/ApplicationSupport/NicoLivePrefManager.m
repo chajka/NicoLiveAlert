@@ -64,7 +64,7 @@
 	// watchlist tab
 - (NSArray *) loadManualWatchList
 {
-	NSMutableArray *watchlist = [NSMutableArray arrayWithArray:[myDefaults objectForKey:WathListTable]];
+	NSMutableArray *watchlist = [NSMutableArray arrayWithArray:[myDefaults objectForKey:WatchListTable]];
 
 	if ([watchlist count] == 0)
 		return NULL;

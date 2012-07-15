@@ -172,15 +172,16 @@ __strong OnigRegexp			*startTimeRegex;
 		return;
 	}// end if cannot correct server information.
 
+	[self connectionRised:NLNotificationServerCanResponce];
 	programListSocket = [[CFSocketConnection alloc] initWithServerName:[serverInfo serveName] andPort:[serverInfo port]];
 	[programListSocket setInputStreamDelegate:self];
 	[programListSocket setOutputStreamDelegate:self];
 	if ([programListSocket connect] == YES)
 	{
-		[self resetKeepAliveMonitor];
-		[keepAliveMonitor fire];
 		if (connected == NO)
 			[self connectionRised:NLNotificationStartListen];
+		[self resetKeepAliveMonitor];
+		[keepAliveMonitor fire];
 	}// end if connect to program server success
 
 #if __has_feature(objc_arc) == 0
@@ -395,7 +396,7 @@ __strong OnigRegexp			*startTimeRegex;
 
 	sendrequest = NO;
 	[self stopConnectionRiseMonitor];
-	[self connectionRised:NLNotificationServerResponce];
+	[self connectionRised:NLNotificationServerCanResponce];
 }// end - (void) checkConnectionRised
 
 #pragma mark -

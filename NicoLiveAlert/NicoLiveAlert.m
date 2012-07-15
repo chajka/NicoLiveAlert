@@ -21,7 +21,6 @@
 @interface NicoLiveAlert ()
 - (BOOL) checkFirstLaunch;
 - (void) disableAtLeopardItems;
-- (void) setupAccounts;
 - (void) setupTables;
 - (void) setupMonitor;
 - (void) loadPreferences;
@@ -29,6 +28,7 @@
 - (void) openLiveProgram:(NSDictionary *)liveInfo autoOpen:(BOOL)autoOpen;
 - (void) hookNotifications;
 - (void) removeNotifications;
+- (void) setupAccounts;
 - (void) listenHalt:(NSNotification *)note;
 - (void) listenRestart:(NSNotification *)note;
 - (void) foundLive:(NSNotification *)note;
@@ -65,6 +65,7 @@ NSMutableDictionary *watchitems = nil;
 #if __has_feature(objc_arc) == 0
 	[statusBar retain];
 #endif
+	logined = NO;
 	broadcasting = NO;
 	myLiveNumber = nil;
 }// end - (void) awakeFromNib
@@ -82,12 +83,10 @@ NSMutableDictionary *watchitems = nil;
 		// remove Leopard unusable items
 	[self disableAtLeopardItems];
 #endif
-		// setup for account
-	[self setupAccounts];
-		// setup drag & dorp table in preference panel
-	[self setupTables];
 		// hook notifications
 	[self hookNotifications];
+		// setup drag & dorp table in preference panel
+	[self setupTables];
 		// start monitor
 	[self setupMonitor];
 	[programSieves kick];
@@ -168,6 +167,12 @@ NSMutableDictionary *watchitems = nil;
 		[aryAccountItems addObject:entry];
 			// cleanup entry for reuse
 	}// end foreach account
+
+	NLActivePrograms *activePrograms = [programSieves activePrograms];
+	[activePrograms setUsers:nicoliveAccounts];
+	[programSieves setWatchList:[nicoliveAccounts watchlist]];
+
+	logined = YES;
 }// end - (void) setupAccounts
 
 - (void) setupTables
@@ -190,8 +195,6 @@ NSMutableDictionary *watchitems = nil;
 	programSieves = [[NLProgramList alloc] init];
 	NLActivePrograms *activeprograms = [[NLActivePrograms alloc] init];
 	[activeprograms setSbItem:statusBar];
-	[activeprograms setUsers:nicoliveAccounts];
-	[programSieves setWatchList:[nicoliveAccounts watchlist]];
 	[programSieves setActivePrograms:activeprograms];
 	[programSieves setWatchOfficial:watchOfficialProgram];
 	[programSieves setWatchChannel:watchOfficialChannel];
@@ -386,13 +389,18 @@ NSMutableDictionary *watchitems = nil;
 
 - (void) listenRestart:(NSNotification *)note
 {
+	if ((logined == NO) && 
+		([[note object] isEqualToString:NLNotificationServerCanResponce] == YES))
+	{
+		[self setupAccounts];
+	}// end if 
+	
 	if ([[note name] isEqualToString:NSWorkspaceDidWakeNotification])
-		[programSieves kick];
+		[programSieves reset];
 }// end - (void) listenRestart:(NSNotification *)note
 
 - (void) foundLive:(NSNotification *)note
 {
-NSLog(@"foundLive : %@", note);
 	BOOL isAautoOpen = [[note object] boolValue];
 	NSString *liveNumber = [[note userInfo] valueForKey:LiveNumber];
 	BOOL myBroadcast = broadcasting & [liveNumber isEqualToString:myLiveNumber];

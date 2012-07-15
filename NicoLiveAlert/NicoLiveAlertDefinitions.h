@@ -212,7 +212,7 @@ enum elementLiteralIndex {
 #define NLNotificationStreamOpen		@"NLNotificationStreamOpen"
 #define NLNotificationStreamError		@"NLNotificationStreamError"
 #define NLNotificationStreamEnd			@"NLNotificationStreamEnd"
-#define NLNotificationServerResponce	@"NLNotificationServerResponce"
+#define NLNotificationServerCanResponce	@"NLNotificationServerCanResponce"
 #define NLNotificationStartListen		@"NLNotificationStartListen"
 #define NLNotificationSieveProgram		@"NLNotificationSieveProgram"
 #define GrowlRiseTitle					@"Start Monitoring"

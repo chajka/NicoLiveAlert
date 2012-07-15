@@ -79,6 +79,7 @@
 	NLUsers											*nicoliveAccounts;
 	NLProgramList									*programSieves;
 
+		// application control flags
 	BOOL											enableAutoOpen;
 	BOOL											watchOfficialProgram;
 	BOOL											watchOfficialChannel;
@@ -88,6 +89,8 @@
 	BOOL											kickCommentViewerOnMyBroadcast;
 	BOOL											kickCommentViewerAtAutoOpen;
 	BOOL											kickCommentViewerOpenByMe;
+		// application status flag
+	BOOL											logined;
 		// my status
 	BOOL											broadcasting;
 	NSString										*myLiveNumber;

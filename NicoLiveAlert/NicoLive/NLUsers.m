@@ -321,7 +321,7 @@ NSNumber *inactive;
 
 - (void) refreshAccounts:(NSNotification *)note
 {
-	if ((online == YES) || ([[note object] isEqualToString:NLNotificationServerResponce] == NO))
+	if ((online == YES) || ([[note object] isEqualToString:NLNotificationServerCanResponce] == NO))
 		return;
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:NLNotificationConnectionRised object:nil];

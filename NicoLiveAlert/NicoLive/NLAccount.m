@@ -25,6 +25,7 @@
 @synthesize ticket;
 @synthesize channels;
 @synthesize accountMenu;
+@synthesize keychainItem;
 
 	// internal use variables (when initialize only)
 NSDictionary	*elements;
@@ -33,11 +34,56 @@ NSUInteger		currentElement;
 NSNumber		*notAutoOpen;
 
 #pragma mark construct / destruct
+- (id) initWithKeychainAccount:(KCSInternetUser *)keychainAccount
+{
+	self = [super init];
+	if (self)
+	{
+		keychainItem = [keychainAccount copy];
+		mailaddr = [keychainItem account];
+		password = [keychainItem password];
+		nickname = nil;
+		userid = nil;
+		channels = nil;
+		ticket = nil;
+			// initialize connection internal variables
+		ticket = nil;
+			// initialize internal variable
+		elements = [self generateElementDict]; 
+#if __has_feature(objc_arc) == 0
+		[elements retain];
+#endif
+		stringBuffer = nil;
+		currentElement = 0;
+		notAutoOpen = [NSNumber numberWithBool:NO];
+		if ([self getLoginTicket] != YES)
+		{
+#if __has_feature(objc_arc) == 0
+			[self dealloc];
+#endif
+			return nil;
+		}// end if getAccountInfo is failed
+		if ([self getAccountInfo] != YES)
+		{
+#if __has_feature(objc_arc) == 0
+			[self dealloc];
+#endif
+			return nil;
+		}// end if get Account info was failed
+			// cleanup initialize only variables
+		[self cleanupInternalVariables];
+		[self makeMenuItem];
+	}// end if
+
+	return self;
+}// - (id) initWithKeychainItem:(KCSInternetUser *)keychainItem
+
 - (id) initWithAccount:(NSString *)account andPassword:(NSString *)pass
 {
 	self = [super init];
 	if (self)
 	{		// initialize user information member variables
+		keychainItem = nil;
 		mailaddr = [account copy];
 		password = [pass copy];
 		nickname = nil;
@@ -123,6 +169,14 @@ NSNumber		*notAutoOpen;
 	[accountMenu setMixedStateImage:mixedStateImg];
 	[accountMenu setRepresentedObject:self];
 }// end - (void) makeMenuItem
+
+- (BOOL) changePasswordTo:(NSString *)pass
+{
+	OSStatus result = -1;
+	result = [keychainItem changePasswordTo:pass];
+
+	return (result == noErr) ? YES : NO;
+}// end 
 
 - (BOOL) updateAccountInfo
 {

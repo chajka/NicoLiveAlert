@@ -84,8 +84,15 @@ NSNumber *inactive;
 		NSString *mailaddr = [user account];
 		NSString *password = [user password];
 		NSString *nick = nil;
-		account = [[NLAccount alloc] initWithAccount:mailaddr andPassword:password];
-		if (account == nil)
+		BOOL vaildAccount = NO;
+		account = [[NLAccount alloc] initWithKeychainAccount:user];
+		if (account != nil)
+		{
+			nick = [account nickname];
+			online = YES;
+			vaildAccount = YES;
+		}
+		else
 		{
 			NSDictionary *userInfo = [usersInfo valueForKey:mailaddr];
 			if (userInfo != nil)
@@ -95,12 +102,9 @@ NSNumber *inactive;
 			}// end if saved account
 			online = NO;
 		}
-		else
-		{
-			nick = [account nickname];
-			online = YES;
-		}
-		[usersDict setValue:account forKey:nick];
+		if (vaildAccount == YES)
+			[usersDict setValue:account forKey:nick];
+
 		if ([[[usersInfo valueForKey:mailaddr] valueForKey:keyAccountWatchEnabled] boolValue] == YES)
 			[usersState setValue:active forKey:[account nickname]];
 		else
@@ -152,8 +156,24 @@ NSNumber *inactive;
 - (OSStatus) addUser:(NSString *)useraccount withPassword:(NSString *)userpassword
 {
 	OSStatus error = 1;
-		// create NLAccount instance
-	NLAccount *user = [[NLAccount alloc] initWithAccount:useraccount andPassword:userpassword];
+	NLAccount *user = nil;
+	for (NLAccount *acc in [accounts allValues])
+		if ([[acc mailaddr] isEqualToString:useraccount] == YES)
+			user = acc;
+		// end if found account
+	// end foreach known account
+
+		// update NLAccount instance
+	if (user != nil)
+	{
+		BOOL success = NO;
+		success = [user changePasswordTo:userpassword];
+
+		return (success == YES) ? noErr : -1;
+	}// end if accout is found
+
+		// account is not found create it.
+	user = [[NLAccount alloc] initWithAccount:useraccount andPassword:userpassword];
 	if (user == nil)
 		return error;
 	// end if user was logined.
@@ -176,6 +196,7 @@ NSNumber *inactive;
 	if ([keychainOfUser addTokeychain] == YES)
 	{
 		error = noErr;
+		[user setKeychainItem:keychainOfUser];
 		[users addObject:user];
 			// create account menuItem
 		if (usersMenu == nil)

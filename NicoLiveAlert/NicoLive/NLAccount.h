@@ -23,7 +23,7 @@
 	NSString			*ticket;
 	NSMutableDictionary	*channels;
 	NSMenuItem			*accountMenu;
-	KCSInternetUser		*keychainItem;
+	__strong KCSInternetUser		*keychainItem;
 }
 @property (readonly)			NSString			*mailaddr;
 @property (readonly)			NSString			*password;

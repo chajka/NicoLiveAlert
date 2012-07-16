@@ -39,7 +39,10 @@ NSNumber		*notAutoOpen;
 	self = [super init];
 	if (self)
 	{
-		keychainItem = [keychainAccount copy];
+		keychainItem = keychainAccount;
+#if __has_feature(objc_arc) == 0
+		[keychainItem retain];
+#endif
 		mailaddr = [keychainItem account];
 		password = [keychainItem password];
 		nickname = nil;
@@ -132,6 +135,7 @@ NSNumber		*notAutoOpen;
 		channels = nil;
 		ticket = nil;
 		channels = nil;
+		keychainItem = nil;
 		[self makeMenuItem];
 	}// end if self 
 	return self;
@@ -151,6 +155,8 @@ NSNumber		*notAutoOpen;
 	if (stringBuffer != nil)	[stringBuffer release];
 		// cleanup menu item
 	if (accountMenu != nil)	[accountMenu release];
+		//
+	if (keychainItem != nil)	[keychainItem release];
 
 	[super dealloc];
 #endif

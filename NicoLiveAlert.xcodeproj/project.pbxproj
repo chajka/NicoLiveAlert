@@ -74,6 +74,11 @@
 		1D36A60F15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
 		1D36A61015478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
 		1D36A61115478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
+		1D3DA39B15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */; };
+		1D3DA39C15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */; };
+		1D3DA39D15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */; };
+		1D3DA39E15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */; };
+		1D3DA39F15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */; };
 		1D5558171529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D5558181529392000221516 /* SocketConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5558161529392000221516 /* SocketConnectionTests.m */; };
 		1D5847CA1584224000235184 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5847C91584224000235184 /* Foundation.framework */; };
@@ -401,6 +406,8 @@
 		1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = NicoLivePrefManager.m; path = ApplicationSupport/NicoLivePrefManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1D36A60C15478BC400516CDF /* IOMTableViewDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IOMTableViewDragAndDrop.h; path = CocoaEnhance/IOMTableViewDragAndDrop.h; sourceTree = "<group>"; };
 		1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IOMTableViewDragAndDrop.m; path = CocoaEnhance/IOMTableViewDragAndDrop.m; sourceTree = "<group>"; };
+		1D3DA39915B41A05009B1BBD /* NLProgram+Drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NLProgram+Drawing.h"; path = "NicoLive/NLProgram+Drawing.h"; sourceTree = "<group>"; };
+		1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NLProgram+Drawing.m"; path = "NicoLive/NLProgram+Drawing.m"; sourceTree = "<group>"; };
 		1D5558151529392000221516 /* SocketConnectionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnectionTests.h; path = Network/SocketConnectionTests.h; sourceTree = "<group>"; };
 		1D5558161529392000221516 /* SocketConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketConnectionTests.m; path = Network/SocketConnectionTests.m; sourceTree = "<group>"; };
 		1D5847C81584224000235184 /* tv.from.chajka.NicoLiveAlert.Importer.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tv.from.chajka.NicoLiveAlert.Importer.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -889,6 +896,8 @@
 				1DE87D81151EFFBB006C6EDC /* NLUsers.m */,
 				1DC5A7B1153320A80077B187 /* NLProgram.h */,
 				1DC5A7B2153320A80077B187 /* NLProgram.m */,
+				1D3DA39915B41A05009B1BBD /* NLProgram+Drawing.h */,
+				1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */,
 				1D72B117152B5CB400F7944C /* NLProgramList.h */,
 				1D72B118152B5CB400F7944C /* NLProgramList.m */,
 				1DA0978915365D4C0083A2E1 /* NLActivePrograms.h */,
@@ -1302,6 +1311,7 @@
 				1D5E8C9B1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA21579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D0ECB6215AAF905002F1A8D /* CFSocketConnection.m in Sources */,
+				1D3DA39B15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1335,6 +1345,7 @@
 				1D5E8CA51579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D1DF5E8157B6D9300E2318B /* HTTPConnectionTests.m in Sources */,
 				1D0ECB6615AAF905002F1A8D /* CFSocketConnection.m in Sources */,
+				1D3DA39F15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1377,6 +1388,7 @@
 				1D5E8C9C1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA31579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D0ECB6315AAF905002F1A8D /* CFSocketConnection.m in Sources */,
+				1D3DA39C15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1423,6 +1435,7 @@
 				1D5E8CA61579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D1DF5E9157B6D9300E2318B /* HTTPConnectionTests.m in Sources */,
 				1D0ECB6515AAF905002F1A8D /* CFSocketConnection.m in Sources */,
+				1D3DA39E15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1483,6 +1496,7 @@
 				1D5E8C9D1579DB2900AB268B /* HTTPConnection.m in Sources */,
 				1D5E8CA41579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D0ECB6415AAF905002F1A8D /* CFSocketConnection.m in Sources */,
+				1D3DA39D15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

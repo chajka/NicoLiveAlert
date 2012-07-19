@@ -53,6 +53,11 @@
 		1D1E523A151B0BA900BDD43D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1E5231151B0B9900BDD43D /* Localizable.strings */; };
 		1D1E523B151B0BA900BDD43D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1E5231151B0B9900BDD43D /* Localizable.strings */; };
 		1D1E523C151B0BA900BDD43D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1E5231151B0B9900BDD43D /* Localizable.strings */; };
+		1D2702FE15B83FE000FDC04D /* NLClickableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2702FD15B83FE000FDC04D /* NLClickableImageView.m */; };
+		1D2702FF15B83FE000FDC04D /* NLClickableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2702FD15B83FE000FDC04D /* NLClickableImageView.m */; };
+		1D27030015B83FE000FDC04D /* NLClickableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2702FD15B83FE000FDC04D /* NLClickableImageView.m */; };
+		1D27030115B83FE000FDC04D /* NLClickableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2702FD15B83FE000FDC04D /* NLClickableImageView.m */; };
+		1D27030215B83FE000FDC04D /* NLClickableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2702FD15B83FE000FDC04D /* NLClickableImageView.m */; };
 		1D2985B2154D1D6C007F80A2 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 1D2985B1154D1D6C007F80A2 /* Growl Registration Ticket.growlRegDict */; };
 		1D2985B3154D1D6C007F80A2 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 1D2985B1154D1D6C007F80A2 /* Growl Registration Ticket.growlRegDict */; };
 		1D2AD092151F693A001496E6 /* NLAccountTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2AD090151F693A001496E6 /* NLAccountTests.m */; };
@@ -395,6 +400,8 @@
 		1D1DF5E7157B6D9300E2318B /* HTTPConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPConnectionTests.m; path = Network/HTTPConnectionTests.m; sourceTree = "<group>"; };
 		1D1E5232151B0B9900BDD43D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = NicoLiveAlert/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1D1E5238151B0BA900BDD43D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = NicoLiveAlert/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1D2702FC15B83FE000FDC04D /* NLClickableImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLClickableImageView.h; path = GUI/NLClickableImageView.h; sourceTree = "<group>"; };
+		1D2702FD15B83FE000FDC04D /* NLClickableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLClickableImageView.m; path = GUI/NLClickableImageView.m; sourceTree = "<group>"; };
 		1D2985B1154D1D6C007F80A2 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Growl Registration Ticket.growlRegDict"; path = "Growl/Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		1D2AD090151F693A001496E6 /* NLAccountTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLAccountTests.m; path = NicoLive/NLAccountTests.m; sourceTree = "<group>"; };
 		1D2AD091151F693A001496E6 /* NLAccountTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccountTests.h; path = NicoLive/NLAccountTests.h; sourceTree = "<group>"; };
@@ -761,6 +768,8 @@
 				1D36A5D8154575F000516CDF /* LinkTextFieldCell.m */,
 				1DDE396E154801150089D0D4 /* NLArrayControllerDragAndDrop.h */,
 				1DDE396F154801150089D0D4 /* NLArrayControllerDragAndDrop.m */,
+				1D2702FC15B83FE000FDC04D /* NLClickableImageView.h */,
+				1D2702FD15B83FE000FDC04D /* NLClickableImageView.m */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -1312,6 +1321,7 @@
 				1D5E8CA21579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D0ECB6215AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 				1D3DA39B15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
+				1D2702FE15B83FE000FDC04D /* NLClickableImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1346,6 +1356,7 @@
 				1D1DF5E8157B6D9300E2318B /* HTTPConnectionTests.m in Sources */,
 				1D0ECB6615AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 				1D3DA39F15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
+				1D27030215B83FE000FDC04D /* NLClickableImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1389,6 +1400,7 @@
 				1D5E8CA31579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D0ECB6315AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 				1D3DA39C15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
+				1D2702FF15B83FE000FDC04D /* NLClickableImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1436,6 +1448,7 @@
 				1D1DF5E9157B6D9300E2318B /* HTTPConnectionTests.m in Sources */,
 				1D0ECB6515AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 				1D3DA39E15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
+				1D27030115B83FE000FDC04D /* NLClickableImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1497,6 +1510,7 @@
 				1D5E8CA41579DB4B00AB268B /* KCSUser.m in Sources */,
 				1D0ECB6415AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 				1D3DA39D15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
+				1D27030015B83FE000FDC04D /* NLClickableImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

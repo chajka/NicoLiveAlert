@@ -8,6 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface NLClickableImageView : NSImageView
+@interface NLClickableImageView : NSImageView {
+	id	target;
+	id	representedObject;
+	SEL	selector;
+}
+@property (retain, readwrite) id	target;
+@property (retain, readwrite) id	representedObject;
+
+- (void) setAction:(SEL)aSelector toTarget:(id)object;
 
 @end

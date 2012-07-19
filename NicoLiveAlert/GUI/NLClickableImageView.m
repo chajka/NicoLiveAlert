@@ -9,20 +9,49 @@
 #import "NLClickableImageView.h"
 
 @implementation NLClickableImageView
+@synthesize target;
+@synthesize representedObject;
 
-- (id)initWithFrame:(NSRect)frame
+- (id) initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
-    }
+        target = nil;
+		representedObject = nil;
+		selector = nil;
+    }// end if
     
     return self;
-}
+}// end - (id) initWithFrame:(NSRect)frame
 
-- (void)drawRect:(NSRect)dirtyRect
+- (void) dealloc
 {
-    // Drawing code here.
-}
+#if __has_feature(objc_arc) == 0
+	if (target != nil)				[target release];
+	if (representedObject != nil)	[representedObject release];
 
+	[super dealloc];
+#endif
+}// end - (void) dealloc
+
+- (void) drawRect:(NSRect)dirtyRect
+{
+    [super drawRect:dirtyRect];
+}// end - (void) drawRect:(NSRect)dirtyRect
+
+- (void) setAction:(SEL)aSelector toTarget:(id)object
+{
+	selector = aSelector;
+	[self setTarget:object];
+}// end - (void) setAction:(SEL)aSelector toTarget:(id)object
+
+- (BOOL) acceptsFirstMouse:(NSEvent *)theEvent
+{
+	if ((selector == nil) || (target == nil))
+		return NO;
+
+	BOOL result = [self sendAction:selector to:target];
+
+	return result;
+}// end - (BOOL) acceptsFirstMouse:(NSEvent *)theEvent
 @end

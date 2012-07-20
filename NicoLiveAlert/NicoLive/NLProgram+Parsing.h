@@ -8,6 +8,14 @@
 
 #import "NLProgram.h"
 
-@interface NLProgram (Parsing)
+extern NSMutableString *dataString;
+extern NSInteger currentElement;
+extern NSDictionary *elementDict;
+extern NSString *embedContent;
 
+@interface NLProgram (Parsing)
+- (NSDictionary *) elementDict;
+- (void) parseOfficialProgram;
+- (void) parseProgramInfo:(NSString *)liveNo;
+- (void) parseOwnerNickname:(NSString *)owner;
 @end

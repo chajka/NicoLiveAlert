@@ -21,8 +21,6 @@ static const CGFloat elapesedStringWidth = 39;
 static const CGFloat elapesedStringHeight = timeStringHeight;
 
 #pragma mark user program constant
-static const CGFloat programBoundsW = 293.0;
-static const CGFloat programBoundsH = 75.0;
 static const CGFloat accountOffsetX = 52.0;
 static const CGFloat accountOffsetY = 0.0;
 static const CGFloat accountWitdth = 120.0;
@@ -31,8 +29,6 @@ static const CGFloat communityOffsetX = 52.0;
 static const CGFloat communityOffsetY = 12.0;
 static const CGFloat progTitleOffsetX = 0.0;
 static const CGFloat progTitleOffsetY = programBoundsH - 13;
-static const CGFloat progOwnerOffsetX = 12.0;
-static const CGFloat progOwnerOffsetY = programBoundsH - 25;
 static const CGFloat progDescOffsetX = 52.0;
 static const CGFloat progDescOffsetY = 24.0;
 static const CGFloat progDescWidth = (programBoundsW - thumbnailSize);
@@ -42,8 +38,6 @@ static const CGFloat userTimeOffsetY = 0.0;
 static const CGFloat userElapsedOffsetX = (programBoundsW - elapesedStringWidth);
 
 #pragma mark official program constant
-static const CGFloat officialBoundsW = 293.0;
-static const CGFloat officialBoundsH = 50.0;
 static const CGFloat officialDescX = 52.0;
 static const CGFloat officialDescY = 24.0;
 static const CGFloat officialDescW = (officialBoundsW - thumbnailSize);

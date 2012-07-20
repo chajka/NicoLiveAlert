@@ -8,6 +8,18 @@
 
 #import "NLProgram.h"
 
+static const CGFloat thumbnailSize = 50.0;
+
+#pragma mark user program constant
+static const CGFloat programBoundsW = 293.0;
+static const CGFloat programBoundsH = 75.0;
+static const CGFloat progOwnerOffsetX = 12.0;
+static const CGFloat progOwnerOffsetY = programBoundsH - 25;
+
+#pragma mark official program constant
+static const CGFloat officialBoundsW = 293.0;
+static const CGFloat officialBoundsH = 50.0;
+
 @interface NLProgram (Drawing)
 	// drawing methods
 - (void) drawUserProgram;
@@ -18,4 +30,3 @@
 - (void) growlProgramNotify:(NSString *)notificationName;
 	// static variable
 @end
-static const CGFloat thumbnailSize = 50.0;

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "NicoLiveAlertDefinitions.h"
 #import "NLAccount.h"
+#import "NLClickableImageView.h"
 #import "OnigRegexp.h"
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
@@ -41,6 +42,7 @@
 	NSTimer					*elapseTimer;
 	NSNotificationCenter	*center;
 	NSDictionary			*info;
+	NSDictionary			*representedObject;
 	BOOL					iconWasValid;
 	BOOL					iconIsValid;
 	BOOL					isReservedProgram;
@@ -56,6 +58,7 @@
 @property (readonly) BOOL				broadCasting;
 @property (readonly) BOOL				isOfficial;
 @property (readonly) NSDictionary		*info;
+@property (readonly) NSDictionary		*representedObject;
 
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isMine:(BOOL)mine isChannel:(BOOL) isChannel;
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official;

@@ -239,6 +239,11 @@ enum elementLiteralIndex {
 #define ProgramListRegex	@"<chat.*>(.*)</chat>"
 #define DateStartTimeRegex	@"date=\"(\\d+)\""
 
+#define Zero							(0.0)
+#define menuOffsetX						(5.0)
+#define MenuMargineW					(10.0)
+#define MenuMargineH					(4.0)
+
 enum {
 	offsetLiveNo = 0,
 	offsetCommuCh,

@@ -24,6 +24,9 @@
 	// activity control method
 - (BOOL) isBroadCasting;
 - (void) createMenuItem;
+- (void) clickProgram:(id)message;
+- (void) clickCommunity:(id)message;
+- (void) clickOwnerName:(id)message;
 	// timer driven methods
 - (void) checkBroadcasting:(NSTimer *)theTimer;
 	// timer management methods
@@ -42,6 +45,7 @@
 @synthesize isOfficial;
 @synthesize broadCasting;
 @synthesize info;
+@synthesize representedObject;
 
 NSMutableString *dataString;
 NSInteger currentElement;
@@ -406,12 +410,98 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 - (void) createMenuItem
 {
 	programMenu = [[NSMenuItem alloc] initWithTitle:@"" action:@selector(openProgram:) keyEquivalent:@""];
-	NSDictionary *rep = [NSDictionary dictionaryWithObjectsAndKeys:
+	representedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
 						 self, keyProgram, programURL, keyLiveNumber, nil];
-	[programMenu setImage:menuImage];
+
+	NSSize imageSize = [menuImage size];
+	NSRect menuItemRect = NSMakeRect(Zero, Zero, imageSize.width + MenuMargineW, imageSize.height + MenuMargineH);
+	NSRect programRect = NSMakeRect(Zero, Zero, imageSize.width, imageSize.height);
+	NSView *menuItem = [[NSView alloc] initWithFrame:menuItemRect];
+	NLClickableImageView *programView = [[NLClickableImageView alloc] initWithFrame:programRect];
+	[programView setImage:menuImage];
+	[programView setAction:@selector(clickProgram:) toTarget:self];
+	[programView setToolTip:programNumber];
+
+	NSRect thumbRect = NSMakeRect(Zero, Zero, thumbnailSize, thumbnailSize);
+	NLClickableImageView *thumbView = [[NLClickableImageView alloc] initWithFrame:thumbRect];
+	[thumbView setImage:thumbnail];
+	if (isOfficial == YES)
+	{
+		[thumbView setAction:@selector(clickChannel:) toTarget:self];
+		[thumbView setRepresentedObject:communityID];
+	}
+	else
+	{
+		[thumbView setAction:@selector(clickCommunity:) toTarget:self];
+		[thumbView setRepresentedObject:communityID];
+	}
+	[thumbView setToolTip:communityID];
+	
+	if (isOfficial == NO)
+	{
+		NSSize ownerSize = [ownerName size];
+		NSRect ownerRect = NSMakeRect(Zero, Zero, ownerSize.width, ownerSize.height);
+		NLClickableImageView *ownerView = [[NLClickableImageView alloc] initWithFrame:ownerRect];
+		[ownerView setImage:ownerName];
+		[ownerView setAction:@selector(clickOwnerName:) toTarget:self];
+		[ownerView setToolTip:broadcastOwner];
+		[ownerView setRepresentedObject:broadcastOwner];
+		[programView setSubviews:[NSArray arrayWithObjects:thumbView, ownerView, nil]];
+		[ownerView setFrameOrigin:NSMakePoint(progOwnerOffsetX, progOwnerOffsetY)];
+#if __has_feature(objc_arc) == 0
+		[ownerView release];
+#endif
+	}
+	else
+	{
+		[programView setSubviews:[NSArray arrayWithObject:thumbView]];
+	}
+	[thumbView setFrameOrigin:NSMakePoint(Zero, Zero)];
+	[menuItem setSubviews:[NSArray arrayWithObject:programView]];
+	[programView setFrameOrigin:NSMakePoint(menuOffsetX, Zero)];	
+	
+	[programMenu setView:menuItem];
 	[programMenu setEnabled:YES];
-	[programMenu setRepresentedObject:rep];
+	[programMenu setRepresentedObject:representedObject];
+#if __has_feature(objc_arc) == 0
+	[thumbView release];
+	[programView release];
+	[menuItem release];
+#endif
 }// - (void) createMenuItem
+
+- (void) clickProgram:(id)message
+{
+	id app = [NSApp delegate];
+	[app performSelector:@selector(openProgram:) withObject:self];
+}// end - (void) clickProgram:(id)message
+
+- (void) clickCommunity:(id)message
+{
+	if (message == nil)
+		[self clickProgram:nil];
+	
+	NSString *urlstr = [NSString stringWithFormat:URLFormatCommunity, [message representedObject]];
+	NSURL *url = [NSURL URLWithString:urlstr];
+	[[NSWorkspace sharedWorkspace] openURL:url];
+}// end - (void) clickCommunity:(id)message
+
+- (void) clickChannel:(id)message
+{
+	if (message == nil)
+		[self clickProgram:nil];
+		
+	NSString *urlstr = [NSString stringWithFormat:URLFormatChannel, [message representedObject]];
+	NSURL *url = [NSURL URLWithString:urlstr];
+	[[NSWorkspace sharedWorkspace] openURL:url];
+}// end - (void) clickChannel:(id)message
+
+- (void) clickOwnerName:(id)message
+{
+	NSString *urlstr = [NSString stringWithFormat:URLFormatUser, [message representedObject]];
+	NSURL *url = [NSURL URLWithString:urlstr];
+	[[NSWorkspace sharedWorkspace] openURL:url];
+}// end - (void) clickOwnerName:(id)message
 
 #pragma mark-
 #pragma mark timer driven methods

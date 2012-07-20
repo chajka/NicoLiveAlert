@@ -266,7 +266,7 @@ enum {
 	// reguler expressions
 #define ProgramTitleRegex	@"title=\"(.*)\""
 #define ThumbImageRegex		@"<img src=\"(http://.*)\" class=\"banner\">"
-#define ProgStartTimeRegex	@"(\\d+:\\d+)</div></?[ap]>"
+#define ProgStartTimeRegex	@"<div id=\"data\">(.+\\d+:\\d+)</div>"
 #define ProgramURLRegex		@"<a href=\"(http://live.nicovideo.jp/watch/lv\\d+)\""
 #define ProgStateRegex		@"class=\"(before|beforeTS|onair|done|doneTS)\""
 #define NicknameRegex		@"<nickname>(.*)</nickname>"

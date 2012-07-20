@@ -114,6 +114,11 @@
 		1D6500CB150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		1D6500CC150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
 		1D6500CD150CBE98002F5A8B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6500C9150CBE98002F5A8B /* Security.framework */; };
+		1D6B1F9415B8F1490088CBBE /* NLProgram+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6B1F9315B8F1490088CBBE /* NLProgram+Parsing.m */; };
+		1D6B1F9515B8F1490088CBBE /* NLProgram+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6B1F9315B8F1490088CBBE /* NLProgram+Parsing.m */; };
+		1D6B1F9615B8F1490088CBBE /* NLProgram+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6B1F9315B8F1490088CBBE /* NLProgram+Parsing.m */; };
+		1D6B1F9715B8F1490088CBBE /* NLProgram+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6B1F9315B8F1490088CBBE /* NLProgram+Parsing.m */; };
+		1D6B1F9815B8F1490088CBBE /* NLProgram+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6B1F9315B8F1490088CBBE /* NLProgram+Parsing.m */; };
 		1D70827915675FEA008683F5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D70827715675FEA008683F5 /* InfoPlist.strings */; };
 		1D70827C15675FEA008683F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D70827B15675FEA008683F5 /* main.m */; };
 		1D7082A515686C8B008683F5 /* tv.from.chajka.NicoLiveAlert.Collaborator.xpc in Copy XPC Service */ = {isa = PBXBuildFile; fileRef = 1D70827115675FEA008683F5 /* tv.from.chajka.NicoLiveAlert.Collaborator.xpc */; };
@@ -433,6 +438,8 @@
 		1D6500C3150CB351002F5A8B /* KCSUserTsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUserTsts.h; path = Keychain/KCSUserTsts.h; sourceTree = "<group>"; };
 		1D6500C4150CB351002F5A8B /* KCSUserTsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUserTsts.m; path = Keychain/KCSUserTsts.m; sourceTree = "<group>"; };
 		1D6500C9150CBE98002F5A8B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		1D6B1F9215B8F1490088CBBE /* NLProgram+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NLProgram+Parsing.h"; path = "NicoLive/NLProgram+Parsing.h"; sourceTree = "<group>"; };
+		1D6B1F9315B8F1490088CBBE /* NLProgram+Parsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NLProgram+Parsing.m"; path = "NicoLive/NLProgram+Parsing.m"; sourceTree = "<group>"; };
 		1D70827115675FEA008683F5 /* tv.from.chajka.NicoLiveAlert.Collaborator.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tv.from.chajka.NicoLiveAlert.Collaborator.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D70827615675FEA008683F5 /* Collaborator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Collaborator-Info.plist"; sourceTree = "<group>"; };
 		1D70827815675FEA008683F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -907,6 +914,8 @@
 				1DC5A7B2153320A80077B187 /* NLProgram.m */,
 				1D3DA39915B41A05009B1BBD /* NLProgram+Drawing.h */,
 				1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */,
+				1D6B1F9215B8F1490088CBBE /* NLProgram+Parsing.h */,
+				1D6B1F9315B8F1490088CBBE /* NLProgram+Parsing.m */,
 				1D72B117152B5CB400F7944C /* NLProgramList.h */,
 				1D72B118152B5CB400F7944C /* NLProgramList.m */,
 				1DA0978915365D4C0083A2E1 /* NLActivePrograms.h */,
@@ -1322,6 +1331,7 @@
 				1D0ECB6215AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 				1D3DA39B15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 				1D2702FE15B83FE000FDC04D /* NLClickableImageView.m in Sources */,
+				1D6B1F9415B8F1490088CBBE /* NLProgram+Parsing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1357,6 +1367,7 @@
 				1D0ECB6615AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 				1D3DA39F15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 				1D27030215B83FE000FDC04D /* NLClickableImageView.m in Sources */,
+				1D6B1F9815B8F1490088CBBE /* NLProgram+Parsing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1401,6 +1412,7 @@
 				1D0ECB6315AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 				1D3DA39C15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 				1D2702FF15B83FE000FDC04D /* NLClickableImageView.m in Sources */,
+				1D6B1F9515B8F1490088CBBE /* NLProgram+Parsing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1449,6 +1461,7 @@
 				1D0ECB6515AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 				1D3DA39E15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 				1D27030115B83FE000FDC04D /* NLClickableImageView.m in Sources */,
+				1D6B1F9715B8F1490088CBBE /* NLProgram+Parsing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1511,6 +1524,7 @@
 				1D0ECB6415AAF905002F1A8D /* CFSocketConnection.m in Sources */,
 				1D3DA39D15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 				1D27030015B83FE000FDC04D /* NLClickableImageView.m in Sources */,
+				1D6B1F9615B8F1490088CBBE /* NLProgram+Parsing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

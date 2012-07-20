@@ -153,6 +153,8 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 #if __has_feature(objc_arc) == 0
 	if (programMenu != nil)			[programMenu release];
 	if (menuImage != nil)			[menuImage release];
+	if (thumbnail != nil)			[thumbnail release];
+	if (ownerName != nil)			[ownerName release];
 	if (background != nil)			[background release];
 	if (timeMask != nil)			[timeMask release];
 	if (thumbnail != nil)			[thumbnail release];
@@ -183,6 +185,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	programMenu = nil;
 	menuImage = nil;
 	thumbnail = nil;
+	ownerName = nil;
 	background = nil;
 	timeMask = nil;
 	stringAttributes = nil;

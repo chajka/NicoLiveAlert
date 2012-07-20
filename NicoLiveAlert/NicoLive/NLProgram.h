@@ -19,6 +19,7 @@
 	NSMenuItem				*programMenu;
 	NSImage					*menuImage;
 	NSImage					*thumbnail;
+	NSImage					*ownerName;
 	NSBezierPath			*background;
 	NSBezierPath			*timeMask;
 	NSMutableDictionary		*stringAttributes;

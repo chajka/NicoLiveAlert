@@ -28,6 +28,7 @@
 	NSString				*programTitle;
 	NSString				*programDescription;
 	NSString				*communityName;
+	NSString				*channelNumber;
 	NSString				*primaryAccount;
 	NSString				*communityID;
 	NSString				*broadcastOwner;
@@ -61,7 +62,7 @@
 @property (readonly) NSDictionary		*representedObject;
 
 - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isMine:(BOOL)mine isChannel:(BOOL) isChannel;
-- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official;
+- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official withChannel:(NSString *)ch;
 - (BOOL) isEqual:(id)object;
 - (BOOL) isSame:(NLProgram *)program;
 - (void) terminate;

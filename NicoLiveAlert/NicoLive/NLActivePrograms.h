@@ -23,7 +23,7 @@
 @property (retain, readwrite) NLUsers		*users;
 
 - (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isChannel:(BOOL) isChannel;
-- (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official;
+- (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official withChannel:(NSString *)ch;
 	//
 - (void) suspend;
 - (void) resume;

@@ -110,7 +110,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 }// end - (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date forAccount:(NLAccount *)account owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isMine:(BOOL)mine isChannel:(BOOL) isChanne
 
 	// constructor for official or channel program
-- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official
+- (id) initWithProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official withChannel:(NSString *)ch
 {
 	self = [super init];
 	if (self)
@@ -120,6 +120,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		isOfficial = YES;
 		iconWasValid = NO;
 		iconIsValid = NO;
+		channelNumber = [ch copy];
 		@try {
 			[self checkStartTime:date forLive:liveNo];
 			[self parseOfficialProgram];
@@ -164,6 +165,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	if (programTitle != nil)		[programTitle release];
 	if (programDescription != nil)	[programDescription release];
 	if (communityName != nil)		[communityName release];
+	if (channelNumber != nil)		[channelNumber release];
 	if (primaryAccount != nil)		[primaryAccount release];
 	if (communityID != nil)			[communityID release];
 	if (broadcastOwner != nil)		[broadcastOwner release];
@@ -194,6 +196,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	programTitle = nil;
 	programDescription = nil;
 	communityName = nil;
+	channelNumber = nil;
 	primaryAccount = nil;
 	communityID = nil;
 	broadcastOwner = nil;
@@ -245,6 +248,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 {
 	OnigRegexp *liveStateRegex = [OnigRegexp compile:ProgStateRegex];
 	OnigRegexp *broadcastTimeRegex = [OnigRegexp compile:ProgStartTimeRegex];
+	OnigRegexp *timeSanityRegex = [OnigRegexp compile:ProgSanityRegex];
 	NSURL *embedURL = [NSURL URLWithString:[NSString stringWithFormat:STREMEMBEDQUERY, liveNo]];
 
 	NSError *err = nil;
@@ -254,14 +258,22 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 
 	OnigResult *checkOnair = [liveStateRegex search:embedContent];
 	OnigResult *broadcastTime = [broadcastTimeRegex search:embedContent];
+	OnigResult *sanityTime = [timeSanityRegex search:[broadcastTime stringAt:1]];
+
 	if (([[checkOnair stringAt:1] isEqualToString:ONAIRSTATE] == YES)
 		|| (broadcastTime == nil))
 	{
 		startTime = [date copy];
 		return;
 	}
+	
+	NSString *dateString = nil;
+	if (sanityTime != nil)
+		dateString = [NSString stringWithFormat:TimeSanityFormatString, [sanityTime stringAt:1], [sanityTime stringAt:2], [sanityTime stringAt:3]];
+	else
+		dateString = [broadcastTime stringAt:1];
 
-	NSDate *broadcastDate = [NSDate dateWithNaturalLanguageString:[broadcastTime stringAt:1] locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
+	NSDate *broadcastDate = [NSDate dateWithNaturalLanguageString:dateString locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
 	
 	NSTimeInterval diff = [broadcastDate timeIntervalSinceDate:date];
 	if (([[checkOnair stringAt:1] isEqualToString:BEFORESTATE] == YES) ||
@@ -428,7 +440,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	if (isOfficial == YES)
 	{
 		[thumbView setAction:@selector(clickChannel:) toTarget:self];
-		[thumbView setRepresentedObject:communityID];
+		[thumbView setRepresentedObject:channelNumber];
 	}
 	else
 	{

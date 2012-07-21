@@ -285,7 +285,7 @@ __strong OnigRegexp			*startTimeRegex;
 	{
 		BOOL autoOpenFlag = [[watchList valueForKey:live] boolValue];
 		NSNumber *autoOpen = [NSNumber numberWithBool:autoOpenFlag];
-		[activePrograms addOfficialProgram:live withDate:date autoOpen:autoOpen isOfficial:YES];
+		[activePrograms addOfficialProgram:live withDate:date autoOpen:autoOpen isOfficial:YES withChannel:nil];
 		return;
 	}// end if program is official program
 
@@ -297,7 +297,7 @@ __strong OnigRegexp			*startTimeRegex;
 			BOOL autoOpenFlag = [[watchList valueForKey:live] boolValue];
 			NSNumber *autoOpen = [NSNumber numberWithBool:autoOpenFlag];
 			if (watchChannel == YES)
-				[activePrograms addOfficialProgram:live withDate:date autoOpen:autoOpen isOfficial:NO];
+				[activePrograms addOfficialProgram:live withDate:date autoOpen:autoOpen isOfficial:NO withChannel:[NSString stringWithFormat:CHANNELFORMAT, [program objectAtIndex:offsetOwner]]];
 			return;
 		}// end if program is official channel
 		
@@ -315,9 +315,9 @@ __strong OnigRegexp			*startTimeRegex;
 			NSInteger kind = ([prefix isEqualToString:kindChannel] ? bradcastKindChannel :
 							  (([prefix isEqualToString:kindOfficial] ? bradcastKindOfficial : bradcastKindUser)));
 			if (kind == bradcastKindChannel)
-				[activePrograms addOfficialProgram:live withDate:date autoOpen:needOpen isOfficial:NO];
+				[activePrograms addOfficialProgram:live withDate:date autoOpen:needOpen isOfficial:NO withChannel:[program objectAtIndex:offsetCommuCh]];
 			else if (kind == bradcastKindOfficial)
-				[activePrograms addOfficialProgram:live withDate:date autoOpen:needOpen isOfficial:YES];
+				[activePrograms addOfficialProgram:live withDate:date autoOpen:needOpen isOfficial:YES withChannel:[NSString stringWithFormat:CHANNELFORMAT, [program objectAtIndex:offsetOwner]]];
 			else
 				[activePrograms addUserProgram:live withDate:date community:[program objectAtIndex:offsetCommuCh] owner:[program objectAtIndex:offsetOwner] autoOpen:needOpen isChannel:NO];
 			return;

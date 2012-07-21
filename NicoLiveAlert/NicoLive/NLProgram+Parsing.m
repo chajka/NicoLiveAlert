@@ -153,14 +153,12 @@
 		if ([[attributeDict valueForKey:keyXMLStatus] isEqualToString:resultOK] == NO)
 			@throw [NSException exceptionWithName:RESULTERRORNAME reason:RESULTERRORREASON userInfo:attributeDict];
 		// end if result is not ok
-		// end if element is status
+	// end if element is status
 	
 	currentElement = [[elementDict valueForKey:elementName] integerValue];
 	if (currentElement != 0)
-	{
 		dataString = [NSMutableString string];
-			//		programDataBuffer = [NSMutableData data];
-	}// end if
+	// end if
 }// end - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName

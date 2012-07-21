@@ -49,7 +49,7 @@ NSNumber *yes;
 }// end - (void) dealloc
 
 #pragma mark -
-- (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isChannel:(BOOL) isChannel
+- (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen isChannel:(BOOL)isChannel
 {
 	if ([[liveNumbers valueForKey:liveNo] isEqualTo:yes])
 		return;
@@ -93,14 +93,14 @@ NSNumber *yes;
 #endif
 }// end - (void) addUserProgram:(NSString *)liveNo withDate:(NSDate *)date community:(NSString *)community owner:(NSString *)owner autoOpen:(NSNumber *)autoOpen
 
-- (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official
+- (void) addOfficialProgram:(NSString *)liveNo withDate:(NSDate *)date autoOpen:(NSNumber *)autoOpen isOfficial:(BOOL)official withChannel:(NSString *)ch
 {
 	if ([[liveNumbers valueForKey:liveNo] isEqualTo:yes])
 		return;
 	else
 		[liveNumbers setValue:yes forKey:liveNo];
 
-	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo  withDate:date autoOpen:autoOpen isOfficial:official];
+	NLProgram *program = [[NLProgram alloc] initWithProgram:liveNo  withDate:date autoOpen:autoOpen isOfficial:official withChannel:(NSString *)ch];
 	if (program == nil)
 		return;
 

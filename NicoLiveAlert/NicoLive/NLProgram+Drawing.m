@@ -247,6 +247,7 @@ static const CGFloat TimeColorBlue = (64.0 / 255);
 		if ([thumbnail isValid] == YES)
 		{
 			iconIsValid = YES;
+			[thumbnail setSize:NSMakeSize(thumbnailSize, thumbnailSize)];
 #if __has_feature(objc_arc) == 0
 			[thumbnailURL release];
 #endif
@@ -277,13 +278,11 @@ static const CGFloat TimeColorBlue = (64.0 / 255);
 			[path lineToPoint:NSMakePoint(officialBoundsW, (timeStringHeight / 2))];
 			[path setLineWidth:timeStringHeight];
 			NSString *string = [startTime descriptionWithCalendarFormat:StartOfficialTimeFormat timeZone:nil locale:localeDict];
-/*
-			 if ((iconWasValid == NO) && (iconIsValid == YES))
-			 {
-			 [thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
-			 iconWasValid = YES;
-			 }// end if redraw icon
-*/
+			if ((iconWasValid == NO) && (iconIsValid == YES))
+			{
+				// [thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
+				iconWasValid = YES;
+			}// end if redraw icon
 			[menuImage lockFocus];
 			[[NSColor whiteColor] set];
 			[path stroke];
@@ -299,13 +298,11 @@ static const CGFloat TimeColorBlue = (64.0 / 255);
 			[path lineToPoint:NSMakePoint(programBoundsW, (timeStringHeight / 2))];
 			[path setLineWidth:timeStringHeight];
 			NSString *string = [startTime descriptionWithCalendarFormat:StartUserTimeFormat timeZone:nil locale:localeDict];
-/*
 			if ((iconWasValid == NO) && (iconIsValid == YES))
 			{
-				[thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
+				// [thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
 				iconWasValid = YES;
 			}// end if redraw icon
-*/
 			[menuImage lockFocus];
 			[[NSColor whiteColor] set];
 			[path stroke];
@@ -319,13 +316,11 @@ static const CGFloat TimeColorBlue = (64.0 / 255);
 		NSString *elapesdTime = nil;
 		elapesdTime = [NSString stringWithFormat:ElapsedTimeFormat, elapsedHour, elapsedMinute];
 		lastMintue = elapsedMinute;
-/*
-		 if ((iconWasValid == NO) && (iconIsValid == YES))
-		 {
-		 [thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
-		 iconWasValid = YES;
-		 }// end if redraw icon
-*/
+		if ((iconWasValid == NO) && (iconIsValid == YES))
+		{
+			// [thumbnail drawAtPoint:NSMakePoint(originX, originY) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fract];
+			iconWasValid = YES;
+		}// end if redraw icon
 		[menuImage lockFocus];
 		[[NSColor whiteColor] set];
 		[timeMask fill];
@@ -340,7 +335,7 @@ static const CGFloat TimeColorBlue = (64.0 / 255);
 #else
 	[arp drain];
 #endif
-	[center postNotification:[NSNotification notificationWithName:NLNotificationTimeUpdated object:self]];
+		//	[center postNotification:[NSNotification notificationWithName:NLNotificationTimeUpdated object:self]];
 }// end - (void) updateRemain
 
 #pragma mark -

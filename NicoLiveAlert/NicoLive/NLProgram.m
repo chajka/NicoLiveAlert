@@ -121,6 +121,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		iconWasValid = NO;
 		iconIsValid = NO;
 		channelNumber = [ch copy];
+NSLog(@"Channel %@", channelNumber);
 		@try {
 			[self checkStartTime:date forLive:liveNo];
 			[self parseOfficialProgram];
@@ -246,7 +247,6 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 
 - (void) checkStartTime:(NSDate *)date forLive:(NSString *)liveNo
 {
-	OnigRegexp *liveStateRegex = [OnigRegexp compile:ProgStateRegex];
 	OnigRegexp *broadcastTimeRegex = [OnigRegexp compile:ProgStartTimeRegex];
 	OnigRegexp *timeSanityRegex = [OnigRegexp compile:ProgSanityRegex];
 	NSURL *embedURL = [NSURL URLWithString:[NSString stringWithFormat:STREMEMBEDQUERY, liveNo]];
@@ -256,17 +256,9 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	if (embedContent == nil)
 		@throw [NSException exceptionWithName:EmbedFetchFailed reason:StringIsEmpty userInfo:nil];
 
-	OnigResult *checkOnair = [liveStateRegex search:embedContent];
 	OnigResult *broadcastTime = [broadcastTimeRegex search:embedContent];
 	OnigResult *sanityTime = [timeSanityRegex search:[broadcastTime stringAt:1]];
 
-	if (([[checkOnair stringAt:1] isEqualToString:ONAIRSTATE] == YES)
-		|| (broadcastTime == nil))
-	{
-		startTime = [date copy];
-		return;
-	}
-	
 	NSString *dateString = nil;
 	if (sanityTime != nil)
 		dateString = [NSString stringWithFormat:TimeSanityFormatString, [sanityTime stringAt:1], [sanityTime stringAt:2], [sanityTime stringAt:3]];
@@ -276,9 +268,12 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	NSDate *broadcastDate = [NSDate dateWithNaturalLanguageString:dateString locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
 	
 	NSTimeInterval diff = [broadcastDate timeIntervalSinceDate:date];
-	if (([[checkOnair stringAt:1] isEqualToString:BEFORESTATE] == YES) ||
-		([[checkOnair stringAt:1] isEqualToString:BEFORETSSTATE] == YES) || 
-		((abs(((NSInteger)diff) / 60) != 0)))
+	if (abs((NSInteger)(diff / 60)) == 0)
+	{
+		startTime = [date copy];
+		return;
+	}
+	else
 	{
 		NSTimeInterval startUnixTime = [date timeIntervalSince1970] + diff;
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
@@ -440,7 +435,10 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 	if (isOfficial == YES)
 	{
 		[thumbView setAction:@selector(clickChannel:) toTarget:self];
-		[thumbView setRepresentedObject:channelNumber];
+		if ([channelNumber isEqualToString:ExcludeChannel] == NO)
+			[thumbView setRepresentedObject:channelNumber];
+		else 
+			[thumbView setRepresentedObject:nil];
 	}
 	else
 	{
@@ -490,7 +488,7 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 
 - (void) clickCommunity:(id)message
 {
-	if (message == nil)
+	if (([message representedObject] == nil) || ([[message representedObject] isEqualToString:@""] == YES))
 		[self clickProgram:nil];
 	
 	NSString *urlstr = [NSString stringWithFormat:URLFormatCommunity, [message representedObject]];
@@ -500,8 +498,12 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 
 - (void) clickChannel:(id)message
 {
-	if (message == nil)
+	if (([message representedObject] == nil) || 
+		([[message representedObject] isEqualToString:@""] == YES))
+	{
 		[self clickProgram:nil];
+		return;
+	}
 		
 	NSString *urlstr = [NSString stringWithFormat:URLFormatChannel, [message representedObject]];
 	NSURL *url = [NSURL URLWithString:urlstr];

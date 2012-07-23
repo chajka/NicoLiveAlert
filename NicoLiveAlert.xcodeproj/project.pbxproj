@@ -79,6 +79,9 @@
 		1D36A60F15478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
 		1D36A61015478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
 		1D36A61115478BC400516CDF /* IOMTableViewDragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */; };
+		1D3AB45315BD4C7200A8DD93 /* NLRSSReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3AB45215BD4C7200A8DD93 /* NLRSSReader.m */; };
+		1D3AB45415BD4C7200A8DD93 /* NLRSSReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3AB45215BD4C7200A8DD93 /* NLRSSReader.m */; };
+		1D3AB45515BD4C7200A8DD93 /* NLRSSReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3AB45215BD4C7200A8DD93 /* NLRSSReader.m */; };
 		1D3DA39B15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */; };
 		1D3DA39C15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */; };
 		1D3DA39D15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */; };
@@ -418,6 +421,8 @@
 		1D36A5EF1546202500516CDF /* NicoLivePrefManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = NicoLivePrefManager.m; path = ApplicationSupport/NicoLivePrefManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1D36A60C15478BC400516CDF /* IOMTableViewDragAndDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IOMTableViewDragAndDrop.h; path = CocoaEnhance/IOMTableViewDragAndDrop.h; sourceTree = "<group>"; };
 		1D36A60D15478BC400516CDF /* IOMTableViewDragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IOMTableViewDragAndDrop.m; path = CocoaEnhance/IOMTableViewDragAndDrop.m; sourceTree = "<group>"; };
+		1D3AB45115BD4C7200A8DD93 /* NLRSSReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLRSSReader.h; path = RSS/NLRSSReader.h; sourceTree = "<group>"; };
+		1D3AB45215BD4C7200A8DD93 /* NLRSSReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLRSSReader.m; path = RSS/NLRSSReader.m; sourceTree = "<group>"; };
 		1D3DA39915B41A05009B1BBD /* NLProgram+Drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NLProgram+Drawing.h"; path = "NicoLive/NLProgram+Drawing.h"; sourceTree = "<group>"; };
 		1D3DA39A15B41A05009B1BBD /* NLProgram+Drawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NLProgram+Drawing.m"; path = "NicoLive/NLProgram+Drawing.m"; sourceTree = "<group>"; };
 		1D5558151529392000221516 /* SocketConnectionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketConnectionTests.h; path = Network/SocketConnectionTests.h; sourceTree = "<group>"; };
@@ -941,6 +946,8 @@
 		1DBF294215877DC300AC4AD7 /* RSS */ = {
 			isa = PBXGroup;
 			children = (
+				1D3AB45115BD4C7200A8DD93 /* NLRSSReader.h */,
+				1D3AB45215BD4C7200A8DD93 /* NLRSSReader.m */,
 			);
 			name = RSS;
 			sourceTree = "<group>";
@@ -1332,6 +1339,7 @@
 				1D3DA39B15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 				1D2702FE15B83FE000FDC04D /* NLClickableImageView.m in Sources */,
 				1D6B1F9415B8F1490088CBBE /* NLProgram+Parsing.m in Sources */,
+				1D3AB45315BD4C7200A8DD93 /* NLRSSReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1413,6 +1421,7 @@
 				1D3DA39C15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 				1D2702FF15B83FE000FDC04D /* NLClickableImageView.m in Sources */,
 				1D6B1F9515B8F1490088CBBE /* NLProgram+Parsing.m in Sources */,
+				1D3AB45415BD4C7200A8DD93 /* NLRSSReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1525,6 +1534,7 @@
 				1D3DA39D15B41A05009B1BBD /* NLProgram+Drawing.m in Sources */,
 				1D27030015B83FE000FDC04D /* NLClickableImageView.m in Sources */,
 				1D6B1F9615B8F1490088CBBE /* NLProgram+Parsing.m in Sources */,
+				1D3AB45515BD4C7200A8DD93 /* NLRSSReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

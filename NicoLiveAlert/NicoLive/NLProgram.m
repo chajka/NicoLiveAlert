@@ -121,7 +121,6 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		iconWasValid = NO;
 		iconIsValid = NO;
 		channelNumber = [ch copy];
-NSLog(@"Channel %@", channelNumber);
 		@try {
 			[self checkStartTime:date forLive:liveNo];
 			[self parseOfficialProgram];
@@ -173,9 +172,13 @@ NSLog(@"Channel %@", channelNumber);
 	if (broadcastOwnerName != nil)	[broadcastOwnerName release];
 	if (startTime != nil)			[startTime release];
 	if (startTimeString != nil)		[startTimeString release];
+	if (localeDict != nil)			[localeDict release];
 	if (programURL != nil)			[programURL release];
+	if (thumbnailURL != nil)		[thumbnailURL release];
 	if (info != nil)				[info release];
 
+	if (center != nil)				[center release];
+	if (dataString != nil)			[dataString release];
 	if (embedContent != nil)		[embedContent release];
 
 	[super dealloc];
@@ -192,6 +195,7 @@ NSLog(@"Channel %@", channelNumber);
 	ownerName = nil;
 	background = nil;
 	timeMask = nil;
+	thumbnail = nil;
 	stringAttributes = nil;
 	programNumber = nil;
 	programTitle = nil;
@@ -253,7 +257,7 @@ NSLog(@"Channel %@", channelNumber);
 
 	NSError *err = nil;
 	embedContent = [[NSString alloc] initWithContentsOfURL:embedURL encoding:NSUTF8StringEncoding error:&err];
-	if (embedContent == nil)
+	if ((embedContent == nil) || (err.code != 0))
 		@throw [NSException exceptionWithName:EmbedFetchFailed reason:StringIsEmpty userInfo:nil];
 
 	OnigResult *broadcastTime = [broadcastTimeRegex search:embedContent];
@@ -268,7 +272,7 @@ NSLog(@"Channel %@", channelNumber);
 	NSDate *broadcastDate = [NSDate dateWithNaturalLanguageString:dateString locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
 	
 	NSTimeInterval diff = [broadcastDate timeIntervalSinceDate:date];
-	if (abs((NSInteger)(diff / 60)) == 0)
+	if (abs((int)(diff / 60)) == 0)
 	{
 		startTime = [date copy];
 		return;
@@ -461,6 +465,7 @@ NSLog(@"Channel %@", channelNumber);
 #if __has_feature(objc_arc) == 0
 		[ownerView release];
 #endif
+		ownerView = nil;
 	}
 	else
 	{

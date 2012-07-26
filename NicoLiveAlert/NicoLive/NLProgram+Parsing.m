@@ -64,16 +64,16 @@
 	programURL = [[NSString alloc] initWithString:[result stringAt:1]];
 #if __has_feature(objc_arc) == 0
 	[embedContent release];
-	embedContent = nil;
 #endif
+	embedContent = nil;
 }// end - (void) parseOfficialProgram
 
 - (void) parseProgramInfo:(NSString *)liveNo
 {
 #if __has_feature(objc_arc) == 0
 	if (embedContent != nil)	[embedContent release];
-	embedContent = nil;
 #endif
+	embedContent = nil;
 	BOOL success = NO;
 	NSXMLParser *parser = nil;
 #if __has_feature(objc_arc)
@@ -101,12 +101,17 @@
 			}// end exception handling
 		}// end if parser is allocated
 #if __has_feature(objc_arc)
+	response = nil;
+	parser = nil;
 	}
 #else
 	[response release];
+	response = nil;
 	[parser release];
+	parser = nil;
 	[arp drain];
 #endif
+
 	if (success != YES)
 		@throw [NSException exceptionWithName:StreamInforFetchFaild reason:UserProgXMLParseFail userInfo:nil];
 }// end - (BOOL) parseProgramInfo:(NSString *)urlString
@@ -129,7 +134,8 @@
 			broadcastOwnerName = [[NSString alloc] initWithString:[nicknameResult stringAt:1]];
 		else
 			broadcastOwnerName = [[NSString alloc] initWithString:owner];
-			// end if
+		// end if
+		elementDict = nil;
 #if __has_feature(objc_arc)
 	}
 #else

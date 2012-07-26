@@ -261,6 +261,7 @@ enum {
 #define fontNameOfPrimaryAccount	@"Futura-Medium"
 #define fontNameOfElapsedTime		@"CourierNewPS-BoldMT"
 
+#define ProgramFromRSSOwnerName		@"RSS"
 #define OfficialTitleString	NSLocalizedString(@"OfficialTitleString", @"")
 #define StartUserTimeFormat			@" %H:%M + 00:00"
 #define ReserveUserTimeFormat		@" %%H:%%M - 00:%02ld"
@@ -413,6 +414,53 @@ enum AppCollaboCheckBoxes {
 #define PrefSource					@"source"
 #define PrefDest					@"dest"
 #define PreferenceData				@"PreferenceData"
+
+#pragma mark -
+#pragma mark RSSReading
+
+#define KeyWatchOfficialProgram		@"watchOfficialProgram"
+#define KeyWatchOfficialChannel		@"watchOfficialChannel"
+
+#define ElementNameTitle			@"title"
+#define ElementNameGUID				@"guid"
+#define ElementNameDate				@"pubDate"
+#define ElementNameDescription		@"description"
+#define ElementNameCommuName		@"nicolive:community_name"
+#define ElementNameCommuNumber		@"nicolive:community_id"
+#define ElementNameType				@"nicolive:type"
+#define ElementNameOwner			@"nicolive:owner_name"
+#define ElementItemName				@"item"
+
+enum {
+	indexNameGUID = 1,
+	indexNameDate,
+	indexNameCommuNumber,
+	indexNameOwner,
+	indexNameType	/* ,
+	indexNameTitle,
+	indexNameDescription,
+	indexNameCommuName,
+	indexNameType, */
+};
+
+enum {
+	FoundProgramKindUser = 0,
+	FoundProgramKindOfficial,
+	FoundProgramKindChannel
+};
+
+#define RSSNoContentLength			(1000)
+#define NotOwnerCharSet				@"lvcoh"
+#define ProgramTypeCommunity		@"community"
+#define ProgramTypeChannel			@"channel"
+#define ProgramTypeOfficial			@"official"
+#define UserNameCorrectFormat		@"http://seiga.nicovideo.jp/api/user/info?id=%@"
+#define RSSFeedURLFormat			@"http://live.nicovideo.jp/recent/rss?sort=&p=%ld"
+#define UserNameCorrectRegex		@"<nickname>(.*)</nickname>"
+#define ProgramTitleNumberRegex		@"<div class=\"apple-rss-subject\".*<a href=\"http://live.nicovideo.jp/watch/(lv\\d+)\">(.*)</a></div>"
+#define ProgramCommunityRegex		@"<div class=\"apple-rss-author\".*\">(.*)/(co\\d+)</div>"
+#define ProgramDescriptRegex		@"<div class=\"apple-rss-summary\" >(.*)</div>"
+#define ProgramStartTimeRegex		@"<div class=\"apple-rss-date\" title=\".*\">(.*)</div>"
 
 #pragma mark -
 #pragma mark Growling

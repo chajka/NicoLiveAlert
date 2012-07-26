@@ -12,6 +12,7 @@
 #import "NLUsers.h"
 #import "NLProgramList.h"
 #import "NLActivePrograms.h"
+#import "NLRSSReader.h"
 #import "IOMTableViewDragAndDrop.h"
 #import "NLArrayControllerDragAndDrop.h"
 #import "Growl/Growl.h"
@@ -78,6 +79,7 @@
 	NicoLivePrefManager								*prefs;
 	NLUsers											*nicoliveAccounts;
 	NLProgramList									*programSieves;
+	NLRSSReader										*rssManager;
 
 		// application control flags
 	BOOL											enableAutoOpen;

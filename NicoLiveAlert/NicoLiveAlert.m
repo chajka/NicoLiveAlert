@@ -107,6 +107,8 @@ NSMutableDictionary *watchitems = nil;
 	[statusBar release];
 	[programSieves release];
 	programSieves = nil;
+	[rssManager release];
+	rssManager = nil;
 	[prefs release];
 #endif
 }// end - (void) applicationWillTerminate:(NSNotification *)notification
@@ -171,6 +173,7 @@ NSMutableDictionary *watchitems = nil;
 	NLActivePrograms *activePrograms = [programSieves activePrograms];
 	[activePrograms setUsers:nicoliveAccounts];
 	[programSieves setWatchList:[nicoliveAccounts watchlist]];
+	[rssManager setWatchList:[nicoliveAccounts watchlist]];
 
 	logined = YES;
 }// end - (void) setupAccounts
@@ -194,10 +197,14 @@ NSMutableDictionary *watchitems = nil;
 {
 	programSieves = [[NLProgramList alloc] init];
 	NLActivePrograms *activeprograms = [[NLActivePrograms alloc] init];
+	rssManager = [[NLRSSReader alloc] init];
+	[rssManager setActivePrograms:activeprograms];
 	[activeprograms setSbItem:statusBar];
 	[programSieves setActivePrograms:activeprograms];
 	[programSieves setWatchOfficial:watchOfficialProgram];
 	[programSieves setWatchChannel:watchOfficialChannel];
+	[rssManager setWatchOfficial:watchOfficialProgram];
+	[rssManager setWatchChannel:watchOfficialChannel];
 
 #if __has_feature(objc_arc) == 0
 		// activeprograms keep in programSieves
@@ -292,11 +299,12 @@ NSMutableDictionary *watchitems = nil;
 	NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:liveInfo];	
 
 	if (autoOpen == YES)
+	{
 		if (kickCommentViewerAtAutoOpen == YES)
 			[info setValue:enable forKey:CommentViewer];
 		else
 			[info setValue:disable forKey:CommentViewer];
-	// end if autoOpen
+	}// end if autoOpen
 
 	if (broadcasting == YES)
 	{
@@ -396,7 +404,10 @@ NSMutableDictionary *watchitems = nil;
 	}// end if 
 	
 	if ([[note name] isEqualToString:NSWorkspaceDidWakeNotification])
+	{
 		[programSieves reset];
+		[rssManager startScnan];
+	}
 }// end - (void) listenRestart:(NSNotification *)note
 
 - (void) foundLive:(NSNotification *)note
@@ -448,28 +459,31 @@ NSMutableDictionary *watchitems = nil;
 	NSInteger selectedRow = [[[note object] objectForKey:keyRow] integerValue];
 
 	if (targetTable == tblManualWatchList)
+	{
 		if (selectedRow != -1)
 			[btnRemoveWatchListItem setEnabled:YES];
 		else
 			[btnRemoveWatchListItem setEnabled:NO];
 		// end if row is selected
-	// end if selected table is Manual WatchList
+	}// end if selected table is Manual WatchList
 
 	if (targetTable == tblAccountList)
+	{
 		if (selectedRow != -1)
 			[btnRemoveAccount setEnabled:YES];
 		else
 			[btnRemoveAccount setEnabled:NO];
 		// end if row is selected
-	// end if selected table is Account list
+	}// end if selected table is Account list
 
 	if (targetTable == tblTinyLauncher)
+	{
 		if (selectedRow != -1)
 			[btnRemoveApplication setEnabled:YES];
 		else
 			[btnRemoveApplication setEnabled:NO];
 		// end if row is selected
-	// end if selected table is tiny launcher
+	}// end if selected table is tiny launcher
 }// end - (void) rowSelected:(NSNotification *)note
 
 - (BOOL) checkFirstLaunch
@@ -499,10 +513,12 @@ NSMutableDictionary *watchitems = nil;
 - (IBAction) resetConnection:(id)sender
 {
 	[programSieves reset];
+	[self rescanRSS:nil];
 }// end - (IBAction) resetConnection:(id)sender
 
 - (IBAction) rescanRSS:(id)sender
 {
+	[rssManager startScnan];
 }// end - (IBAction) rescanRSS:(id)sender
 
 - (IBAction) launchApplicaions:(id)sender
@@ -558,7 +574,8 @@ NSMutableDictionary *watchitems = nil;
 	watchOfficialProgram = ([sender state] == NSOnState) ? YES : NO;
 	
 	[programSieves setWatchOfficial:watchOfficialProgram];
-	[statusBar setWatchOfficial:[programSieves officialState]]; 
+	[rssManager setWatchOfficial:watchOfficialProgram];
+	[statusBar setWatchOfficial:[programSieves officialState]];
 }// end - (IBAction) watchOfficialProgram:(id)sender
 
 - (IBAction) watchOfficialChannel:(id)sender
@@ -566,7 +583,8 @@ NSMutableDictionary *watchitems = nil;
 	watchOfficialChannel = ([sender state] == NSOnState) ? YES : NO;
 
 	[programSieves setWatchChannel:watchOfficialChannel];
-	[statusBar setWatchOfficial:[programSieves officialState]]; 
+	[rssManager setWatchChannel:watchOfficialChannel];
+	[statusBar setWatchOfficial:[programSieves officialState]];
 }//end - (IBAction) watchOfficialChannel:(id)sender
 
 - (IBAction) addToWatchList:(id)sender

@@ -227,7 +227,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
 	NSCIImageRep *alt = [NSCIImageRep imageRepWithCIImage:invertImage];
 
 		// draw program count on image
-	NSString *progCountStr = [NSString stringWithFormat:@"%d", numberOfPrograms];
+	NSString *progCountStr = [NSString stringWithFormat:@"%ld", numberOfPrograms];
 	if ((numberOfPrograms == 0) || (connected == NO))
 	{
 		statusbarIcon = [[NSImage alloc] initWithSize:NSMakeSize(noProgWidth, iconSizeW)];

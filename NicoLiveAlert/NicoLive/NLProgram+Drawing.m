@@ -345,7 +345,7 @@ static const CGFloat TimeColorBlue = (64.0 / 255);
 	[dict setValue:isStickey forKey:GROWL_NOTIFICATION_STICKY];
 	[dict setValue:context forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
 	
-	[GrowlApplicationBridge notifyWithDictionary:dict];
+	[GrowlApplicationBridge notifyWithDictionary:[NSDictionary dictionaryWithDictionary:dict]];
 }// end - (void) growlProgramNotify:(NSString *)notificationName
 
 @end

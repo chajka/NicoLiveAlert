@@ -96,6 +96,7 @@
 		// my status
 	BOOL											broadcasting;
 	NSString										*myLiveNumber;
+	NSMutableDictionary								*growlDuplicateAnnihilator;
 	NSArray											*oldWatchlists;
 #if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
 		// xpc variable definition

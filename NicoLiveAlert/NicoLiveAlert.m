@@ -73,6 +73,7 @@ NSMutableDictionary *watchitems = nil;
 - (void) applicationWillFinishLaunching:(NSNotification *)aNotification
 {
 	[GrowlApplicationBridge setGrowlDelegate:self];
+	growlDuplicateAnnihilator = [[NSMutableDictionary alloc] init];
 	prefs = [[NicoLivePrefManager alloc] initWithDefaults:userDefaults];
 }// end 
 
@@ -104,6 +105,7 @@ NSMutableDictionary *watchitems = nil;
 	[self savePreferences];
 
 #if __has_feature(objc_arc) == 0
+	[growlDuplicateAnnihilator release];
 	[statusBar release];
 	[programSieves release];
 	programSieves = nil;
@@ -881,7 +883,12 @@ NSMutableDictionary *watchitems = nil;
 #pragma mark GrowlApplicationBridge delegate
 - (void) growlNotificationWasClicked:(id)clickContext
 {
-	NSDictionary *info = [NSUnarchiver unarchiveObjectWithData:(NSData *)clickContext];
+	NSDictionary *info = [NSUnarchiver unarchiveObjectWithData:clickContext];
+	NSString *program = [info valueForKey:LiveNumber];
+	if ([growlDuplicateAnnihilator valueForKey:program] != nil)
+		return;
+
+	[growlDuplicateAnnihilator setValue:program forKey:program];
 	[self openLiveProgram:info autoOpen:NO];
 }// end - (void) growlNotificationWasClicked:(id)clickContext
 

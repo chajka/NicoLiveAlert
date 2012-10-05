@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <Growl/Growl.h>
 #import "NicoLivePrefManager.h"
 #import "NLStatusbar.h"
 #import "NLUsers.h"
@@ -15,7 +16,6 @@
 #import "NLRSSReader.h"
 #import "IOMTableViewDragAndDrop.h"
 #import "NLArrayControllerDragAndDrop.h"
-#import "Growl/Growl.h"
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 @interface NicoLiveAlert : NSObject <NSApplicationDelegate, GrowlApplicationBridgeDelegate> {

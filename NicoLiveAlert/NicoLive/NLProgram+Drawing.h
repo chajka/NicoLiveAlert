@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 iom. All rights reserved.
 //
 
+#import <Growl/Growl.h>
 #import "NLProgram.h"
 
 static const CGFloat thumbnailSize = 50.0;

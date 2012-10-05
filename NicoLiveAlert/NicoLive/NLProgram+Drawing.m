@@ -7,7 +7,8 @@
 //
 
 #import "NLProgram+Drawing.h"
-#import "Growl/Growl.h"
+
+@implementation NLProgram (Drawing)
 
 static const CGFloat originX = 0.0;
 static const CGFloat originY = 0.0;
@@ -74,8 +75,6 @@ static const CGFloat TimeColorRed = (128.0 / 255);
 static const CGFloat TimeColorGreen = (0.0 / 255);
 static const CGFloat TimeColorBlue = (64.0 / 255);
 
-
-@implementation NLProgram (Drawing)
 
 #pragma mark -
 #pragma mark drawing
@@ -332,8 +331,8 @@ static const CGFloat TimeColorBlue = (64.0 / 255);
 	NSNumber *priority = [NSNumber numberWithInt:0];
 	NSNumber *isStickey = [NSNumber numberWithBool:NO];
 	NSData *context = [NSArchiver archivedDataWithRootObject:info];
-	[dict setValue:notificationName forKey:GROWL_NOTIFICATION_NAME];
 	[dict setValue:programTitle forKey:GROWL_NOTIFICATION_TITLE];
+	[dict setValue:notificationName forKey:GROWL_NOTIFICATION_NAME];
 	if (programDescription != nil)
 		[dict setValue:programDescription forKey:GROWL_NOTIFICATION_DESCRIPTION];
 #ifdef GROWL_NOTIFICATION_ICON_DATA
@@ -345,7 +344,7 @@ static const CGFloat TimeColorBlue = (64.0 / 255);
 	[dict setValue:isStickey forKey:GROWL_NOTIFICATION_STICKY];
 	[dict setValue:context forKey:GROWL_NOTIFICATION_CLICK_CONTEXT];
 	
-	[GrowlApplicationBridge notifyWithDictionary:[NSDictionary dictionaryWithDictionary:dict]];
+	[GrowlApplicationBridge notifyWithDictionary:dict];
 }// end - (void) growlProgramNotify:(NSString *)notificationName
 
 @end

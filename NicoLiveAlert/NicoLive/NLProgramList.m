@@ -7,7 +7,7 @@
 //
 
 #import "NLProgramList.h"
-#import "Growl/Growl.h"
+#import <Growl/Growl.h>
 
 @interface NLProgramList ()
 - (void) startListen:(NSNotification *)note;

@@ -141,7 +141,7 @@ BOOL			xmlresult;
 			serveName = [[NSString alloc] initWithString:contentStr];
 			break;
 		case indexPort:
-			port = [contentStr integerValue];
+			port = [contentStr intValue];
 			break;
 		case indexThread:
 			thread = [[NSString alloc] initWithString:contentStr];

@@ -15,12 +15,12 @@
 @interface NLMessageServerInfo : NSObject {
 #endif
 	NSString	*serveName;
-	NSUInteger	port;
+	int			port;
 	NSString	*thread;
 	BOOL		maintenance;
 }
 @property (readonly) NSString	*serveName;
-@property (readonly) NSUInteger	port;
+@property (readonly) int		port;
 @property (readonly) NSString	*thread;
 @property (readonly) BOOL		maintenance;
 

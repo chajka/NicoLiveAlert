@@ -42,7 +42,6 @@
 		1D1CE331150C7EA6001E7E39 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1CE2DA150C77BB001E7E39 /* MainMenu.xib */; };
 		1D1D3EFF151316C1001F571F /* KCSInternetUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D3EFE151316C1001F571F /* KCSInternetUserTests.m */; };
 		1D1D3F00151316C1001F571F /* KCSInternetUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1D3EFE151316C1001F571F /* KCSInternetUserTests.m */; };
-		1D1DF5E5157B1DC100E2318B /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8EDCBA157B1D530081A9C8 /* Growl.framework */; };
 		1D1DF5E8157B6D9300E2318B /* HTTPConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1DF5E7157B6D9300E2318B /* HTTPConnectionTests.m */; };
 		1D1DF5E9157B6D9300E2318B /* HTTPConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1DF5E7157B6D9300E2318B /* HTTPConnectionTests.m */; };
 		1D1E5233151B0B9900BDD43D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D1E5231151B0B9900BDD43D /* Localizable.strings */; };
@@ -110,6 +109,9 @@
 		1D5E8CA41579DB4B00AB268B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8CA01579DB4B00AB268B /* KCSUser.m */; };
 		1D5E8CA51579DB4B00AB268B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8CA01579DB4B00AB268B /* KCSUser.m */; };
 		1D5E8CA61579DB4B00AB268B /* KCSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5E8CA01579DB4B00AB268B /* KCSUser.m */; };
+		1D5F0263161E84AC0028832F /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5F0262161E84AC0028832F /* Growl.framework */; };
+		1D5F0264161E84AC0028832F /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5F0262161E84AC0028832F /* Growl.framework */; };
+		1D5F0265161E84AC0028832F /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5F0262161E84AC0028832F /* Growl.framework */; };
 		1D640E431574418C007A76A6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D1CE2C5150C77BA001E7E39 /* Cocoa.framework */; };
 		1D6500C5150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
 		1D6500C6150CB351002F5A8B /* KCSUserTsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6500C4150CB351002F5A8B /* KCSUserTsts.m */; };
@@ -135,8 +137,6 @@
 		1D85D2C31557DCA2005D4AFB /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D85D2C11557DCA2005D4AFB /* UserDefaults.plist */; };
 		1D878105154573610075B151 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D878104154573610075B151 /* Growl.framework */; };
 		1D878106154573610075B151 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D878104154573610075B151 /* Growl.framework */; };
-		1D8EDCBB157B1D530081A9C8 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8EDCBA157B1D530081A9C8 /* Growl.framework */; };
-		1D8EDCBC157B1D530081A9C8 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8EDCBA157B1D530081A9C8 /* Growl.framework */; };
 		1D922484155B8DA200775B7A /* NLAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D922483155B8DA200775B7A /* NLAccountInfo.m */; };
 		1D922485155B8DA200775B7A /* NLAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D922483155B8DA200775B7A /* NLAccountInfo.m */; };
 		1D922486155B8DA200775B7A /* NLAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D922483155B8DA200775B7A /* NLAccountInfo.m */; };
@@ -335,7 +335,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1D1DF5E5157B1DC100E2318B /* Growl.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -440,6 +439,7 @@
 		1D5E8C951579DB2900AB268B /* HTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTTPConnection.h; path = NetworkBits/HTTPConnection.h; sourceTree = "<group>"; };
 		1D5E8CA01579DB4B00AB268B /* KCSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUser.m; path = KeyChainService/KCSUser.m; sourceTree = "<group>"; };
 		1D5E8CA11579DB4B00AB268B /* KCSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUser.h; path = KeyChainService/KCSUser.h; sourceTree = "<group>"; };
+		1D5F0262161E84AC0028832F /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = NicoLiveAlert/Growl/2.0/Growl.framework; sourceTree = "<group>"; };
 		1D6500C3150CB351002F5A8B /* KCSUserTsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCSUserTsts.h; path = Keychain/KCSUserTsts.h; sourceTree = "<group>"; };
 		1D6500C4150CB351002F5A8B /* KCSUserTsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCSUserTsts.m; path = Keychain/KCSUserTsts.m; sourceTree = "<group>"; };
 		1D6500C9150CBE98002F5A8B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -456,7 +456,6 @@
 		1D72B118152B5CB400F7944C /* NLProgramList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = NLProgramList.m; path = NicoLive/NLProgramList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1D85D2C11557DCA2005D4AFB /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = UserDefaults.plist; path = SupportingFiles/UserDefaults.plist; sourceTree = "<group>"; };
 		1D878104154573610075B151 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = NicoLiveAlert/Growl/Legacy/Growl.framework; sourceTree = "<group>"; };
-		1D8EDCBA157B1D530081A9C8 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = NicoLiveAlert/Growl/1.3/Growl.framework; sourceTree = "<group>"; };
 		1D922482155B8DA200775B7A /* NLAccountInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccountInfo.h; path = NicoLive/NLAccountInfo.h; sourceTree = "<group>"; };
 		1D922483155B8DA200775B7A /* NLAccountInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLAccountInfo.m; path = NicoLive/NLAccountInfo.m; sourceTree = "<group>"; };
 		1D93A139153856DA00328D5C /* OnigRegexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexp.h; sourceTree = "<group>"; };
@@ -523,7 +522,7 @@
 				1D1CE2C6150C77BA001E7E39 /* Cocoa.framework in Frameworks */,
 				1D6500CA150CBE98002F5A8B /* Security.framework in Frameworks */,
 				1D141CFE151DAA1300CEB686 /* QuartzCore.framework in Frameworks */,
-				1D8EDCBB157B1D530081A9C8 /* Growl.framework in Frameworks */,
+				1D5F0263161E84AC0028832F /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,7 +534,6 @@
 				1D1CE2E5150C77BB001E7E39 /* Cocoa.framework in Frameworks */,
 				1D6500CC150CBE98002F5A8B /* Security.framework in Frameworks */,
 				1D141D00151DAA1300CEB686 /* QuartzCore.framework in Frameworks */,
-				1D8EDCBC157B1D530081A9C8 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +545,7 @@
 				1D6500CB150CBE98002F5A8B /* Security.framework in Frameworks */,
 				1D141CFF151DAA1300CEB686 /* QuartzCore.framework in Frameworks */,
 				1D878105154573610075B151 /* Growl.framework in Frameworks */,
+				1D5F0264161E84AC0028832F /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,6 +586,7 @@
 				1DCEEC31156E64A40044B75E /* Security.framework in Frameworks */,
 				1DCEEC32156E64A40044B75E /* QuartzCore.framework in Frameworks */,
 				1DCEEC33156E64A40044B75E /* Growl.framework in Frameworks */,
+				1D5F0265161E84AC0028832F /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -740,7 +740,7 @@
 		1D4E35C015457231000EAE03 /* Growl */ = {
 			isa = PBXGroup;
 			children = (
-				1D4E35C215457248000EAE03 /* 1.3 */,
+				1D4E35C215457248000EAE03 /* 2.0 */,
 				1D4E35C11545723E000EAE03 /* Legacy */,
 			);
 			name = Growl;
@@ -754,12 +754,12 @@
 			name = Legacy;
 			sourceTree = "<group>";
 		};
-		1D4E35C215457248000EAE03 /* 1.3 */ = {
+		1D4E35C215457248000EAE03 /* 2.0 */ = {
 			isa = PBXGroup;
 			children = (
-				1D8EDCBA157B1D530081A9C8 /* Growl.framework */,
+				1D5F0262161E84AC0028832F /* Growl.framework */,
 			);
-			name = 1.3;
+			name = 2.0;
 			sourceTree = "<group>";
 		};
 		1D555813152938E900221516 /* Network */ = {
@@ -1691,6 +1691,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/NicoLiveAlert/Growl/1.3\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/2.0\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
@@ -1715,6 +1716,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/NicoLiveAlert/Growl/1.3\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/2.0\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
@@ -1779,6 +1781,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/NicoLiveAlert/Growl/Legacy\"",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/2.0\"",
 				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1803,6 +1806,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/NicoLiveAlert/Growl/Legacy\"",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/2.0\"",
 				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1918,6 +1922,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/NicoLiveAlert/Growl/Legacy\"",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/2.0\"",
 				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1945,6 +1950,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/NicoLiveAlert/Growl/Legacy\"",
+					"\"$(SRCROOT)/NicoLiveAlert/Growl/2.0\"",
 				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

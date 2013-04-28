@@ -485,6 +485,7 @@ __strong OnigRegexp			*startTimeRegex;
 			// store last data recieve time;
 			// databyte is terminator
 		NSString *msg = [[NSString alloc] initWithData:programListDataBuffer encoding:NSUTF8StringEncoding];
+NSLog(@"%@", msg);
 		int tokenNumber = 0;
 		const char *sep = [ChatContentCharset UTF8String];
 		char *phrase, *brkb;

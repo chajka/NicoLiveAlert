@@ -190,6 +190,7 @@ static CGFloat disconnectedColorAlpha = 0.70;
     [[statusbarMenu	itemWithTag:tagLaunchApplications] setTitle:TITLELAUNCHER];
     [[statusbarMenu itemWithTag:tagPreference] setTitle:TITLEPREFERENCE];
     [[statusbarMenu itemWithTag:tagAbout] setTitle:TITLEABOUT];
+	[[statusbarMenu itemWithTag:tagCheckUpdate] setTitle:TITLECHECKUPDATE];
     [[statusbarMenu itemWithTag:tagQuit] setTitle:TITLEQUIT];
     
 	[statusBarItem setMenu:statusbarMenu];

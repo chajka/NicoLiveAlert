@@ -228,7 +228,7 @@ static const CGFloat TimeColorBlue = (64.0 / 255);
 {
 	NSInteger now = (NSInteger)[[NSDate date] timeIntervalSinceDate:startTime];
 	NSUInteger elapsedMinute = abs((now / 60) % 60);	
-	NSUInteger elapsedHour = abs(now / (60 * 60));
+	NSUInteger elapsedHour = abs((int)(now / (60 * 60)));
 	if (elapsedMinute == lastMintue)
 		return;
 	

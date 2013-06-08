@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Growl/Growl.h>
+#import <Sparkle/Sparkle.h>
 #import "NicoLivePrefManager.h"
 #import "NLStatusbar.h"
 #import "NLUsers.h"
@@ -30,8 +31,9 @@
 	__strong IBOutlet NSMenuItem				*menuItemAutoOpen;
 	__strong IBOutlet NSMenuItem				*menuItemPrograms;
 	__strong IBOutlet NSMenuItem				*menuItemOfficalPrograms;
-	__strong IBOutlet NSMenuItem				*menuAccounts;
-	__strong IBOutlet NSMenuItem				*manuLauncApplications;
+	__strong IBOutlet NSMenuItem				*menuItemAccounts;
+	__strong IBOutlet NSMenuItem				*menuItemLauncApplications;
+	__strong IBOutlet NSMenuItem				*menuItemCheckForUpdates;
 
 		// Preference Panel items
 	__strong IBOutlet NSTabView					*tabviewPreferences;
@@ -72,7 +74,10 @@
 	__strong IBOutlet NLArrayControllerDragAndDrop	*aryAccountItems;
 	__strong IBOutlet NLArrayControllerDragAndDrop	*aryLauncherItems;
 
-			// user's defaults object
+		// sparkle
+	IBOutlet SUUpdater								*sparkle;
+
+		// user's defaults object
 	__strong IBOutlet NSUserDefaultsController		*userDefaults;
 	
 	NLStatusbar										*statusBar;

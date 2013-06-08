@@ -10,6 +10,11 @@
 #import "NLActivePrograms.h"
 #import "OnigRegexp.h"
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_6
+@protocol NSXMLParserDelegate <NSObject>
+@end
+#endif
+
 @interface NLRSSReader : NSObject <NSXMLParserDelegate> {
 	NLActivePrograms	*activePrograms;
 	NSMutableDictionary	*watchList;

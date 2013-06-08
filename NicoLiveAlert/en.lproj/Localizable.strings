@@ -12,9 +12,10 @@
 "TitleAccounts" = "Accounts";
 "TitleResetConnection" = "Reset Connection";
 "TitleScanRSS" = "Scan RSS";
-"TitleLauncher" = "launch Applications";
+"TitleLauncher" = "Launch Applications";
 "TitlePreference" = "Preference…";
 "TitleAbout" = "About NicoLiveAlert…";
+"TitleCheckUpdate" = "Check for Updates";
 "TitleQuit" = "Quit";
 // menubar alternate title
 "TitleUserNoProgram" = "No Program";

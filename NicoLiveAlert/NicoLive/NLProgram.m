@@ -261,13 +261,13 @@ static const NSTimeInterval elapseCheckCycle = (10.0);
 		@throw [NSException exceptionWithName:EmbedFetchFailed reason:StringIsEmpty userInfo:nil];
 
 	OnigResult *broadcastTime = [broadcastTimeRegex search:embedContent];
-	OnigResult *sanityTime = [timeSanityRegex search:[broadcastTime stringAt:1]];
+	OnigResult *sanityTime = [timeSanityRegex search:[broadcastTime stringAt:2]];
 
 	NSString *dateString = nil;
 	if (sanityTime != nil)
 		dateString = [NSString stringWithFormat:TimeSanityFormatString, [sanityTime stringAt:1], [sanityTime stringAt:2], [sanityTime stringAt:3]];
 	else
-		dateString = [broadcastTime stringAt:1];
+		dateString = [broadcastTime stringAt:2];
 
 	NSDate *broadcastDate = [NSDate dateWithNaturalLanguageString:dateString locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
 	

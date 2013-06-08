@@ -69,6 +69,7 @@ enum statusBarMenuItems {
 	tagPreference,
 	tagSep2 = 1020,
 	tagAbout,
+	tagCheckUpdate,
 	tagQuit
 };
 
@@ -81,6 +82,7 @@ enum statusBarMenuItems {
 #define TITLESCANRSS			NSLocalizedString(@"TitleScanRSS", @"")
 #define	TITLELAUNCHER			NSLocalizedString(@"TitleLauncher", @"")
 #define	TITLEPREFERENCE			NSLocalizedString(@"TitlePreference", @"")
+#define TITLECHECKUPDATE		NSLocalizedString(@"TitleCheckUpdate", @"")
 
 #define TITLEABOUT				NSLocalizedString(@"TitleAbout", @"")
 #define	TITLEQUIT				NSLocalizedString(@"TitleQuit", @"")
@@ -273,11 +275,11 @@ enum {
 #define TimeSanityFormatString		@"%@%@%@"
 	// reguler expressions
 #define ProgramTitleRegex	@"title=\"(.*)\""
-#define ThumbImageRegex		@"<img src=\"(http://.*)\" class=\"banner\">"
-#define ProgStartTimeRegex	@"<div id=\"data\">(.*\\d+:\\d+)</div>"
+#define ThumbImageRegex		@"<img src=\"(http://(nl|icon)\\.(n|s)img.*\\.jpg)"
+#define ProgStartTimeRegex	@"<div (id|class)=\"data\">(.*\\d+:\\d+)</div>"
 #define ProgSanityRegex		@"(.*\\()<font color='.*'>(.*)</font>(.+\\d+:\\d+)"
 #define ProgramURLRegex		@"<a href=\"(http://live.nicovideo.jp/watch/lv\\d+)\""
-#define ProgStateRegex		@"class=\"(before|beforeTS|onair|done|doneTS)\""
+#define ProgStateRegex		@"class=\"(before|beforeTS|onair|done|doneTS) sprite\""
 #define NicknameRegex		@"<nickname>(.*)</nickname>"
 #define ExcludeChannel		@"ch394"
 

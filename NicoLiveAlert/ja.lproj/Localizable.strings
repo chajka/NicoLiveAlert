@@ -15,6 +15,7 @@
 "TitleLauncher" = "登録したアプリケーションを起動";
 "TitlePreference" = "環境設定…";
 "TitleAbout" = "NicoLiveAlertについて…";
+"TitleCheckUpdate" = "アップデートの確認";
 "TitleQuit" = "終了";
 // menubar alternate title
 "TitleUserNoProgram" = "ユーザー生はありません";

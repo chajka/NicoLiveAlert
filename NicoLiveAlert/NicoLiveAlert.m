@@ -94,6 +94,8 @@ NSMutableDictionary *watchitems = nil;
 #if MAC_OS_X_VERSION_MIN_REQUIRED == MAC_OS_X_VERSION_10_7
 	[self setupCollaboreationService];
 #endif
+		// check for update
+	[sparkle checkForUpdatesInBackground];
 }// end - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 
 - (void) applicationWillTerminate:(NSNotification *)notification
@@ -542,7 +544,7 @@ NSMutableDictionary *watchitems = nil;
 {
 	NSCellStateValue usersState = NSOffState;
 	usersState = [nicoliveAccounts toggleUserState:(NSMenuItem *)sender];
-	[menuAccounts setState:usersState];
+	[menuItemAccounts setState:usersState];
 	[statusBar setUserState:usersState];
 }// end - (IBAction) toggleUserState:(id)sender
 

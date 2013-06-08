@@ -478,14 +478,14 @@ __strong OnigRegexp			*startTimeRegex;
 	lastTime = [[NSDate alloc] init];
 	
 #if __has_feature(objc_arc)
-	@autoreleasepool {
+	@autoreleasepool {	
 #else
 	NSAutoreleasePool *arp = [[NSAutoreleasePool alloc] init];
 #endif
 			// store last data recieve time;
 			// databyte is terminator
 		NSString *msg = [[NSString alloc] initWithData:programListDataBuffer encoding:NSUTF8StringEncoding];
-NSLog(@"%@", msg);
+//NSLog(@"%@", msg);
 		int tokenNumber = 0;
 		const char *sep = [ChatContentCharset UTF8String];
 		char *phrase, *brkb;

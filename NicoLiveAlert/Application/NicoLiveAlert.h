@@ -7,9 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NLStatusbar.h"
 
-@interface NicoLiveAlert : NSObject <NSApplicationDelegate>
-
-@property (assign) IBOutlet NSWindow *window;
+@interface NicoLiveAlert : NSObject <NSApplicationDelegate> {
+				NLStatusbar	*statusBar;
+	IBOutlet	NSMenu		*statusBarMenu;
+}
 
 @end

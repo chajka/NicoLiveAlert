@@ -8,11 +8,58 @@
 
 #import "NicoLiveAlert.h"
 
-@implementation NicoLiveAlert
+@interface NicoLiveAlert ()
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+#ifdef __cplusplus
+extern "C" {
+#endif
+static void uncaughtExceptionHandler(NSException *exception);
+#ifdef __cplusplus
+} //end extern "C"
+#endif
+
+@end
+
+static NSString *StatusBarIconName = @"sbicon";
+
+@implementation NicoLiveAlert
+#pragma mark - synthesize properties
+#pragma mark - class method
+#pragma mark - constructor / destructor
+#pragma mark - override
+- (void) awakeFromNib
 {
-	// Insert code here to initialize your application
-}
+	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+}// end - (void) awakeFromNib
+
+#pragma mark - delegate
+- (void) applicationWillFinishLaunching:(NSNotification *)notification
+{
+	
+}// end - (void) applicationWillFinishLaunching:(NSNotification *)notification
+
+- (void) applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	statusBar = [[NLStatusbar alloc] initWithMenu:statusBarMenu andIconName:StatusBarIconName];
+}// end - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
+
+- (void) applicationWillTerminate:(NSNotification *)notification
+{
+	
+}// end - (void) applicationWillFinishLaunching:(NSNotification *)notification
+
+#pragma mark - instance method
+#pragma mark constructor
+#pragma mark - properties
+#pragma mark - messages
+#pragma mark - private
+#pragma mark - C functions
+static
+void uncaughtExceptionHandler(NSException *exception)
+{
+    NSLog(@"Exception Name %@, Reason %@", exception.name, exception.reason);
+	NSLog(@"Exception Description %@", exception.description);
+    NSLog(@"Exception Call Stack Symbols %@", exception.callStackSymbols);
+}// end void uncaughtExceptionHandler(NSException *exception)
 
 @end

@@ -35,11 +35,12 @@
 #pragma mark - private
 - (void) installStatusBarMenu:(NSMenu *)menu iconName:(NSString *)iconName
 {
+	systemStatusMenu = menu;
 	systemStatusBar = [NSStatusBar systemStatusBar];
 	statusMenuItem = [systemStatusBar statusItemWithLength:NSVariableStatusItemLength];
 	[statusMenuItem setHighlightMode:YES];
 	[statusMenuItem setImage:[NSImage imageNamed:iconName]];
-	[statusMenuItem setMenu:menu];
+	[statusMenuItem setMenu:systemStatusMenu];
 }// end - (void) installStatusBarMenu
 
 #pragma mark - C functions

@@ -1,5 +1,5 @@
 //
-//  NLAppDelegate.h
+//  NicoLiveAlerte.h
 //  NicoLiveAlert
 //
 //  Created by Чайка on 3/25/14.
@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface NLAppDelegate : NSObject <NSApplicationDelegate>
+@interface NicoLiveAlert : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 

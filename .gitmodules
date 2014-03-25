@@ -1,0 +1,3 @@
+[submodule "NicoLiveAlert/NetworkBits"]
+	path = NicoLiveAlert/NetworkBits
+	url = https://chajka@github.com/chajka/NetworkBits.git

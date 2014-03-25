@@ -36,6 +36,7 @@
 		1DAECBF518E1311F00C402AE /* away.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAECBEA18E1311F00C402AE /* away.png */; };
 		1DAECBF618E1311F00C402AE /* available.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAECBEB18E1311F00C402AE /* available.png */; };
 		1DAECBF718E1311F00C402AE /* available.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAECBEB18E1311F00C402AE /* available.png */; };
+		1DAECBFB18E1382A00C402AE /* NLStatusbar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1DAECBFA18E1382A00C402AE /* NLStatusbar.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,8 @@
 		1DAECBE918E1311F00C402AE /* idle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = idle.png; path = Images/idle.png; sourceTree = "<group>"; };
 		1DAECBEA18E1311F00C402AE /* away.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = away.png; path = Images/away.png; sourceTree = "<group>"; };
 		1DAECBEB18E1311F00C402AE /* available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = available.png; path = Images/available.png; sourceTree = "<group>"; };
+		1DAECBF918E1382A00C402AE /* NLStatusbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLStatusbar.h; path = GUI/NLStatusbar.h; sourceTree = "<group>"; };
+		1DAECBFA18E1382A00C402AE /* NLStatusbar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NLStatusbar.mm; path = GUI/NLStatusbar.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +145,7 @@
 		1D38F51D18E12C96006C5C70 /* NicoLiveAlert */ = {
 			isa = PBXGroup;
 			children = (
+				1DAECBF818E137CE00C402AE /* GUI */,
 				1DAECBE418E1309D00C402AE /* Application */,
 				1D38F52F18E12C96006C5C70 /* Images.xcassets */,
 				1D38F51E18E12C96006C5C70 /* Supporting Files */,
@@ -201,6 +205,15 @@
 				1DAECBEB18E1311F00C402AE /* available.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		1DAECBF818E137CE00C402AE /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				1DAECBF918E1382A00C402AE /* NLStatusbar.h */,
+				1DAECBFA18E1382A00C402AE /* NLStatusbar.mm */,
+			);
+			name = GUI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D38F55118E1300F006C5C70 /* NicoLiveAlert.m in Sources */,
+				1DAECBFB18E1382A00C402AE /* NLStatusbar.mm in Sources */,
 				1D38F52418E12C96006C5C70 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

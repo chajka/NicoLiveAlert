@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NLStatusbar : NSObject
+@interface NLStatusbar : NSObject {
+	__strong	NSStatusItem	*statusMenuItem;
+	__strong	NSStatusBar		*systemStatusBar;
+}
 
+- (id) initWithMenu:(NSMenu *)menu andIconName:(NSString *)iconName;
 @end

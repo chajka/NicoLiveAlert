@@ -10,9 +10,8 @@
 #import "NLStatusbar.h"
 
 @interface NicoLiveAlert : NSObject <NSApplicationDelegate> {
-	NLStatusbar *statusBar;
+				NLStatusbar	*statusBar;
+	IBOutlet	NSMenu		*statusBarMenu;
 }
-
-@property (assign) IBOutlet NSWindow *window;
 
 @end

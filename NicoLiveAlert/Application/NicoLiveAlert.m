@@ -20,6 +20,8 @@ static void uncaughtExceptionHandler(NSException *exception);
 
 @end
 
+static NSString *StatusBarIconName = @"sbicon";
+
 @implementation NicoLiveAlert
 #pragma mark - synthesize properties
 #pragma mark - class method
@@ -38,7 +40,7 @@ static void uncaughtExceptionHandler(NSException *exception);
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-		// Insert code here to initialize your application
+	statusBar = [[NLStatusbar alloc] initWithMenu:statusBarMenu andIconName:StatusBarIconName];
 }// end - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 
 - (void) applicationWillTerminate:(NSNotification *)notification

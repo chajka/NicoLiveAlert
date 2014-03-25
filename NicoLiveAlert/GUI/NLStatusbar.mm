@@ -25,6 +25,7 @@
 
 	return self;
 }// end - (id) initWithMenu:(NSMenu *)menu iconName:(NSString *)iconName
+
 #pragma mark - override
 #pragma mark - delegate
 #pragma mark - instance method
@@ -40,5 +41,6 @@
 	[statusMenuItem setImage:[NSImage imageNamed:iconName]];
 	[statusMenuItem setMenu:menu];
 }// end - (void) installStatusBarMenu
+
 #pragma mark - C functions
 @end

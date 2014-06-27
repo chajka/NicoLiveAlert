@@ -466,7 +466,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Я Чайка";
+				CODE_SIGN_IDENTITY = "Akira Muraki";
+				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/../../../ResourceRules.plist";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
@@ -481,7 +482,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Я Чайка";
+				CODE_SIGN_IDENTITY = "Akira Muraki";
+				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/../../../ResourceRules.plist";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";

@@ -18,6 +18,8 @@
 		1D38F55118E1300F006C5C70 /* NicoLiveAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D38F55018E1300F006C5C70 /* NicoLiveAlert.m */; };
 		1D38F55218E1300F006C5C70 /* NicoLiveAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D38F55018E1300F006C5C70 /* NicoLiveAlert.m */; };
 		1D38F55518E1304C006C5C70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D38F52318E12C96006C5C70 /* main.m */; };
+		1D6E27971962DACF00E76D49 /* YCKeychainService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6E27961962DACF00E76D49 /* YCKeychainService.framework */; };
+		1D6E27981962DACF00E76D49 /* YCKeychainService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6E27961962DACF00E76D49 /* YCKeychainService.framework */; };
 		1DAECBDA18E1307500C402AE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DAECBD818E1307500C402AE /* Credits.rtf */; };
 		1DAECBDB18E1307500C402AE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DAECBD818E1307500C402AE /* Credits.rtf */; };
 		1DAECBDE18E1308400C402AE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DAECBDC18E1308400C402AE /* InfoPlist.strings */; };
@@ -67,6 +69,7 @@
 		1D38F54B18E12DFE006C5C70 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1D38F55018E1300F006C5C70 /* NicoLiveAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NicoLiveAlert.m; path = Application/NicoLiveAlert.m; sourceTree = "<group>"; };
 		1D38F55318E13020006C5C70 /* NicoLiveAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NicoLiveAlert.h; path = Application/NicoLiveAlert.h; sourceTree = "<group>"; };
+		1D6E27961962DACF00E76D49 /* YCKeychainService.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YCKeychainService.framework; path = NicoLiveAlert/Frameworks/YCKeychainService.framework; sourceTree = "<group>"; };
 		1DAECBD918E1307500C402AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = Localize/en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		1DAECBDD18E1308400C402AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localize/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1DAECBE118E1309400C402AE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Localize/en.lproj/NicoLiveAlert.xib; sourceTree = "<group>"; };
@@ -87,6 +90,7 @@
 			files = (
 				1D38F54C18E12DFE006C5C70 /* Security.framework in Frameworks */,
 				1D38F51818E12C96006C5C70 /* Cocoa.framework in Frameworks */,
+				1D6E27971962DACF00E76D49 /* YCKeychainService.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +100,7 @@
 			files = (
 				1D38F53818E12C96006C5C70 /* Cocoa.framework in Frameworks */,
 				1D38F53718E12C96006C5C70 /* XCTest.framework in Frameworks */,
+				1D6E27981962DACF00E76D49 /* YCKeychainService.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +129,7 @@
 		1D38F51618E12C96006C5C70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1D6E27961962DACF00E76D49 /* YCKeychainService.framework */,
 				1D38F54B18E12DFE006C5C70 /* Security.framework */,
 				1D38F51718E12C96006C5C70 /* Cocoa.framework */,
 				1D38F53618E12C96006C5C70 /* XCTest.framework */,
@@ -469,6 +475,10 @@
 				CODE_SIGN_IDENTITY = "Akira Muraki";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/../../../ResourceRules.plist";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/NicoLiveAlert/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
@@ -485,6 +495,10 @@
 				CODE_SIGN_IDENTITY = "Akira Muraki";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/../../../ResourceRules.plist";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/NicoLiveAlert/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
 				INFOPLIST_FILE = "NicoLiveAlert/NicoLiveAlert-Info.plist";
@@ -502,6 +516,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/NicoLiveAlert/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";
@@ -524,6 +539,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/NicoLiveAlert/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NicoLiveAlert/NicoLiveAlert-Prefix.pch";

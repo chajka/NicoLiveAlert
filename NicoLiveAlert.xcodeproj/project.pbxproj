@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1D38F51818E12C96006C5C70 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D38F51718E12C96006C5C70 /* Cocoa.framework */; };
 		1D38F52418E12C96006C5C70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D38F52318E12C96006C5C70 /* main.m */; };
-		1D38F53018E12C96006C5C70 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D38F52F18E12C96006C5C70 /* Images.xcassets */; };
 		1D38F53718E12C96006C5C70 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D38F53618E12C96006C5C70 /* XCTest.framework */; };
 		1D38F53818E12C96006C5C70 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D38F51718E12C96006C5C70 /* Cocoa.framework */; };
 		1D38F54018E12C96006C5C70 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D38F53E18E12C96006C5C70 /* InfoPlist.strings */; };
@@ -61,7 +60,6 @@
 		1DE8F6261964678E00079F1A /* NLAccountPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6231964678E00079F1A /* NLAccountPreferenceView.xib */; };
 		1DE8F62A1964893F00079F1A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6271964893F00079F1A /* Localizable.strings */; };
 		1DE8F62B1964893F00079F1A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6271964893F00079F1A /* Localizable.strings */; };
-		1DE8F62C1964893F00079F1A /* NicoLiveAlert-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D38F51F18E12C96006C5C70 /* NicoLiveAlert-Info.plist */; };
 		1DE8F62D1964893F00079F1A /* NicoLiveAlert-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D38F51F18E12C96006C5C70 /* NicoLiveAlert-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +121,8 @@
 		1DE8F6241964678E00079F1A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Localize/en.lproj/NLAccountPreferenceView.xib; sourceTree = "<group>"; };
 		1DE8F6281964893F00079F1A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = Localize/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1DE8F6291964893F00079F1A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localize/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1DE8F62E19648A0100079F1A /* NicoLiveAlertPreferencesDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NicoLiveAlertPreferencesDefinitions.h; path = PreferencePanels/NicoLiveAlertPreferencesDefinitions.h; sourceTree = "<group>"; };
+		1DE8F62F19648DE500079F1A /* NicoLiveAlertDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NicoLiveAlertDefinitions.h; path = Application/NicoLiveAlertDefinitions.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,7 +195,7 @@
 			children = (
 				1DAECBE418E1309D00C402AE /* Application */,
 				1DAECBF818E137CE00C402AE /* GUI */,
-				1DE8F5E019645BA900079F1A /* PreferencePanels */,
+				1DE8F5E019645BA900079F1A /* Preference */,
 				1D38F51E18E12C96006C5C70 /* Supporting Files */,
 				1DE8F5D6196455ED00079F1A /* External */,
 				1DAECBE518E130FD00C402AE /* Images */,
@@ -238,6 +238,7 @@
 		1DAECBE418E1309D00C402AE /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				1DE8F62F19648DE500079F1A /* NicoLiveAlertDefinitions.h */,
 				1D38F55318E13020006C5C70 /* NicoLiveAlert.h */,
 				1D38F55018E1300F006C5C70 /* NicoLiveAlert.m */,
 				1DAECBE018E1309400C402AE /* NicoLiveAlert.xib */,
@@ -286,9 +287,10 @@
 			name = MASPreferences;
 			sourceTree = "<group>";
 		};
-		1DE8F5E019645BA900079F1A /* PreferencePanels */ = {
+		1DE8F5E019645BA900079F1A /* Preference */ = {
 			isa = PBXGroup;
 			children = (
+				1DE8F62E19648A0100079F1A /* NicoLiveAlertPreferencesDefinitions.h */,
 				1DE8F5E119645BF600079F1A /* NLGeneralPreferenceViewController.h */,
 				1DE8F5E219645BF600079F1A /* NLGeneralPreferenceViewController.mm */,
 				1DE8F5E819645C7000079F1A /* NLGeneralPreferenceView.xib */,
@@ -302,7 +304,7 @@
 				1DE8F61D1964673900079F1A /* NLAccountPreferenceViewController.mm */,
 				1DE8F6231964678E00079F1A /* NLAccountPreferenceView.xib */,
 			);
-			name = PreferencePanels;
+			name = Preference;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,10 +385,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D38F53018E12C96006C5C70 /* Images.xcassets in Resources */,
 				1DE8F5DE1964561700079F1A /* MASPreferencesWindow.xib in Resources */,
 				1DAECBF218E1311F00C402AE /* idle.png in Resources */,
-				1DE8F62C1964893F00079F1A /* NicoLiveAlert-Info.plist in Resources */,
 				1DAECBF418E1311F00C402AE /* away.png in Resources */,
 				1DAECBDE18E1308400C402AE /* InfoPlist.strings in Resources */,
 				1DAECBDA18E1307500C402AE /* Credits.rtf in Resources */,

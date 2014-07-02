@@ -55,6 +55,10 @@
 		1DE8F615196465B200079F1A /* NLNotiryPreferenceViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8F612196465B200079F1A /* NLNotiryPreferenceViewController.mm */; };
 		1DE8F61A1964660E00079F1A /* NLNotiryPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6181964660E00079F1A /* NLNotiryPreferenceView.xib */; };
 		1DE8F61B1964660E00079F1A /* NLNotiryPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6181964660E00079F1A /* NLNotiryPreferenceView.xib */; };
+		1DE8F61F1964673900079F1A /* NLAccountPreferenceViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8F61D1964673900079F1A /* NLAccountPreferenceViewController.mm */; };
+		1DE8F6201964673900079F1A /* NLAccountPreferenceViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8F61D1964673900079F1A /* NLAccountPreferenceViewController.mm */; };
+		1DE8F6251964678E00079F1A /* NLAccountPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6231964678E00079F1A /* NLAccountPreferenceView.xib */; };
+		1DE8F6261964678E00079F1A /* NLAccountPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6231964678E00079F1A /* NLAccountPreferenceView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +114,9 @@
 		1DE8F611196465B200079F1A /* NLNotiryPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLNotiryPreferenceViewController.h; path = PreferencePanels/NLNotiryPreferenceViewController.h; sourceTree = "<group>"; };
 		1DE8F612196465B200079F1A /* NLNotiryPreferenceViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NLNotiryPreferenceViewController.mm; path = PreferencePanels/NLNotiryPreferenceViewController.mm; sourceTree = "<group>"; };
 		1DE8F6191964660E00079F1A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Localize/en.lproj/NLNotiryPreferenceView.xib; sourceTree = "<group>"; };
+		1DE8F61C1964673900079F1A /* NLAccountPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccountPreferenceViewController.h; path = PreferencePanels/NLAccountPreferenceViewController.h; sourceTree = "<group>"; };
+		1DE8F61D1964673900079F1A /* NLAccountPreferenceViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NLAccountPreferenceViewController.mm; path = PreferencePanels/NLAccountPreferenceViewController.mm; sourceTree = "<group>"; };
+		1DE8F6241964678E00079F1A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Localize/en.lproj/NLAccountPreferenceView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +291,9 @@
 				1DE8F611196465B200079F1A /* NLNotiryPreferenceViewController.h */,
 				1DE8F612196465B200079F1A /* NLNotiryPreferenceViewController.mm */,
 				1DE8F6181964660E00079F1A /* NLNotiryPreferenceView.xib */,
+				1DE8F61C1964673900079F1A /* NLAccountPreferenceViewController.h */,
+				1DE8F61D1964673900079F1A /* NLAccountPreferenceViewController.mm */,
+				1DE8F6231964678E00079F1A /* NLAccountPreferenceView.xib */,
 			);
 			name = PreferencePanels;
 			sourceTree = "<group>";
@@ -377,6 +387,7 @@
 				1DAECBF618E1311F00C402AE /* available.png in Resources */,
 				1DE8F60B196464C100079F1A /* NLWatchlistPreferenceView.xib in Resources */,
 				1DAECBEE18E1311F00C402AE /* NicoLiveAlert.icns in Resources */,
+				1DE8F6251964678E00079F1A /* NLAccountPreferenceView.xib in Resources */,
 				1DE8F61A1964660E00079F1A /* NLNotiryPreferenceView.xib in Resources */,
 				1DAECBE218E1309400C402AE /* NicoLiveAlert.xib in Resources */,
 			);
@@ -398,6 +409,7 @@
 				1DAECBF718E1311F00C402AE /* available.png in Resources */,
 				1DE8F60C196464C100079F1A /* NLWatchlistPreferenceView.xib in Resources */,
 				1DAECBEF18E1311F00C402AE /* NicoLiveAlert.icns in Resources */,
+				1DE8F6261964678E00079F1A /* NLAccountPreferenceView.xib in Resources */,
 				1DE8F61B1964660E00079F1A /* NLNotiryPreferenceView.xib in Resources */,
 				1DAECBE318E1309400C402AE /* NicoLiveAlert.xib in Resources */,
 			);
@@ -413,6 +425,7 @@
 				1DE8F5DC1964561700079F1A /* MASPreferencesWindowController.m in Sources */,
 				1DE8F614196465B200079F1A /* NLNotiryPreferenceViewController.mm in Sources */,
 				1DE8F60F196464CD00079F1A /* NLWatchlistPreferenceViewController.mm in Sources */,
+				1DE8F61F1964673900079F1A /* NLAccountPreferenceViewController.mm in Sources */,
 				1DE8F5E419645BF600079F1A /* NLGeneralPreferenceViewController.mm in Sources */,
 				1D38F55118E1300F006C5C70 /* NicoLiveAlert.m in Sources */,
 				1DAECBFB18E1382A00C402AE /* NLStatusbar.mm in Sources */,
@@ -427,6 +440,7 @@
 				1DE8F5DD1964561700079F1A /* MASPreferencesWindowController.m in Sources */,
 				1DE8F615196465B200079F1A /* NLNotiryPreferenceViewController.mm in Sources */,
 				1DE8F610196464CD00079F1A /* NLWatchlistPreferenceViewController.mm in Sources */,
+				1DE8F6201964673900079F1A /* NLAccountPreferenceViewController.mm in Sources */,
 				1DE8F5E519645BF600079F1A /* NLGeneralPreferenceViewController.mm in Sources */,
 				1D38F54218E12C96006C5C70 /* NicoLiveAlertTests.m in Sources */,
 				1D38F55518E1304C006C5C70 /* main.m in Sources */,
@@ -499,6 +513,14 @@
 				1DE8F6191964660E00079F1A /* en */,
 			);
 			name = NLNotiryPreferenceView.xib;
+			sourceTree = "<group>";
+		};
+		1DE8F6231964678E00079F1A /* NLAccountPreferenceView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DE8F6241964678E00079F1A /* en */,
+			);
+			name = NLAccountPreferenceView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

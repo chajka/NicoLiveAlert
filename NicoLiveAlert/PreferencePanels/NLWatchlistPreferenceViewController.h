@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MASPreferencesViewController.h"
 
-@interface NLWatchlistPreferenceViewController : NSViewController
+@interface NLWatchlistPreferenceViewController : NSViewController <MASPreferencesViewController>
 
 @end

@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MASPreferencesViewController.h"
 
-@interface NLNotiryPreferenceViewController : NSViewController
+@interface NLNotiryPreferenceViewController : NSViewController <MASPreferencesViewController>
 
 @end

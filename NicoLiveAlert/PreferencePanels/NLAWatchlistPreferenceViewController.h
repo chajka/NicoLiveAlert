@@ -1,5 +1,5 @@
 //
-//  NLGeneralPreferenceViewController.h
+//  NLAWatchlistPreferenceViewController.h
 //  NicoLiveAlert
 //
 //  Created by Чайка on 7/3/14.
@@ -8,7 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MASPreferencesViewController.h"
+#import "NicoLiveAlertPreferencesDefinitions.h"
 
-@interface NLGeneralPreferenceViewController : NSViewController <MASPreferencesViewController>
+@interface NLAWatchlistPreferenceViewController : NSViewController <MASPreferencesViewController>
 
 @end

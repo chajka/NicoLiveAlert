@@ -1,18 +1,18 @@
 //
-//  NLAccountPreferenceViewController.mm
+//  NLAWatchlistPreferenceViewController.mm
 //  NicoLiveAlert
 //
 //  Created by Чайка on 7/3/14.
 //  Copyright (c) 2014 Instrumentality of mankind. All rights reserved.
 //
 
-#import "NLAccountPreferenceViewController.h"
+#import "NLAWatchlistPreferenceViewController.h"
 
-@interface NLAccountPreferenceViewController ()
+@interface NLAWatchlistPreferenceViewController ()
 
 @end
 
-@implementation NLAccountPreferenceViewController
+@implementation NLAWatchlistPreferenceViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

@@ -1,18 +1,18 @@
 //
-//  NLGeneralPreferenceViewController.mm
+//  NLNotiryPreferenceViewController.mm
 //  NicoLiveAlert
 //
 //  Created by Чайка on 7/3/14.
 //  Copyright (c) 2014 Instrumentality of mankind. All rights reserved.
 //
 
-#import "NLGeneralPreferenceViewController.h"
+#import "NLANotiryPreferenceViewController.h"
 
-@interface NLGeneralPreferenceViewController ()
+@interface NLANotiryPreferenceViewController ()
 
 @end
 
-@implementation NLGeneralPreferenceViewController
+@implementation NLANotiryPreferenceViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,5 +38,4 @@
 {
     return @"ToolbarTitle";
 }// end - (NSString *)toolbarItemLabel
-
 @end

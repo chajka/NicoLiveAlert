@@ -1,18 +1,18 @@
 //
-//  NLWatchlistPreferenceViewController.mm
+//  NLAGeneralPreferenceViewController.mm
 //  NicoLiveAlert
 //
 //  Created by Чайка on 7/3/14.
 //  Copyright (c) 2014 Instrumentality of mankind. All rights reserved.
 //
 
-#import "NLWatchlistPreferenceViewController.h"
+#import "NLAGeneralPreferenceViewController.h"
 
-@interface NLWatchlistPreferenceViewController ()
+@interface NLAGeneralPreferenceViewController ()
 
 @end
 
-@implementation NLWatchlistPreferenceViewController
+@implementation NLAGeneralPreferenceViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,4 +38,5 @@
 {
     return @"ToolbarTitle";
 }// end - (NSString *)toolbarItemLabel
+
 @end

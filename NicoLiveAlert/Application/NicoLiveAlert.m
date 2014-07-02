@@ -35,7 +35,7 @@ static NSString *StatusBarIconName = @"sbicon";
 #pragma mark - delegate
 - (void) applicationWillFinishLaunching:(NSNotification *)notification
 {
-	
+	firstTimePreference = YES;
 }// end - (void) applicationWillFinishLaunching:(NSNotification *)notification
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -48,11 +48,26 @@ static NSString *StatusBarIconName = @"sbicon";
 	
 }// end - (void) applicationWillFinishLaunching:(NSNotification *)notification
 
+#pragma mark - actions
+- (IBAction) openPreferences:(id)sender
+{
+	
+}// end - (IBAction) openPreferences:(id)sender
+
 #pragma mark - instance method
-#pragma mark constructor
 #pragma mark - properties
 #pragma mark - messages
 #pragma mark - private
+- (void) setupPreferencePanel
+{
+	@autoreleasepool {
+		if (firstTimePreference) {
+			firstTimePreference = NO;
+		}// end if first time open preference window
+		
+	}// end autorelease pool
+}// end - (void) setupPreferencePanel
+
 #pragma mark - C functions
 static
 void uncaughtExceptionHandler(NSException *exception)

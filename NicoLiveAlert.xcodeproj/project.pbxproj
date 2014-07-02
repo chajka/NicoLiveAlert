@@ -59,6 +59,10 @@
 		1DE8F6201964673900079F1A /* NLAccountPreferenceViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8F61D1964673900079F1A /* NLAccountPreferenceViewController.mm */; };
 		1DE8F6251964678E00079F1A /* NLAccountPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6231964678E00079F1A /* NLAccountPreferenceView.xib */; };
 		1DE8F6261964678E00079F1A /* NLAccountPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6231964678E00079F1A /* NLAccountPreferenceView.xib */; };
+		1DE8F62A1964893F00079F1A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6271964893F00079F1A /* Localizable.strings */; };
+		1DE8F62B1964893F00079F1A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6271964893F00079F1A /* Localizable.strings */; };
+		1DE8F62C1964893F00079F1A /* NicoLiveAlert-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D38F51F18E12C96006C5C70 /* NicoLiveAlert-Info.plist */; };
+		1DE8F62D1964893F00079F1A /* NicoLiveAlert-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D38F51F18E12C96006C5C70 /* NicoLiveAlert-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,7 +81,7 @@
 		1D38F51A18E12C96006C5C70 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		1D38F51B18E12C96006C5C70 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1D38F51C18E12C96006C5C70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D38F51F18E12C96006C5C70 /* NicoLiveAlert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NicoLiveAlert-Info.plist"; sourceTree = "<group>"; };
+		1D38F51F18E12C96006C5C70 /* NicoLiveAlert-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "NicoLiveAlert-Info.plist"; sourceTree = "<group>"; };
 		1D38F52318E12C96006C5C70 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1D38F52518E12C96006C5C70 /* NicoLiveAlert-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NicoLiveAlert-Prefix.pch"; sourceTree = "<group>"; };
 		1D38F52F18E12C96006C5C70 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 		1DE8F61C1964673900079F1A /* NLAccountPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLAccountPreferenceViewController.h; path = PreferencePanels/NLAccountPreferenceViewController.h; sourceTree = "<group>"; };
 		1DE8F61D1964673900079F1A /* NLAccountPreferenceViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NLAccountPreferenceViewController.mm; path = PreferencePanels/NLAccountPreferenceViewController.mm; sourceTree = "<group>"; };
 		1DE8F6241964678E00079F1A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Localize/en.lproj/NLAccountPreferenceView.xib; sourceTree = "<group>"; };
+		1DE8F6281964893F00079F1A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = Localize/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1DE8F6291964893F00079F1A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localize/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,8 +193,8 @@
 		1D38F51D18E12C96006C5C70 /* NicoLiveAlert */ = {
 			isa = PBXGroup;
 			children = (
-				1DAECBF818E137CE00C402AE /* GUI */,
 				1DAECBE418E1309D00C402AE /* Application */,
+				1DAECBF818E137CE00C402AE /* GUI */,
 				1DE8F5E019645BA900079F1A /* PreferencePanels */,
 				1D38F51E18E12C96006C5C70 /* Supporting Files */,
 				1DE8F5D6196455ED00079F1A /* External */,
@@ -201,6 +207,7 @@
 		1D38F51E18E12C96006C5C70 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1DE8F6271964893F00079F1A /* Localizable.strings */,
 				1D38F51F18E12C96006C5C70 /* NicoLiveAlert-Info.plist */,
 				1DAECBDC18E1308400C402AE /* InfoPlist.strings */,
 				1DAECBD818E1307500C402AE /* Credits.rtf */,
@@ -358,6 +365,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = 1D38F50B18E12C96006C5C70;
 			productRefGroup = 1D38F51518E12C96006C5C70 /* Products */;
@@ -378,6 +386,7 @@
 				1D38F53018E12C96006C5C70 /* Images.xcassets in Resources */,
 				1DE8F5DE1964561700079F1A /* MASPreferencesWindow.xib in Resources */,
 				1DAECBF218E1311F00C402AE /* idle.png in Resources */,
+				1DE8F62C1964893F00079F1A /* NicoLiveAlert-Info.plist in Resources */,
 				1DAECBF418E1311F00C402AE /* away.png in Resources */,
 				1DAECBDE18E1308400C402AE /* InfoPlist.strings in Resources */,
 				1DAECBDA18E1307500C402AE /* Credits.rtf in Resources */,
@@ -388,6 +397,7 @@
 				1DE8F60B196464C100079F1A /* NLWatchlistPreferenceView.xib in Resources */,
 				1DAECBEE18E1311F00C402AE /* NicoLiveAlert.icns in Resources */,
 				1DE8F6251964678E00079F1A /* NLAccountPreferenceView.xib in Resources */,
+				1DE8F62A1964893F00079F1A /* Localizable.strings in Resources */,
 				1DE8F61A1964660E00079F1A /* NLNotiryPreferenceView.xib in Resources */,
 				1DAECBE218E1309400C402AE /* NicoLiveAlert.xib in Resources */,
 			);
@@ -400,6 +410,7 @@
 				1D38F54018E12C96006C5C70 /* InfoPlist.strings in Resources */,
 				1DE8F5DF1964561700079F1A /* MASPreferencesWindow.xib in Resources */,
 				1DAECBF318E1311F00C402AE /* idle.png in Resources */,
+				1DE8F62D1964893F00079F1A /* NicoLiveAlert-Info.plist in Resources */,
 				1DAECBF518E1311F00C402AE /* away.png in Resources */,
 				1DAECBDF18E1308400C402AE /* InfoPlist.strings in Resources */,
 				1DAECBDB18E1307500C402AE /* Credits.rtf in Resources */,
@@ -410,6 +421,7 @@
 				1DE8F60C196464C100079F1A /* NLWatchlistPreferenceView.xib in Resources */,
 				1DAECBEF18E1311F00C402AE /* NicoLiveAlert.icns in Resources */,
 				1DE8F6261964678E00079F1A /* NLAccountPreferenceView.xib in Resources */,
+				1DE8F62B1964893F00079F1A /* Localizable.strings in Resources */,
 				1DE8F61B1964660E00079F1A /* NLNotiryPreferenceView.xib in Resources */,
 				1DAECBE318E1309400C402AE /* NicoLiveAlert.xib in Resources */,
 			);
@@ -521,6 +533,15 @@
 				1DE8F6241964678E00079F1A /* en */,
 			);
 			name = NLAccountPreferenceView.xib;
+			sourceTree = "<group>";
+		};
+		1DE8F6271964893F00079F1A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DE8F6281964893F00079F1A /* ja */,
+				1DE8F6291964893F00079F1A /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

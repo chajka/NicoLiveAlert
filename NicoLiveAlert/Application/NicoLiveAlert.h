@@ -10,8 +10,13 @@
 #import "NLStatusbar.h"
 
 @interface NicoLiveAlert : NSObject <NSApplicationDelegate> {
-				NLStatusbar	*statusBar;
+		// menu outlet
 	IBOutlet	NSMenu		*statusBarMenu;
-}
 
+		//
+	NLStatusbar				*statusBar;
+	NSWindowController		*preferenceWindowController;
+}
+#pragma mark - actions
+- (IBAction) openPreferences:(id)sender;
 @end

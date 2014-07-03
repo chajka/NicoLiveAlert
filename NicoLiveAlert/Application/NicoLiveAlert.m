@@ -7,6 +7,11 @@
 //
 
 #import "NicoLiveAlert.h"
+#import "MASPreferencesWindowController.h"
+#import "NLAGeneralPreferenceViewController.h"
+#import "NLAWatchlistPreferenceViewController.h"
+#import "NLANotiryPreferenceViewController.h"
+#import "NLAAccountPreferenceViewController.h"
 
 @interface NicoLiveAlert ()
 
@@ -35,7 +40,6 @@ static NSString *StatusBarIconName = @"sbicon";
 #pragma mark - delegate
 - (void) applicationWillFinishLaunching:(NSNotification *)notification
 {
-	
 }// end - (void) applicationWillFinishLaunching:(NSNotification *)notification
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -48,11 +52,36 @@ static NSString *StatusBarIconName = @"sbicon";
 	
 }// end - (void) applicationWillFinishLaunching:(NSNotification *)notification
 
+#pragma mark - actions
+- (IBAction) openPreferences:(id)sender
+{
+	@autoreleasepool {
+		if (preferenceWindowController == nil) {
+			preferenceWindowController = [self buildPreferencePanel];
+			[(MASPreferencesWindowController *)preferenceWindowController selectControllerAtIndex:0];
+		}// end if not build preference window yet.
+
+		[preferenceWindowController showWindow:nil];
+	}// end autorelease pool block
+}// end - (IBAction) openPreferences:(id)sender
+
 #pragma mark - instance method
-#pragma mark constructor
 #pragma mark - properties
 #pragma mark - messages
 #pragma mark - private
+- (NSWindowController *) buildPreferencePanel
+{
+	NLAGeneralPreferenceViewController *general = [[NLAGeneralPreferenceViewController alloc] init];
+	NLAWatchlistPreferenceViewController *watchlist = [[NLAWatchlistPreferenceViewController alloc] init];
+	NLANotiryPreferenceViewController *notify = [[NLANotiryPreferenceViewController alloc] init];
+	NLAAccountPreferenceViewController *accounts = [[NLAAccountPreferenceViewController alloc] init];
+	NSArray *preferencePanels = [NSArray arrayWithObjects:general, watchlist, notify, accounts, nil];
+
+	NSWindowController *preferences = [[MASPreferencesWindowController alloc] initWithViewControllers:preferencePanels title:@"Preferences"];
+
+	return preferences;
+}// end - (void) setupPreferencePanel
+
 #pragma mark - C functions
 static
 void uncaughtExceptionHandler(NSException *exception)

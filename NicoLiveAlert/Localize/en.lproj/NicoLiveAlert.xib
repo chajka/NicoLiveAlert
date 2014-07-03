@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -43,7 +43,11 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
+                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
+                                <connections>
+                                    <action selector="openPreferences:" target="-1" id="NB6-aG-fqP"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -696,12 +700,19 @@
                 </menuItem>
                 <menuItem title="Preferences…" id="wRh-pU-QPv">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openPreferences:" target="-1" id="Y5v-Wg-8qy"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="1WU-vN-bsK"/>
                 <menuItem title="Check for Update" id="c47-In-hXh">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Quit" keyEquivalent="q" id="o8g-F1-4vC"/>
+                <menuItem title="Quit" keyEquivalent="q" id="o8g-F1-4vC">
+                    <connections>
+                        <action selector="terminate:" target="-2" id="aaK-Aq-rcS"/>
+                    </connections>
+                </menuItem>
             </items>
         </menu>
     </objects>

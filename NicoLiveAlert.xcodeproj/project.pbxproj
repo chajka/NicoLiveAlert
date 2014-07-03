@@ -17,8 +17,19 @@
 		1D38F55118E1300F006C5C70 /* NicoLiveAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D38F55018E1300F006C5C70 /* NicoLiveAlert.m */; };
 		1D38F55218E1300F006C5C70 /* NicoLiveAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D38F55018E1300F006C5C70 /* NicoLiveAlert.m */; };
 		1D38F55518E1304C006C5C70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D38F52318E12C96006C5C70 /* main.m */; };
-		1D6E27971962DACF00E76D49 /* YCKeychainService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6E27961962DACF00E76D49 /* YCKeychainService.framework */; };
-		1D6E27981962DACF00E76D49 /* YCKeychainService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D6E27961962DACF00E76D49 /* YCKeychainService.framework */; };
+		1D3D4187196593AE0099E679 /* YCKeychainService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3D4186196593AE0099E679 /* YCKeychainService.framework */; };
+		1D3D4188196593AE0099E679 /* YCKeychainService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3D4186196593AE0099E679 /* YCKeychainService.framework */; };
+		1D3D4189196593B80099E679 /* YCKeychainService.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3D4186196593AE0099E679 /* YCKeychainService.framework */; };
+		1D3D418E1965F7A90099E679 /* Accounts.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D3D418A1965F7A90099E679 /* Accounts.png */; };
+		1D3D418F1965F7A90099E679 /* Accounts.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D3D418A1965F7A90099E679 /* Accounts.png */; };
+		1D3D41901965F7A90099E679 /* keys.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D3D418B1965F7A90099E679 /* keys.png */; };
+		1D3D41911965F7A90099E679 /* keys.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D3D418B1965F7A90099E679 /* keys.png */; };
+		1D3D41921965F7A90099E679 /* watch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D3D418C1965F7A90099E679 /* watch.png */; };
+		1D3D41931965F7A90099E679 /* watch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D3D418C1965F7A90099E679 /* watch.png */; };
+		1D3D41941965F7A90099E679 /* Growl.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D3D418D1965F7A90099E679 /* Growl.png */; };
+		1D3D41951965F7A90099E679 /* Growl.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D3D418D1965F7A90099E679 /* Growl.png */; };
+		1D3D41971965F93E0099E679 /* Bell.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D3D41961965F93E0099E679 /* Bell.png */; };
+		1D3D41981965F93E0099E679 /* Bell.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D3D41961965F93E0099E679 /* Bell.png */; };
 		1DAECBDA18E1307500C402AE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DAECBD818E1307500C402AE /* Credits.rtf */; };
 		1DAECBDB18E1307500C402AE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DAECBD818E1307500C402AE /* Credits.rtf */; };
 		1DAECBDE18E1308400C402AE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DAECBDC18E1308400C402AE /* InfoPlist.strings */; };
@@ -61,6 +72,7 @@
 		1DE8F62A1964893F00079F1A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6271964893F00079F1A /* Localizable.strings */; };
 		1DE8F62B1964893F00079F1A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8F6271964893F00079F1A /* Localizable.strings */; };
 		1DE8F62D1964893F00079F1A /* NicoLiveAlert-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D38F51F18E12C96006C5C70 /* NicoLiveAlert-Info.plist */; };
+		1DECEC3019658D1B00593455 /* Key.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DECEC2F19658D1B00593455 /* Key.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +84,29 @@
 			remoteInfo = NicoLiveAlert;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1D9B5E9A19657DCD00A54C1D /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1D3D4189196593B80099E679 /* YCKeychainService.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D9B5E9D19657F1800A54C1D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1D38F51418E12C96006C5C70 /* NicoLiveAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NicoLiveAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,7 +126,12 @@
 		1D38F54B18E12DFE006C5C70 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1D38F55018E1300F006C5C70 /* NicoLiveAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NicoLiveAlert.m; path = Application/NicoLiveAlert.m; sourceTree = "<group>"; };
 		1D38F55318E13020006C5C70 /* NicoLiveAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NicoLiveAlert.h; path = Application/NicoLiveAlert.h; sourceTree = "<group>"; };
-		1D6E27961962DACF00E76D49 /* YCKeychainService.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YCKeychainService.framework; path = NicoLiveAlert/Frameworks/YCKeychainService.framework; sourceTree = "<group>"; };
+		1D3D4186196593AE0099E679 /* YCKeychainService.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YCKeychainService.framework; path = NicoLiveAlert/Frameworks/YCKeychainService.framework; sourceTree = "<group>"; };
+		1D3D418A1965F7A90099E679 /* Accounts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Accounts.png; path = Images/Accounts.png; sourceTree = "<group>"; };
+		1D3D418B1965F7A90099E679 /* keys.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keys.png; path = Images/keys.png; sourceTree = "<group>"; };
+		1D3D418C1965F7A90099E679 /* watch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = watch.png; path = Images/watch.png; sourceTree = "<group>"; };
+		1D3D418D1965F7A90099E679 /* Growl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Growl.png; path = Images/Growl.png; sourceTree = "<group>"; };
+		1D3D41961965F93E0099E679 /* Bell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Bell.png; path = Images/Bell.png; sourceTree = "<group>"; };
 		1DAECBD918E1307500C402AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = Localize/en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		1DAECBDD18E1308400C402AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localize/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1DAECBE118E1309400C402AE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Localize/en.lproj/NicoLiveAlert.xib; sourceTree = "<group>"; };
@@ -123,6 +163,7 @@
 		1DE8F6291964893F00079F1A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localize/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1DE8F62E19648A0100079F1A /* NicoLiveAlertPreferencesDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NicoLiveAlertPreferencesDefinitions.h; path = PreferencePanels/NicoLiveAlertPreferencesDefinitions.h; sourceTree = "<group>"; };
 		1DE8F62F19648DE500079F1A /* NicoLiveAlertDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NicoLiveAlertDefinitions.h; path = Application/NicoLiveAlertDefinitions.h; sourceTree = "<group>"; };
+		1DECEC2F19658D1B00593455 /* Key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Key.png; path = Images/Key.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +173,7 @@
 			files = (
 				1D38F54C18E12DFE006C5C70 /* Security.framework in Frameworks */,
 				1D38F51818E12C96006C5C70 /* Cocoa.framework in Frameworks */,
-				1D6E27971962DACF00E76D49 /* YCKeychainService.framework in Frameworks */,
+				1D3D4187196593AE0099E679 /* YCKeychainService.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +183,7 @@
 			files = (
 				1D38F53818E12C96006C5C70 /* Cocoa.framework in Frameworks */,
 				1D38F53718E12C96006C5C70 /* XCTest.framework in Frameworks */,
-				1D6E27981962DACF00E76D49 /* YCKeychainService.framework in Frameworks */,
+				1D3D4188196593AE0099E679 /* YCKeychainService.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,7 +212,7 @@
 		1D38F51618E12C96006C5C70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1D6E27961962DACF00E76D49 /* YCKeychainService.framework */,
+				1D3D4186196593AE0099E679 /* YCKeychainService.framework */,
 				1D38F54B18E12DFE006C5C70 /* Security.framework */,
 				1D38F51718E12C96006C5C70 /* Cocoa.framework */,
 				1D38F53618E12C96006C5C70 /* XCTest.framework */,
@@ -249,12 +290,18 @@
 		1DAECBE518E130FD00C402AE /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1D3D418A1965F7A90099E679 /* Accounts.png */,
+				1D3D41961965F93E0099E679 /* Bell.png */,
+				1D3D418B1965F7A90099E679 /* keys.png */,
+				1D3D418C1965F7A90099E679 /* watch.png */,
+				1D3D418D1965F7A90099E679 /* Growl.png */,
 				1DAECBE618E1311F00C402AE /* sbicon.png */,
 				1DAECBE718E1311F00C402AE /* NicoLiveAlert.icns */,
 				1DAECBE818E1311F00C402AE /* invisible.png */,
 				1DAECBE918E1311F00C402AE /* idle.png */,
 				1DAECBEA18E1311F00C402AE /* away.png */,
 				1DAECBEB18E1311F00C402AE /* available.png */,
+				1DECEC2F19658D1B00593455 /* Key.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -317,6 +364,7 @@
 				1D38F51018E12C96006C5C70 /* Sources */,
 				1D38F51118E12C96006C5C70 /* Frameworks */,
 				1D38F51218E12C96006C5C70 /* Resources */,
+				1D9B5E9A19657DCD00A54C1D /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -334,6 +382,7 @@
 				1D38F53118E12C96006C5C70 /* Sources */,
 				1D38F53218E12C96006C5C70 /* Frameworks */,
 				1D38F53318E12C96006C5C70 /* Resources */,
+				1D9B5E9D19657F1800A54C1D /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -388,16 +437,22 @@
 				1DE8F5DE1964561700079F1A /* MASPreferencesWindow.xib in Resources */,
 				1DAECBF218E1311F00C402AE /* idle.png in Resources */,
 				1DAECBF418E1311F00C402AE /* away.png in Resources */,
+				1D3D41941965F7A90099E679 /* Growl.png in Resources */,
+				1D3D418E1965F7A90099E679 /* Accounts.png in Resources */,
+				1DECEC3019658D1B00593455 /* Key.png in Resources */,
 				1DAECBDE18E1308400C402AE /* InfoPlist.strings in Resources */,
 				1DAECBDA18E1307500C402AE /* Credits.rtf in Resources */,
 				1DAECBF018E1311F00C402AE /* invisible.png in Resources */,
 				1DE8F5EA19645C7000079F1A /* NLAGeneralPreferenceView.xib in Resources */,
 				1DAECBEC18E1311F00C402AE /* sbicon.png in Resources */,
 				1DAECBF618E1311F00C402AE /* available.png in Resources */,
+				1D3D41901965F7A90099E679 /* keys.png in Resources */,
 				1DE8F60B196464C100079F1A /* NLAWatchlistPreferenceView.xib in Resources */,
+				1D3D41921965F7A90099E679 /* watch.png in Resources */,
 				1DAECBEE18E1311F00C402AE /* NicoLiveAlert.icns in Resources */,
 				1DE8F6251964678E00079F1A /* NLAAccountPreferenceView.xib in Resources */,
 				1DE8F62A1964893F00079F1A /* Localizable.strings in Resources */,
+				1D3D41971965F93E0099E679 /* Bell.png in Resources */,
 				1DE8F61A1964660E00079F1A /* NLANotiryPreferenceView.xib in Resources */,
 				1DAECBE218E1309400C402AE /* NicoLiveAlert.xib in Resources */,
 			);
@@ -410,20 +465,25 @@
 				1D38F54018E12C96006C5C70 /* InfoPlist.strings in Resources */,
 				1DE8F5DF1964561700079F1A /* MASPreferencesWindow.xib in Resources */,
 				1DAECBF318E1311F00C402AE /* idle.png in Resources */,
+				1D3D418F1965F7A90099E679 /* Accounts.png in Resources */,
 				1DE8F62D1964893F00079F1A /* NicoLiveAlert-Info.plist in Resources */,
 				1DAECBF518E1311F00C402AE /* away.png in Resources */,
 				1DAECBDF18E1308400C402AE /* InfoPlist.strings in Resources */,
+				1D3D41951965F7A90099E679 /* Growl.png in Resources */,
 				1DAECBDB18E1307500C402AE /* Credits.rtf in Resources */,
 				1DAECBF118E1311F00C402AE /* invisible.png in Resources */,
 				1DE8F5EB19645C7000079F1A /* NLAGeneralPreferenceView.xib in Resources */,
 				1DAECBED18E1311F00C402AE /* sbicon.png in Resources */,
+				1D3D41981965F93E0099E679 /* Bell.png in Resources */,
 				1DAECBF718E1311F00C402AE /* available.png in Resources */,
+				1D3D41911965F7A90099E679 /* keys.png in Resources */,
 				1DE8F60C196464C100079F1A /* NLAWatchlistPreferenceView.xib in Resources */,
 				1DAECBEF18E1311F00C402AE /* NicoLiveAlert.icns in Resources */,
 				1DE8F6261964678E00079F1A /* NLAAccountPreferenceView.xib in Resources */,
 				1DE8F62B1964893F00079F1A /* Localizable.strings in Resources */,
 				1DE8F61B1964660E00079F1A /* NLANotiryPreferenceView.xib in Resources */,
 				1DAECBE318E1309400C402AE /* NicoLiveAlert.xib in Resources */,
+				1D3D41931965F7A90099E679 /* watch.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,6 +623,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Akira Muraki";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -579,7 +640,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -601,6 +662,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Akira Muraki";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -612,7 +674,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -620,6 +682,7 @@
 		1D38F54618E12C96006C5C70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Akira Muraki";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/../../../ResourceRules.plist";
@@ -640,6 +703,7 @@
 		1D38F54718E12C96006C5C70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Akira Muraki";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/../../../ResourceRules.plist";

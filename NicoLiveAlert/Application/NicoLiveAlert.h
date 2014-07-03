@@ -15,7 +15,7 @@
 
 		//
 	NLStatusbar				*statusBar;
-	BOOL					firstTimePreference;
+	NSWindowController		*preferenceWindowController;
 }
 #pragma mark - actions
 - (IBAction) openPreferences:(id)sender;

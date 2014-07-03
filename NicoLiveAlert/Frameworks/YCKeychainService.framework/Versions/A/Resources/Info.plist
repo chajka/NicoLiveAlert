@@ -16,6 +16,8 @@
 	<string>YCKeychainService</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
+	<key>CFBundleResourceSpecification</key>
+	<string>ResourceRules.plist</string>
 	<key>CFBundleShortVersionString</key>
 	<string>0.0.0.0</string>
 	<key>CFBundleSignature</key>

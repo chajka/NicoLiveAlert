@@ -16,7 +16,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:GeneralPrefNibName bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
     }
@@ -26,17 +26,16 @@
 #pragma mark - MASPreferencesViewController
 - (NSString *)identifier
 {
-    return @"IdentifierName";
+    return GeneralPrefIdentifier;
 }// end - (NSString *)identifier
 
 - (NSImage *)toolbarItemImage
 {
-    return nil;	// NSImage
+    return [NSImage imageNamed:GeneralImageName];
 }// end - (NSImage *)toolbarItemImage
 
 - (NSString *)toolbarItemLabel
 {
-    return @"ToolbarTitle";
+    return GeneralToolBarTitle;
 }// end - (NSString *)toolbarItemLabel
-
 @end

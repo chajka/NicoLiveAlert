@@ -16,7 +16,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:WatchlistPrefNibName bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
     }
@@ -26,16 +26,16 @@
 #pragma mark - MASPreferencesViewController
 - (NSString *)identifier
 {
-    return @"IdentifierName";
+    return WatchlistPrefIdentifier;
 }// end - (NSString *)identifier
 
 - (NSImage *)toolbarItemImage
 {
-    return nil;	// NSImage
+    return [NSImage imageNamed:WatchlistImageName];
 }// end - (NSImage *)toolbarItemImage
 
 - (NSString *)toolbarItemLabel
 {
-    return @"ToolbarTitle";
+    return WatchlistToolBarTitle;
 }// end - (NSString *)toolbarItemLabel
 @end

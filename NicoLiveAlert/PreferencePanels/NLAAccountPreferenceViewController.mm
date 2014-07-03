@@ -16,7 +16,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:AccountPrefNibName bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
     }
@@ -26,16 +26,16 @@
 #pragma mark - MASPreferencesViewController
 - (NSString *)identifier
 {
-    return @"IdentifierName";
+    return AccountPrefIdentifier;
 }// end - (NSString *)identifier
 
 - (NSImage *)toolbarItemImage
 {
-    return nil;	// NSImage
+    return [NSImage imageNamed:AccountImageName];
 }// end - (NSImage *)toolbarItemImage
 
 - (NSString *)toolbarItemLabel
 {
-    return @"ToolbarTitle";
+    return AccountToolBarTitle;
 }// end - (NSString *)toolbarItemLabel
 @end
